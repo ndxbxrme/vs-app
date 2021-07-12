@@ -1,0 +1,51 @@
+
+<div class="leads-route">
+  <div class="row">
+    <h1>{{mla('leads-' + roleType + '-heading')}}</h1>
+    <button class="btn orangebtn" ui-sref="leads_lead-new" ng-show="auth.isAuthorized(&quot;lead-new&quot;)">{{mla('leads-button-add')}}<i class="fa fa-plus"></i></button>
+  </div>
+  <div class="controls row">
+    <div class="left">
+      <div class="sort">Order By:<a class="order-item" href="" ng-click="sort.set(&quot;modifiedAt&quot;)" ng-class="sort.class(&quot;modifiedAt&quot;)">Last Updated</a><a class="order-item" href="" ng-click="sort.set(&quot;date&quot;)" ng-class="sort.class(&quot;date&quot;)">Enquiry Date</a></div>
+    </div>
+    <div class="right">
+      <div class="search-box">
+        <input type="text" ng-model="leads.args.where.s.$like"/>
+        <div class="total">Showing {{leads.total}} of {{allleads.total}} leads</div>
+      </div>
+    </div>
+  </div>
+  <table class="list-table" ng-show="leads.total">
+    <thead>
+      <tr>
+        <th class="source"><span>{{ mla('leads-table-source') }}</span></th>
+        <th class="address"><span>{{ mla('leads-table-address') }}</span></th>
+        <th class="applicant"><span>{{ mla('leads-table-applicant') }}</span></th>
+        <th class="date"><span>{{ mla('leads-table-date') }}</span></th>
+        <th class="options"><span>{{ mla('leads-table-options') }}</span></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="lead in leads.items">
+      <tr>
+        <td class="source">
+          <label>{{ mla('leads-table-source') }}</label><span class="{{ lead.source }} {{lead.method}}"></span>
+        </td>
+        <td class="address">
+          <label>{{ mla('leads-table-address') }}</label><a ui-sref="leads_lead({_id:lead._id})">{{ lead.property.address || lead.user.address}}, {{ lead.property.postcode || lead.user.postcode}}, {{ lead.price | currency:'£'}}</a>
+        </td>
+        <td class="applicant">
+          <label>{{ mla('leads-table-applicant') }}</label><span>{{lead.applicant}}</span>
+        </td>
+        <td class="date">
+          <label>{{ mla('leads-table-date') }}</label><span>{{lead.date | date:'medium'}}</span>
+        </td>
+        <td class="options">
+          <label>{{ mla('leads-table-options') }}</label>
+          <button class="btn" ui-sref="leads_lead({_id:lead._id})">{{ mla('leads-button-view-lead') }}</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p ng-show="leads.items &amp;&amp; !leads.total">{{ mla('leads-message-no-items') }}</p>
+  <paging total="leads.total" opts="leads.args"></paging>
+</div>

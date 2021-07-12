@@ -1,0 +1,132 @@
+@import '../../variables'
+
+.dashboard-route
+  .currency
+    width 8rem
+    display inline-block
+    text-align right
+  .overview, .income
+    width 100%
+    border 1px solid vs-grey
+    border-spacing 0
+    border-radius 3px
+    margin-bottom 30px
+    position relative
+    box-sizing border-box
+    .tr
+      display flex
+      .th, .td
+        flex 1
+        box-sizing border-box
+        label
+          display none
+      .th
+        padding 20px
+        background vs-grey
+        text-align center
+        color white
+        font-size 2rem
+        font-weight 100
+        border-bottom 1px solid vs-grey
+      .td
+        padding 15px
+        text-align center
+        font-size: 1.6rem
+        border-bottom 1px solid vs-grey
+        a
+          color vs-orange
+        &.clickable
+          cursor pointer
+          color vs-orange
+      &.head-two, &.total
+        background #f1f1f1
+        .td 
+          font-weight 600
+	.summary
+    width: 100%
+    border-spacing 0
+    border-collapse collapse
+    margin-bottom 30px
+    th
+      text-align left
+      vertical-align bottom
+      font-size 1.2rem
+      line-height 1rem
+      background vs-grey
+      color white
+      padding 10px
+      height 150px
+      white-space nowrap
+      &:last-of-type
+        width 40px
+    tr td
+      border 1px solid vs-lightgrey
+      text-align center
+      vertical-align middle
+      line-height 1.2rem
+      position relative
+      &:first-child
+        background #f1f1f1
+        border 1px solid vs-grey
+        text-align left
+        font-weight 600
+        padding 0 5px
+    a 
+      color vs-orange
+      line-height 1.6rem
+    p.service-level
+      position absolute
+      top -3px
+      right -4px
+      color white
+      background vs-grey
+      border-radius 50%
+      display flex
+      align-items center
+      justify-content center
+      height 15px
+      width 17px
+      padding-top 2px
+      font-size 10px
+    a.sort
+      color vs-orange
+      display block
+      padding 10px 0
+      &.rotate
+        transform rotate(-65deg)
+        width 20px
+    .rotate
+      transform rotate(-65deg)
+      width 20px
+    i.fa-times
+      background-color vs-red
+      color white
+      line-height 1
+      padding 7px 10px
+      border-radius 5px
+    i.fa-check
+      background-color vs-green
+      color white
+      line-height 1
+      padding 7px 8px
+      border-radius 5px
+
+@media screen and (max-width:720px)
+  .income
+    .tr
+      flex-direction column
+      &.head-two
+        display none
+      .td, .th
+        width 100%
+        .inner
+          display flex
+          label
+            display block
+            flex 1
+            text-align left
+            color vs-grey
+            span
+              flex 1
+              text-align right
+        

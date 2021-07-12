@@ -1,0 +1,77 @@
+
+<div class="modal task-modal">
+  <h1 ng-show="!task._id">Book a maintenance appointment</h1>
+  <h1 ng-show="task._id">Edit maintenance appointment</h1>
+  <form name="forms.myForm" ng-submit="save()" novalidate="novalidate">
+    <div class="form-item">
+      <label class="title">For:</label>
+      <select sumoselect="options" ng-model="task.assignedTo">
+        <option ng-repeat="user in maintenance" value="{{user._id}}">{{user.displayName || user.local.email}}'s diary</option>
+      </select>
+    </div>
+    <div class="form-item">
+      <label class="title">Property:</label>
+      <input type="text" ng-model="task.property"/>
+    </div>
+    <div class="form-item half">
+      <label class="title">Job:</label>
+      <select sumoselect="options" ng-model="task.job">
+        <option ng-repeat="job in jobs" value="{{job}}">{{job}}</option>
+      </select>
+    </div>
+    <div class="form-item half">
+      <label class="title">Status:</label>
+      <select sumoselect="options" ng-model="task.status">
+        <option ng-repeat="status in statuses" value="{{status.id}}">{{status.name}}</option>
+      </select>
+    </div>
+    <div class="form-item half">
+      <label class="title">Date:</label><a class="date" tap="setDate()">{{task.date | date:"mediumDate"}}</a>
+    </div>
+    <div class="form-item half">
+      <label class="title">Time:</label>
+      <input type="time" ng-model="task.date"/>
+    </div>
+    <div class="form-item half">
+      <label class="title">Duration:</label>
+      <input type="time" ng-model="task.duration"/>
+    </div>
+    <div class="form-item">
+      <label class="title">Job brief:</label>
+      <textarea ng-model="task.brief"></textarea>
+    </div>
+    <div class="form-item">
+      <label class="title">Cost (£):</label>
+      <input type="number" name="cost" ng-model="task.cost" required="required"/><small class="error" ng-show="submitted &amp;&amp; forms.myForm.cost.$error.required">Please enter the cost of the job</small>
+    </div>
+    <div class="form-item half">
+      <label class="title">Materials (£):</label>
+      <input type="number" ng-model="task.materials"/>
+    </div>
+    <div class="form-item">
+      <label class="title">Job card:</label>
+      <div class="documents">
+        <div class="drop-box" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
+          <h3>Drop files here to upload</h3>
+          <button class="file-upload" type="file" ngf-select="uploadFiles($file, $invalidFiles)">Or click here to choose</button>
+        </div>
+        <div class="document-list" ng-show="task.documents.length">
+          <div class="document" ng-repeat="document in task.documents"><a class="document-link" ng-href="{{makeDownloadUrl('maintenance',document)}}" target="_self"><img ng-src="{{makeDownloadUrl('maintenance',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
+              <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;"><img class="logo" src="public/img/icons/vs-document.png"/></div></a>
+            <div class="filename"> 
+              <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
+            </div>
+            <div class="controls" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])"><a class="delete" href="" ng-click="deleteDocument(document)">Delete</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-item">
+      <label class="title">Created by:</label><span>{{task.createdDate | date:'mediumDate'}}, {{task.createdDate | date:'shortTime'}} | &nbsp;<img gravatar-src="task.createdBy.local.email"/><span>{{task.createdBy.displayName || task.createdBy.local.email}}</span></span>
+    </div>
+    <div class="controls bottom">
+      <button class="delete" type="button" tap="delete()" ng-show="task._id">Delete</button>
+      <input class="submit" type="submit" value="Submit"/>
+    </div>
+  </form><a class="close-reveal-modal" ng-click="cancel()">&times;</a>
+</div>

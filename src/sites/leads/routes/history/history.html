@@ -1,0 +1,67 @@
+
+<div class="history-route">
+  <div class="row">
+    <div class="left">
+      <h1>{{mla('history-heading')}}</h1>
+    </div>
+    <div class="right">
+      <div class="radios">
+        <div class="radio">
+          <input id="rts" type="radio" name="roleType" ng-model="history.args.where.roleType" value="Selling"/>
+          <label for="rts">Selling</label>
+        </div>
+        <div class="radio">
+          <input id="rtl" type="radio" name="roleType" ng-model="history.args.where.roleType" value="Letting"/>
+          <label for="rtl">Letting</label>
+        </div>
+        <div class="radio">
+          <input id="rtv" type="radio" name="roleType" ng-model="history.args.where.roleType" value="Valuation"/>
+          <label for="rtv">Valuation</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="controls row">
+    <div class="left">
+      <div class="sort">Order By:<a class="order-item" href="" ng-click="sort.set(&quot;modifiedAt&quot;)" ng-class="sort.class(&quot;modifiedAt&quot;)">Last Updated</a><a class="order-item" href="" ng-click="sort.set(&quot;date&quot;)" ng-class="sort.class(&quot;date&quot;)">Enquiry Date</a></div>
+    </div>
+    <div class="right">
+      <div class="search-box">
+        <input type="text" ng-model="history.args.where.s.$like"/>
+        <div class="total">Showing {{history.total}} of {{allhistory.total}} leads</div>
+      </div>
+    </div>
+  </div>
+  <table class="list-table" ng-show="history.total">
+    <thead>
+      <tr>
+        <th class="address"><span>{{ mla('history-table-address') }}</span></th>
+        <th class="applicant"><span>{{ mla('history-table-applicant') }}</span></th>
+        <th class="date"><span>{{ mla('history-table-date') }}</span></th>
+        <th class="status"><span>{{ mla('history-table-status') }}</span></th>
+        <th class="view"><span>{{ mla('history-table-view') }}</span></th>
+        <th class="restore"><span>{{ mla('history-table-restore') }}</span></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="lead in history.items">
+      <tr>
+        <td class="address">
+          <label>{{ mla('history-table-address') }}</label><span>{{ lead.property.address || lead.user.address}}, {{ lead.property.postcode || lead.user.postcode}}, {{ lead.price | currency:'£'}}</span>
+        </td>
+        <td class="applicant">
+          <label>{{ mla('history-table-applicant') }}</label><span>{{lead.applicant}}</span>
+        </td>
+        <td class="date">
+          <label>{{ mla('history-table-date') }}</label><span>{{lead.date | date:'medium'}}</span>
+        </td>
+        <td class="status">
+          <label>{{ mla('history-table-status') }}</label><span>{{lead.deleted ? 'Deleted': 'Booked'}}</span>
+        </td>
+        <td class="view"><a ui-sref="leads_leadDeleted({_id: lead._id})">{{ mla('history-table-view') }}</a></td>
+        <td class="restore"><a href="" ng-click="restore(lead)">{{ mla('history-table-restore') }}</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p ng-show="history.items &amp;&amp; !history.total">{{ mla('history-message-no-items') }}</p>
+  <paging total="history.total" opts="history.args"></paging>
+</div>

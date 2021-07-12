@@ -1,0 +1,96 @@
+
+<div class="marketing">
+  <h1>Marketing Forms</h1>
+  <div class="marketing-forms">
+    <h2 ng-click="status_new=!status_new">New Sales Instruction Form</h2>
+    <div class="m-form" ng-class="status_new ? 'open' : 'closed'">
+      <form name="newSalesEmail" novalidate="novalidate" ng-submit="submitNewSales()" ng-hide="salesEmailSent">
+        <div class="row">
+          <div class="input-holder">
+            <label>Property Address</label>
+            <textarea name="address" ng-model="newSales.address"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-holder third">
+            <label>Property Price</label>
+            <input type="text" name="newSalesPropertyPrice" ng-model="newSales.newSalesPropertyPrice" placeholder="£" required="required"/>
+            <div class="error" ng-show="submitted &amp;&amp; newSalesEmail.newSalesPropertyPrice.$invalid">Please add the Property Price</div>
+          </div>
+          <div class="input-holder third">
+            <label>Bedrooms</label>
+            <select name="bedrooms" ng-model="newSales.bedrooms" required="required">
+              <option value="" selected="selected">Please Select</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <div class="error" ng-show="submitted &amp;&amp; newSalesEmail.bedrooms.$invalid">Please select the amount of bedrooms</div>
+          </div>
+          <div class="input-holder third">
+            <label>Property Type</label>
+            <select name="propertyType" ng-model="newSales.propertyType" required="required">
+              <option value="" selected="selected">Please Select</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Terrace">Terrace</option>
+              <option value="Semi Detached">Semi Detached</option>
+              <option value="Detached">Detached</option>
+            </select>
+            <div class="error" ng-show="submitted &amp;&amp; newSalesEmail.propertyType.$invalid">Please select the property Type</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-holder half">
+            <label>VitalSpace URL</label>
+            <input type="text" name="newSalesPropertyUrl" ng-model="newSales.newSalesPropertyUrl" placeholder="https://..."/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-holder">
+            <label>Access Arrangements</label>
+            <textarea name="access" ng-model="newSales.access"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="controls right">
+            <button type="button" ng-click="cancel()">Cancel</button>
+            <input type="submit" value="Submit"/>
+          </div>
+        </div>
+      </form>
+      <div class="success" ng-show="salesEmailSent">
+        <h2>Form Submitted Successfully</h2>
+      </div>
+    </div>
+    <h2 ng-click="status_reduction=!status_reduction">Price Reduction Form</h2>
+    <div class="m-form" ng-class="status_reduction ? 'open' : 'closed'">
+      <form name="reductionEmail" novalidate="novalidate" ng-submit="submitReduction()" ng-hide="reductionEmailSent">
+        <div class="row">
+          <div class="input-holder">
+            <label>Property Address</label>
+            <textarea name="address" ng-model="reduction.address"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-holder half">
+            <label>New Property Price</label>
+            <input type="text" name="reductionPropertyPrice" ng-model="reduction.reductionPropertyPrice" placeholder="£" required="required"/>
+            <div class="error" ng-show="submitted &amp;&amp; reductionEmail.reductionPropertyPrice.$invalid">Please add the Property Price</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="controls right">
+            <button type="button" ng-click="cancel()">Cancel</button>
+            <input type="submit" value="Submit"/>
+          </div>
+        </div>
+      </form>
+      <div class="success" ng-show="reductionEmailSent">
+        <h2>Form Submitted Successfully</h2>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+
+<div class="dashboard-route">
+  <h1>Leads</h1>
+  <table class="selling">
+    <thead>
+      <tr>
+        <th colspan="2">{{ mla('dashboard-table-selling-heading') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="head-two">
+        <td>{{ mla('dashboard-table-selling-status') }}</td>
+        <td>{{ mla('dashboard-table-selling-position') }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-selling-today') }}</td>
+        <td>{{ sellingToday.total }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-selling-outstanding') }}</td>
+        <td>{{ sellingOutstanding.total }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-selling-total') }}</td>
+        <td>{{ sellingToday.total + sellingOutstanding.total }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="letting">
+    <thead>
+      <tr>
+        <th colspan="2">{{ mla('dashboard-table-letting-heading') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="head-two">
+        <td>{{ mla('dashboard-table-letting-status') }}</td>
+        <td>{{ mla('dashboard-table-letting-position') }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-letting-today') }}</td>
+        <td>{{ lettingToday.total }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-letting-outstanding') }}</td>
+        <td>{{ lettingOutstanding.total }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-letting-total') }}</td>
+        <td>{{ lettingToday.total + lettingOutstanding.total }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="valuation">
+    <thead>
+      <tr>
+        <th colspan="2">{{ mla('dashboard-table-valuation-heading') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="head-two">
+        <td>{{ mla('dashboard-table-valuation-status') }}</td>
+        <td>{{ mla('dashboard-table-valuation-position') }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-valuation-today') }}</td>
+        <td>{{ valuationToday.total }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-valuation-outstanding') }}</td>
+        <td>{{ valuationOutstanding.total }}</td>
+      </tr>
+      <tr>
+        <td>{{ mla('dashboard-table-valuation-total') }}</td>
+        <td>{{ valuationToday.total + valuationOutstanding.total }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

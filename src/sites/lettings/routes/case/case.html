@@ -1,0 +1,137 @@
+
+<div class="case">
+  <h1>Case <span class="address">- {{property.item.displayAddress}}<span class="right">Service Level: <span>{{property.item.ServiceLevel.Name}}</span></span></span></h1>
+  <h2 ng-show="property.item.$case.item.override.reason===&quot;fallenThrough&quot;">Fallen through</h2>
+  <div class="advance-request" ng-repeat="request in property.item.$case.item.advanceRequests | filter:{dismissed:&quot;!true&quot;,applied:&quot;!true&quot;}">
+    <div class="left">Requested to be advanced to {{request.advanceTo | date:'mediumDate'}} by <img gravatar-src="request.user.local.email"/>{{request.user.displayName || request.user.local.email}}</div>
+    <div class="admin-request" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">
+      <button ng-click="applyRequest(request)">Apply</button>
+      <button ng-click="request.dismissed=true;property.item.$case.save()">Dismiss</button>
+    </div>
+  </div>
+  <progression ng-repeat="progression in property.item.$case.item.progressions" data="progression"></progression>
+  <button class="has-dropdown" ng-focus="progBtnFocussed=true" ng-blur="hideDropdown(&quot;progBtnFocussed&quot;)" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">Add Progression</button>
+  <ul class="dropdown" ng-show="progBtnFocussed">
+    <li ng-repeat="progression in progressions.items"><a href="" ng-click="addProgression(progression)">{{progression.name}}, {{progression.side}}</a></li>
+  </ul>
+  <button ng-click="advanceProgression()">Advance all milestones</button>
+  <!--button(ng-show='auth.checkRoles(["superadmin", "admin"])', ng-click='fallenThrough()') Fallen through-->
+  <button ng-click="requestEmail(&quot;Landlord&quot;)">Landlord Request</button>
+  <button ng-click="requestEmail(&quot;Employer&quot;)">Employer Request</button>
+  <div class="countdown" ng-show="showClock" ng-class="{overdue:depositOverdue}">
+    <flip-clock time="345600000" clock-face="DailyCounter" countdown="true" show-seconds="false" autostart="false" stop="stopCallback()"></flip-clock>
+  </div>
+  <div class="rental-terms"> 
+    <h2>Rental Terms</h2>
+    <form name="rentalTerms" ng-submit="submitRT()">
+      <div class="row">
+        <div class="agreed-rent fifth">
+          <label>Agreed Monthly Rent</label>
+          <input type="text" ng-model="property.item.$case.item.agreedRent"/>
+        </div>
+        <div class="deposit fifth">
+          <label>Security Deposit</label>
+          <input type="text" ng-model="property.item.$case.item.deposit"/>
+        </div>
+        <div class="holding-deposit fifth">
+          <label>Holding Deposit</label>
+          <input type="text" ng-model="property.item.$case.item.hDeposit"/>
+        </div>
+        <div class="tenancy-terms fifth">
+          <label>Tenancy Terms</label>
+          <select ng-model="property.item.$case.item.tenancyTerms">
+            <option value="6" selected="selected">6 Months</option>
+            <option value="12">12 Months</option>
+            <option value="24">24 Months</option>
+          </select>
+        </div>
+        <div class="proposed-moving fifth">
+          <label>Proposed Moving in Date</label>
+          <input type="date" ng-model="property.item.$case.item.proposedMoving"/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="agent-request fifth">
+          <label>Landlord/Agent Request</label>
+          <select ng-model="property.item.$case.item.agentRequest">
+            <option value="no" selected="selected">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+        <div class="employer-ref fifth">
+          <label>Employer Reference</label>
+          <select ng-model="property.item.$case.item.employerRef">
+            <option value="no" selected="selected">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+        <div class="self-employed fifth">
+          <label>Self Employed Application</label>
+          <select ng-model="property.item.$case.item.selfEmployed">
+            <option value="no" selected="selected">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+        <div class="pet-deposit fifth">
+          <label>Pet Deposit</label>
+          <select ng-model="property.item.$case.item.petDeposit">
+            <option value="no" selected="selected">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+        <div class="special fifth">
+          <label>Special Clauses</label>
+          <select ng-model="property.item.$case.item.specialClauses">
+            <option value="no" selected="selected">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+      </div>
+      <input type="submit" value="Save"/>
+    </form>
+  </div>
+  <h2>Documents<sup ng-show="property.item.$case.item.documents.length">{{property.item.$case.item.documents.length}}</sup></h2>
+  <button class="view-documents" ng-click="showDocuments = !showDocuments">{{showDocuments?'Hide':'View'}} Documents</button>
+  <div class="documents" ng-show="showDocuments">
+    <div class="drop-box" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
+      <h3>Drop files here to upload</h3>
+      <button class="file-upload" type="file" ngf-select="uploadFiles($file, $invalidFiles)">Or click here to choose</button>
+    </div>
+    <div class="document-list" ng-show="property.item.$case.item.documents.length">
+      <div class="document" ng-repeat="document in property.item.$case.item.documents"><a class="document-link" ng-href="{{makeDownloadUrl('agency',document)}}" target="_self"><img ng-src="{{makeDownloadUrl('agency',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
+          <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;"><img class="logo" src="public/img/icons/vs-document.png"/></div></a>
+        <div class="filename"> 
+          <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
+          <input type="text" ng-model="document.name" ng-show="document.editing" placeholder="Name"/>
+        </div>
+        <div class="by"> 
+          <label>Created by: </label>{{document.user.local.email}}
+        </div>
+        <div class="on"> 
+          <label>Created on: </label>{{document.date | date:'mediumDate'}}, {{document.date | date:'shortTime'}}
+        </div>
+        <div class="controls" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])"><a class="edit" href="" ng-click="document.editing=!document.editing" ng-show="!document.editing">Edit</a><a class="save" href="" ng-click="saveDocument(document)" ng-show="document.editing">Save</a><a class="delete" href="" ng-click="deleteDocument(document)">Delete</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="contacts row">
+    <lettings-contact-details title="Landlord"></lettings-contact-details>
+    <tenant-details title="Tenants"></tenant-details>
+  </div>
+  <div class="case-notes">
+    <h2 class="orange">Case Notes</h2>
+    <div class="case-note" ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)">
+      <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a class="delete" href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo">Delete</a><a class="edit" href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo">Edit</a></div>
+      <div class="note"> 
+        <div class="details"><span ng-show="note.side">- {{note.side}}</span>
+          <div class="note-body" ng-bind-html="note.text | markdown:true"></div>
+        </div>
+      </div>
+    </div>
+    <pagination class="pagination-sm pagination" total="notesData.length" ng-model="notesPage" page-size="notesLimit"></pagination>
+    <div class="add-note">
+      <code-mirror ng-model="note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
+      <button ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
+    </div>
+  </div>
+</div>

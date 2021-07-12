@@ -1,0 +1,54 @@
+
+<div class="dashboard"> 
+  <h1>Dashboard</h1>
+  <div class="overview">
+    <div class="thead">
+      <div class="tr">
+        <div class="th" colspan="2">Overview of live cases</div>
+      </div>
+    </div>
+    <div class="tbody">
+      <div class="tr head-two">
+        <div class="td">Status</div>
+        <div class="td">Sale Position</div>
+      </div>
+      <div class="tr" ng-repeat="di in items = (dashboard.items | filter:{type:&quot;overview&quot;})">
+        <div class="td">{{di.name}}</div>
+        <div class="td clickable" ng-click="showInfo(&quot;count&quot;, di, month)">{{count(di)}}</div>
+      </div>
+      <div class="tr total">
+        <div class="td">Total</div>
+        <div class="td">{{total(items)}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="income">
+    <div class="thead">
+      <div class="tr">
+        <div class="th" colspan="{{incomeItems.length + 1}}"> <i class="fa fa-gbp" aria-hidden="true"></i> Income</div>
+      </div>
+    </div>
+    <div class="tbody">
+      <div class="tr head-two">
+        <div class="td">Month</div>
+        <div class="td" ng-repeat="di in incomeItems = (dashboard.items | filter:{type:&quot;income&quot;})">{{di.name}}</div>
+      </div>
+      <div class="tr" ng-repeat="month in months">
+        <div class="td">{{month.name}}</div>
+        <div class="td clickable" ng-repeat="di in incomeItems" ng-click="showInfo(&quot;income&quot;, di, month)">
+          <div class="inner">
+            <label>{{di.name}}</label><span ng-bind-html="income(di, month) | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></span>
+          </div>
+        </div>
+      </div>
+      <div class="tr total">
+        <div class="td">Total</div>
+        <div class="td clickable" ng-repeat="di in incomeItems" ng-click="showInfo(&quot;income&quot;, di, allmonths)"> 
+          <div class="inner">
+            <label>{{di.name}}</label><span ng-bind-html="income(di, allmonths) | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+@import '../../variables'
+.setup
+  padding-bottom 4rem
+  h2
+    padding .8rem
+    font-weight 300
+    color vs-orange
+    border-bottom 1px solid vs-lightgrey
+  .add-user
+    width 100%
+    border 1px solid vs-lightgrey
+    border-radius 5px
+    background #f1f1f1
+    padding 1rem
+    .row
+      display flex
+    form 
+      width 100%
+    input, select, h3, p, button
+      margin 0.25rem
+    input[type=email]
+      flex 1
+      vs-input()
+      background white
+    select
+      height 41px
+      width 100px
+    input[type=submit]
+      padding 10px 30px
+      width 100px
+      color white
+      background vs-orange
+      border none
+      border-radius 3px
+      margin-top 0.5rem
+      float right
+    .invite-url
+      input
+        vs-input()
+        flex 1
+      button
+        vs-button()
+  .row
+    display flex
+    flex-wrap wrap
+    justify-content space-between
+    .email-templates, .sms-templates, .users, .add-user, .overview, .income
+      width 49%
+      min-width 300px
+      display flex
+      flex-direction column
+      box-sizing border-box
+      @media screen and (max-width: 680px)
+        width 100%
+        min-width 50px
+    .users
+      img
+        margin-right 5px
+      .user
+        display flex
+        span
+          flex 1
+    .email-template, .sms-template, .dashboard-item
+      display flex
+      background vs-tablegrey
+      padding 0.8rem
+      align-items center
+      &:nth-of-type(even)
+        background: vs-white
+      .name
+        flex 1
+      &:last-of-type
+        background green
+      a
+        color inherit
+        padding 0 5px
+        &:hover
+          color vs-orange
+  .progressions-controls
+    display flex
+    justify-content space-between
+  .add-email-template, .add-sms-template
+    vs-button-green()
+    margin-top 1rem
+    text-decoration none
+    text-transform uppercase
+    svg
+      margin-right 5px

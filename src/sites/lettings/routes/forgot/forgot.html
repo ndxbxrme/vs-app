@@ -1,0 +1,48 @@
+
+<div class="forgot-dir">
+  <h1>forgot password</h1>
+  <div class="forgot-request" ng-if="!token">
+    <form name="$parent.myForm" novalidate="novalidate" autocomplete="off" ng-submit="submitEmail()" ignore="ignore" ng-hide="codeRequested">
+      <div class="form-item c-input email required  has-icon" ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ mle('forgotUser-email-label') }}</label><i class="icon email"></i>
+        <input type="text" name="email" ng-model="forgotUser.item.email" placeholder="{{ mle('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ mle('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled" required="required" email="email"/>
+        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.email.$error.required">{{ mle('forgotUser-email-error-required') }}</p>
+        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.email.$error.email">{{ mle('forgotUser-email-error-email') }}</p>
+      </div>
+      <div class="controls">
+        <input class="btn" type="submit" value="{{m(&quot;newUser-button-next&quot;)}}"/>
+      </div>
+    </form>
+    <div class="code-requested" ng-show="codeRequested">{{ mle('forgot-codeRequested-message') }}</div>
+  </div>
+  <div class="forgot-update" ng-if="token">
+    <form name="$parent.myForm" novalidate="novalidate" autocomplete="off" ng-submit="submitPass()" ignore="ignore">
+      <div class="form-item c-input password required no-label has-icon" ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}"><i class="icon lock"></i>
+        <input type="password" name="password" ng-model="newUser.local.password" placeholder="{{ mle('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ mle('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled" required="required" strength="strength" password="password"/>
+        <div class="tooltip" ng-hide="myForm.password.$valid">
+          <div class="invalid" ng-show="myForm.password.$invalid">
+            <p>{{mle('newUser-password-popup-pre')}}</p>
+            <ul>
+              <li ng-show="myForm.password.$error.length">{{mle('newUser-password-error-length')}}</li>
+              <li ng-show="myForm.password.$error.number">{{mle('newUser-password-error-number')}}</li>
+              <li ng-show="myForm.password.$error.lower">{{mle('newUser-password-error-lower')}}</li>
+              <li ng-show="myForm.password.$error.upper">{{mle('newUser-password-error-upper')}}</li>
+              <li ng-show="myForm.password.$error.special">{{mle('newUser-password-error-special')}}</li>
+            </ul>
+            <p>{{mle('newUser-password-popup-post')}}</p>
+          </div>
+        </div><i class="valid" ng-show="$parent.myForm.password.$valid">✔</i>
+        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.password.$error.required">{{ mle('newUser-password-error-required') }}</p>
+        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.password.$error.strength">{{ mle('newUser-password-error-strength') }}</p>
+      </div>
+      <div class="form-item c-input repeatPassword required no-label has-icon" ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}"><i class="icon lock"></i>
+        <input type="password" name="repeatPassword" ng-model="$parent.repeatPassword" placeholder="{{ mle('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ mle('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled" required="required"/><i class="valid" ng-show="$parent.repeatPassword &amp;&amp; $parent.repeatPassword===newUser.local.password">✔</i>
+        <p class="error" ng-show="submitted &amp;&amp; $parent.repeatPassword &amp;&amp; $parent.repeatPassword !== newUser.local.password">{{mle('newUser-repeatPassword-error-mismatch')}}</p>
+        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.repeatPassword.$error.required">{{ mle('newUser-repeatPassword-error-required') }}</p>
+      </div>
+      <div class="controls">
+        <input class="btn" type="submit" value="{{m(&quot;newUser-button-submit&quot;)}}"/>
+      </div>
+    </form>
+  </div>
+</div>

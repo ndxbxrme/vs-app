@@ -1,0 +1,37 @@
+
+<div class="setup-route">
+  <div class="jobtypes">
+    <h2>Job types</h2>
+    <code-mirror ng-model="jobtypes.item.jobs" options="{mode:&quot;text&quot;}" callbacks="jobCallbacks"></code-mirror>
+  </div>
+  <div class="users">
+    <h2>Users</h2>
+    <div class="row">
+      <div class="users">
+        <div class="user" ng-repeat="user in myusers = (users.items | filter:&quot;!superadmin&quot; | filter:&quot;!cors&quot;)"> <img gravatar-src="user.local.email"/><span>{{user.displayName || user.local.email}}</span></div>
+      </div>
+      <div class="add-user">
+        <h3>Invite user</h3>
+        <form name="addUserForm" ng-submit="addUser()">
+          <div class="row">
+            <input type="email" ng-model="newUser.local.email" placeholder="Email address"/>
+            <select ng-model="newUser.role">
+              <option value="agency" selected="selected">Agency</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <input type="submit" value="Invite"/>
+        </form>
+        <div class="invite-error">{{inviteError}}</div>
+        <div class="invite-url" ng-show="inviteUrl">
+          <p>An email has been sent or you can copy and paste the url below</p>
+          <div class="row">
+            <input type="text" ng-model="inviteUrl"/>
+            <button ng-click="copyInviteToClipboard()">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

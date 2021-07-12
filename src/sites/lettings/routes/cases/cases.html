@@ -1,0 +1,71 @@
+
+<div class="cases">
+  <h1>Cases </h1>
+  <div class="controls">
+    <div class="left">
+      <div class="sort">Order By:<a class="order-item" href="" ng-click="sort=&quot;-$case.item.modifiedAt&quot;;page=1" ng-class="{selected:sort===&quot;-LastUpdated&quot;}">Last updated</a><a class="order-item" href="" ng-click="sort=&quot;$case.item.proposedMoving&quot;;page=1" ng-class="{selected:sort===&quot;-$case.item.proposedMoving&quot;}">Move in date</a></div>
+      <div class="show">Show:<a class="filter-item icon-green" href="" ng-click="filter=&quot;completed&quot;;page=1" ng-class="{selected:filter===&quot;completed&quot;}">Up-to-date</a><a class="filter-item icon-orange" href="" ng-click="filter=&quot;progressing&quot;;page=1" ng-class="{selected:filter===&quot;progressing&quot;}">In Progress</a><a class="filter-item icon-red" href="" ng-click="filter=&quot;overdue&quot;;page=1" ng-class="{selected:filter===&quot;overdue&quot;}">Overdue</a><a class="filter-item" href="" ng-click="filter=&quot;&quot;;page=1" ng-class="{selected:!filter}">All</a></div>
+    </div>
+    <div class="right">
+      <div class="search">
+        <input type="text" ng-model="search" placeholder="Search Cases" ng-change="page=1"/>
+      </div>
+      <div class="showing">Showing {{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+    </div>
+  </div>
+  <table class="table table-responsive small-mobile-hide" ng-show="filterData.length &gt; 0">
+    <thead>
+      <tr>
+        <th width="5%">Status</th>
+        <th width="25%">Property Address</th>
+        <th width="20%">Landlord</th>
+        <th width="20%">Tenant</th>
+        <th width="15%">Move In Date</th>
+        <th width="5%">Options</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
+      <tr ng-click="property.open = !property.open">
+        <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
+          <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
+            <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
+            <div class="title">{{property.$case.item.milestone.title}}</div>
+          </div>
+        </td>
+        <td>
+          <div class="address">{{property.$case.item.override.address || property.displayAddress}}</div>
+          <div class="dates" ng-show="property.open">
+            <div class="date">Last Updated: <strong>{{property.$case.item.modifiedAt | timeAgo}} </strong>-- {{property.$case.item.modifiedAt | date:'mediumDate'}}, {{property.$case.item.modifiedAt | date:'shortTime'}}</div>
+            <div class="date" ng-show="needsDate">Date added to the Case: {{property.$case.item.estCompletedTime}}</div>
+            <div class="date" ng-show="property.$case.item.offer.DateTime">Start Date: {{property.$case.item.offer.DateTime | date:'mediumDate'}}</div>
+          </div>
+        </td>
+        <td class="vendor">{{property.$case.item.LandlordName}}</td>
+        <td class="purchaser"> 
+          <div class="tenant" ng-repeat="tenant in property.$case.item.Tenants">{{tenant.Person.ContactName}}</div>
+        </td>
+        <td class="movein">{{property.$case.item.proposedMoving | date:'MMM d, yyyy'}}</td>
+        <td class="options"><a class="button" ui-sref="lettings_case({roleId:property.RoleId})">View Case</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mobile-table small-mobile-show">
+    <div class="case-card" ng-repeat="property in filterData | limitTo:limit:limit*(page-1)">
+      <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
+        <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
+        <div class="title">{{property.$case.item.milestone.title}}</div>
+      </div>
+      <div class="address-row">
+        <div class="address">{{property.displayAddress}}</div>
+        <div class="offer">{{property.$case.item.offer.Value | currency : "£" : 0}}</div>
+        <div class="vendor">Vendor: <strong>{{property.$case.item.vendor}}</strong></div>
+        <div class="purchaser">Purchaser: <strong>{{property.$case.item.purchaser}}</strong></div>
+        <div class="options"><a class="button" ui-sref="lettings_case({roleId:property.RoleId})">View Case</a></div>
+      </div>
+    </div>
+  </div>
+  <pagination class="pagination-sm pagination" total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true"></pagination>
+  <div class="nothing-to-show" ng-show="filterData.length===0">
+    <h3>Nothing to show</h3>
+  </div>
+</div>

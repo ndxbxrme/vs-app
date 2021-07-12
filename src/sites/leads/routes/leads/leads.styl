@@ -1,0 +1,89 @@
+@import '../../variables'
+.leads-route
+  .orangebtn
+    background vs-orange
+    color white
+    text-transform uppercase
+    .fa
+      margin-left 10px
+      font-size 1.8rem
+      vertical-align middle
+  .sort
+    font-weight 800
+    a 
+      color vs-orange
+      font-weight 300
+  .search-box
+    width 23rem
+    margin-bottom 30px
+    .total
+      text-align right
+  .options
+    width 1%
+  .row
+    justify-content space-between
+  thead
+    background vs-orange
+    th
+      text-align center
+      color white
+  td
+    vertical-align middle
+    a 
+      color vs-orange
+      font-weight 600
+      transition color 0.4s ease-in-out
+      &:hover
+        color vs-grey
+    &.source
+      color vs-orange
+      text-transform uppercase
+      font-size 10px
+      .rightmove
+        background url(./public/img/rm-logo.svg) center no-repeat
+        background-size 100px 30px
+        width 100px
+        height 30px
+        display block
+        margin 0 auto
+      .gravity
+        background url(./public/img/VitalSpaceLogo-2016-orange.svg) center no-repeat
+        background-size 100px 30px
+        width 100px
+        height 30px
+        display block
+        margin 0 auto
+      .onthemarket
+        background url(./public/img/otm-logo.png) center no-repeat
+        background-size 120px 30px
+        width 120px
+        height 30px
+        display block
+        margin 0 auto
+      .local.telephone
+        background url(./public/img/icons/vs_icons.png) no-repeat
+        background-position -256px -168px
+        width 80px
+        height 80px
+        display block
+        margin 0 auto
+        zoom .4
+      .local.email
+        background url(./public/img/icons/vs_icons.png) no-repeat
+        background-position -172px -420px
+        width 80px
+        height 80px
+        display block
+        margin 0 auto
+        zoom .4
+      .local.walkin
+        background url(./public/img/icons/vs_icons.png) no-repeat
+        background-position -256px -336px
+        width 80px
+        height 80px
+        display block
+        margin 0 auto
+        zoom .4
+      @media screen and (max-width:47rem)
+        .rightmove, .gravity
+          display table-cell

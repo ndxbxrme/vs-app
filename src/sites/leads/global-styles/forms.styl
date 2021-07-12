@@ -1,0 +1,76 @@
+@import '../variables'
+          
+.form-row
+  display flex
+  flex-wrap wrap
+  .form-label
+    width 20%
+    padding-top 3.6rem
+    @media screen and (max-width: 740px)
+      display none
+  .form-item
+    display flex
+    flex-direction column
+    flex 1
+    margin-left 1.6rem
+    margin-bottom 1.6rem
+  .address, .user
+    flex 1
+  .user
+    display flex
+    flex-wrap wrap
+.panel
+  .controls
+    width 100%
+    display flex
+    justify-content flex-end
+    .btn
+      margin-left 1rem
+  h2, h3, h4
+    width 100%
+    padding 1.6rem 1.02rem 0 1.02rem
+    margin 0
+  .row
+    h3
+      flex 1
+    
+
+
+input[type='text'], input[type='password'], input[type='email'], .date-picker-input
+  font-family Lato, sans-serif
+  display block
+  width 100%
+  min-width 12rem
+  height 4.4rem
+  padding 0 1.28rem .1rem
+  border .1rem solid #d7dadd
+  border-radius .2rem
+  font-size 1.6rem
+  background-color vs-brightwhite
+  text-align left
+  color vs-text
+  box-shadow none
+  transition all .2s
+  text-overflow ellipsis
+  white-space nowrap
+  outline-color vs-link
+  &.invisible
+    position absolute
+    top -1000em
+    left -1000em
+.SumoSelect
+  width 100%
+  height 4.4rem
+  .SelectBox
+    height 4.4rem
+    line-height 4.4rem
+    padding 0 1.28rem .1rem
+  .CaptionCont
+    border .1rem solid #d7dadd
+    font-size 1.6rem
+    background-color vs-brightwhite
+    .placeholder
+      color rgba(57,74,88,.618)!important
+      font-style normal!important
+.optWrapper
+  top 4.4rem!important

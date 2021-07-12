@@ -1,0 +1,58 @@
+
+<div class="dashboard-route">
+  <h1>Lettings</h1>
+  <div class="overview">
+    <div class="thead">
+      <div class="tr">
+        <div class="th" colspan="2">Overview of live cases</div>
+      </div>
+    </div>
+    <div class="tbody">
+      <div class="tr head-two">
+        <div class="td">Status</div>
+        <div class="td">Sale Position</div>
+      </div>
+      <div class="tr available-props">
+        <div class="td"> <a href="/lettings/available">Available Properties</a></div>
+        <div class="td">{{available.total}}</div>
+      </div>
+      <div class="tr" ng-repeat="di in items = (dashboard.items | filter:{type:&quot;overview&quot;})">
+        <div class="td">{{di.name}}</div>
+        <div class="td clickable" ng-click="showInfo(&quot;count&quot;, di, month)">{{count(di)}}</div>
+      </div>
+      <div class="tr total">
+        <div class="td">Total</div>
+        <div class="td">{{total(items)}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="progressions" ng-show="properties.total">
+    <h2>Progression</h2>
+    <table class="summary">
+      <thead>
+        <tr>
+          <th></th>
+          <th> <a class="sort rotate" href="" ng-click="sort=&quot;-milestone.startTime&quot;" ng-class="{selected:sort===&quot;-startTime&quot;}">DOA</a></th>
+          <th> <a class="sort rotate" href="" ng-click="sort=&quot;proposedMoving&quot;" ng-class="{selected:sort===&quot;proposedMoving&quot;}">Move In (est)</a></th>
+          <th ng-repeat="milestone in buyerProgression.milestones | flatten">
+            <p class="rotate">{{milestone.title}}</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="property in properties.items | orderBy:sort">
+        <tr>
+          <td> <a ui-sref="lettings_case({roleId:property.RoleId})">{{property.Address.Number}} {{property.Address.Street}}</a>
+            <p class="service-level">{{property.ServiceLevel.Name==='Tenant Find' ? 'T' : 'M'}}</p>
+          </td>
+          <td>
+            <p class="date">{{property.milestone.startTime | date:'dd.MM.yy'}}</p>
+          </td>
+          <td>
+            <p class="date">{{property.proposedMoving | date:'dd.MM.yy'}}</p>
+          </td>
+          <td ng-repeat="milestone in property.progressions[0].milestones | flatten"><i class="fal" ng-class="milestone.completed ? &quot;fa-check&quot; : &quot;fa-times&quot;"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

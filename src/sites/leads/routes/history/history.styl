@@ -1,0 +1,52 @@
+@import '../../variables'
+.history-route
+  .radios
+    display flex
+    .radio
+      padding 0 0 0 10px
+  .sort
+    font-weight 800
+    a 
+      color vs-orange
+      font-weight 300
+  .search-box
+    width 23rem
+    margin-bottom 30px
+    .total
+      text-align right
+  .options
+    width 1%
+  .row
+    justify-content space-between
+  thead
+    background vs-orange
+    th
+      text-align center
+      color white
+  td
+    vertical-align middle
+    a 
+      color vs-orange
+      font-weight 600
+      transition color 0.4s ease-in-out
+      display block!important
+      &:hover
+        color vs-grey
+    &.source
+      color vs-orange
+      text-transform uppercase
+      font-size 10px
+      .rightmove
+        background url(./public/img/rm-logo.svg) center no-repeat
+        background-size 100px 30px
+        width 100px
+        height 30px
+        display block
+        margin 0 auto
+      .gravity
+        background url(./public/img/VitalSpaceLogo-2016-orange.svg) center no-repeat
+        background-size 100px 30px
+        width 100px
+        height 30px
+        display block
+        margin 0 auto

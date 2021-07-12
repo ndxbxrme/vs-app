@@ -1,0 +1,24 @@
+<html>
+<head>
+  <base href="/">
+  <style type="text/css">
+    body {
+      margin: 0;
+      font-family: Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;
+      font-size: .9em;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/09e1a123ea.js" crossorigin="anonymous"></script>
+</head>
+<body ng-app="vs-app" ng-click="bodyTap($event)">
+  <menu ng-if="auth.getUser() || state('invited') || state('forgot') || state('forgot-response')"></menu>
+  <login></login>
+  <div ui-view="" ng-if="auth.getUser() || state('invited') || state('forgot') || state('forgot-response')"></div>
+  <agency-progression-popup></agency-progression-popup>
+  <maintenance-date-swiper config="{prefix:&quot;swiper&quot;, modifier:1.5, show:false}"></maintenance-date-swiper>
+  <maintenance-task-popup></maintenance-task-popup>
+  <date-swiper config="{prefix:&quot;swiper&quot;, modifier:1.5, show:false}"></date-swiper>
+  <script type="text/javascript" src="third-party/marked.js"></script>
+  <script type="text/javascript" src="third-party/third-party.js?7"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+
+<div class="solicitors-route"> 
+  <h1>Solicitors</h1>
+  <div class="solicitors">
+    <div class="solicitor" ng-repeat="solicitor in solicitors | orderBy:&quot;name&quot;">
+      <div class="inner">
+        <div class="row">
+          <div class="solicitors-name">{{solicitor.name}}</div>
+          <div class="cases">
+            <label>Cases</label><span>{{solicitor.properties.length}}</span>
+          </div>
+        </div>
+        <hr/>
+        <div class="row"><a class="button" ng-click="open(solicitor)"><span ng-hide="solicitor.open">View List</span><span ng-show="solicitor.open">Close List</span></a></div>
+        <div class="properties" ng-show="solicitor.open">
+          <hr/>
+          <div class="row">
+            <h5>Address</h5>
+            <h5>Date</h5>
+          </div>
+          <hr/>
+          <div class="property" ng-repeat="property in solicitor.properties | orderBy:&quot;date&quot;">
+            <div class="default" ui-sref="agency_case({roleId:property.RoleId})">
+              <div class="number">{{$index + 1}}</div>
+              <div class="address">{{property.address}}</div>
+              <div class="p" ng-show="property.purchaser===solicitor.id">P</div>
+              <div class="v" ng-show="property.vendor===solicitor.id">V</div>
+              <div class="fees" ng-bind-html="property.commission | currency:'£' | currencyFormat"></div>
+              <div class="date">{{property.date | date:'mediumDate'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

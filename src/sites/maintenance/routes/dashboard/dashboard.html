@@ -1,0 +1,68 @@
+
+<div class="dashboard-route">
+  <div class="toolbar">
+    <div class="today">{{today | date:'EEEE, MMM dd, yyyy'}}</div>
+    <div class="user-select">
+      <select class="usertheme" ng-model="$root.selectedUser" ui-select2="userSelectOptions" theme="usertheme" ng-change="hidePopup()" style="width:100%">
+        <option ng-repeat="user in maintenance" value="{{user._id}}">{{user.displayName || user.local.email}}</option>
+      </select>
+    </div>
+    <div class="dates">
+      <maintenance-date-swiper config="{prefix:&quot;toolbar&quot;, modifier:1.5, show:true}"></maintenance-date-swiper>
+    </div>
+    <div class="filters">
+      <h4>Status</h4>
+      <div class="filter">
+        <input id="filterConfirmed" type="checkbox" ng-change="setFilters()" ng-model="filters.confirmed"/>
+        <label for="filterConfirmed"> </label><span>Confirmed</span>
+      </div>
+      <div class="filter">
+        <input id="filterQuote" type="checkbox" ng-change="setFilters()" ng-model="filters.quote"/>
+        <label for="filterQuote"> </label><span>Quote</span>
+      </div>
+      <div class="filter">
+        <input id="filterCompleted" type="checkbox" ng-change="setFilters()" ng-model="filters.completed"/>
+        <label for="filterCompleted"> </label><span>Completed</span>
+      </div>
+    </div>
+    <div class="income">{{income = calculateWeeklyIncome(); ''}}
+      <h4>Weekly Target</h4>
+      <div class="desktop">
+        <div class="income-item">
+          <label>Income</label><span>{{income.amount | currency:'£'}}</span>
+        </div>
+        <div class="income-item">
+          <label>Target</label><span>{{income.target | currency:'£'}}</span>
+        </div>
+        <div class="income-item">
+          <label>+/-</label><span class="total" ng-class="{loss:income.profitloss&lt;0}">{{income.profitloss | currency:'£'}}</span>
+        </div>
+      </div>
+      <div class="mobile">
+        <div class="income-item">
+          <label>Income</label><span>&nbsp;{{income.amount | currency:'£':0}}</span>
+        </div>
+        <div class="income-item">
+          <label>Target</label><span>&nbsp;{{income.target | currency:'£':0}}</span>
+        </div>
+        <div class="income-item">
+          <label>+/-</label><span class="total" ng-class="{loss:income.profitloss&lt;0}">&nbsp;{{income.profitloss | currency:'£':0}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="counts">
+      <h4>Weekly Activities</h4>
+      <div class="counts-item">
+        <label>Jobs</label><span>{{income.jobs}}</span>
+      </div>
+      <div class="counts-item">
+        <label>Quotes</label><span>{{income.quotes}}</span>
+      </div>
+    </div>
+    <div class="users">
+      <h4>Users</h4>
+      <div class="user" ng-repeat="user in staff"><img gravatar-src="user.local.email"/>{{user.displayName || user.local.email}}</div>
+    </div>
+  </div>
+  <maintenance-calendar></maintenance-calendar>
+</div>

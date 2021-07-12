@@ -1,0 +1,51 @@
+vs-orange = #f15b25
+vs-grey = #464e53
+vs-green = #25f15c
+vs-amber = orange
+vs-red = #f12540
+vs-lightgrey = #ccc
+vs-white = #fbfbfb
+vs-brightwhite = #fdfdfd
+vs-text = #394a58
+vs-link = #44789f
+vs-silver = #9ca4ab
+vs-lightsilver = #e7eef3
+vs-red = #bd1622
+vs-warning = #d17b36
+$state-danger = #B01326
+$state-warning = #D17B36
+$state-success = #45A951
+$primary-base = #165788
+$primary-accent = #BE1622
+$primary-neutral = #9A9B9C
+$bounce = cubic-bezier(.3,1.4,.5,.9)
+$transition = .4s
+vs-button()
+  display inline-block
+  white-space nowrap
+  padding 1rem
+  border 1px solid #ccc
+  border-radius 0.5rem
+  color vs-orange
+  background white
+  transition all 0.4s ease-in-out
+  outline none
+  cursor default
+  &:hover
+    background vs-orange
+    color white
+vs-input()
+  padding 10px
+  border-radius 3px
+  border 1px solid vs-lightgrey
+  box-sizing border-box
+chain-box()
+  width 100%
+  max-width 400px
+  border 1px solid vs-lightgrey
+  border-radius 5px
+  padding 1rem
+  box-shadow 1px 1px 2px rgba(0,0,0,0.01)
+  z-index 10
+  background #fff
+  box-sizing border-box

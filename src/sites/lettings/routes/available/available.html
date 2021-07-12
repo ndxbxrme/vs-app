@@ -1,0 +1,51 @@
+
+<div class="available">
+  <h1>Available Properties </h1>
+  <div class="controls">
+    <div class="left">
+      <div class="sort">Order By:<a class="order-item" href="" ng-click="sort=&quot;-$case.item.DateInstructed&quot;;page=1" ng-class="{selected:sort===&quot;-DateInstructed&quot;}">First Listed</a><a class="order-item" href="" ng-click="sort=&quot;-$case.item.Viewings.length&quot;;page=1" ng-class="{selected:sort===&quot;-Viewings&quot;}">Viewings</a><a class="order-item" href="" ng-click="sort=&quot;-$case.item.Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-PriceValue&quot;}">Asking Price</a></div>
+    </div>
+    <div class="right">
+      <div class="search">
+        <input type="text" ng-model="search" placeholder="Search Cases" ng-change="page=1"/>
+      </div>
+      <div class="showing">Showing {{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+    </div>
+  </div>
+  <table class="table table-responsive small-mobile-hide" ng-show="filterData.length &gt; 0">
+    <thead>
+      <tr>
+        <th width="30%">Property Address</th>
+        <th width="20%">Landlord</th>
+        <th width="30%">Viewing Arrangements</th>
+        <th width="20%">Listed</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
+      <tr ng-click="property.open = !property.open">
+        <td><img class="image" src="{{property.$case.item.Images[0].Url}}?width=200" width="100"/>
+          <div class="address">{{property.$case.item.override.address || property.displayAddress}}</div>
+          <div class="rental-price">{{property.$case.item.Price.PriceValue | currency : "£" : 0}} {{property.$case.item.Price.PriceType.DisplayName}}</div>
+        </td>
+        <td class="vendor">{{property.$case.item.LandlordName}}</td>
+        <td class="viewing-next">
+          <p class="title">{{property.$case.item.SpecialArrangements[0].SpecialArrangementType.Name}}</p>
+          <p>{{property.$case.item.SpecialArrangements[0].Text}}</p>
+          <p class="title">{{property.$case.item.SpecialArrangements[1].SpecialArrangementType.Name}}</p>
+          <p>{{property.$case.item.SpecialArrangements[1].Text}}</p>
+          <p class="title">{{property.$case.item.SpecialArrangements[2].SpecialArrangementType.Name}}</p>
+          <p>{{property.$case.item.SpecialArrangements[2].Text}}</p>
+        </td>
+        <td class="listed"> 
+          <div class="instructed">Instructed on: {{property.$case.item.DateInstructed | date:'dd/MM/yy'}}</div>
+          <div class="time-ago">({{property.$case.item.DateInstructed | timeAgo}})</div>
+          <div class="viewings-count">Viewings: {{property.$case.item.Viewings.length}}</div><a ui-sref="lettings_case({roleId:property.RoleId})">View Case</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination class="pagination-sm pagination" total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true"></pagination>
+  <div class="nothing-to-show" ng-show="filterData.length===0">
+    <h3>Nothing to show</h3>
+  </div>
+</div>
