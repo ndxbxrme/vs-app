@@ -1,3 +1,0 @@
-export PROPERTY_URL=https://myproperty.vitalspace.co.uk/api
-export PROPERTY_TOKEN=U2FsdGVkX1+gN0j3nIuDrf4S1KtTl0vRhxunxFOeDtCZL4szHbINhQMSl3TY+PNFXXcO98NFsIhbVx8rAYArkMQRaW+Yy2jh58LtGwFfwQdp
-export PORT=80
