@@ -247,7 +247,10 @@
               } else {
                 roles = (ref2 = $state.get(stateName)) != null ? (ref3 = ref2.data) != null ? ref3.auth : void 0 : void 0;
                 if (!roles) {
-                  return true;
+                  const bits = stateName.split(/_/g);
+                  let site = bits[0];
+                  if(bits.length===3) site = bits[0] + '_' + bits[1];
+                  return user.local.sites[site];
                 }
                 return checkRoles(roles);
               }
@@ -297,8 +300,9 @@
             }
           },
           logOut: function() {
-            socket.emit('user', null);
+            if(sockets) socket.emit('user', null);
             user = null;
+            localStorage.setItem('token', '');
             return $http.get('/api/logout');
           },
           onUser: function(func) {

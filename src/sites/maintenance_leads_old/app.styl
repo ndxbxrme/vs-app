@@ -1,0 +1,246 @@
+@import 'variables'
+*
+  outline-color transparent
+  box-sizing border-box
+button, input[type=submit], input[type=button]
+  vs-button()
+  text-transform uppercase
+  &.button-alt
+    vs-button-alt()
+  &.button-green
+    vs-button-green()
+  &.button-grey
+    vs-button-grey()
+  svg
+    margin-right 5px
+input[type=text], input[type=email], input[type=password], select, textarea
+  padding .8rem
+  border 1px solid vs-lightgrey
+  border-radius 3px
+  background vs-tablegrey
+label 
+  margin-bottom 5px
+.search
+    input
+      width 300px
+      margin-bottom 30px
+a
+  color vs-orange
+body, html
+  margin 0
+  height 100%
+  min-height 100%
+body
+  font-family ProximaNova-Light,sans-serif
+  color #333
+  h1
+    margin-top 10px
+  .space-between
+    display flex
+    justify-content space-between
+    align-items baseline
+    .right
+      display flex
+      flex-direction column
+      justify-content flex-end
+      button
+        margin-bottom .5rem
+      .showing
+        font-size .8rem
+        text-align right
+        margin-top .2rem
+  form
+    max-width 700px
+    margin 0 auto
+  .flex-start
+    display flex
+    justify-content flex-start
+    align-items baseline
+  .page
+    min-height 100%
+    box-sizing border-box
+    display flex
+    flex-direction column
+    transition filter 0.8s
+    padding-top 5rem
+  .body, .holder, .view
+    display flex
+    flex 1
+    justify-content center
+    .route
+      width calc(100% - 4rem)
+    .route-full
+      width 100%
+  .holder
+    transition 0.4s
+    transform translateX(0px)
+    &.mobile-menu-out
+      transform translateX(-180px)
+  .SumoSelect
+    width 100%
+    > .CaptionCont
+      border 1px solid vs-lightgrey
+      background vs-tablegrey
+      padding 10px
+    > .optWrapper > .options li.opt
+      background vs-lightgrey
+      padding 10px
+  .form-section
+    display flex
+    flex-wrap wrap
+    margin-bottom 1rem
+    align-items baseline
+    p.error
+      color vs-warning
+      margin 0
+    .form-label
+      min-width 8rem
+      font-weight bold
+      p
+        font-weight normal
+    .form-controls
+      display flex
+      flex-wrap wrap
+      flex 1
+      justify-content space-between
+    .third
+      width calc(33.3% - 1rem)
+      @media screen and (max-width: 50rem)
+        width 100%
+    .two-thirds
+      width calc(66.6% - .5rem)
+      @media screen and (max-width: 50rem)
+        width 100%
+    .form-item
+      display flex
+      width 100%
+      flex-direction column
+      margin-bottom .4rem
+      position relative
+      textarea
+        min-height 6rem
+      &.required:after
+        position absolute
+        right 0
+        content '*'
+        color vs-orange
+      &.required.no-label:after
+        position absolute
+        right 0
+        bottom 100%
+        content '*'
+.reveal-modal-bg, .reveal-modal-bg.fade
+  background rgba(0,0,0,0)!important
+body.modal-open
+  .page
+    filter blur(4px) saturate(0)
+    opacity 0.6
+/*.modal
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  padding 1rem
+  border 1px solid vs-orange
+  h1, h2
+    font-weight normal
+    margin 0 0 1rem 0
+  h1
+    font-size 1.4rem
+    color vs-orange
+    text-transform uppercase
+  h2
+    font-size 1rem
+  form, form .form-item
+    display flex
+    flex-direction column
+    align-items center
+    width 90%
+    input
+      margin-top .4rem
+    input[type=text]
+      flex 1
+      width 100%
+      margin-bottom 10px*/
+table.issue-table
+  margin-top 1rem
+  border-collapse collapse
+  border 1px solid vs-lightgray
+  width 100%
+  thead
+    tr
+      th
+        padding 1rem
+        background-color vs-orange
+        text-align left
+        color white
+        font-size 1rem
+        font-weight 100
+        border-bottom 1px solid vs-grey
+        border-right: 1px solid rgba(255,255,255,0.1);
+        no-select()
+  tbody:nth-child(odd)
+    tr
+      background vs-tablegrey
+  td
+    border-bottom 1px solid vs-lightgrey
+    font-size .8rem
+    vertical-align middle
+    padding 1rem
+    position relative
+    svg.fa-camera-retro
+      position absolute
+      top 50%
+      right 10px
+      transform translateY(-50%)
+.has-sort
+  cursor pointer
+.sorting
+  background-size 1.6rem
+  background-repeat no-repeat
+  background-position center right
+.pagination
+  justify-content center
+  background vs-tablegrey
+  .page
+    &:first-child,
+    &:last-child,
+    &.selected
+      color vs-orange
+.login-form
+  input
+    margin-bottom 5px
+    min-width 220px
+@media screen and (max-width:992px)
+  h1 
+    font-size 1.4rem
+  .search
+    input
+      width 230px
+      margin-bottom 15px
+  table, thead, tbody, th, td, tr
+    display block
+  thead
+    margin-bottom 30px
+    tr
+      border-bottom none 
+      th
+        padding 10px
+  th 
+    width 94%
+  tr 
+    border-bottom 3px solid vs-orange 
+  td
+    position relative
+    padding-left 50%
+    &:before
+      padding-right 30px
+      white-space nowrap
+      font-weight 700
+    svg.fa-camera-retro
+      top 20% !important
+      right 0px !important
+  body .space-between
+    display block
+    .left
+      margin-bottom 20px

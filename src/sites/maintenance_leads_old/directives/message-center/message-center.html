@@ -1,0 +1,101 @@
+
+<div class="message-center"> 
+  <div class="message-center-heading">
+    <h2 class="orange">{{ m('outgoingEmail-messageCenter-heading')}}</h2>
+    <button class="small-orange-button" type="button" ng-click="(composingMessage=true) &amp;&amp; (outgoingEmail={})"> <i class="fal fa-feather"></i>New message</button>
+  </div>
+  <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('outgoingEmail')" ignore="ignore" ng-show="composingMessage">
+    <div class="form-section">
+      <div class="form-item c-select messageTo required  " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ m('outgoingEmail-messageTo-label') }}</label>
+        <div class="input-holder">
+          <select sumoselect="{placeholder:m('#{args.prefix}-#{args.name}-placeholder'), search:true}" ng-model="outgoingEmail.item.messageTo" name="messageTo" ng-disabled="disabled" required="required">
+            <option ng-repeat="messageTo in messageRecipients" value="{{#{args.name}.#{args.id}}}" ng-disabled="#{args.name}.disabled" ng-hide="#{args.name}.hidden">{{ messageTo.name }}</option>
+          </select>
+        </div>
+        <p class="error" ng-show="submitted &amp;&amp; myForm.messageTo.$error.required">{{ m('outgoingEmail-messageTo-error-required') }}</p>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-controls">
+        <div class="form-item c-input subject   " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+          <label class="label">{{ m('outgoingEmail-subject-label') }}</label>
+          <input type="text" name="subject" ng-model="outgoingEmail.item.subject" placeholder="{{ m('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ m('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-item">
+        <label class="space-between">Attachments {{noAttachments()}}
+          <button class="small-black-button" type="button" ng-click="outgoingEmail.showAttachments = !outgoingEmail.showAttachments">{{ outgoingEmail.showAttachments? m('outgoingEmail-documentsHide-label') : m('outgoingEmail-documentsShow-label') }}</button>
+        </label>
+        <div class="attachments" ng-show="outgoingEmail.showAttachments">
+          <div class="drop-box" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
+            <h3>Drop files here to upload</h3>
+            <button class="file-upload" type="file" ngf-select="uploadFiles($file, $invalidFiles)">Or click here to choose</button>
+          </div>
+          <div class="document-list" ng-show="issue.item.documents.length">
+            <div class="document" ng-repeat="document in issue.item.documents">
+              <div class="document-link" ng-click="document.$attached=!document.$attached" ng-class="{attached:document.$attached}"><img ng-src="{{makeDownloadUrl('maintenance_leads',document)}}" ng-if="document.basetype===&quot;image&quot;"/><img class="logo {{document.basetype}}" src="public/img/icons/vs-document.png" ng-hide="document.basetype===&quot;image&quot;"/>
+                <div class="filename"> <span ng-show="!document.editing">{{document.name || document.originalFilename}}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-item">
+        <label>{{ m('outgoingEmail-messageBody-label') }}</label>
+        <code-mirror name="messageBody" ng-model="outgoingEmail.body" options="{lineWrapping:true}"></code-mirror>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-controls">
+        <button class="small-orange-button" type="button" name="send" ng-click="sendEmail()"> 
+          <div class="fal fa-paper-plane"></div>{{ m('outgoingEmail-send-label') }}
+        </button>
+        <button class="small-black-button" type="button" name="cancel" ng-click="(outgoingEmail={}) &amp;&amp; (composingMessage=false)"> 
+          <div class="fal fa-window-close"></div>{{ m('outgoingEmail-cancel-label') }}
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="messages">
+    <div class="message-filters"> 
+      <div class="filter">
+        <div class="fas fa-filter"></div><a ng-click="setMessageFilter(&quot;Landlord&quot;)" ng-class="{selected:messageFilter=='Landlord'}">Landlord</a> | <a ng-click="setMessageFilter(&quot;Contractor&quot;)" ng-class="{selected:messageFilter=='Contractor'}">Contractor</a> | <a ng-click="setMessageFilter(&quot;Tenant&quot;)" ng-class="{selected:messageFilter=='Tenant'}">Tenant</a>
+      </div><a class="sort" ng-click="messageSort=(messageSort==&quot;date&quot;?&quot;-date&quot;:&quot;date&quot;)">
+        <div class="fas fa-sort-alt"></div><span ng-show="messageSort==&quot;date&quot;">Oldest First</span><span ng-hide="messageSort==&quot;date&quot;">Newest First</span></a>
+    </div>
+    <div class="message" ng-repeat="message in issue.item.messages | filter:{entity:messageFilter} | orderBy:messageSort" ng-class="{in:message.dir===&quot;in&quot;}"> 
+      <div class="message-entity {{message.from || &quot;vitalspace&quot;}}">{{message.from.substr(0,1) || ''}}<img class="user-img" gravatar-src="message.user.local.email" ng-hide="message.from"/></div>
+      <div class="message-holder">
+        <div class="message-subject"> 
+          <div class="left"> 
+            <div class="subject">{{message.subject}}</div>
+          </div>
+          <div class="right">
+            <div class="message-date">{{message.date | date:medium }}</div>
+          </div>
+        </div>
+        <div class="message-details">
+          <div class="left">
+            <div class="message-to" ng-show="message.dir===&quot;out&quot;">To {{message.toName}}, {{message.toEntity}}</div>
+            <div class="message-from" ng-show="message.dir===&quot;in&quot;">From {{message.fromName}}, {{message.from}}</div>
+          </div>
+          <button class="small-black-button" type="button" ng-click="reply(message)" ng-show="message.from"> 
+            <div class="fal fa-reply"></div>Reply
+          </button>
+        </div>
+        <div class="message-content">
+          <div class="document-list" ng-show="message.attachments.length">
+            <div class="document" ng-repeat="document in message.attachments"><a class="document-link" ng-href="{{makeDownloadUrl('maintenance_leads',document)}}" target="_self"><img ng-src="{{makeDownloadUrl('maintenance_leads',document)}}" ng-if="document.basetype===&quot;image&quot;"/><img class="logo {{document.basetype}}" src="public/img/icons/vs-document.png" ng-hide="document.basetype===&quot;image&quot;"/>
+                <div class="filename"> <span ng-show="!document.editing">{{document.name || document.originalFilename}}</span></div></a></div>
+          </div>
+          <div class="message-body">{{message.text}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

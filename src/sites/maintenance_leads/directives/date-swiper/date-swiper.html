@@ -1,16 +1,16 @@
 
-<div class="date-swiper-holder" ng-class="{'is-active': config.show}">
+<div ng-class="{'is-active': config.show}" class="date-swiper-holder">
   <div class="date-swiper-box">
     <div class="date-swiper">
       <div class="carousel">
-        <div class="month month-{{$index+1}} month-{{m.year}}-{{m.month+1}}" ng-repeat="m in months track by $index">
+        <div ng-repeat="m in months track by $index" class="month month-{{$index+1}} month-{{m.year}}-{{m.month+1}}">
           <div class="month-holder">
             <div class="left">
-              <div class="prev" tap="monthPrev()">&lt;</div>
+              <div tap="monthPrev()" class="prev">&lt;</div>
             </div>
             <div class="month-name">{{m.monthName}} <span class="month-year">{{m.year}}</span></div>
             <div class="right">
-              <div class="next" tap="monthNext()">&gt;</div>
+              <div tap="monthNext()" class="next">&gt;</div>
             </div>
           </div>
           <ul class="day-names">
@@ -28,7 +28,7 @@
     </div>
     <div class="controls">
       <div class="button-row">
-        <div class="done" ng-click="done()">Done</div>
+        <div ng-click="done()" class="done">Done</div>
       </div>
     </div>
   </div>

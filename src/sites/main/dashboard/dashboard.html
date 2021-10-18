@@ -1,0 +1,5 @@
+<sites>
+  <div lettings-dashboard ng-if="auth.isAuthorized('lettings_dashboard')"></div>
+  <div leads-dashboard ng-if="auth.isAuthorized('leads_dashboard')"></div>
+  <div maintenanceleads-dashboard class="maintenanceleads-dashboard" ng-if="auth.isAuthorized('maintenance_leads_dashboard')"></div>
+</sites>

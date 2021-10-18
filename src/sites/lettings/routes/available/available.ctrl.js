@@ -31,7 +31,6 @@
         property = ref[i];
         property.$case = $scope.single('lettings:properties', property.RoleId + '_' + new Date(property.AvailableDate).valueOf(), function(item) {
           var ref1;
-          console.log(item);
           item.$parent.search = `${item.item.displayAddress}||${item.item.TenantName}||${item.item.LandlordName}`;
           item.$parent.milestoneStatus = item.item.milestoneStatus;
           if (item.item.progressions && item.item.progressions.length) {

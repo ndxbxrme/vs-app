@@ -7,7 +7,7 @@
       template: require("./dashboard-item.html").default,
       controller: 'lettingsDashboardItemCtrl',
       data: {
-        title: 'Vitalspace Conveyancing - Dashboard Item',
+        title: 'Vitalspace Lettings - Dashboard Item',
 		auth: ['lettings:admin', 'lettings:superadmin']
       },
       resolve: {

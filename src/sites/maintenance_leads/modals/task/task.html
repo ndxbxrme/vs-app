@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="form-item half">
-      <label class="title">Date:</label><a class="date" tap="setDate()">{{task.date | date:"mediumDate"}}</a>
+      <label class="title">Date:</label><a tap="setDate()" class="date">{{task.date | date:"mediumDate"}}</a>
     </div>
     <div class="form-item quarter">
       <label class="title">Time:</label>
@@ -30,10 +30,10 @@
       <label class="title">Duration:</label>
       <input type="time" ng-model="task.duration" required="required"/>
     </div>
-    <div class="form-item" ng-show="task._id">
+    <div ng-show="task._id" class="form-item">
       <div class="buttons">
-        <button class="button-alt" type="button" ng-click="chaseContractor(&quot;email&quot;, task)"> <i class="fal fa-at"></i>{{ mml('issue-label-email') }}</button>
-        <button class="button-grey" type="button" ng-click="chaseContractor(&quot;sms&quot;, task)"> <i class="fal fa-sms"></i>{{ mml('issue-label-sms') }}</button>
+        <button type="button" ng-click="chaseContractor(&quot;email&quot;, task)" class="button-alt"> <i class="fal fa-at"></i>{{ m('issue-label-email') }}</button>
+        <button type="button" ng-click="chaseContractor(&quot;sms&quot;, task)" class="button-grey"> <i class="fal fa-sms"></i>{{ m('issue-label-sms') }}</button>
       </div>
     </div>
     <!--.form-item.half(ng-if='needsJobNumber')
@@ -44,8 +44,8 @@
       <label class="title">Created by:</label><span>{{task.createdDate | date:'mediumDate'}}, {{task.createdDate | date:'shortTime'}} | &nbsp;<img gravatar-src="task.createdBy.local.email"/><span>{{task.createdBy.displayName || task.createdBy.local.email}}</span></span>
     </div>
     <div class="controls bottom">
-      <button class="delete" type="button" tap="delete()" ng-show="task._id">Delete</button>
-      <input class="submit" type="submit" value="Submit"/>
+      <button type="button" tap="delete()" ng-show="task._id" class="delete">Delete</button>
+      <input type="submit" value="Submit" class="submit"/>
     </div>
-  </form><a class="close-reveal-modal" ng-click="cancel()">&times;</a>
+  </form><a ng-click="cancel()" class="close-reveal-modal">&times;</a>
 </div>

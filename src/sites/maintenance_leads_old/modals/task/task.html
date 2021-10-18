@@ -1,0 +1,51 @@
+
+<div class="modal task-modal">
+  <h1 ng-show="!task._id">Book a maintenance appointment</h1>
+  <h1 ng-show="task._id">Edit maintenance appointment</h1>
+  <form name="forms.myForm" ng-submit="save()" novalidate="novalidate">
+    <div class="form-item half">
+      <label class="title">Property:</label>
+      <p>{{task.address}}</p>
+    </div>
+    <div class="form-item half">
+      <label class="title">Title:</label>
+      <p>{{task.title}}</p>
+    </div>
+    <div class="form-item">
+      <label class="title">Contractor</label>
+      <div class="input-holder">
+        <select sumoselect="{placeholder:'Contractor', search:true}" ng-model="task.contractor" name="contractors" required="required">
+          <option ng-repeat="contractor in contractors" value="{{contractor._id}}">{{ contractor.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-item half">
+      <label class="title">Date:</label><a class="date" tap="setDate()">{{task.date | date:"mediumDate"}}</a>
+    </div>
+    <div class="form-item quarter">
+      <label class="title">Time:</label>
+      <input type="time" ng-model="task.date" required="required"/>
+    </div>
+    <div class="form-item quarter">
+      <label class="title">Duration:</label>
+      <input type="time" ng-model="task.duration" required="required"/>
+    </div>
+    <div class="form-item" ng-show="task._id">
+      <div class="buttons">
+        <button class="button-alt" type="button" ng-click="chaseContractor(&quot;email&quot;, task)"> <i class="fal fa-at"></i>{{ mml('issue-label-email') }}</button>
+        <button class="button-grey" type="button" ng-click="chaseContractor(&quot;sms&quot;, task)"> <i class="fal fa-sms"></i>{{ mml('issue-label-sms') }}</button>
+      </div>
+    </div>
+    <!--.form-item.half(ng-if='needsJobNumber')
+    label.title CFP Job Number
+    input(type='text', ng-model='$parent.$parent.$parent.cfpJobNumber', required)
+    -->
+    <div class="form-item">
+      <label class="title">Created by:</label><span>{{task.createdDate | date:'mediumDate'}}, {{task.createdDate | date:'shortTime'}} | &nbsp;<img gravatar-src="task.createdBy.local.email"/><span>{{task.createdBy.displayName || task.createdBy.local.email}}</span></span>
+    </div>
+    <div class="controls bottom">
+      <button class="delete" type="button" tap="delete()" ng-show="task._id">Delete</button>
+      <input class="submit" type="submit" value="Submit"/>
+    </div>
+  </form><a class="close-reveal-modal" ng-click="cancel()">&times;</a>
+</div>

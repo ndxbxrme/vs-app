@@ -2,8 +2,8 @@
 <div class="contractors-route route">
   <div class="space-between">
     <div class="left">
-      <h1>{{ mml('contractors-heading') }}</h1>
-      <button class="button-green" ui-sref="maintenance_leads_contractor({_id:&quot;&quot;})"> <i class="fas fa-plus"> </i>{{ mml('contractors-button-new') }}</button>
+      <h1>{{ m('contractors-heading') }}</h1>
+      <button ui-sref="maintenance_leads_contractor({_id:&quot;&quot;})" class="button-green"> <i class="fas fa-plus"> </i>{{ m('contractors-button-new') }}</button>
     </div>
     <div class="right"> 
       <div class="search">
@@ -13,24 +13,24 @@
     </div>
   </div>
   <div class="contractors">
-    <div class="contractor" ng-repeat="contractor in filterData =(contractors.items | filter:search | orderBy:sort) | limitTo:limit:limit*(page-1)"> 
-      <div class="contractor-heading" ui-sref="maintenance_leads_contractor({_id:contractor._id})" ng-class="{empty:!contractor.issues.total}">
+    <div ng-repeat="contractor in filterData =(contractors.items | filter:search | orderBy:sort) | limitTo:limit:limit*(page-1)" class="contractor"> 
+      <div ui-sref="maintenance_leads_contractor({_id:contractor._id})" ng-class="{empty:!contractor.issues.total}" class="contractor-heading">
         <div class="name">{{ contractor.name }}</div>
         <div class="no-issues">
           <div class="label">Issues</div>
           <div class="number">{{ contractor.issues.total }}</div>
         </div>
       </div>
-      <button class="button-alt" type="button" ng-click="contractor.showList=!contractor.showList" ng-show="contractor.issues.total"><span ng-show="contractor.showList"> <i class="fal fa-eye-slash"></i>Hide List</span><span ng-hide="contractor.showList"><i class="fal fa-eye"> </i>View List</span></button>
-      <button class="button-grey" type="button" ng-click="deleteContractor(contractor)" ng-if="auth.isAuthorized([&quot;superadmin&quot;, &quot;admin&quot;])"> <i class="fal fa-trash-alt"></i>Delete</button>
-      <div class="issues" ng-show="contractor.showList">
-        <div class="issue" ng-repeat="issue in contractor.issues.items" ui-sref="maintenance_leads_issue({_id:issue._id})">
+      <button type="button" ng-click="contractor.showList=!contractor.showList" ng-show="contractor.issues.total" class="button-alt"><span ng-show="contractor.showList"> <i class="fal fa-eye-slash"></i>Hide List</span><span ng-hide="contractor.showList"><i class="fal fa-eye"> </i>View List</span></button>
+      <button type="button" ng-click="deleteContractor(contractor)" ng-if="auth.isAuthorized([&quot;superadmin&quot;, &quot;admin&quot;])" class="button-grey"> <i class="fal fa-trash-alt"></i>Delete</button>
+      <div ng-show="contractor.showList" class="issues">
+        <div ng-repeat="issue in contractor.issues.items" ui-sref="maintenance_leads_issue({_id:issue._id})" class="issue">
           <div class="address">{{ issue.address }}</div>
           <div class="title">{{ issue.title }}</div>
         </div>
       </div>
     </div>
   </div>
-  <div class="empty-table" ng-show="!filterData.length">{{ mml('contractors-empty-table') }}</div>
+  <div ng-show="!filterData.length" class="empty-table">{{ m('contractors-empty-table') }}</div>
   <pagination ng-model="contractors.args.page" total="contractors.total" page-size="contractors.args.pageSize"></pagination>
 </div>

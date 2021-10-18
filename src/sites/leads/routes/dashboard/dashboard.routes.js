@@ -6,7 +6,7 @@
       url: '/leads',
       template: '<leads-dashboard></leads-dashboard>',
       data: {
-        title: 'Dashboard'
+        title: 'Vitalspace Leads - Dashboard'
       }
     });
   });

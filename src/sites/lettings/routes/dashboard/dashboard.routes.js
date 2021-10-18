@@ -6,7 +6,7 @@
       url: '/lettings',
       template: '<lettings-dashboard></lettings-dashboard>',
       data: {
-        title: 'Dashboard'
+        title: 'Vitalspace Lettings - Dashboard'
       }
     });
   });

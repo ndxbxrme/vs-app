@@ -1,0 +1,94 @@
+vs-orange = #f15b25
+vs-grey = #464e53
+vs-green = #00A685
+vs-amber = orange
+vs-red = #f12540
+vs-lightgrey = #ccc
+vs-tablegrey = #f5f5f5
+vs-white = #fbfbfb
+vs-brightwhite = #fdfdfd
+vs-text = #394a58
+vs-link = #44789f
+vs-silver = #9ca4ab
+vs-lightsilver = #e7eef3
+vs-red = #bd1622
+vs-warning = #d17b36
+
+:root
+  --fa-primary-color vs-orange
+  --fa-secondary-color #333333
+vs-button()
+  display inline-block
+  white-space nowrap
+  padding .65rem 1.6rem
+  border 1px solid #ccc
+  border-radius 0.5rem
+  color vs-orange
+  background white
+  transition all 0.4s ease-in-out
+  outline none
+  cursor default
+  font-size 0.8rem
+  &:hover
+    background vs-orange
+    color white
+  &:disabled
+    opacity 0.4
+    &:hover
+      background white
+      color vs-orange
+vs-button-alt()
+  display inline-block
+  white-space nowrap
+  padding .65rem 1.6rem
+  border 1px solid vs-orange
+  border-radius 0.5rem
+  color white
+  background vs-orange
+  transition all 0.4s ease-in-out
+  outline none
+  cursor default
+  font-size 0.8rem
+  &:hover
+    background vs-grey
+    color white
+  &:disabled
+    opacity 0.4
+    &:hover
+      background white
+      color vs-orange
+vs-button-green()
+  display inline-block
+  white-space nowrap
+  padding .65rem 1.6rem
+  border 1px solid #00A685
+  border-radius 0.5rem
+  background #00A685
+  color white
+  transition all 0.4s ease-in-out
+  outline none
+  cursor default
+  font-size 0.8rem
+  &:hover
+    background vs-grey
+vs-button-grey()
+  display inline-block
+  white-space nowrap
+  padding .65rem 1.6rem
+  border 1px solid vs-grey
+  border-radius 0.5rem
+  background vs-grey
+  color white
+  transition all 0.4s ease-in-out
+  outline none
+  cursor default
+  font-size 0.8rem
+  &:hover
+    background vs-orange
+no-select()
+  -webkit-touch-callout none
+  -webkit-user-select none
+  -khtml-user-select none
+  -moz-user-select none
+  -ms-user-select none
+  user-select none

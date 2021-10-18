@@ -4,25 +4,25 @@
   <div class="row">
     <div class="email-templates">
       <h2>Email templates</h2>
-      <div class="email-template" ng-repeat="template in emailTemplates.items"><a class="name" ui-sref="maintenance_leads_template({id:template._id,type:'email'})">{{template.name}}</a>
-        <div class="delete"><a href="" ng-click="emailTemplates.delete(template)"><i class="far fa-times-circle" aria-hidden="true"></i></a></div>
+      <div ng-repeat="template in emailTemplates.items" class="email-template"><a ui-sref="maintenance_leads_template({id:template._id,type:'email'})" class="name">{{template.name}}</a>
+        <div class="delete"><a href="" ng-click="emailTemplates.delete(template)"><i aria-hidden="true" class="far fa-times-circle"></i></a></div>
       </div>
-      <div><a class="add-email-template button-green" ui-sref="maintenance_leads_template({id:'new',type:'email'})"> <i class="fas fa-plus"> </i>Add email template</a></div>
+      <div><a ui-sref="maintenance_leads_template({id:'new',type:'email'})" class="add-email-template button-green"> <i class="fas fa-plus"> </i>Add email template</a></div>
     </div>
     <div class="sms-templates">
       <h2>Sms templates</h2>
-      <div class="sms-template" ng-repeat="template in smsTemplates.items"><a class="name" ui-sref="maintenance_leads_template({id:template._id,type:'sms'})">{{template.name}}</a>
-        <div class="delete"><a href="" ng-click="smsTemplates.delete(template)"><i class="far fa-times-circle" aria-hidden="true"></i></a></div>
+      <div ng-repeat="template in smsTemplates.items" class="sms-template"><a ui-sref="maintenance_leads_template({id:template._id,type:'sms'})" class="name">{{template.name}}</a>
+        <div class="delete"><a href="" ng-click="smsTemplates.delete(template)"><i aria-hidden="true" class="far fa-times-circle"></i></a></div>
       </div>
-      <div><a class="add-sms-template" ui-sref="maintenance_leads_template({id:'new',type:'sms'})"> <i class="fas fa-plus"> </i>Add sms template</a></div>
+      <div><a ui-sref="maintenance_leads_template({id:'new',type:'sms'})" class="add-sms-template"> <i class="fas fa-plus"> </i>Add sms template</a></div>
     </div>
   </div>
   <div class="users">
     <h2>Users</h2>
     <div class="row">
       <div class="users">
-        <div class="user" ng-repeat="user in myusers = (users.items | filter:&quot;!superadmin&quot; | filter:&quot;!cors&quot;)"> <img gravatar-src="user.local.email"/><span>{{user.displayName || user.local.email}}</span>
-          <div class="delete" ng-click="deleteUser(user)">Delete</div>
+        <div ng-repeat="user in myusers = (users.items | filter:&quot;!superadmin&quot; | filter:&quot;!cors&quot;)" class="user"> <img gravatar-src="user.local.email"/><span>{{user.displayName || user.local.email}}</span>
+          <div ng-click="deleteUser(user)" class="delete">Delete</div>
         </div>
       </div>
       <div class="add-user">
@@ -38,7 +38,7 @@
           <input type="submit" value="Invite"/>
         </form>
         <div class="invite-error">{{inviteError}}</div>
-        <div class="invite-url" ng-show="inviteUrl">
+        <div ng-show="inviteUrl" class="invite-url">
           <p>An email has been sent or you can copy and paste the url below</p>
           <div class="row">
             <input type="text" ng-model="inviteUrl"/>

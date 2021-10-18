@@ -10,7 +10,7 @@
         _id: null
       },
       data: {
-        title: 'lead',
+        title: 'Vitalspace Leads - Lead',
         auth: ['leads:superadmin', 'leads:admin', 'leads:agency']
       }
     });
@@ -19,7 +19,7 @@
       template: require("./lead.html").default,
       controller: 'leadsLeadCtrl',
       data: {
-        title: 'lead',
+        title: 'Vitalspace Leads - Lead',
         auth: ['leads:superadmin', 'leads:admin', 'leads:agency']
       }
     });
@@ -36,7 +36,7 @@
         }
       },
       data: {
-        title: 'lead',
+        title: 'Vitalspace Leads - Lead',
         auth: ['leads:superadmin', 'leads:admin']
       }
     });

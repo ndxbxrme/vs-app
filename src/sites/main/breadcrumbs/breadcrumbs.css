@@ -1,0 +1,13 @@
+.breadcrumbs {
+  margin-top: 4em;
+  display: flex;
+  flex-wrap: wrap;
+}
+.breadcrumbs .breadcrumb {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+}
+.breadcrumbs .breadcrumb-site {
+  font-size: .8em;
+}

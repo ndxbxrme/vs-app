@@ -2,15 +2,15 @@
 <div class="modal issue-book small">
   <h1>{{ m('modal-issue-book-title') }}</h1>
   <form name="forms.myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('forms.myForm')">
-    <div class="form-item c-input jobnumber required  " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+    <div ng-class="{warning: submitted &amp;&amp; forms.myForm.jobnumber.$invalid}" class="form-item c-input jobnumber required  ">
       <label class="label">{{ m('forms.myForm-jobnumber-label') }}</label>
-      <input type="text" name="jobnumber" ng-model="forms.myForm.item.jobnumber" placeholder="{{ m('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ m('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled" required="required"/>
-      <p class="error" ng-show="submitted &amp;&amp; forms.myForm.jobnumber.$error.required">{{ m('forms.myForm-jobnumber-error-required') }}    </p>
+      <input type="text" name="jobnumber" ng-model="forms.myForm.item.jobnumber" placeholder="{{ m('forms.myForm-jobnumber-placeholder') }}" title="{{ m('forms.myForm-jobnumber-label') }}" ng-disabled="disabled" required="required"/>
+      <p ng-show="submitted &amp;&amp; forms.myForm.jobnumber.$error.required" class="error">{{ m('forms.myForm-jobnumber-error-required') }}    </p>
     </div>
     <div class="controls">
       <label> </label>
-      <button class="button-green" type="submit" value="Book"><i class="fal fa-ballot-check"></i>Book</button>
-      <button class="button-grey" type="button" ng-click="cancel()"> <i class="fal fa-times"></i>Cancel</button>
+      <button type="submit" value="Book" class="button-green"><i class="fal fa-ballot-check"></i>Book</button>
+      <button type="button" ng-click="cancel()" class="button-grey"> <i class="fal fa-times"></i>Cancel</button>
     </div>
   </form>
 </div>

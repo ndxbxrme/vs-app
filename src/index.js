@@ -11,8 +11,10 @@ const sites = {
   "main": {
     "name": "main",
     "module": "ndx",
-    "url": "http://localhost",
-    "ws": "ws://localhost"
+    "url1": "http://localhost:23232",
+    "ws1": "ws://localhost:23232",
+    "url": "http://92.237.208.72:3001",
+    "ws": "ws://92.237.208.72:3001"
   },
   "lettings": {
     "name": "lettings",

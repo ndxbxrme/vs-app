@@ -1,47 +1,47 @@
 
 <div class="forgot-dir">
   <h1>Forgot password</h1>
-  <div class="forgot-request" ng-if="!token">
+  <div ng-if="!token" class="forgot-request">
     <form name="$parent.myForm" novalidate="novalidate" autocomplete="off" ng-submit="submitEmail()" ignore="ignore" ng-hide="codeRequested">
-      <div class="form-item c-input email required  " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
-        <label class="label">{{ mml('forgotUser-email-label') }}</label>
-        <input type="text" name="email" ng-model="forgotUser.item.email" placeholder="{{ mml('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ mml('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled" required="required" email="email"/>
-        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.email.$error.required">{{ mml('forgotUser-email-error-required') }}    </p>
-        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.email.$error.email">{{ mml('forgotUser-email-error-email') }}    </p>
+      <div ng-class="{warning: submitted &amp;&amp; $parent.myForm.email.$invalid}" class="form-item c-input email required  ">
+        <label class="label">{{ m('forgotUser-email-label') }}</label>
+        <input type="text" name="email" ng-model="forgotUser.item.email" placeholder="{{ m('forgotUser-email-placeholder') }}" title="{{ m('forgotUser-email-label') }}" ng-disabled="disabled" required="required" email="email"/>
+        <p ng-show="submitted &amp;&amp; $parent.myForm.email.$error.required" class="error">{{ m('forgotUser-email-error-required') }}    </p>
+        <p ng-show="submitted &amp;&amp; $parent.myForm.email.$error.email" class="error">{{ m('forgotUser-email-error-email') }}    </p>
       </div>
       <div class="controls">
-        <input class="btn" type="submit" value="{{m(&quot;newUser-button-next&quot;)}}"/>
+        <input type="submit" value="{{m(&quot;newUser-button-next&quot;)}}" class="btn"/>
       </div>
     </form>
-    <div class="code-requested" ng-show="codeRequested">{{ mml('forgot-codeRequested-message') }}</div>
+    <div ng-show="codeRequested" class="code-requested">{{ m('forgot-codeRequested-message') }}</div>
   </div>
-  <div class="forgot-update" ng-if="token">
+  <div ng-if="token" class="forgot-update">
     <form name="$parent.myForm" novalidate="novalidate" autocomplete="off" ng-submit="submitPass()" ignore="ignore">
-      <div class="form-item c-input password required no-label " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
-        <input type="password" name="password" ng-model="newUser.local.password" placeholder="{{ mml('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ mml('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled" required="required" strength="strength" password="password"/>
-        <div class="tooltip" ng-hide="myForm.password.$valid">
-          <div class="invalid" ng-show="myForm.password.$invalid">
-            <p>{{mml('newUser-password-popup-pre')}}</p>
+      <div ng-class="{warning: submitted &amp;&amp; $parent.myForm.password.$invalid}" class="form-item c-input password required no-label ">
+        <input type="password" name="password" ng-model="newUser.local.password" placeholder="{{ m('newUser-password-placeholder') }}" title="{{ m('newUser-password-label') }}" ng-disabled="disabled" required="required" strength="strength" password="password"/>
+        <div ng-hide="myForm.password.$valid" class="tooltip">
+          <div ng-show="myForm.password.$invalid" class="invalid">
+            <p>{{m('newUser-password-popup-pre')}}</p>
             <ul>
-              <li ng-show="myForm.password.$error.length">{{mml('newUser-password-error-length')}}</li>
-              <li ng-show="myForm.password.$error.number">{{mml('newUser-password-error-number')}}</li>
-              <li ng-show="myForm.password.$error.lower">{{mml('newUser-password-error-lower')}}</li>
-              <li ng-show="myForm.password.$error.upper">{{mml('newUser-password-error-upper')}}</li>
-              <li ng-show="myForm.password.$error.special">{{mml('newUser-password-error-special')}}</li>
+              <li ng-show="myForm.password.$error.length">{{m('newUser-password-error-length')}}</li>
+              <li ng-show="myForm.password.$error.number">{{m('newUser-password-error-number')}}</li>
+              <li ng-show="myForm.password.$error.lower">{{m('newUser-password-error-lower')}}</li>
+              <li ng-show="myForm.password.$error.upper">{{m('newUser-password-error-upper')}}</li>
+              <li ng-show="myForm.password.$error.special">{{m('newUser-password-error-special')}}</li>
             </ul>
-            <p>{{mml('newUser-password-popup-post')}}</p>
+            <p>{{m('newUser-password-popup-post')}}</p>
           </div>
-        </div><i class="valid" ng-show="$parent.myForm.password.$valid">✔</i>
-        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.password.$error.required">{{ mml('newUser-password-error-required') }}    </p>
-        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.password.$error.strength">{{ mml('newUser-password-error-strength') }}    </p>
+        </div><i ng-show="$parent.myForm.password.$valid" class="valid">✔</i>
+        <p ng-show="submitted &amp;&amp; $parent.myForm.password.$error.required" class="error">{{ m('newUser-password-error-required') }}    </p>
+        <p ng-show="submitted &amp;&amp; $parent.myForm.password.$error.strength" class="error">{{ m('newUser-password-error-strength') }}    </p>
       </div>
-      <div class="form-item c-input repeatPassword required no-label " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
-        <input type="password" name="repeatPassword" ng-model="$parent.repeatPassword" placeholder="{{ mml('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ mml('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled" required="required"/><i class="valid" ng-show="$parent.repeatPassword &amp;&amp; $parent.repeatPassword===newUser.local.password">✔</i>
-        <p class="error" ng-show="submitted &amp;&amp; $parent.repeatPassword &amp;&amp; $parent.repeatPassword !== newUser.local.password">{{mml('newUser-repeatPassword-error-mismatch')}}</p>
-        <p class="error" ng-show="submitted &amp;&amp; $parent.myForm.repeatPassword.$error.required">{{ mml('newUser-repeatPassword-error-required') }}    </p>
+      <div ng-class="{warning: submitted &amp;&amp; $parent.myForm.repeatPassword.$invalid}" class="form-item c-input repeatPassword required no-label ">
+        <input type="password" name="repeatPassword" ng-model="$parent.repeatPassword" placeholder="{{ m('newUser-repeatPassword-placeholder') }}" title="{{ m('newUser-repeatPassword-label') }}" ng-disabled="disabled" required="required"/><i ng-show="$parent.repeatPassword &amp;&amp; $parent.repeatPassword===newUser.local.password" class="valid">✔</i>
+        <p ng-show="submitted &amp;&amp; $parent.repeatPassword &amp;&amp; $parent.repeatPassword !== newUser.local.password" class="error">{{m('newUser-repeatPassword-error-mismatch')}}</p>
+        <p ng-show="submitted &amp;&amp; $parent.myForm.repeatPassword.$error.required" class="error">{{ m('newUser-repeatPassword-error-required') }}    </p>
       </div>
       <div class="controls">
-        <input class="btn" type="submit" value="{{m(&quot;newUser-button-submit&quot;)}}"/>
+        <input type="submit" value="{{m(&quot;newUser-button-submit&quot;)}}" class="btn"/>
       </div>
     </form>
   </div>

@@ -1,5 +1,5 @@
 
-<div class="task-popup-dir" ng-show="!getHidden()">
+<div ng-show="!getHidden()" class="task-popup-dir">
   <div class="popup">
     <div class="details">
       <div class="details-item">
@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="controls">
-      <button class="edit" ng-click="edit(getTask())">Edit</button>
+      <button ng-click="edit(getTask())" class="edit">Edit</button>
     </div>
   </div>
   <div class="pointer"></div>

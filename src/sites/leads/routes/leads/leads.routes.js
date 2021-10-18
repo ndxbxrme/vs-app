@@ -7,7 +7,7 @@
       template: require("./leads.html").default,
       controller: 'leadsLeadsCtrl',
       data: {
-        title: 'leads',
+        title: 'Vitalspace Leads - Leads',
         auth: ['leads:superadmin', 'leads:admin', 'leads:agency']
       }
     });
@@ -20,7 +20,7 @@
         booked: null
       },
       data: {
-        title: 'Selling',
+        title: 'Vitalspace Leads - Selling',
         auth: ['leads:superadmin', 'leads:admin', 'leads:agency']
       }
     });
@@ -33,7 +33,7 @@
         booked: null
       },
       data: {
-        title: 'Letting',
+        title: 'Vitalspace Leads - Letting',
         auth: ['leads:superadmin', 'leads:admin', 'leads:agency']
       }
     });
@@ -46,7 +46,7 @@
         booked: null
       },
       data: {
-        title: 'Letting',
+        title: 'Vitalspace Leads - Letting',
         auth: ['leads:superadmin', 'leads:admin', 'leads:agency']
       }
     });

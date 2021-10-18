@@ -2,37 +2,37 @@
 <div class="landlords-route route">
   <div class="space-between">
     <div class="left">
-      <h1>{{ mml('landlords-heading') }}</h1>
-      <button class="button-green" ui-sref="maintenance_leads_landlord({_id:&quot;&quot;})"> <i class="fas fa-plus"> </i>{{ mml('landlords-button-new') }}</button>
+      <h1>{{ m('landlords-heading') }}</h1>
+      <button ui-sref="maintenance_leads_landlord({_id:&quot;&quot;})" class="button-green"> <i class="fas fa-plus"> </i>{{ m('landlords-button-new') }}</button>
     </div>
     <div class="right"> 
       <div class="search">
-        <input type="text" ng-model="mysearch.$like" placeholder="Search Cases" ng-change="page=1"/>
+        <input type="text" ng-model="search" placeholder="Search Cases" ng-change="page=1"/>
       </div>
-      <div class="showing">Showing {{filterData.length}} of {{landlords.total}} landlord{{totalProps!==1?'s':''}}</div>
+      <div class="showing">Showing {{filterData.length}} of {{landlords.items.length}} landlord{{totalProps!==1?'s':''}}</div>
     </div>
   </div>
   <div class="landlords">
-    <div class="landlord" ng-repeat="landlord in filterData =(landlords.items | orderBy:sort) | limitTo:limit:limit*(page-1)"> 
-      <div class="landlord-heading" ui-sref="maintenance_leads_landlord({_id:landlord._id})" ng-class="{empty:!landlord.addresses.length}">
+    <div ng-repeat="landlord in filterData =(landlords.items | filter:search | orderBy:sort) | limitTo:limit:limit*(page-1)" class="landlord"> 
+      <div ui-sref="maintenance_leads_landlord({_id:landlord._id})" ng-class="{empty:!landlord.addresses.length}" class="landlord-heading">
         <div class="name">{{ landlord.name }}</div>
         <div class="no-issues">
           <div class="label">Properties</div>
           <div class="number">{{ landlord.addresses.length }}</div>
         </div>
       </div>
-      <button class="button-alt" type="button" ng-click="landlord.showList=!landlord.showList" ng-show="landlord.addresses.length"><span ng-show="landlord.showList"> <i class="fal fa-eye-slash"></i>Hide List</span><span ng-hide="landlord.showList"><i class="fal fa-eye"> </i>View List</span></button>
-      <button class="button-grey" type="button" ng-click="deletelandlord(landlord)" ng-if="auth.isAuthorized([&quot;superadmin&quot;, &quot;admin&quot;])"> <i class="fal fa-trash-alt"></i>Delete</button>
-      <div class="addresses" ng-show="landlord.showList">
-        <div class="address" ng-repeat="address in landlord.addresses">
+      <button type="button" ng-click="landlord.showList=!landlord.showList" ng-show="landlord.addresses.length" class="button-alt"><span ng-show="landlord.showList"> <i class="fal fa-eye-slash"></i>Hide List</span><span ng-hide="landlord.showList"><i class="fal fa-eye"> </i>View List</span></button>
+      <button type="button" ng-click="deletelandlord(landlord)" ng-if="auth.isAuthorized([&quot;superadmin&quot;, &quot;admin&quot;])" class="button-grey"> <i class="fal fa-trash-alt"></i>Delete</button>
+      <div ng-show="landlord.showList" class="addresses">
+        <div ng-repeat="address in landlord.addresses" class="address">
           <div class="title">{{ address }}</div>
         </div>
       </div>
     </div>
   </div>
-  <div class="empty-table" ng-show="!filterData.length">{{ mml('landlords-empty-table') }}</div>
+  <div ng-show="!filterData.length" class="empty-table">{{ m('landlords-empty-table') }}</div>
   <pagination ng-model="landlords.args.page" total="landlords.total" page-size="landlords.args.pageSize"></pagination>
-  <div class="addresses" ng-if="addresses.length">
-    <div class="address" ng-repeat="address in addresses">{{ address }}</div>
+  <div ng-if="addresses.length" class="addresses">
+    <div ng-repeat="address in addresses" class="address">{{ address }}</div>
   </div>
 </div>

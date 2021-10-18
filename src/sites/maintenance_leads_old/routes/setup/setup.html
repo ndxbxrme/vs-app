@@ -1,0 +1,54 @@
+
+<div class="setup route">
+  <h1>Setup</h1>
+  <div class="row">
+    <div class="email-templates">
+      <h2>Email templates</h2>
+      <div class="email-template" ng-repeat="template in emailTemplates.items"><a class="name" ui-sref="maintenance_leads_template({id:template._id,type:'email'})">{{template.name}}</a>
+        <div class="delete"><a href="" ng-click="emailTemplates.delete(template)"><i class="far fa-times-circle" aria-hidden="true"></i></a></div>
+      </div>
+      <div><a class="add-email-template button-green" ui-sref="maintenance_leads_template({id:'new',type:'email'})"> <i class="fas fa-plus"> </i>Add email template</a></div>
+    </div>
+    <div class="sms-templates">
+      <h2>Sms templates</h2>
+      <div class="sms-template" ng-repeat="template in smsTemplates.items"><a class="name" ui-sref="maintenance_leads_template({id:template._id,type:'sms'})">{{template.name}}</a>
+        <div class="delete"><a href="" ng-click="smsTemplates.delete(template)"><i class="far fa-times-circle" aria-hidden="true"></i></a></div>
+      </div>
+      <div><a class="add-sms-template" ui-sref="maintenance_leads_template({id:'new',type:'sms'})"> <i class="fas fa-plus"> </i>Add sms template</a></div>
+    </div>
+  </div>
+  <div class="users">
+    <h2>Users</h2>
+    <div class="row">
+      <div class="users">
+        <div class="user" ng-repeat="user in myusers = (users.items | filter:&quot;!superadmin&quot; | filter:&quot;!cors&quot;)"> <img gravatar-src="user.local.email"/><span>{{user.displayName || user.local.email}}</span>
+          <div class="delete" ng-click="deleteUser(user)">Delete</div>
+        </div>
+      </div>
+      <div class="add-user">
+        <h3>Invite user</h3>
+        <form name="addUserForm" ng-submit="addUser()">
+          <div class="row">
+            <input type="email" ng-model="newUser.local.email" placeholder="Email address"/>
+            <select ng-model="newUser.role">
+              <option value="agency" selected="selected">Agency</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <input type="submit" value="Invite"/>
+        </form>
+        <div class="invite-error">{{inviteError}}</div>
+        <div class="invite-url" ng-show="inviteUrl">
+          <p>An email has been sent or you can copy and paste the url below</p>
+          <div class="row">
+            <input type="text" ng-model="inviteUrl"/>
+            <button ng-click="copyInviteToClipboard()">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="update-statuses">
+    <button ng-click="updateStatuses()">Update statuses</button>
+  </div>
+</div>

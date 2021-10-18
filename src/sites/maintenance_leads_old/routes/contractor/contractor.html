@@ -1,0 +1,24 @@
+
+<div class="contractor-route route">
+  <h1>{{ m('contractor-heading') }}</h1>
+  <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('contractor')">
+    <div class="form-section">
+      <div class="form-item c-input name   " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ m('contractor-name-label') }}</label>
+        <input type="text" name="name" ng-model="contractor.item.name" placeholder="{{ m('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ m('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled"/>
+      </div>
+      <div class="form-item c-input phone   " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ m('contractor-phone-label') }}</label>
+        <input type="text" name="phone" ng-model="contractor.item.phone" placeholder="{{ m('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ m('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled"/>
+      </div>
+      <div class="form-item c-input email   " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ m('contractor-email-label') }}</label>
+        <input type="email" name="email" ng-model="contractor.item.email" placeholder="{{ m('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ m('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled"/>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn cancel" type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)">{{ m('forms-cancel') }}</button>
+      <input class="btn button-alt" type="submit" value="{{ m('#{args.submitText}') }}" ng-disabled="disabled || myForm.$pristine"/>
+    </div>
+  </form>
+</div>

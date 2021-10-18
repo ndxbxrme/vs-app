@@ -1,0 +1,35 @@
+
+<div class="landlord-route route">
+  <h1>{{ m('landlord-heading') }}</h1>
+  <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('landlord')">
+    <div class="form-section">
+      <div class="form-item c-input name   " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ m('landlord-name-label') }}</label>
+        <input type="text" name="name" ng-model="landlord.item.name" placeholder="{{ m('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ m('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled"/>
+      </div>
+      <div class="form-item c-input phone   " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ m('landlord-phone-label') }}</label>
+        <input type="text" name="phone" ng-model="landlord.item.phone" placeholder="{{ m('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ m('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled"/>
+      </div>
+      <div class="form-item c-input email   " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ m('landlord-email-label') }}</label>
+        <input type="email" name="email" ng-model="landlord.item.email" placeholder="{{ m('#{args.prefix}-#{args.name}-placeholder') }}" title="{{ m('#{args.prefix}-#{args.name}-label') }}" ng-disabled="disabled"/>
+      </div>
+      <div class="form-item c-select addresses   " ng-class="{warning: submitted #{'&amp;&amp;'} #{formName}.#{args.name}.$invalid}">
+        <label class="label">{{ m('landlord-addresses-label') }}</label>
+        <div class="input-holder">
+          <select sumoselect="{placeholder:m('#{args.prefix}-#{args.name}-placeholder'), search:true}" ng-model="landlord.item.addresses" name="addresses" ng-disabled="disabled" multiple="multiple">
+            <option ng-repeat="addresses in addresses" value="{{#{args.name}.#{args.id}}}" ng-disabled="#{args.name}.disabled" ng-hide="#{args.name}.hidden">{{ addresses.name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="addresses">
+        <div class="address" ng-repeat="address in landlord.item.addresses">{{ address }}</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn cancel" type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)">{{ m('forms-cancel') }}</button>
+      <input class="btn button-alt" type="submit" value="{{ m('#{args.submitText}') }}" ng-disabled="disabled || myForm.$pristine"/>
+    </div>
+  </form>
+</div>

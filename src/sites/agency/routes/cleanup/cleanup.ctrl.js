@@ -6,7 +6,6 @@
     $scope.progressions = $scope.list('agency:progressions', {
       isdefault: true
     }, function(progressions) {
-      console.log(progressions);
       return $scope.properties = $scope.properties || $scope.list('agency:properties', null, function(properties) {
         var i, property, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7;
         i = properties.items.length;
@@ -69,7 +68,6 @@
         ref1 = property.progressions;
         for (k = 0, len1 = ref1.length; k < len1; k++) {
           progression = ref1[k];
-          console.log(progression);
           progression.milestones[progression.milestones.length - 1][0].completed = true;
           progression.milestones[progression.milestones.length - 1][0].completedDate = property.exchangeDate;
           property.milestoneIndex[progression._id] = progression.milestones.length - 1;

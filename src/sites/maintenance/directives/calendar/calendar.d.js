@@ -7,7 +7,6 @@
       template: require("./calendar.html").default,
       replace: true,
       link: function(scope, elem, attrs) {
-        console.log('calendar says hi');
         var _calculateSnapPoint, _snaps, carousel, d, dayOffset, daysToShow, deref, generateData, getTasks, hammerSwiper, makeWeek, mapTasksToDays, resize, selectedDate, snapTo, startDate, swiper, x, y;
         dayOffset = 7;
         daysToShow = 5;
@@ -196,7 +195,6 @@
           return false;
         };
         scope.openTask = function(task, ev) {
-          console.log('task clicked');
           if (MaintenanceTaskPopup.getHidden()) {
             task = task || {};
             task.duration = task.duration || new Date(3600000);

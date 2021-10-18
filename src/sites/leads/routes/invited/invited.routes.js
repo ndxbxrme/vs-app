@@ -5,7 +5,10 @@
     return $stateProvider.state('leads_invited', {
       url: '/leads/invite/:code',
       template: require("./invited.html").default,
-      controller: 'leadsInvitedCtrl'
+      controller: 'leadsInvitedCtrl',
+      data: {
+        title: 'Vitalspace Leads - Invited'
+      }
     });
   });
 

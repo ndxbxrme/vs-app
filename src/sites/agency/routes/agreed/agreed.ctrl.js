@@ -132,7 +132,6 @@
       sort: 'startDate',
       sortDir: 'ASC'
     }, updateProperties);
-    console.log($scope.properties.args);
     $scope.open = function(selectedMonth) {
       var j, len, month, open, ref;
       open = selectedMonth.open;

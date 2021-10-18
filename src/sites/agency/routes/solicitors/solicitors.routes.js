@@ -7,7 +7,7 @@
       template: require("./solicitors.html").default,
       controller: 'agencySolicitorsCtrl',
       data: {
-        title: 'solicitors',
+        title: 'Vitalspace Conveyancing - Solicitors',
 		auth: ['agency:agency', 'agency:admin', 'agency:superadmin']
       },
       resolve: {

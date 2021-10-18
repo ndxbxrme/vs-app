@@ -7,7 +7,7 @@
       template: require("./template.html").default,
       controller: 'leadsTemplateCtrl',
       data: {
-        title: 'template',
+        title: 'Vitalspace Leads - Template',
         auth: ['leads:superadmin', 'leads:admin']
       }
     });

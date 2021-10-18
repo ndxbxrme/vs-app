@@ -18,12 +18,9 @@
       }
     };
     return $scope.submitPass = function() {
-      console.log('submit', $scope.repeatPassword, $scope.newUser.local.password, $scope.myForm.$valid);
       $scope.submitted = true;
       if ($scope.myForm.$valid) {
-        console.log('valid');
         if ($scope.repeatPassword === $scope.newUser.local.password) {
-          console.log('passwords match');
           return $http.post(`/forgot-update/${$scope.token}`, {
             password: $scope.newUser.local.password
           }, $http.sites["lettings"].config).then(function(response) {

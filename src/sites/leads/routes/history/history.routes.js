@@ -7,7 +7,7 @@
       template: require("./history.html").default,
       controller: 'leadsHistoryCtrl',
       data: {
-        title: 'history',
+        title: 'Vitalspace Leads - History',
         auth: ['leads:superadmin', 'leads:admin']
       }
     });

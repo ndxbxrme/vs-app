@@ -70,7 +70,6 @@
         return task;
       },
       show: function(_elem) {
-        console.log('showing');
         hidden = false;
         elem = _elem[0];
         return $timeout(function() {
