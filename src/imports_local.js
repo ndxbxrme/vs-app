@@ -9,3 +9,4 @@ import './sites/main/invited/invited.js';
 import './sites/main/setup/setup.js';
 import './sites/main/template/template.js';
 import './sites/main/breadcrumbs/breadcrumbs.js';
+import './sites/main/footer/footer.js';

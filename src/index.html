@@ -9,6 +9,7 @@
   <breadcrumbs ng-if="auth.getUser()"></breadcrumbs>
   <login></login>
   <div ui-view="" ng-if="auth.getUser() || state('invited') || state('forgot') || state('forgot-response')" class="main-view"></div>
+  <footer ng-if="auth.getUser()"></footer>
   <agency-progression-popup></agency-progression-popup>
   <maintenance-date-swiper config="{prefix:&quot;swiper&quot;, modifier:1.5, show:false}"></maintenance-date-swiper>
   <maintenance-task-popup></maintenance-task-popup>

@@ -32,6 +32,7 @@ angular.module('vs-app')
     }
     if (trans.$from().name) {
       progressionPopup.hide();
+      document.body.className = document.body.className.replace(/\s*.*?-page/g, '');
       return $('body').removeClass(`${trans.$from().name}-page`);
     }
   });

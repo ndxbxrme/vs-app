@@ -7,6 +7,8 @@
       replace: true,
       scope: {},
       link: function(scope, elem) {
+        document.body.className = document.body.className.replace(/\s*.*?-page/g, '');
+        document.body.className += ' login-page';
         scope.login = function() {
           scope.submitted = true;
           if (scope.loginForm.$valid) {
