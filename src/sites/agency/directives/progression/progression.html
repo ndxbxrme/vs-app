@@ -1,19 +1,39 @@
 
 <div class="progression" ng-class="{editing:editing()}">
+  
   <div ng-hide="$parent.editor">
-    <div class="heading">
-      <h5>Case - {{progression.side}}'s side - {{progression.name}} - {{property.item.displayAddress}}</h5>
-      <div class="controls" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])"><a href="" ng-click="moveUp()"><i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i></a><a href="" ng-click="moveDown()"><i class="fa fa-arrow-circle-o-down" aria-hidden="true"></i></a><a href="" ng-click="remove()"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>
+    <div class="heading row">
+      <div class="col-10">
+        <h5>Case - {{progression.side}}'s side - {{progression.name}} - {{property.item.displayAddress}}</h5>
+      </div>
+      <div class="col-2 text-end">
+        <div class="controls" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])">
+          <a href="" ng-click="moveUp()"><i class="fa-light fa-up"></i></a>
+          <a href="" ng-click="moveDown()"><i class="fa-light fa-down"></i></a>
+          <a href="" ng-click="remove()"><i class="fa-light fa-circle-trash"></i></a>
+        </div>
+      </div>
     </div>
   </div>
+
   <div ng-show="$parent.editor">
-    <div class="heading" ng-hide="editing()">
-      <h5>{{progression.name}}, {{progression.side}}</h5>
-      <div class="controls" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])"><a href="" ng-click="moveUp()"><i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i></a><a href="" ng-click="moveDown()"><i class="fa fa-arrow-circle-o-down" aria-hidden="true"></i></a><a href="" ng-click="remove()"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>
-      <div class="controls"><a href="" ng-click="edit();">
-           Edit<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
+    <div class="heading row" ng-hide="editing()">
+      <div class="col-10">
+        <h5>{{progression.name}}, {{progression.side}}</h5>
+      </div>
+      <div class="col-2 text-end">
+        <span class="controls" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])">
+          <a href="" ng-click="moveUp()"><i class="fa-light fa-up"></i></a>
+          <a href="" ng-click="moveDown()"><i class="fa-light fa-down"></i></a>
+          <a href="" ng-click="remove()"><i class="fa-light fa-circle-trash"></i></a>
+        </span>
+        <span class="controls">
+          <a href="" ng-click="edit();"><i class="fa-light fa-pen-circle"></i></a>
+        </div>
+      </div>
     </div>
-    <div class="heading" ng-show="editing()">
+
+    <div class="heading row" ng-show="editing()">
       <div class="inputs">
         <label><span>Name</span>
           <input type="text" ng-model="progression.name" placeholder="Name"/>
@@ -29,7 +49,8 @@
         <label for="side-seller{{$index}}">Seller</label>
       </div>
     </div>
-  </div>
+
+
   <div class="milestones">
     <canvas></canvas>
     <div class="branch" ng-repeat="branch in progression.milestones">

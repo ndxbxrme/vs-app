@@ -1,36 +1,56 @@
 
 <div class="solicitors-route"> 
-  <h1>Solicitors</h1>
-  <div class="solicitors">
-    <div class="solicitor" ng-repeat="solicitor in solicitors | orderBy:&quot;name&quot;">
-      <div class="inner">
-        <div class="row">
-          <div class="solicitors-name">{{solicitor.name}}</div>
-          <div class="cases">
-            <label>Cases</label><span>{{solicitor.properties.length}}</span>
-          </div>
-        </div>
-        <hr/>
-        <div class="row"><a class="button" ng-click="open(solicitor)"><span ng-hide="solicitor.open">View List</span><span ng-show="solicitor.open">Close List</span></a></div>
-        <div class="properties" ng-show="solicitor.open">
-          <hr/>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12">
+        <h1>Solicitors</h1>
+      </div>
+    </div>
+
+    <div class="solicitors">
+      <div class="solicitor col-lg-4 col-6" ng-repeat="solicitor in solicitors | orderBy:&quot;name&quot;">
+        <div class="inner">
           <div class="row">
-            <h5>Address</h5>
-            <h5>Date</h5>
+            <div class="col-9">
+              <div class="solicitors-name">{{solicitor.name}}</div>
+              <div class="cases">
+                <label>Cases</label><span>{{solicitor.properties.length}}</span>
+              </div>
+            </div>
+            <div class="col-3 text-end">
+              <a class="small button" ng-click="open(solicitor)"><span ng-hide="solicitor.open">View List</span><span ng-show="solicitor.open">Close List</span></a>
+            </div>
           </div>
-          <hr/>
-          <div class="property" ng-repeat="property in solicitor.properties | orderBy:&quot;date&quot;">
-            <div class="default" ui-sref="agency_case({roleId:property.RoleId})">
-              <div class="number">{{$index + 1}}</div>
-              <div class="address">{{property.address}}</div>
-              <div class="p" ng-show="property.purchaser===solicitor.id">P</div>
-              <div class="v" ng-show="property.vendor===solicitor.id">V</div>
-              <div class="fees" ng-bind-html="property.commission | currency:'£' | currencyFormat"></div>
-              <div class="date">{{property.date | date:'mediumDate'}}</div>
+          
+          <div class="properties" ng-show="solicitor.open">
+            <div class="row">
+              <div class="col">
+                <h5>Address</h5>
+              </div>
+              <div class="col text-end">
+                <h5>Date</h5>
+              </div>
+            </div>
+            <div class="property" ng-repeat="property in solicitor.properties | orderBy:&quot;date&quot;">
+              <div class="default" ui-sref="agency_case({roleId:property.RoleId})">
+                <div class="row">
+                  <div class="number col-1">{{$index + 1}}</div>
+                  <div class="address col-11">{{property.address}}</div>
+                </div>
+                <div class="row">
+                  <div class="date col">{{property.date | date:'mediumDate'}}</div>
+                  <div class="col text-end">
+                    <span class="p" ng-show="property.purchaser===solicitor.id">P</span>
+                    <span class="v" ng-show="property.vendor===solicitor.id">V</span>
+                    <div class="fees" ng-bind-html="property.commission | currency:'£' | currencyFormat"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </div>
