@@ -1,11 +1,13 @@
-
+@import './css/**/*.styl'
 @import './sites/**/*.styl'
 
 body.agency_*
   color red
 
 .main-view
-  margin-top 4em
+  padding-top 1em
+  background vs-lightsilver
+  height 100%
 
 ::-webkit-scrollbar
   width 8px
@@ -17,3 +19,14 @@ body.agency_*
   background #555
 input 
   -webkit-appearance none
+
+// Pagination
+.pagination
+  justify-content center
+  background vs-tablegrey
+  padding 10px
+  .page
+    &:first-child,
+    &:last-child,
+    &.selected
+      color vs-orange

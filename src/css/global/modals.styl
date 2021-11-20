@@ -1,0 +1,27 @@
+.reveal-modal-bg, 
+.reveal-modal-bg.fade
+  &.in
+    background rgba(0,0,0,0.3)
+    opacity 1
+.reveal-modal.fade
+  overflow hidden
+  box-shadow 4px 4px 4px 0 rgba(0,0,0,.05)
+  border none
+  border-radius 3px
+  &.in
+    opacity 1
+    .modal 
+      background white
+      display flex
+      flex-direction column
+      height auto  
+      position relative
+  .modal-header
+    background vs-grey
+    flex-direction column
+    padding 10px 40px
+    h1
+      color white
+      margin: 5px 0px
+  .close-reveal-modal
+    color vs-orange

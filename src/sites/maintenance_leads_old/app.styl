@@ -2,24 +2,6 @@
 *
   outline-color transparent
   box-sizing border-box
-button, input[type=submit], input[type=button]
-  vs-button()
-  text-transform uppercase
-  &.button-alt
-    vs-button-alt()
-  &.button-green
-    vs-button-green()
-  &.button-grey
-    vs-button-grey()
-  svg
-    margin-right 5px
-input[type=text], input[type=email], input[type=password], select, textarea
-  padding .8rem
-  border 1px solid vs-lightgrey
-  border-radius 3px
-  background vs-tablegrey
-label 
-  margin-bottom 5px
 .search
     input
       width 300px
@@ -31,10 +13,6 @@ body, html
   height 100%
   min-height 100%
 body
-  font-family ProximaNova-Light,sans-serif
-  color #333
-  h1
-    margin-top 10px
   .space-between
     display flex
     justify-content space-between
@@ -129,39 +107,6 @@ body
         right 0
         bottom 100%
         content '*'
-.reveal-modal-bg, .reveal-modal-bg.fade
-  background rgba(0,0,0,0)!important
-body.modal-open
-  .page
-    filter blur(4px) saturate(0)
-    opacity 0.6
-/*.modal
-  display flex
-  flex-direction column
-  justify-content center
-  align-items center
-  padding 1rem
-  border 1px solid vs-orange
-  h1, h2
-    font-weight normal
-    margin 0 0 1rem 0
-  h1
-    font-size 1.4rem
-    color vs-orange
-    text-transform uppercase
-  h2
-    font-size 1rem
-  form, form .form-item
-    display flex
-    flex-direction column
-    align-items center
-    width 90%
-    input
-      margin-top .4rem
-    input[type=text]
-      flex 1
-      width 100%
-      margin-bottom 10px*/
 table.issue-table
   margin-top 1rem
   border-collapse collapse
@@ -199,18 +144,6 @@ table.issue-table
   background-size 1.6rem
   background-repeat no-repeat
   background-position center right
-.pagination
-  justify-content center
-  background vs-tablegrey
-  .page
-    &:first-child,
-    &:last-child,
-    &.selected
-      color vs-orange
-.login-form
-  input
-    margin-bottom 5px
-    min-width 220px
 @media screen and (max-width:992px)
   h1 
     font-size 1.4rem

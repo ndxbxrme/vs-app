@@ -1,7 +1,9 @@
+import './third_party/bootstrap-css/css/bootstrap.min.css';
 import './index.styl';
 const angular = window.angular;
 const io = require('socket.io-client');
 const RestClient = require('./services/ndx-rest-client.js');
+const bootstrap = require('bootstrap');
 window.CodeMirror = require('codemirror');
 import 'codemirror/lib/codemirror.css';
 window.jade = require('jade');

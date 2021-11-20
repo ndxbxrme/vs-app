@@ -1,4 +1,3 @@
-import './breadcrumbs.css';
 angular.module('vs-app')
 .factory('breadcrumbs', () => {
   const allHistory = JSON.parse(localStorage.getItem('allHistory') || '[]');

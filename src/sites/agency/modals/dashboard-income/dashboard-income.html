@@ -1,13 +1,13 @@
 
 <div class="modal dashboard-income">
-  <div class="row">
+  <div class="modal-header">
     <h1>{{data.di.name}}<span ng-show="data.month.name">, {{data.month.name}}</span></h1>
     <input type="text" ng-model="search" placeholder="Search..."/>
   </div>
   <table class="table table-responsive">
     <tbody ng-repeat="property in list = (data.list | filter:{displayAddress:search}) | orderBy:&quot;offer.Property.Address.Street&quot; | limitTo:limit:limit*(page-1)">
       <td><a class="address" href="" ng-click="go(property)">{{property.displayAddress}}</a></td>
-      <td class="squish" ng-show="data.di.sumtype===&quot;Income&quot;">&pound;{{property.role.Commission}}</td>
+      <td ng-show="data.di.sumtype===&quot;Income&quot;">&pound;{{property.role.Commission}}</td>
     </tbody>
   </table>
   <pagination class="pagination-sm pagination" total="list.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true"></pagination><a class="close-reveal-modal" ng-click="cancel()">&times;</a>

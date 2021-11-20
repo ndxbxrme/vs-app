@@ -5,7 +5,6 @@ import './third_party/ng-sumoselect/build/app.css';
 //import '../../../vs-leads/bower_components/components-font-awesome/css/font-awesome.css';
 import './third_party/flipclock/compiled/flipclock.css';
 import './third_party/select2/select2.css';
-//import './third_party/bootstrap-css/css/bootstrap.min.css';
 //import './third_party/fancybox/source/jquery.fancybox.css';
 //import '../../../vs-property/bower/fancybox/source/blank.gif';
 //import '../../../vs-property/bower/fancybox/source/fancybox_loading.gif';

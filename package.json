@@ -17,9 +17,11 @@
     "angular": "^1.8.2",
     "angular-ui-router": "^1.0.29",
     "bcrypt-nodejs": "0.0.3",
+    "bootstrap": "^5.1.3",
     "codemirror": "^5.61.1",
     "crypto-js": "^3.1.9-1",
     "html-loader": "^2.1.2",
+    "jade": "^1.11.0",
     "ndx-auth": "^0.1.13",
     "ndx-connect": "0.0.6",
     "ndx-cors": "0.0.10",
@@ -33,8 +35,7 @@
     "ndx-superadmin": "^0.1.6",
     "ndx-user-roles": "^0.4.0",
     "socket.io-client": "^1.4.5",
-    "superagent": "^3.4.0",
-    "jade": "^1.11.0"
+    "superagent": "^3.4.0"
   },
   "devDependencies": {
     "babel-loader": "^8.2.2",

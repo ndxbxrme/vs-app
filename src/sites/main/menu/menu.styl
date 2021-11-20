@@ -1,14 +1,29 @@
 .site-menu
-  height 4em
+  height 80px
   z-index 400
   position fixed
   background white
-  padding-left 2em
-  padding-top .6em
+  padding 1em 0
   width 100%
+  height auto
+  border-bottom 1px solid #e0e0e0
   sites
     display flex
     flex-direction row
+    &.site-settings
+      justify-content flex-end
+      site
+        a
+          text-align right
+          &:hover
+            color #f15b25
+            background none
+        pages
+          left auto
+          right 0
+          top 40px
+          a
+           text-align right 
   pages
     display none
     background white
@@ -16,15 +31,30 @@
     display flex
     flex-direction column
     min-width 9em
+    position relative
     a
-      padding .4em .6em
+      color #303030
+      font-size: 1.8rem
+      font-weight 300
+      padding 10px 20px
+      text-transform capitalize
+      transition all 0.4s ease-in-out
     a:hover, a:focus
-      background rgba(0,0,0,0.1)
+      color #f15b25
     &:hover, &:focus
       pages
         display flex
         flex-direction column
-        box-shadow 1px 1px 1px rgba(0,0,0,0.1)
+        box-shadow 4px 4px 4px 0 rgba(0,0,0,.05)
+        width 200px
+        position absolute
+        top 45px
+        left 0
+        a
+          text-align left
+        a:hover, a:focus
+          color #f15b25
+          background rgba(0,0,0,0.05)
     .favorites-site
       font-size .8em
       margin-right .5em
