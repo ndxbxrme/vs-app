@@ -1,41 +1,44 @@
 <sites>
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-sm-4 col-6">
-        <a ui-sref="agency_dashboard" ng-show="auth.isAuthorized('agency_dashboard')" class="big-link">
-          <i class="fa-duotone fa-handshake"></i>
-          Conveyancing
-        </a>
-      </div>
-      <div class="col-sm-4 col-6">
-        <a ui-sref="agency_marketing" ng-show="auth.isAuthorized('agency_marketing')" class="big-link">
-          <i class="fa-duotone fa-money-check-pen"></i>
-          Property Marketing
-        </a>
-      </div>
-      <div class="col-sm-4 col-6">
-        <a ui-sref="lettings_dashboard" ng-show="auth.isAuthorized('lettings_dashboard')" class="big-link">
-          <i class="fa-duotone fa-house-person-return"></i>
-          Lettings
-        </a>
-      </div>
-      <div class="col-sm-4 col-6">
-        <a ui-sref="leads_dashboard" ng-show="auth.isAuthorized('leads_dashboard')" class="big-link">
-          <i class="fa-duotone fa-bars-progress"></i>
-          Leads
-        </a>
-      </div>
-      <div class="col-sm-4 col-6">
-        <a ui-sref="maintenance_dashboard" ng-show="auth.isAuthorized('maintenance_dashboard')" class="big-link">
-          <i class="fa-duotone fa-screwdriver-wrench"></i>
-          Maintenance
-        </a>
-      </div>
-      <div class="col-sm-4 col-6">
-        <a ui-sref="maintenance_leads_dashboard" ng-show="auth.isAuthorized('maintenance_leads_dashboard')" class="big-link">
-          <i class="fa-duotone fa-list-check"></i>
-          Maintenance Leads
-        </a>
+  <div class="dashboard">
+    <div class="container">
+      <h1>VitalSpace Property <strong class="orange">Dashboard</strong></h1>
+      <div class="row text-center">
+        <div class="col-sm-4 col-6">
+          <a ui-sref="agency_dashboard" ng-show="auth.isAuthorized('agency_dashboard')" class="big-link">
+            <i class="fa-duotone fa-handshake"></i>
+            Conveyancing
+          </a>
+        </div>
+        <div class="col-sm-4 col-6">
+          <a ui-sref="agency_marketing" ng-show="auth.isAuthorized('agency_marketing')" class="big-link">
+            <i class="fa-duotone fa-money-check-pen"></i>
+            Property Marketing
+          </a>
+        </div>
+        <div class="col-sm-4 col-6">
+          <a ui-sref="lettings_dashboard" ng-show="auth.isAuthorized('lettings_dashboard')" class="big-link">
+            <i class="fa-duotone fa-house-person-return"></i>
+            Lettings
+          </a>
+        </div>
+        <div class="col-sm-4 col-6">
+          <a ui-sref="leads_dashboard" ng-show="auth.isAuthorized('leads_dashboard')" class="big-link">
+            <i class="fa-duotone fa-bars-progress"></i>
+            Leads
+          </a>
+        </div>
+        <div class="col-sm-4 col-6">
+          <a ui-sref="maintenance_dashboard" ng-show="auth.isAuthorized('maintenance_dashboard')" class="big-link">
+            <i class="fa-duotone fa-screwdriver-wrench"></i>
+            Maintenance
+          </a>
+        </div>
+        <div class="col-sm-4 col-6">
+          <a ui-sref="maintenance_leads_dashboard" ng-show="auth.isAuthorized('maintenance_leads_dashboard')" class="big-link">
+            <i class="fa-duotone fa-list-check"></i>
+            Maintenance Leads
+          </a>
+        </div>
       </div>
     </div>
   </div>

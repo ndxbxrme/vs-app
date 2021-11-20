@@ -1,39 +1,59 @@
 @import '../variables'
-h1
-  font-size 4rem
-  line-height 4.5rem
-  margin-bottom 30px
-  font-weight 300
-h2
-  color vs-orange
-  font-size 3rem
-  line-height 4rem
-  margin-bottom 25px
-  font-weight 300
-h3
-  font-size 2rem
-  line-height 3rem
-  margin-bottom 20px
-  font-weight 300
-p
-  margin-bottom 15px
-  font-weight 300
+body
+  h1
+    font-size 3.5rem
+    line-height 4.5rem
+    margin-bottom 20px
+    font-weight 300
+  h2
+    font-size 2.4rem
+    line-height 3rem
+    margin-bottom 25px
+    font-weight 300
+    position relative
+    sup
+      background vs-orange
+      border-radius 10px
+      color white
+      width 20px
+      height 20px
+      display flex
+      justify-content center
+      align-items center
+      position absolute
+      top -10px
+      left -10px
+  h3
+    font-size 2rem
+    line-height 3rem
+    margin-bottom 20px
+    font-weight 300
+  h4, h5
+    font-size 2rem
+    line-height 3rem
+    margin-bottom 10px
+    font-weight 600
+  p
+    margin-bottom 15px
+    font-weight 300
 
-a
-  color vs-orange
-  transition color 0.4s ease-in-out
-  &:hover
-    color vs-grey
-    text-decoration none
+  a
+    color vs-orange
+    transition color 0.4s ease-in-out
+    &:hover
+      color vs-grey
+      text-decoration none
 
-ul
-  margin 0 0 30px 27px
-  li
-    text-indent -27px
-    &:before
-      content ''
-      display inline-block
-      width 16px
-      height 16px
-      margin-right 10px
-      vertical-align middle
+  ul
+    margin 0 0 30px 27px
+    li
+      text-indent -27px
+      &:before
+        content ''
+        display inline-block
+        width 16px
+        height 16px
+        margin-right 10px
+        vertical-align middle
+  strong
+    font-weight 600

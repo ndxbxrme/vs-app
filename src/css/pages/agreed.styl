@@ -1,0 +1,104 @@
+.agreed-route, .solicitors-route
+  .years
+    margin-bottom 20px
+    a
+      color vs-grey
+      border 1px solid vs-lightgrey
+      border-radius 3px
+      margin-right 0.5rem
+      padding 0.5rem
+      &.selected
+        color vs-orange
+        border-color vs-orange
+  .months, .solicitors
+    display flex
+    flex-wrap wrap
+    width 100%
+    hr
+      opacity 0.3
+    .month, .solicitor
+      position relative
+      &.disabled
+        opacity 0.3
+      .inner
+        padding 20px
+        border-radius 3px
+        border 1px solid vs-lightsilver
+        background white
+        position relative
+        .month-name, .solicitors-name
+          min-width 10rem
+          color vs-orange
+          font-size 2rem
+        .target, .cases
+          display flex
+          align-items baseline
+          cursor pointer
+          .editor
+            input
+              vs-input()
+              width 4rem
+              cursor default
+          label
+            margin-right 1.02rem
+            color vs-orange
+            cursor pointer
+          .default
+            font-weight bold
+        .actual
+        .commission
+          font-size 3rem
+          font-weight 600
+          line-height 1
+        .actual
+          position absolute
+          top 20px
+          right 20px
+      .properties
+        padding 20px
+        border-radius 3px
+        border 1px solid vs-white
+        background white
+        position relative
+        h5
+          margin-bottom 0px
+          color vs-orange
+        .property
+          border-bottom 1px solid vs-lightsilver
+          .editor, .default
+            font-size 1.1rem
+            position relative
+            &.delisted
+              .address, .fees
+                font-weight 900
+              .number:after
+                content '✔'
+                position absolute
+                top 0.4rem
+                color lightseagreen
+            .controls
+              a
+                padding 0 0 0 5px
+            &:hover
+              color vs-orange
+            .number
+              position relative
+            .p, .v
+              color vs-orange
+              font-weight bold
+            .fees
+              margin-right 0.6rem
+              margin-left 0.6rem
+            .date
+              white-space nowrap
+          .editor
+            margin-bottom 10px
+            input[type='text']
+              vs-input()
+            .address
+              margin-left 0
+              input
+                width 100%
+            .fees
+              input
+                width 6rem

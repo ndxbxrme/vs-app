@@ -1,15 +1,11 @@
 .cases
+  // Controls
   .controls
-    display flex
-    flex-wrap wrap
-    justify-content space-between
-    margin-bottom 1rem
     .order-item, .filter-item
       display inline-block
       position relative
       color vs-orange
-      margin-left 2rem
-      margin-bottom 1rem
+      margin 0px 15px 5px 0px
       &.icon-green, &.icon-red, &.icon-orange
         padding-left 2rem
         &:before
@@ -26,78 +22,53 @@
       &.icon-orange:before
         background vs-amber
       &.selected
-        text-decoration underline
-    .showing
-        text-align right
-  table
-    border-collapse: collapse;
-    thead
-      tr
-        th
-          padding 10px
-          background vs-orange
-          text-align left
-          color white
-          font-size 2rem
-          font-weight 100
-          border-bottom 1px solid vs-grey
-    td
-      border-bottom 1px solid vs-lightgrey
-      vertical-align middle
-      padding 15px
-      .address
-        color vs-orange
-        font-weight bold
-      .dates
-        font-size 1.1rem
-        .date
-          margin-top 0.5rem
-      .milestone
-        transform translateY(1rem)
-      &.offer
-        font-weight bold
-        font-size 1.8rem
-        p
-          font-weight 300
-          font-size 1.4rem
-          margin-top 0
-      &.has-request
         font-weight 600
-    td.options
-      //vertical-align middle
-  .mobile-table
-    border 1px solid #ccc
-    .case-card
-      border-bottom 1px solid #ccc
-      padding 1rem
-      display flex
-      .address-row
-        display flex
-        flex-direction column
+      
+  // Table
+  table.table
+    margin-bottom 0px
+    tbody
+      border-top 5px solid vs-lightsilver
+      border-bottom 5px solid vs-lightsilver
+    tr 
+      td
+        vertical-align top
+        p
+          margin-bottom 0px
         .address
           color vs-orange
           font-weight bold
-        .offer
+        .dates
+          font-size 1.1rem
+          .date
+            margin-top 0.5rem
+        .milestone
+          transform translateY(1rem)
+        &.offer
           font-weight bold
           font-size 1.8rem
-      .milestone
-        flex 0
-        margin-right 2rem
-        .title
-          min-height 0!important
-  .options
-    a.button
-      display inline-block
-      white-space nowrap
-      padding 1rem
-      border 1px solid #ccc
-      border-radius 0.5rem
-      color vs-orange
-      transition all 0.4s ease-in-out
-      cursor pointer
-      &:hover
-        background vs-orange
-        color white
+          p
+            font-weight 300
+            font-size 1.4rem
+            margin-top 0
+        &.has-request
+            font-weight 600
+      &.meta
+        td
+          background vs-white
+          border-bottom 1px solid vs-grey
+          padding 10px 15px
+  .milestone
+    text-align left
+    align-items flex-start
+    margin-top -10px
+    .icon
+      height 30px
+      width 30px
+      border none
+      &:after
+        height 30px
+        width 30px
   .pagination-holder
     display flex
     justify-content center
@@ -113,7 +84,6 @@
           color #fff
   .pagination
     justify-content center
-    margin 20px 0
     text-align center
     .page
       padding 5px 10px 3px 10px

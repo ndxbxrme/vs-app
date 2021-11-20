@@ -1,0 +1,149 @@
+.case
+  .address
+    font-size 1.8rem
+    font-weight 100
+    span.right
+      float right
+      font-size 2rem
+      font-weight 800
+      color vs-orange
+  .case-row
+    margin-bottom 30px
+    padding-bottom 30px
+    border-bottom 1px solid white
+  .docs-chain
+    .drop-box
+      border 1px dashed vs-grey
+      border-radius 3px
+      background white
+      width 100%
+      text-align center
+      margin 30px 0 10px
+      padding 20px
+      &.dragover
+        h3
+          color vs-orange
+    .document
+      border 1px solid vs-lightgrey
+      border-radius 3px
+      background white
+      padding 20px
+      margin 0px 0px 10px 0px
+      font-weight 600
+      label
+        font-weight 500
+      svg
+        font-size 5rem
+      .controls
+        margin-top 10px
+    button.view-chain
+      margin-bottom 30px
+    .chain
+      position relative
+      display flex
+      flex-direction column
+      align-items center
+      .connector
+        text-align center
+        height 3rem
+        width 4rem
+        background-image url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='far' data-icon='link-simple' class='svg-inline--fa fa-link-simple' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'%3E%3Cpath fill='currentColor' d='M480 96h-104C362.8 96 352 106.8 352 120s10.75 24 24 24H480c61.75 0 112 50.25 112 112s-50.25 112-112 112h-104c-13.25 0-24 10.75-24 24S362.8 416 376 416H480c88.22 0 160-71.78 160-160S568.2 96 480 96zM264 368H160c-61.75 0-112-50.25-112-112S98.25 144 160 144h104C277.3 144 288 133.3 288 120S277.3 96 264 96H160C71.78 96 0 167.8 0 256s71.78 160 160 160h104C277.3 416 288 405.3 288 392S277.3 368 264 368zM192 256c0 13.25 10.75 24 24 24h208C437.3 280 448 269.3 448 256s-10.75-24-24-24h-208C202.8 232 192 242.8 192 256z'%3E%3C/path%3E%3C/svg%3E")
+        background-size cover
+        transform rotate(90deg)
+        position relative
+        z-index 11
+        &:first-of-type
+          display none
+      .current-property, .chain-property
+        chain-box()
+        display flex
+        color vs-grey
+        img
+          max-width 160px
+      .details
+        margin-left 1rem
+      .add-chain
+        position absolute
+        right 0px
+        top -68px
+  .contacts
+    .card
+      position relative
+      border 1px solid vs-lightgrey
+      border-radius 3px
+      background white
+      padding 20px 20px 10px 20px
+      min-height 170px
+      overflow hidden
+      div
+        margin-bottom 5px
+      .edit-btn
+        position absolute
+        top 10px
+        right 10px
+      .role
+        font-weight 600
+      .mail-link
+        width 200px
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+  .case-notes
+    border 1px solid vs-lightgrey
+    padding 20px
+    margin 10px 0
+    border-radius 3px
+    border 1px solid vs-lightsilver
+    background vs-white
+    .case-note
+      border 1px solid vs-lightgrey
+      padding 20px
+      margin 10px 0
+      border-radius 3px
+      border 1px solid vs-lightsilver
+      background white
+      .date 
+        font-weight 600
+        .edit, .delete
+          display inline
+          float right
+          color vs-orange
+          margin-left 1rem
+      p, h1, h2, h3, h4, h5, h6
+        margin 0 0 0px 0
+      img
+        margin-right 5px
+  .add-note
+    margin-top 10px
+    .CodeMirror
+      border 1px solid vs-lightgrey
+      border-radius 5px
+      background #f1f1f1
+      padding-left 15px
+      height 120px
+      pre
+        font-size 1.8rem
+    button
+      margin-top 15px
+      background vs-orange
+      color white
+      border vs-orange
+      &:hover
+        background vs-grey
+    .connector
+      height 3rem
+      border none
+      width 8rem
+      background url(./public/img/icons/commercial-chain.jpg)
+      background-size cover
+    .current-property, .chain-property
+      chain-box()
+      max-width 420px
+      display flex
+      color vs-grey
+      img
+        max-width 160px
+      .details
+        margin-left 1rem
+    .add-chain
+      z-index 10

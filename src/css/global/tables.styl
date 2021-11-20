@@ -25,9 +25,27 @@
       cursor pointer
 
 table.table
-  margin-bottom 0
+  width 100%
+  border-spacing: 0
+  border-radius 3px
+  margin-bottom 30px
+  position relative
+  box-sizing border-box
+  overflow hidden
   &>:not(:first-child)
     border none
+  thead
+    th
+      padding 20px
+      background vs-grey
+      text-align center
+      color white
+      font-size 2rem
+      font-weight 100
+      border-bottom 1px solid vs-lightgrey
+  tbody
+    tr td
+      background: white
   th, td
     padding 15px
     text-align left

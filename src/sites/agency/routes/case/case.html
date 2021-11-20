@@ -1,82 +1,130 @@
 
 <div class="case">
-  <h1>Case <span class="address">- {{property.item.displayAddress}}<span class="right">{{property.item.$case.item.offer.Value | currency : "£" : 0}}</span></span></h1>
-  <h2 ng-show="property.item.$case.item.override.reason===&quot;fallenThrough&quot;">Fallen through</h2>
-  <div class="advance-request" ng-repeat="request in property.item.$case.item.advanceRequests | filter:{dismissed:&quot;!true&quot;,applied:&quot;!true&quot;}">
-    <div class="left">Requested to be advanced to {{request.advanceTo | date:'mediumDate'}} by <img gravatar-src="request.user.local.email"/>{{request.user.displayName || request.user.local.email}}</div>
-    <div class="admin-request" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">
-      <button ng-click="applyRequest(request)">Apply</button>
-      <button ng-click="request.dismissed=true;property.item.$case.save()">Dismiss</button>
-    </div>
-  </div>
-  <agency-progression ng-repeat="progression in property.item.$case.item.progressions" data="progression"></agency-progression>
-  <button class="has-dropdown" ng-focus="progBtnFocussed=true" ng-blur="hideDropdown(&quot;progBtnFocussed&quot;)" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">Add Progression</button>
-  <ul class="dropdown" ng-show="progBtnFocussed">
-    <li ng-repeat="progression in progressions.items"><a href="" ng-click="addProgression(progression)">{{progression.name}}, {{progression.side}}</a></li>
-  </ul>
-  <button ng-hide="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="advanceProgression()">Advance all milestones</button>
-  <button ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="fallenThrough()">Fallen through</button>
-  <h2>Chain</h2>
-  <button class="view-chain" ng-click="showChain = !showChain">{{showChain?'Hide':'View'}} Chain</button>
-  <div class="chain" ng-show="showChain">
-    <button class="add-chain" ng-click="addChain(property.item.$case.item.chainBuyer, &quot;buyer&quot;)">Add to chain</button>
-    <div class="connector"></div>
-    <chain-item ng-repeat="item in property.item.$case.item.chainBuyer | orderBy:&quot;-&quot;"></chain-item>
-    <div class="current-property"> 
-      <div class="image"><img ng-src="{{property.item.Images[0].Url}}"/></div>
-      <div class="details">
-        <div class="address">{{property.item.displayAddress}}</div>
-        <div class="price">{{property.item.$case.item.offer.Value | currency: '£': 0}}</div>
+  <div class="container">
+    <div class="row case-progressions case-row">
+      <div class="col">
+        <h1>Case <span class="address">- {{property.item.displayAddress}}<span class="right">{{property.item.$case.item.offer.Value | currency : "£" : 0}}</span></span></h1>
+        <h2 ng-show="property.item.$case.item.override.reason===&quot;fallenThrough&quot;">Fallen through</h2>
+        <div class="advance-request" ng-repeat="request in property.item.$case.item.advanceRequests | filter:{dismissed:&quot;!true&quot;,applied:&quot;!true&quot;}">
+          <div class="left">Requested to be advanced to {{request.advanceTo | date:'mediumDate'}} by <img gravatar-src="request.user.local.email"/>{{request.user.displayName || request.user.local.email}}</div>
+          <div class="admin-request" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">
+            <button ng-click="applyRequest(request)">Apply</button>
+            <button ng-click="request.dismissed=true;property.item.$case.save()">Dismiss</button>
+          </div>
+        </div>
+        <agency-progression ng-repeat="progression in property.item.$case.item.progressions" data="progression"></agency-progression>
+        <button class="has-dropdown" ng-focus="progBtnFocussed=true" ng-blur="hideDropdown(&quot;progBtnFocussed&quot;)" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">Add Progression</button>
+        <ul class="dropdown" ng-show="progBtnFocussed">
+          <li ng-repeat="progression in progressions.items"><a href="" ng-click="addProgression(progression)">{{progression.name}}, {{progression.side}}</a></li>
+        </ul>
+        <button ng-hide="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="advanceProgression()">Advance all milestones</button>
+        <button ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="fallenThrough()">Fallen through</button>
       </div>
     </div>
-    <div class="connector"></div>
-    <chain-item ng-repeat="item in property.item.$case.item.chainSeller"></chain-item>
-    <button class="add-chain" ng-click="addChain(property.item.$case.item.chainSeller, &quot;seller&quot;)">Add to chain</button>
-  </div>
-  <h2>Documents<sup ng-show="property.item.$case.item.documents.length">{{property.item.$case.item.documents.length}}</sup></h2>
-  <button class="view-documents" ng-click="showDocuments = !showDocuments">{{showDocuments?'Hide':'View'}} Documents</button>
-  <div class="documents" ng-show="showDocuments">
-    <div class="drop-box" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
-      <h3>Drop files here to upload</h3>
-      <button class="file-upload" type="file" ngf-select="uploadFiles($file, $invalidFiles)">Or click here to choose</button>
-    </div>
-    <div class="document-list" ng-show="property.item.$case.item.documents.length">
-      <div class="document" ng-repeat="document in property.item.$case.item.documents"><a class="document-link" ng-href="{{makeDownloadUrl('agency',document)}}" target="_self"><img ng-src="{{makeDownloadUrl('agency',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
-          <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;"><img class="logo" src="public/img/icons/vs-document.png"/></div></a>
-        <div class="filename"> 
-          <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
-          <input type="text" ng-model="document.name" ng-show="document.editing" placeholder="Name"/>
+
+    <div class="row docs-chain case-row">
+      <!-- Docs -->
+      <div class="col-sm-6">
+        <h2>Documents<sup ng-show="property.item.$case.item.documents.length">{{property.item.$case.item.documents.length}}</sup></h2>
+        <button class="view-documents" ng-click="showDocuments = !showDocuments">{{showDocuments?'Hide':'View'}} Documents</button>
+        <div class="documents" ng-show="showDocuments">
+          <div class="drop-box" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
+            <h3>Drop files here to upload</h3>
+            <button class="file-upload" type="file" ngf-select="uploadFiles($file, $invalidFiles)">Or click here to choose</button>
+          </div>
+          <div class="document-list" ng-show="property.item.$case.item.documents.length">
+            
+            <div class="document row" ng-repeat="document in property.item.$case.item.documents">
+              <div class="col-2">
+                <a class="document-link" ng-href="{{makeDownloadUrl('agency',document)}}" target="_self">
+                  <img ng-src="{{makeDownloadUrl('agency',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
+                  <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;">
+                    <i class="fa-duotone fa-file-lines"></i>
+                  </div>
+                </a>
+              </div>
+              <div class="col-10">
+                <div class="filename"> 
+                  <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
+                  <input type="text" ng-model="document.name" ng-show="document.editing" placeholder="Name"/>
+                </div>
+                <div class="by"> 
+                  <label>Created by:</label> {{document.user.local.email}}
+                </div>
+                <div class="on"> 
+                  <label>Created on:</label> {{document.date | date:'mediumDate'}}, {{document.date | date:'shortTime'}}
+                </div>
+                <div class="controls" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">
+                  <a class="edit small button" href="" ng-click="document.editing=!document.editing" ng-show="!document.editing">Edit</a>
+                  <a class="save small button button-alt" href="" ng-click="saveDocument(document)" ng-show="document.editing">Save</a>
+                  <a class="delete small button button-grey" href="" ng-click="deleteDocument(document)">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="by"> 
-          <label>Created by: </label>{{document.user.local.email}}
+      </div>
+      <!-- Chain -->
+      <div class="col-sm-6">
+        <h2>Chain</h2>
+        <button class="view-chain" ng-click="showChain = !showChain">{{showChain?'Hide':'View'}} Chain</button>
+        
+        <div class="chain" ng-show="showChain">
+          <button class="add-chain" ng-click="addChain(property.item.$case.item.chainBuyer, &quot;buyer&quot;)">Add to chain</button>
+          <div class="connector"></div>
+          
+          <chain-item ng-repeat="item in property.item.$case.item.chainBuyer | orderBy:&quot;-&quot;"></chain-item>
+          
+          <div class="current-property"> 
+            <div class="image"><img ng-src="{{property.item.Images[0].Url}}"/></div>
+            <div class="details">
+              <div class="address">{{property.item.displayAddress}}</div>
+              <div class="price">{{property.item.$case.item.offer.Value | currency: '£': 0}}</div>
+            </div>
+          </div>
+          
+          <div class="connector"></div>
+          
+          <chain-item ng-repeat="item in property.item.$case.item.chainSeller"></chain-item>
+          
+          <button class="add-chain" ng-click="addChain(property.item.$case.item.chainSeller, &quot;seller&quot;)">Add to chain</button>
         </div>
-        <div class="on"> 
-          <label>Created on: </label>{{document.date | date:'mediumDate'}}, {{document.date | date:'shortTime'}}
-        </div>
-        <div class="controls" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])"><a class="edit" href="" ng-click="document.editing=!document.editing" ng-show="!document.editing">Edit</a><a class="save" href="" ng-click="saveDocument(document)" ng-show="document.editing">Save</a><a class="delete" href="" ng-click="deleteDocument(document)">Delete</a></div>
       </div>
     </div>
-  </div>
-  <div class="contacts row">
-    <contact-details title="Vendor's Solicitor"></contact-details>
-    <contact-details title="Vendor's Contact"></contact-details>
-    <contact-details title="Purchaser's Solicitor"></contact-details>
-    <contact-details title="Purchaser's Contact"></contact-details>
-  </div>
-  <div class="case-notes">
-    <h2 class="orange">Case Notes</h2>
-    <div class="case-note" ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)">
-      <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a class="delete" href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo">Delete</a><a class="edit" href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo">Edit</a></div>
-      <div class="note"> 
-        <div class="details"><span ng-show="note.side">- {{note.side}}</span>
-          <div class="note-body" ng-bind-html="note.text | markdown:true"></div>
+
+    
+    <div class="contacts">
+      <div class="row case-row">
+        <div class="col-md-3 col-sm-6">
+          <contact-details title="Vendor's Solicitor"></contact-details>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <contact-details title="Vendor's Contact"></contact-details>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <contact-details title="Purchaser's Solicitor"></contact-details>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <contact-details title="Purchaser's Contact"></contact-details>
         </div>
       </div>
     </div>
-    <pagination class="pagination-sm pagination" total="notesData.length" ng-model="notesPage" page-size="notesLimit"></pagination>
-    <div class="add-note">
-      <code-mirror ng-model="note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
-      <button ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
+
+    <div class="case-notes">
+      <h2 class="orange">Case Notes</h2>
+      <div class="case-note" ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)">
+        <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a class="delete" href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo">Delete</a><a class="edit" href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo">Edit</a></div>
+        <div class="note"> 
+          <div class="details"><span ng-show="note.side">- {{note.side}}</span>
+            <div class="note-body" ng-bind-html="note.text | markdown:true"></div>
+          </div>
+        </div>
+      </div>
+      <pagination class="pagination-sm pagination" total="notesData.length" ng-model="notesPage" page-size="notesLimit"></pagination>
+      <div class="add-note">
+        <code-mirror ng-model="note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
+        <button ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
+      </div>
     </div>
   </div>
 </div>

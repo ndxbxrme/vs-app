@@ -22,7 +22,7 @@ vs-button()
 vs-button-alt()
   display inline-block
   white-space nowrap
-  padding: 10px 30px;
+  padding 10px 30px
   border 1px solid #ccc
   border-radius 0.2rem
   color vs-orange
@@ -42,7 +42,7 @@ vs-button-alt()
 vs-button-green()
   display inline-block
   white-space nowrap
-  padding: 10px 30px;
+  padding 10px 30px
   border none
   border-radius 0.2rem
   background #00A685
@@ -56,7 +56,7 @@ vs-button-green()
 vs-button-grey()
   display inline-block
   white-space nowrap
-  padding: 10px 30px;
+  padding 10px 30px
   border none
   border-radius 0.2rem
   background vs-grey
@@ -75,7 +75,10 @@ no-select()
   -ms-user-select none
   user-select none
 
-button, input[type=submit], input[type=button]
+button, 
+input[type=submit], 
+input[type=button]
+.button
   vs-button()
   text-transform uppercase
   &.button-alt
@@ -86,3 +89,5 @@ button, input[type=submit], input[type=button]
     vs-button-grey()
   svg
     margin-right 5px
+  &.small
+    padding 5px 15px
