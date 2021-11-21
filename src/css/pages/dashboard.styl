@@ -1,10 +1,11 @@
-.dashboard
-.lettings-dashboard-route
+.dashboard,
+.lettings-dashboard-route,
+.leads-dashboard-route
   .currency
     width 8rem
     display inline-block
     text-align right
-  .overview, .income
+  .overview, .income, .selling, .letting, .valuation 
     width 100%
     border-spacing 0
     border-radius 3px
@@ -12,11 +13,13 @@
     position relative
     box-sizing border-box
     overflow hidden
-    .tr
+    .tr, tr
       &.head-two, &.total
-        .td 
+        .td, td
           font-weight 600
           background vs-tablegrey
+      .td, td
+        text-align center
   .summary
     width: 100%
     margin-bottom 30px

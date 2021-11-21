@@ -1,44 +1,15 @@
-@import '../../variables'
 .leads-route
-  .orangebtn
-    background vs-orange
-    color white
-    text-transform uppercase
-    .fa
-      margin-left 10px
-      font-size 1.8rem
-      vertical-align middle
-  .sort
-    font-weight 800
-    a 
+  // Controls
+  .controls
+    .order-item
+      display inline-block
+      position relative
       color vs-orange
-      font-weight 300
-  .search-box
-    width 23rem
-    margin-bottom 30px
-    .total
-      text-align right
-  .options
-    width 1%
-  .row
-    justify-content space-between
-  thead
-    background vs-orange
-    th
-      text-align center
-      color white
+      margin 0px 15px 5px 0px
+      &.sorting
+        font-weight 600
   td
-    vertical-align middle
-    a 
-      color vs-orange
-      font-weight 600
-      transition color 0.4s ease-in-out
-      &:hover
-        color vs-grey
     &.source
-      color vs-orange
-      text-transform uppercase
-      font-size 10px
       .rightmove
         background url(./public/img/rm-logo.svg) center no-repeat
         background-size 100px 30px
@@ -47,6 +18,7 @@
         display block
         margin 0 auto
       .gravity
+        background url(./public/img/vitalspace-logo-leads.svg) center no-repeat
         background-size 100px 30px
         width 100px
         height 30px
@@ -83,6 +55,3 @@
         display block
         margin 0 auto
         zoom .4
-      @media screen and (max-width:47rem)
-        .rightmove, .gravity
-          display table-cell
