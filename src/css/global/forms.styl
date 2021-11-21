@@ -1,63 +1,109 @@
-@import '../variables'
+@import 'variables'
+body
+  .form-holder
+    border 1px solid vs-lightgrey
+    border-radius 3px
+    background white
+    padding 40px
+  input[type=text], input[type=email], input[type=password], input[type=date], select, textarea
+    border 1px solid vs-lightgrey
+    border-radius 3px
+    background vs-tablegrey
+    margin-bottom 1rem
+    padding .8rem
+    appearance none
+    width: 100%
+    line-height 1.5
+  select
+    background-image url('./public/img/icons/dropdown-arrow.svg')
+    background-position calc(100% - 10px) center
+    background-repeat no-repeat
+    background-size 10px
+    outline none
+  label 
+    margin-bottom 5px
 
-input[type=text], input[type=email], input[type=password], select, textarea
-  border 1px solid vs-lightgrey
-  border-radius 3px
-  background vs-tablegrey
-  margin-bottom .5rem
-  padding .8rem
-  appearance none
-  width: 100%
-label 
-  margin-bottom 5px
+  // Checkbox / Radios
+  .checkbox-holder
+    margin-bottom 20px
+  .checkbox-label
+    margin-right 10px
+  input[type="radio"],
+  input[type="checkbox"]
+    position relative
+    cursor pointer
+    margin-right 5px
+    height 22px
+    width 22px
+    opacity 1
+    border 2px solid vs-grey
+    border-radius 11px
+    display inline-flex
+    justify-content center
+    align-items center
+    &:before
+      content ''
+      display block
+      margin-top 0px
+      width 13px
+      height 13px
+      background white
+      border-radius 15px
+      transition all 0.4s ease-in-out
+    &:focus:before
+      box-shadow 0 0 0 3px rgba(0, 0, 0, 0.12)
+    &:checked:before
+      border 8px solid vs-orange
+    &:disabled
+      color #b8b8b8
+      cursor auto
+      &:before
+        box-shadow none
+        background #ddd
+    &:checked:after
+      content ''
+    :checked + span
+      color vs-lightgrey
 
-.form-row
-  display flex
-  flex-wrap wrap
-  .form-label
-    width 20%
-    padding-top 3.6rem
-    @media screen and (max-width: 740px)
-      display none
-  .form-item
-    display flex
-    flex-direction column
-    flex 1
-    margin-left 1.6rem
-    margin-bottom 1.6rem
-  .address, .user
-    flex 1
-  .user
-    display flex
-    flex-wrap wrap
-.panel
-  .controls
+  // Template Forms
+  .CodeMirror, .email-preview, .sms-preview
+    border 1px solid vs-lightgrey
+    border-radius 3px
+    background vs-tablegrey
+    padding 20px
+    iframe
+      border 1px solid vs-lightgrey
+      width 100%
+      min-height 600px
+
+  .panel
+    .controls
+      width 100%
+      display flex
+      justify-content flex-end
+      .btn
+        margin-left 1rem
+    h2, h3, h4
+      width 100%
+      padding 1.6rem 1.02rem 0 1.02rem
+      margin 0
+    .row
+      h3
+        flex 1
+      
+  .SumoSelect
     width 100%
-    display flex
-    justify-content flex-end
-    .btn
-      margin-left 1rem
-  h2, h3, h4
-    width 100%
-    padding 1.6rem 1.02rem 0 1.02rem
-    margin 0
-  .row
-    h3
-      flex 1
-    
-.SumoSelect
-  width 100%
-  height 4.4rem
-  .SelectBox
     height 4.4rem
-    line-height 4.4rem
-    padding 0 1.28rem .1rem
-  .CaptionCont
-    border .1rem solid #d7dadd
-    font-size 1.6rem
-    background-color vs-brightwhite
-    .placeholder
-      color rgba(57,74,88,.618)!important
-      font-style normal!important
-.optWrapper
-  top 4.4rem!important
+    .SelectBox
+      height 4.4rem
+      line-height 4.4rem
+      padding 0 1.28rem .1rem
+    .CaptionCont
+      border .1rem solid #d7dadd
+      font-size 1.6rem
+      background-color vs-brightwhite
+      .placeholder
+        color rgba(57,74,88,.618)!important
+        font-style normal!important
+  .optWrapper
+    top 4.4rem!important

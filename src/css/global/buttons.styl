@@ -1,93 +1,94 @@
-@import '../variables'
-vs-button()
-  display inline-block
-  white-space nowrap
-  padding 10px 30px
-  border none
-  border-radius 0.2rem
-  color white
-  background vs-orange
-  transition all 0.4s ease-in-out
-  outline none
-  cursor default
-  font-size 1.4rem
-  &:hover
-    background vs-grey
-    color white
-  &:disabled
-    opacity 0.4
-    &:hover
-      background white
-      color vs-orange
-vs-button-alt()
-  display inline-block
-  white-space nowrap
-  padding 10px 30px
-  border 1px solid #ccc
-  border-radius 0.2rem
-  color vs-orange
-  background white
-  transition all 0.4s ease-in-out
-  outline none
-  cursor default
-  font-size 1.4rem
-  &:hover
-    background vs-orange
-    color white
-  &:disabled
-    opacity 0.4
-    &:hover
-      background white
-      color vs-orange
-vs-button-green()
-  display inline-block
-  white-space nowrap
-  padding 10px 30px
-  border none
-  border-radius 0.2rem
-  background #00A685
-  color white
-  transition all 0.4s ease-in-out
-  outline none
-  cursor default
-  font-size 1.6rem
-  &:hover
-    background vs-grey
-vs-button-grey()
-  display inline-block
-  white-space nowrap
-  padding 10px 30px
-  border none
-  border-radius 0.2rem
-  background vs-grey
-  color white
-  transition all 0.4s ease-in-out
-  outline none
-  cursor default
-  font-size 1.4rem
-  &:hover
-    background vs-orange
-no-select()
-  -webkit-touch-callout none
-  -webkit-user-select none
-  -khtml-user-select none
-  -moz-user-select none
-  -ms-user-select none
-  user-select none
-
-button, 
-input[type=submit], 
-input[type=button]
-.button
+@import 'variables'
+body
   vs-button()
-  text-transform uppercase
-  &.button-alt
-    vs-button-alt()
-  &.button-green
-    vs-button-green()
-  &.button-grey
-    vs-button-grey()
-  svg
-    margin-right 5px
-  &.small
-    padding 5px 15px
+    display inline-block
+    white-space nowrap
+    padding 10px 30px
+    border none
+    border-radius 0.2rem
+    color white
+    background vs-orange
+    transition all 0.4s ease-in-out
+    outline none
+    cursor default
+    font-size 1.4rem
+    &:hover
+      background vs-grey
+      color white
+    &:disabled
+      opacity 0.4
+      &:hover
+        background white
+        color vs-orange
+  vs-button-alt()
+    display inline-block
+    white-space nowrap
+    padding 10px 30px
+    border 1px solid #ccc
+    border-radius 0.2rem
+    color vs-orange
+    background white
+    transition all 0.4s ease-in-out
+    outline none
+    cursor default
+    font-size 1.4rem
+    &:hover
+      background vs-orange
+      color white
+    &:disabled
+      opacity 0.4
+      &:hover
+        background white
+        color vs-orange
+  vs-button-green()
+    display inline-block
+    white-space nowrap
+    padding 10px 30px
+    border none
+    border-radius 0.2rem
+    background #00A685
+    color white
+    transition all 0.4s ease-in-out
+    outline none
+    cursor default
+    font-size 1.6rem
+    &:hover
+      background vs-grey
+  vs-button-grey()
+    display inline-block
+    white-space nowrap
+    padding 10px 30px
+    border none
+    border-radius 0.2rem
+    background vs-grey
+    color white
+    transition all 0.4s ease-in-out
+    outline none
+    cursor default
+    font-size 1.4rem
+    &:hover
+      background vs-orange
+  no-select()
+    -webkit-touch-callout none
+    -webkit-user-select none
+    -khtml-user-select none
+    -moz-user-select none
+    -ms-user-select none
+    user-select none
+
+  button, 
+  input[type=submit], 
+  input[type=button]
+  .button
+    vs-button()
+    text-transform uppercase
+    &.button-alt
+      vs-button-alt()
+    &.button-green
+      vs-button-green()
+    &.button-grey
+      vs-button-grey()
+    svg
+      margin-right 5px
+    &.small
+      padding 5px 15px

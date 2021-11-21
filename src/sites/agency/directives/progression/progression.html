@@ -29,24 +29,24 @@
         </span>
         <span class="controls">
           <a href="" ng-click="edit();"><i class="fa-light fa-pen-circle"></i></a>
-        </div>
+        </span>
       </div>
     </div>
 
     <div class="heading row" ng-show="editing()">
-      <div class="inputs">
-        <label><span>Name</span>
+      <div class="inputs col-sm-6">
+        <label>
           <input type="text" ng-model="progression.name" placeholder="Name"/>
         </label>
-        <label for="default{{$index}}"><span>Default</span>
+        <label class="checkbox-label" for="default{{$index}}"><span>Default</span>
           <input type="checkbox" id="default{{$index}}" ng-model="progression.isdefault"/>
         </label>
       </div>
-      <div class="btn-group">
+      <div class="btn-group col-sm-6 text-end">
         <input type="radio" name="side{{$index}}" id="side-buyer{{$index}}" ng-model="progression.side" value="Buyer"/>
-        <label for="side-buyer{{$index}}">Buyer</label>
+        <label class="checkbox-label" for="side-buyer{{$index}}">Buyer</label>
         <input type="radio" name="side{{$index}}" id="side-seller{{$index}}" ng-model="progression.side" value="Seller"/>
-        <label for="side-seller{{$index}}">Seller</label>
+        <label class="checkbox-label" for="side-seller{{$index}}">Seller</label>
       </div>
     </div>
 

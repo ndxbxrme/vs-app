@@ -1,0 +1,67 @@
+.dashboard
+.lettings-dashboard-route
+  .currency
+    width 8rem
+    display inline-block
+    text-align right
+  .overview, .income
+    width 100%
+    border-spacing 0
+    border-radius 3px
+    margin-bottom 30px
+    position relative
+    box-sizing border-box
+    overflow hidden
+    .tr
+      &.head-two, &.total
+        .td 
+          font-weight 600
+          background vs-tablegrey
+  .summary
+    width: 100%
+    margin-bottom 30px
+    th
+      vertical-align bottom
+      font-size 1.2rem
+      font-weight 600
+      line-height 1rem
+      padding 10px
+      height 190px
+      white-space nowrap
+      &:last-of-type
+        width 70px
+    tr td
+      border 1px solid vs-lightgrey
+      vertical-align middle
+      position relative
+      padding 10px
+    p.service-level
+      position absolute
+      top 3px
+      right 3px
+      color vs-orange
+      font-weight 900
+    a.sort
+      color vs-orange
+      display block
+      &.rotate
+        transform rotate(-60deg)
+        width 20px
+    .rotate
+      transform rotate(-60deg)
+      width 20px
+      font-weight 600
+    svg.fa-times
+      background-color vs-red
+      color white
+      line-height 1
+      padding 7px 10px
+      border-radius 5px
+    svg.fa-check
+      background-color vs-green
+      color white
+      line-height 1
+      padding 7px
+      border-radius 50px
+        
+        

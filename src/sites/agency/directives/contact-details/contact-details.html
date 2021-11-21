@@ -14,12 +14,13 @@
       </div>
       <div class="communication">
         
-        <div class="contact-telephone" ng-show="data().telephone || editing"><span ng-hide="editing"><i class="fa-light fa-phone-rotary"></i> {{data().telephone}}</span>
+        <div class="contact-telephone" ng-show="data().telephone || editing">
+          <span ng-hide="editing"><i class="fa-light fa-phone-rotary"></i> {{data().telephone}}</span>
           <input type="text" ng-model="data().telephone" ng-show="editing" placeholder="Telephone"/>
         </div>
         
-        <div class="contact-email" ng-show="data().email || editing"><span ng-hide="editing"> <a class="mail-link" href="mailto:{{data().email}}"><i class="fa-light fa-circle-envelope"></i> {{data().email}}</a></span>
-          
+        <div class="contact-email" ng-show="data().email || editing">
+          <span ng-hide="editing"><a class="mail-link" href="mailto:{{data().email}}"><i class="fa-light fa-circle-envelope"></i> {{data().email}}</a></span>
           <input type="email" ng-model="data().email" ng-show="editing" placeholder="Email"/>
         </div>
       </div>
