@@ -53,3 +53,66 @@ body
       padding 15px
       text-align left
       border-bottom 1px solid vs-lightgrey
+  
+  // Leads Tables
+  .list-table
+    .squish
+      width 1%
+    td.num, th.num
+      text-align left
+        &.sorting
+          span
+            color vs-orange
+            &:before
+              opacity 0
+              transform translateY(.3rem)
+            &:after
+              opacity 1
+              border-bottom-color vs-orange
+              transform translateY(.3rem)
+        &.desc.sorting
+          span
+            &:before
+              opacity 1
+              border-top-color vs-orange
+              transform translateY(-.3rem)
+            &:after
+              opacity 0
+              transform translateY(-.3rem)
+              
+    tbody
+      tr
+        label
+          display none
+          
+    @media screen and (max-width: 47rem)
+      display block
+      .status, .date
+        text-align left
+      thead
+        th
+          display none
+      tbody
+        display block
+        tr
+          td
+            display table-row
+            width 100%
+            max-width 100%
+            &:last-of-type
+              border-right none!important
+            &.options
+              width 100%
+              text-align center
+              label
+                display none
+            label
+              display table-cell
+              width 14rem
+              font-size 1.28rem
+              color #9a9b9c
+            span
+              display table-cell
+              vertical-align top
+            a
+              display table-cell

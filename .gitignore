@@ -11,10 +11,5 @@ prepare.js
 socket-test.js
 update_styles.js
 src/token.js
-src/public
 update-messages.js
-!app/
-app/*
-!app/public
-!app/third-party
 package-lock.json
