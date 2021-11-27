@@ -1,24 +1,24 @@
 
 <div class="landlord-route route">
-  <h1>{{ m('landlord-heading') }}</h1>
+  <h1>{{ mml('landlord-heading') }}</h1>
   <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('landlord')">
     <div class="form-section">
       <div ng-class="{warning: submitted &amp;&amp; myForm.name.$invalid}" class="form-item c-input name   ">
-        <label class="label">{{ m('landlord-name-label') }}</label>
-        <input type="text" name="name" ng-model="landlord.item.name" placeholder="{{ m('landlord-name-placeholder') }}" title="{{ m('landlord-name-label') }}" ng-disabled="disabled"/>
+        <label class="label">{{ mml('landlord-name-label') }}</label>
+        <input type="text" name="name" ng-model="landlord.item.name" placeholder="{{ mml('landlord-name-placeholder') }}" title="{{ mml('landlord-name-label') }}" ng-disabled="disabled"/>
       </div>
       <div ng-class="{warning: submitted &amp;&amp; myForm.phone.$invalid}" class="form-item c-input phone   ">
-        <label class="label">{{ m('landlord-phone-label') }}</label>
-        <input type="text" name="phone" ng-model="landlord.item.phone" placeholder="{{ m('landlord-phone-placeholder') }}" title="{{ m('landlord-phone-label') }}" ng-disabled="disabled"/>
+        <label class="label">{{ mml('landlord-phone-label') }}</label>
+        <input type="text" name="phone" ng-model="landlord.item.phone" placeholder="{{ mml('landlord-phone-placeholder') }}" title="{{ mml('landlord-phone-label') }}" ng-disabled="disabled"/>
       </div>
       <div ng-class="{warning: submitted &amp;&amp; myForm.email.$invalid}" class="form-item c-input email   ">
-        <label class="label">{{ m('landlord-email-label') }}</label>
-        <input type="email" name="email" ng-model="landlord.item.email" placeholder="{{ m('landlord-email-placeholder') }}" title="{{ m('landlord-email-label') }}" ng-disabled="disabled"/>
+        <label class="label">{{ mml('landlord-email-label') }}</label>
+        <input type="email" name="email" ng-model="landlord.item.email" placeholder="{{ mml('landlord-email-placeholder') }}" title="{{ mml('landlord-email-label') }}" ng-disabled="disabled"/>
       </div>
       <div ng-class="{warning: submitted &amp;&amp; myForm.addresses.$invalid}" class="form-item c-select addresses   ">
-        <label class="label">{{ m('landlord-addresses-label') }}</label>
+        <label class="label">{{ mml('landlord-addresses-label') }}</label>
         <div class="input-holder">
-          <select sumoselect="{placeholder:m('landlord-addresses-placeholder'), search:true}" ng-model="landlord.item.addresses" name="addresses" ng-disabled="disabled" multiple="multiple">
+          <select sumoselect="{placeholder:mml('landlord-addresses-placeholder'), search:true}" ng-model="landlord.item.addresses" name="addresses" ng-disabled="disabled" multiple="multiple">
             <option ng-repeat="addresses in addresses" value="{{addresses._id}}" ng-disabled="addresses.disabled" ng-hide="addresses.hidden">{{ addresses.name }}</option>
           </select>
         </div>
@@ -28,8 +28,8 @@
       </div>
     </div>
     <div class="controls">
-      <button type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)" class="btn cancel">{{ m('forms-cancel') }}</button>
-      <input type="submit" value="{{ m('forms-submit') }}" ng-disabled="disabled || myForm.$pristine" class="btn button-alt"/>
+      <button type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)" class="btn cancel">{{ mml('forms-cancel') }}</button>
+      <input type="submit" value="{{ mml('forms-submit') }}" ng-disabled="disabled || myForm.$pristine" class="btn button-alt"/>
     </div>
   </form>
 </div>

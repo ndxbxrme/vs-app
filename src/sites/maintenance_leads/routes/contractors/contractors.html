@@ -2,8 +2,8 @@
 <div class="contractors-route route">
   <div class="space-between">
     <div class="left">
-      <h1>{{ m('contractors-heading') }}</h1>
-      <button ui-sref="maintenance_leads_contractor({_id:&quot;&quot;})" class="button-green"> <i class="fas fa-plus"> </i>{{ m('contractors-button-new') }}</button>
+      <h1>{{ mml('contractors-heading') }}</h1>
+      <button ui-sref="maintenance_leads_contractor({_id:&quot;&quot;})" class="button-green"> <i class="fas fa-plus"> </i>{{ mml('contractors-button-new') }}</button>
     </div>
     <div class="right"> 
       <div class="search">
@@ -31,6 +31,6 @@
       </div>
     </div>
   </div>
-  <div ng-show="!filterData.length" class="empty-table">{{ m('contractors-empty-table') }}</div>
+  <div ng-show="!filterData.length" class="empty-table">{{ mml('contractors-empty-table') }}</div>
   <pagination ng-model="contractors.args.page" total="contractors.total" page-size="contractors.args.pageSize"></pagination>
 </div>
