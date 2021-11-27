@@ -1,65 +1,65 @@
 
 <div ng-show="fetched" class="issue-route route">
   <div ng-if="!issue.item._id || editing" class="add-edit">
-    <h1 ng-show="!editing">{{ m('issue-heading-add') }}</h1>
-    <h1 ng-show="editing">{{ m('issue-heading-edit') }}</h1>
+    <h1 ng-show="!editing">{{ mml('issue-heading-add') }}</h1>
+    <h1 ng-show="editing">{{ mml('issue-heading-edit') }}</h1>
     <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('issue')">
       <div class="form-section">
-        <div class="form-label">{{ m('issue-label-source') }}</div>
+        <div class="form-label">{{ mml('issue-label-source') }}</div>
         <div class="form-controls">
           <div ng-class="{warning: submitted &amp;&amp; myForm.source.$invalid}" class="form-item c-select source required no-label ">
             <div class="input-holder">
-              <select sumoselect="{placeholder:m('issue-source-placeholder'), search:true}" ng-model="issue.item.source" name="source" ng-disabled="disabled" required="required">
+              <select sumoselect="{placeholder:mml('issue-source-placeholder'), search:true}" ng-model="issue.item.source" name="source" ng-disabled="disabled" required="required">
                 <option ng-repeat="source in sources" value="{{source._id}}" ng-disabled="source.disabled" ng-hide="source.hidden">{{ source.name }}</option>
               </select>
             </div>
-            <p ng-show="submitted &amp;&amp; myForm.source.$error.required" class="error">{{ m('issue-source-error-required') }}</p>
+            <p ng-show="submitted &amp;&amp; myForm.source.$error.required" class="error">{{ mml('issue-source-error-required') }}</p>
           </div>
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label">{{ m('issue-label-tenant') }}</div>
+        <div class="form-label">{{ mml('issue-label-tenant') }}</div>
         <div class="form-controls">
           <div class="third">
             <div ng-class="{warning: submitted &amp;&amp; myForm.tenantTitle.$invalid}" class="form-item c-input tenantTitle required  ">
-              <label class="label">{{ m('issue-tenantTitle-label') }}</label>
-              <input type="text" name="tenantTitle" ng-model="issue.item.tenantTitle" placeholder="{{ m('issue-tenantTitle-placeholder') }}" title="{{ m('issue-tenantTitle-label') }}" ng-disabled="disabled" required="required"/>
-              <p ng-show="submitted &amp;&amp; myForm.tenantTitle.$error.required" class="error">{{ m('issue-tenantTitle-error-required') }}    </p>
+              <label class="label">{{ mml('issue-tenantTitle-label') }}</label>
+              <input type="text" name="tenantTitle" ng-model="issue.item.tenantTitle" placeholder="{{ mml('issue-tenantTitle-placeholder') }}" title="{{ mml('issue-tenantTitle-label') }}" ng-disabled="disabled" required="required"/>
+              <p ng-show="submitted &amp;&amp; myForm.tenantTitle.$error.required" class="error">{{ mml('issue-tenantTitle-error-required') }}    </p>
             </div>
           </div>
           <div class="third">
             <div ng-class="{warning: submitted &amp;&amp; myForm.tenantFirstName.$invalid}" class="form-item c-input tenantFirstName required  ">
-              <label class="label">{{ m('issue-tenantFirstName-label') }}</label>
-              <input type="text" name="tenantFirstName" ng-model="issue.item.tenantFirstName" placeholder="{{ m('issue-tenantFirstName-placeholder') }}" title="{{ m('issue-tenantFirstName-label') }}" ng-disabled="disabled" required="required"/>
-              <p ng-show="submitted &amp;&amp; myForm.tenantFirstName.$error.required" class="error">{{ m('issue-tenantFirstName-error-required') }}    </p>
+              <label class="label">{{ mml('issue-tenantFirstName-label') }}</label>
+              <input type="text" name="tenantFirstName" ng-model="issue.item.tenantFirstName" placeholder="{{ mml('issue-tenantFirstName-placeholder') }}" title="{{ mml('issue-tenantFirstName-label') }}" ng-disabled="disabled" required="required"/>
+              <p ng-show="submitted &amp;&amp; myForm.tenantFirstName.$error.required" class="error">{{ mml('issue-tenantFirstName-error-required') }}    </p>
             </div>
           </div>
           <div class="third">
             <div ng-class="{warning: submitted &amp;&amp; myForm.tenantLastName.$invalid}" class="form-item c-input tenantLastName required  ">
-              <label class="label">{{ m('issue-tenantLastName-label') }}</label>
-              <input type="text" name="tenantLastName" ng-model="issue.item.tenantLastName" placeholder="{{ m('issue-tenantLastName-placeholder') }}" title="{{ m('issue-tenantLastName-label') }}" ng-disabled="disabled" required="required"/>
-              <p ng-show="submitted &amp;&amp; myForm.tenantLastName.$error.required" class="error">{{ m('issue-tenantLastName-error-required') }}    </p>
+              <label class="label">{{ mml('issue-tenantLastName-label') }}</label>
+              <input type="text" name="tenantLastName" ng-model="issue.item.tenantLastName" placeholder="{{ mml('issue-tenantLastName-placeholder') }}" title="{{ mml('issue-tenantLastName-label') }}" ng-disabled="disabled" required="required"/>
+              <p ng-show="submitted &amp;&amp; myForm.tenantLastName.$error.required" class="error">{{ mml('issue-tenantLastName-error-required') }}    </p>
             </div>
           </div>
           <div ng-class="{warning: submitted &amp;&amp; myForm.tenantPhone.$invalid}" class="form-item c-input tenantPhone required  ">
-            <label class="label">{{ m('issue-tenantPhone-label') }}</label>
-            <input type="text" name="tenantPhone" ng-model="issue.item.tenantPhone" placeholder="{{ m('issue-tenantPhone-placeholder') }}" title="{{ m('issue-tenantPhone-label') }}" ng-disabled="disabled" required="required"/>
-            <p ng-show="submitted &amp;&amp; myForm.tenantPhone.$error.required" class="error">{{ m('issue-tenantPhone-error-required') }}    </p>
+            <label class="label">{{ mml('issue-tenantPhone-label') }}</label>
+            <input type="text" name="tenantPhone" ng-model="issue.item.tenantPhone" placeholder="{{ mml('issue-tenantPhone-placeholder') }}" title="{{ mml('issue-tenantPhone-label') }}" ng-disabled="disabled" required="required"/>
+            <p ng-show="submitted &amp;&amp; myForm.tenantPhone.$error.required" class="error">{{ mml('issue-tenantPhone-error-required') }}    </p>
           </div>
           <div ng-class="{warning: submitted &amp;&amp; myForm.tenantEmail.$invalid}" class="form-item c-input tenantEmail required  ">
-            <label class="label">{{ m('issue-tenantEmail-label') }}</label>
-            <input type="email" name="tenantEmail" ng-model="issue.item.tenantEmail" placeholder="{{ m('issue-tenantEmail-placeholder') }}" title="{{ m('issue-tenantEmail-label') }}" ng-disabled="disabled" required="required" email="email"/>
-            <p ng-show="submitted &amp;&amp; myForm.tenantEmail.$error.required" class="error">{{ m('issue-tenantEmail-error-required') }}    </p>
-            <p ng-show="submitted &amp;&amp; myForm.tenantEmail.$error.email" class="error">{{ m('issue-tenantEmail-error-email') }}    </p>
+            <label class="label">{{ mml('issue-tenantEmail-label') }}</label>
+            <input type="email" name="tenantEmail" ng-model="issue.item.tenantEmail" placeholder="{{ mml('issue-tenantEmail-placeholder') }}" title="{{ mml('issue-tenantEmail-label') }}" ng-disabled="disabled" required="required" email="email"/>
+            <p ng-show="submitted &amp;&amp; myForm.tenantEmail.$error.required" class="error">{{ mml('issue-tenantEmail-error-required') }}    </p>
+            <p ng-show="submitted &amp;&amp; myForm.tenantEmail.$error.email" class="error">{{ mml('issue-tenantEmail-error-email') }}    </p>
           </div>
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label">{{ m('issue-label-landlord') }}</div>
+        <div class="form-label">{{ mml('issue-label-landlord') }}</div>
         <div class="form-controls">
           <div ng-class="{warning: submitted &amp;&amp; myForm.landlordId.$invalid}" class="form-item c-select landlordId  no-label ">
             <div class="input-holder">
-              <select sumoselect="{placeholder:m('issue-landlordId-placeholder'), search:true}" ng-model="issue.item.landlordId" name="landlordId" ng-disabled="disabled">
+              <select sumoselect="{placeholder:mml('issue-landlordId-placeholder'), search:true}" ng-model="issue.item.landlordId" name="landlordId" ng-disabled="disabled">
                 <option ng-repeat="landlordId in landlords.items" value="{{landlordId._id}}" ng-disabled="landlordId.disabled" ng-hide="landlordId.hidden">{{ landlordId.name }}</option>
               </select>
             </div>
@@ -67,39 +67,39 @@
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label">{{ m('issue-label-address') }}</div>
+        <div class="form-label">{{ mml('issue-label-address') }}</div>
         <div class="form-controls">
           <div ng-class="{warning: submitted &amp;&amp; myForm.address1.$invalid}" class="form-item c-input address1 required  ">
-            <label class="label">{{ m('issue-address1-label') }}</label>
-            <input type="text" name="address1" ng-model="issue.item.address1" placeholder="{{ m('issue-address1-placeholder') }}" title="{{ m('issue-address1-label') }}" ng-disabled="disabled" required="required"/>
-            <p ng-show="submitted &amp;&amp; myForm.address1.$error.required" class="error">{{ m('issue-address1-error-required') }}    </p>
+            <label class="label">{{ mml('issue-address1-label') }}</label>
+            <input type="text" name="address1" ng-model="issue.item.address1" placeholder="{{ mml('issue-address1-placeholder') }}" title="{{ mml('issue-address1-label') }}" ng-disabled="disabled" required="required"/>
+            <p ng-show="submitted &amp;&amp; myForm.address1.$error.required" class="error">{{ mml('issue-address1-error-required') }}    </p>
           </div>
           <div ng-class="{warning: submitted &amp;&amp; myForm.address2.$invalid}" class="form-item c-input address2   ">
-            <label class="label">{{ m('issue-address2-label') }}</label>
-            <input type="text" name="address2" ng-model="issue.item.address2" placeholder="{{ m('issue-address2-placeholder') }}" title="{{ m('issue-address2-label') }}" ng-disabled="disabled"/>
+            <label class="label">{{ mml('issue-address2-label') }}</label>
+            <input type="text" name="address2" ng-model="issue.item.address2" placeholder="{{ mml('issue-address2-placeholder') }}" title="{{ mml('issue-address2-label') }}" ng-disabled="disabled"/>
           </div>
           <div ng-class="{warning: submitted &amp;&amp; myForm.postcode.$invalid}" class="form-item c-input postcode required  ">
-            <label class="label">{{ m('issue-postcode-label') }}</label>
-            <input type="text" name="postcode" ng-model="issue.item.postcode" placeholder="{{ m('issue-postcode-placeholder') }}" title="{{ m('issue-postcode-label') }}" ng-disabled="disabled" required="required"/>
-            <p ng-show="submitted &amp;&amp; myForm.postcode.$error.required" class="error">{{ m('issue-postcode-error-required') }}    </p>
+            <label class="label">{{ mml('issue-postcode-label') }}</label>
+            <input type="text" name="postcode" ng-model="issue.item.postcode" placeholder="{{ mml('issue-postcode-placeholder') }}" title="{{ mml('issue-postcode-label') }}" ng-disabled="disabled" required="required"/>
+            <p ng-show="submitted &amp;&amp; myForm.postcode.$error.required" class="error">{{ mml('issue-postcode-error-required') }}    </p>
           </div>
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label">{{ m('issue-label-title') }}</div>
+        <div class="form-label">{{ mml('issue-label-title') }}</div>
         <div class="form-controls">
           <div ng-class="{warning: submitted &amp;&amp; myForm.title.$invalid}" class="form-item c-input title required no-label ">
-            <input type="text" name="title" ng-model="issue.item.title" placeholder="{{ m('issue-title-placeholder') }}" title="{{ m('issue-title-label') }}" ng-disabled="disabled" required="required"/>
-            <p ng-show="submitted &amp;&amp; myForm.title.$error.required" class="error">{{ m('issue-title-error-required') }}    </p>
+            <input type="text" name="title" ng-model="issue.item.title" placeholder="{{ mml('issue-title-placeholder') }}" title="{{ mml('issue-title-label') }}" ng-disabled="disabled" required="required"/>
+            <p ng-show="submitted &amp;&amp; myForm.title.$error.required" class="error">{{ mml('issue-title-error-required') }}    </p>
           </div>
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label">{{ m('issue-label-detail') }}</div>
+        <div class="form-label">{{ mml('issue-label-detail') }}</div>
         <div class="form-controls">
           <div ng-class="{warning: submitted &amp;&amp; myForm.details.$invalid}" class="form-item c-input details   ">
-            <label class="label">{{ m('issue-details-label') }}</label>
-            <textarea type="text" name="details" ng-model="issue.item.details" placeholder="{{ m('issue-details-placeholder') }}" title="{{ m('issue-details-label') }}" ng-disabled="disabled"></textarea>
+            <label class="label">{{ mml('issue-details-label') }}</label>
+            <textarea type="text" name="details" ng-model="issue.item.details" placeholder="{{ mml('issue-details-placeholder') }}" title="{{ mml('issue-details-label') }}" ng-disabled="disabled"></textarea>
           </div>
         </div>
       </div>
@@ -107,8 +107,8 @@
         <div class="form-label"></div>
         <div class="form-controls">
           <div class="controls">
-            <button type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)" class="btn cancel">{{ m('forms-cancel') }}</button>
-            <input type="submit" value="{{ m('forms-submit') }}" ng-disabled="disabled || myForm.$pristine" class="btn button-alt"/>
+            <button type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)" class="btn cancel">{{ mml('forms-cancel') }}</button>
+            <input type="submit" value="{{ mml('forms-submit') }}" ng-disabled="disabled || myForm.$pristine" class="btn button-alt"/>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@
   <div ng-if="issue.item._id &amp;&amp; !editing" class="issue-details">
     <div class="space-between issue-header">
       <div class="left">
-        <h1>{{ m('issue-heading-issue') }}</h1>
+        <h1>{{ mml('issue-heading-issue') }}</h1>
         <h2>{{ issue.item.address }} <span>{{ issue.item.date | date:medium }}</span></h2>
       </div>
       
@@ -161,14 +161,14 @@
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label"> <strong>{{ m('issue-heading-tenant-contact') }}</strong>
+        <div class="form-label"> <strong>{{ mml('issue-heading-tenant-contact') }}</strong>
           <p>{{ issue.item.tenantFirstName }} {{ issue.item.tenantLastName }}</p><a href="mailto:{{issue.item.tenantEmail}}">{{ issue.item.tenantEmail }}</a>
           <p>{{ issue.item.tenantPhone }}</p>
         </div>
         <div class="form-controls space-between">
           <div class="left">
-            <div class="title"><strong>{{ m('issue-heading-issue-title') }}</strong><span>&nbsp;- {{ issue.item.title }}</span></div>
-            <div class="details"><strong>{{ m('issue-heading-fault-detail') }}</strong><span>&nbsp;- {{ issue.item.details }}</span></div>
+            <div class="title"><strong>{{ mml('issue-heading-issue-title') }}</strong><span>&nbsp;- {{ issue.item.title }}</span></div>
+            <div class="details"><strong>{{ mml('issue-heading-fault-detail') }}</strong><span>&nbsp;- {{ issue.item.details }}</span></div>
           </div>
           <div class="right">
             <div class="edit-icons"><span class="orange">View/Edit</span>
@@ -178,11 +178,11 @@
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label">{{ m('issue-heading-landlord') }}</div>
+        <div class="form-label">{{ mml('issue-heading-landlord') }}</div>
         <div class="form-controls">
           <div ng-class="{warning: submitted &amp;&amp; myForm.landlordId.$invalid}" class="form-item c-select landlordId  no-label ">
             <div class="input-holder">
-              <select sumoselect="{placeholder:m('issue-landlordId-placeholder'), search:true}" ng-model="issue.item.landlordId" name="landlordId" ng-disabled="disabled" ng-change="issue.save()">
+              <select sumoselect="{placeholder:mml('issue-landlordId-placeholder'), search:true}" ng-model="issue.item.landlordId" name="landlordId" ng-disabled="disabled" ng-change="issue.save()">
                 <option ng-repeat="landlordId in landlords.items" value="{{landlordId._id}}" ng-disabled="landlordId.disabled" ng-hide="landlordId.hidden">{{ landlordId.name }}</option>
               </select>
             </div>
@@ -190,59 +190,59 @@
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label">{{ m('issue-heading-action-taken') }}</div>
+        <div class="form-label">{{ mml('issue-heading-action-taken') }}</div>
         <div class="form-controls">
           <div class="third">
             <div ng-class="{warning: submitted &amp;&amp; myForm.repliedToTenant.$invalid}" class="form-item c-select repliedToTenant required  ">
-              <label class="label">{{ m('issue-repliedToTenant-label') }}</label>
+              <label class="label">{{ mml('issue-repliedToTenant-label') }}</label>
               <div class="input-holder">
-                <select sumoselect="{placeholder:m('issue-repliedToTenant-placeholder'), search:true}" ng-model="issue.item.repliedToTenant" name="repliedToTenant" ng-disabled="issue.item.statusName===&quot;Completed&quot;" ng-change="issue.save()" required="required">
+                <select sumoselect="{placeholder:mml('issue-repliedToTenant-placeholder'), search:true}" ng-model="issue.item.repliedToTenant" name="repliedToTenant" ng-disabled="issue.item.statusName===&quot;Completed&quot;" ng-change="issue.save()" required="required">
                   <option ng-repeat="repliedToTenant in yesno" value="{{repliedToTenant._id}}" ng-disabled="repliedToTenant.disabled" ng-hide="repliedToTenant.hidden">{{ repliedToTenant.name }}</option>
                 </select>
               </div> 
-              <p ng-show="submitted &amp;&amp; myForm.repliedToTenant.$error.required" class="error">{{ m('issue-repliedToTenant-error-required') }}</p>
+              <p ng-show="submitted &amp;&amp; myForm.repliedToTenant.$error.required" class="error">{{ mml('issue-repliedToTenant-error-required') }}</p>
             </div>
           </div>
           <div class="third">
             <div ng-class="{warning: submitted &amp;&amp; myForm.landlordInformed.$invalid}" class="form-item c-select landlordInformed required  ">
-              <label class="label">{{ m('issue-landlordInformed-label') }}</label>
+              <label class="label">{{ mml('issue-landlordInformed-label') }}</label>
               <div class="input-holder">
-                <select sumoselect="{placeholder:m('issue-landlordInformed-placeholder'), search:true}" ng-model="issue.item.landlordInformed" name="landlordInformed" ng-disabled="issue.item.statusName===&quot;Completed&quot;" ng-change="issue.save()" required="required">
+                <select sumoselect="{placeholder:mml('issue-landlordInformed-placeholder'), search:true}" ng-model="issue.item.landlordInformed" name="landlordInformed" ng-disabled="issue.item.statusName===&quot;Completed&quot;" ng-change="issue.save()" required="required">
                   <option ng-repeat="landlordInformed in yesno" value="{{landlordInformed._id}}" ng-disabled="landlordInformed.disabled" ng-hide="landlordInformed.hidden">{{ landlordInformed.name }}</option>
                 </select>
               </div>
-              <p ng-show="submitted &amp;&amp; myForm.landlordInformed.$error.required" class="error">{{ m('issue-landlordInformed-error-required') }}</p>
+              <p ng-show="submitted &amp;&amp; myForm.landlordInformed.$error.required" class="error">{{ mml('issue-landlordInformed-error-required') }}</p>
             </div>
           </div>
           <div class="third">
             <div ng-class="{warning: submitted &amp;&amp; myForm.contractorArranged.$invalid}" class="form-item c-select contractorArranged required  ">
-              <label class="label">{{ m('issue-contractorArranged-label') }}</label>
+              <label class="label">{{ mml('issue-contractorArranged-label') }}</label>
               <div class="input-holder">
-                <select sumoselect="{placeholder:m('issue-contractorArranged-placeholder'), search:true}" ng-model="issue.item.contractorArranged" name="contractorArranged" ng-disabled="issue.item.statusName===&quot;Completed&quot;" ng-change="issue.save()" required="required">
+                <select sumoselect="{placeholder:mml('issue-contractorArranged-placeholder'), search:true}" ng-model="issue.item.contractorArranged" name="contractorArranged" ng-disabled="issue.item.statusName===&quot;Completed&quot;" ng-change="issue.save()" required="required">
                   <option ng-repeat="contractorArranged in yesno" value="{{contractorArranged._id}}" ng-disabled="contractorArranged.disabled" ng-hide="contractorArranged.hidden">{{ contractorArranged.name }}</option>
                 </select>
               </div>
-              <p ng-show="submitted &amp;&amp; myForm.contractorArranged.$error.required" class="error">{{ m('issue-contractorArranged-error-required') }}</p>
+              <p ng-show="submitted &amp;&amp; myForm.contractorArranged.$error.required" class="error">{{ mml('issue-contractorArranged-error-required') }}</p>
             </div>
           </div>
         </div>
       </div>
       <div ng-show="issue.item.statusName!==&quot;Completed&quot;" class="form-section">
-        <div class="form-label">{{ m('issue-heading-contractor-assigned') }}</div>
+        <div class="form-label">{{ mml('issue-heading-contractor-assigned') }}</div>
         <div class="form-controls">
           <div class="two-thirds">
             <div ng-class="{warning: submitted &amp;&amp; myForm.booked.$invalid}" class="form-item c-select booked   ">
-              <label class="label">{{ m('issue-booked-label') }}</label>
+              <label class="label">{{ mml('issue-booked-label') }}</label>
               <div class="input-holder">
-                <select sumoselect="{placeholder:m('issue-booked-placeholder'), search:true}" ng-model="tasks.items[0].contractor" name="booked" ng-disabled="true">
+                <select sumoselect="{placeholder:mml('issue-booked-placeholder'), search:true}" ng-model="tasks.items[0].contractor" name="booked" ng-disabled="true">
                   <option ng-repeat="booked in contractors.items" value="{{booked._id}}" ng-disabled="booked.disabled" ng-hide="booked.hidden">{{ booked.name }}</option>
                 </select>
               </div>
             </div>
           </div>
           <div class="third delete-book">
-            <button type="button" ng-click="deleteIssue(issue)" class="button-alt"> <i class="fal fa-trash-alt"></i>{{ m('forms-delete') }}</button>
-            <!--button.button-green(type='submit', value='{{ m("forms-book") }}', ng-hide='issue.item.contractor || issue.item.statusName==="Completed"')
+            <button type="button" ng-click="deleteIssue(issue)" class="button-alt"> <i class="fal fa-trash-alt"></i>{{ mml('forms-delete') }}</button>
+            <!--button.button-green(type='submit', value='{{ mml("forms-book") }}', ng-hide='issue.item.contractor || issue.item.statusName==="Completed"')
             i.fal.fa-ballot-check
             | Book
             -->
@@ -250,50 +250,50 @@
         </div>
       </div>
       <div class="form-section">
-        <div class="form-label">{{ m('issue-heading-diary') }}</div>
+        <div class="form-label">{{ mml('issue-heading-diary') }}</div>
         <div class="form-controls diary-controls">
-          <button type="button" ui-sref="maintenance_leads_diary({_id:issue.item._id})" class="button-grey"><i class="fal fa-calendar"></i>{{ m('issue-diary-label') }}</button>
+          <button type="button" ui-sref="maintenance_leads_diary({_id:issue.item._id})" class="button-grey"><i class="fal fa-calendar"></i>{{ mml('issue-diary-label') }}</button>
           <input type="text" value="{{tasks.items[0].date | date:&quot;HH:mm&quot;}}" disabled="disabled" ng-hide="issue.item.statusName===&quot;Reported&quot;" class="task-time"/>
           <input type="text" value="{{tasks.items[0].date | date:&quot;dd/MM/yyyy&quot;}}" disabled="disabled" ng-hide="issue.item.statusName===&quot;Reported&quot;" class="task-date"/>
         </div>
       </div>
       <!--.form-section(ng-show='issue.item.cfpJobNumber && issue.item.statusName==="Booked" && tasks.total')
-      .form-label {{ m('issue-heading-chase') }}
+      .form-label {{ mml('issue-heading-chase') }}
       .form-controls
         .buttons
           button.button-alt(type='button', ng-click='chaseContractor("email", tasks.items[0])') 
             i.fal.fa-at
-            | {{ m('issue-label-email') }}
+            | {{ mml('issue-label-email') }}
           button.button-grey(type='button', ng-click='chaseContractor("sms", tasks.items[0])') 
             i.fal.fa-sms
-            | {{ m('issue-label-sms') }}
+            | {{ mml('issue-label-sms') }}
       -->
       <!--.form-section(ng-show='issue.item.cfpJobNumber && issue.item.statusName==="Booked" && tasks.total')
-      .form-label {{ m('issue-heading-inform') }}
+      .form-label {{ mml('issue-heading-inform') }}
       .form-controls
         .buttons
           button.button-alt(type='button', ng-click='informTenant("email", tasks.items[0])') 
             i.fal.fa-at
-            | {{ m('issue-label-email-tenant') }}
+            | {{ mml('issue-label-email-tenant') }}
           button.button-grey(type='button', ng-click='informTenant("sms", tasks.items[0])') 
             i.fal.fa-sms
-            | {{ m('issue-label-sms-tenant') }}
+            | {{ mml('issue-label-sms-tenant') }}
       -->
       <div ng-show="issue.item.cfpJobNumber &amp;&amp; issue.item.statusName===&quot;Booked&quot; &amp;&amp; tasks.total" class="form-section">
-        <div class="form-label">{{ m('issue-heading-chase-invoice') }}</div>
+        <div class="form-label">{{ mml('issue-heading-chase-invoice') }}</div>
         <div class="form-controls">
           <div class="buttons">
-            <button type="button" ng-click="chaseInvoice(&quot;email&quot;, tasks.items[0])" class="button-alt"> <i class="fal fa-at"></i>{{ m('issue-label-email-invoice') }}</button>
-            <button type="button" ng-click="chaseInvoice(&quot;sms&quot;, tasks.items[0])" class="button-grey"> <i class="fal fa-sms"></i>{{ m('issue-label-sms-invoice') }}</button>
+            <button type="button" ng-click="chaseInvoice(&quot;email&quot;, tasks.items[0])" class="button-alt"> <i class="fal fa-at"></i>{{ mml('issue-label-email-invoice') }}</button>
+            <button type="button" ng-click="chaseInvoice(&quot;sms&quot;, tasks.items[0])" class="button-grey"> <i class="fal fa-sms"></i>{{ mml('issue-label-sms-invoice') }}</button>
           </div>
         </div>
       </div>
       <!--.form-section(ng-show='issue.item.cfpJobNumber && issue.item.statusName==="Booked"') Removed cfp part so the complete butotn shows-->
       <div ng-show="issue.item.statusName===&quot;Booked&quot;" class="form-section">
-        <div class="form-label">{{ m('issue-heading-complete') }}</div>
+        <div class="form-label">{{ mml('issue-heading-complete') }}</div>
         <div class="form-controls">
           <div class="buttons">
-            <button type="button" ng-click="completeIssue(issue)" class="button-green"> <i class="fal fa-check"></i>{{ m('issue-label-complete') }}</button>
+            <button type="button" ng-click="completeIssue(issue)" class="button-green"> <i class="fal fa-check"></i>{{ mml('issue-label-complete') }}</button>
           </div>
         </div>
       </div>
@@ -338,9 +338,9 @@
     </div>
     <div class="notes-and-messages">
       <div class="case-notes">
-        <h2 class="orange">{{ m('issue-heading-notes') }}</h2>
+        <h2 class="orange">{{ mml('issue-heading-notes') }}</h2>
         <div ng-repeat="note in notesData = ( issue.item.notes | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
-          <div class="date">{{note.date | date:medium}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;])" class="delete">{{ m('forms-delete') }}</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])" class="edit">{{ m('forms-edit') }}</a></div>
+          <div class="date">{{note.date | date:medium}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;])" class="delete">{{ mml('forms-delete') }}</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])" class="edit">{{ mml('forms-edit') }}</a></div>
           <div class="note"> 
             <div class="details"><span ng-show="note.side">- {{note.side}}</span>
               <div ng-bind-html="note.text | markdown:true" class="note-body"></div>

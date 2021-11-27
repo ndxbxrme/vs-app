@@ -1,11 +1,11 @@
 
 <div class="modal issue-book small">
-  <h1>{{ m('modal-issue-book-title') }}</h1>
+  <h1>{{ mml('modal-issue-book-title') }}</h1>
   <form name="forms.myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('forms.myForm')">
     <div ng-class="{warning: submitted &amp;&amp; forms.myForm.jobnumber.$invalid}" class="form-item c-input jobnumber required  ">
-      <label class="label">{{ m('forms.myForm-jobnumber-label') }}</label>
-      <input type="text" name="jobnumber" ng-model="forms.myForm.item.jobnumber" placeholder="{{ m('forms.myForm-jobnumber-placeholder') }}" title="{{ m('forms.myForm-jobnumber-label') }}" ng-disabled="disabled" required="required"/>
-      <p ng-show="submitted &amp;&amp; forms.myForm.jobnumber.$error.required" class="error">{{ m('forms.myForm-jobnumber-error-required') }}    </p>
+      <label class="label">{{ mml('forms.myForm-jobnumber-label') }}</label>
+      <input type="text" name="jobnumber" ng-model="forms.myForm.item.jobnumber" placeholder="{{ mml('forms.myForm-jobnumber-placeholder') }}" title="{{ mml('forms.myForm-jobnumber-label') }}" ng-disabled="disabled" required="required"/>
+      <p ng-show="submitted &amp;&amp; forms.myForm.jobnumber.$error.required" class="error">{{ mml('forms.myForm-jobnumber-error-required') }}    </p>
     </div>
     <div class="controls">
       <label> </label>

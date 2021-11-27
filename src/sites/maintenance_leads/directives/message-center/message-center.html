@@ -1,33 +1,33 @@
 
 <div class="message-center"> 
   <div class="message-center-heading">
-    <h2 class="orange">{{ m('outgoingEmail-messageCenter-heading')}}</h2>
+    <h2 class="orange">{{ mml('outgoingEmail-messageCenter-heading')}}</h2>
     <button type="button" ng-click="(composingMessage=true) &amp;&amp; (outgoingEmail={})" class="small-orange-button"> <i class="fal fa-feather"></i>New message</button>
   </div>
   <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('outgoingEmail')" ignore="ignore" ng-show="composingMessage">
     <div class="form-section">
       <div ng-class="{warning: submitted &amp;&amp; myForm.messageTo.$invalid}" class="form-item c-select messageTo required  ">
-        <label class="label">{{ m('outgoingEmail-messageTo-label') }}</label>
+        <label class="label">{{ mml('outgoingEmail-messageTo-label') }}</label>
         <div class="input-holder">
-          <select sumoselect="{placeholder:m('outgoingEmail-messageTo-placeholder'), search:true}" ng-model="outgoingEmail.item.messageTo" name="messageTo" ng-disabled="disabled" required="required">
+          <select sumoselect="{placeholder:mml('outgoingEmail-messageTo-placeholder'), search:true}" ng-model="outgoingEmail.item.messageTo" name="messageTo" ng-disabled="disabled" required="required">
             <option ng-repeat="messageTo in messageRecipients" value="{{messageTo._id}}" ng-disabled="messageTo.disabled" ng-hide="messageTo.hidden">{{ messageTo.name }}</option>
           </select>
         </div>
-        <p ng-show="submitted &amp;&amp; myForm.messageTo.$error.required" class="error">{{ m('outgoingEmail-messageTo-error-required') }}</p>
+        <p ng-show="submitted &amp;&amp; myForm.messageTo.$error.required" class="error">{{ mml('outgoingEmail-messageTo-error-required') }}</p>
       </div>
     </div>
     <div class="form-section">
       <div class="form-controls">
         <div ng-class="{warning: submitted &amp;&amp; myForm.subject.$invalid}" class="form-item c-input subject   ">
-          <label class="label">{{ m('outgoingEmail-subject-label') }}</label>
-          <input type="text" name="subject" ng-model="outgoingEmail.item.subject" placeholder="{{ m('outgoingEmail-subject-placeholder') }}" title="{{ m('outgoingEmail-subject-label') }}" ng-disabled="disabled"/>
+          <label class="label">{{ mml('outgoingEmail-subject-label') }}</label>
+          <input type="text" name="subject" ng-model="outgoingEmail.item.subject" placeholder="{{ mml('outgoingEmail-subject-placeholder') }}" title="{{ mml('outgoingEmail-subject-label') }}" ng-disabled="disabled"/>
         </div>
       </div>
     </div>
     <div class="form-section">
       <div class="form-item">
         <label class="space-between">Attachments {{noAttachments()}}
-          <button type="button" ng-click="outgoingEmail.showAttachments = !outgoingEmail.showAttachments" class="small-black-button">{{ outgoingEmail.showAttachments? m('outgoingEmail-documentsHide-label') : m('outgoingEmail-documentsShow-label') }}</button>
+          <button type="button" ng-click="outgoingEmail.showAttachments = !outgoingEmail.showAttachments" class="small-black-button">{{ outgoingEmail.showAttachments? mml('outgoingEmail-documentsHide-label') : mml('outgoingEmail-documentsShow-label') }}</button>
         </label>
         <div ng-show="outgoingEmail.showAttachments" class="attachments">
           <div ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true" class="drop-box">
@@ -46,17 +46,17 @@
     </div>
     <div class="form-section">
       <div class="form-item">
-        <label>{{ m('outgoingEmail-messageBody-label') }}</label>
+        <label>{{ mml('outgoingEmail-messageBody-label') }}</label>
         <code-mirror name="messageBody" ng-model="outgoingEmail.body" options="{lineWrapping:true}"></code-mirror>
       </div>
     </div>
     <div class="form-section">
       <div class="form-controls">
         <button type="button" name="send" ng-click="sendEmail()" class="small-orange-button"> 
-          <div class="fal fa-paper-plane"></div>{{ m('outgoingEmail-send-label') }}
+          <div class="fal fa-paper-plane"></div>{{ mml('outgoingEmail-send-label') }}
         </button>
         <button type="button" name="cancel" ng-click="(outgoingEmail={}) &amp;&amp; (composingMessage=false)" class="small-black-button"> 
-          <div class="fal fa-window-close"></div>{{ m('outgoingEmail-cancel-label') }}
+          <div class="fal fa-window-close"></div>{{ mml('outgoingEmail-cancel-label') }}
         </button>
       </div>
     </div>
