@@ -5,13 +5,15 @@
     $scope.selectedProperty = null;
     $scope.defaultLast = 'leads';
     $scope.lead = $scope.single('leads:leads', $stateParams, function(lead) {
-      breadcrumbs.setInfo(lead.item.property.address);
       if (JSON.stringify(lead.item) === '{}') {
         $scope.editing = true;
         return lead.item = {
           roleType: 'Selling',
           source: 'local'
         };
+      }
+      else {
+        breadcrumbs.setInfo(lead.item.property.address);
       }
     });
     $scope.sources = {
