@@ -1,103 +1,110 @@
 
-<div ng-show="auth.getUser()" class="dashboard-route route">
-  <h1>Dashboard</h1>
-  <div class="heading">Overview of Maintenance Issues</div>
-  <div class="boxes">
-    <div class="box">
-      <div ui-sref="maintenance_leads_issues" class="title">Today's Maintenance Issues</div>
-      <div ng-class="{empty:!maintenanceToday.total}" class="box-number">{{maintenanceToday.total}}</div>
-      <div ng-repeat="issue in maintenanceToday.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
-        <div class="fad fa-home"></div>
-        <div class="details">
-          <div class="address">{{issue.address}}</div>
-          <div class="issue-title">{{issue.title}}</div>
+<div ng-show="auth.getUser()" class="dashboard-route route maintenance-leads-dashboard">
+  <div class="container">
+    <h1>Dashboard</h1>
+    <h2 class="orange">Overview of Maintenance Issues</h2>
+    <div class="row boxes">
+      <div class="col-xl-3 col-sm-6">
+        <div class="box">
+          <div ui-sref="maintenance_leads_issues" class="title">Today's Maintenance Issues <span ng-class="{empty:!maintenanceToday.total}" class="box-number">{{maintenanceToday.total}}</span></div>
+          <div ng-repeat="issue in maintenanceToday.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
+            <div class="details">
+              <div class="address">{{issue.address}}</div>
+              <div class="issue-title">{{issue.title}}</div>
+            </div>
+            <div class="status">
+              <div class="booked"> 
+                <div class="fad fa-file-medical"></div>
+              </div>
+              <div class="completed">
+                <div class="fad fa-file-check"></div>
+              </div>
+              <div class="invoiced">
+                <div class="fad fa-thumbs-up"></div>
+              </div>
+            </div>
+            <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
+          </div>
+          <pagination ng-model="maintenanceToday.args.page" total="maintenanceToday.total" page-size="maintenanceToday.args.pageSize"></pagination>
         </div>
-        <div class="status">
-          <div class="booked"> 
-            <div class="fad fa-file-medical"></div>
-          </div>
-          <div class="completed">
-            <div class="fad fa-file-check"></div>
-          </div>
-          <div class="invoiced">
-            <div class="fad fa-thumbs-up"></div>
-          </div>
-        </div>
-        <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
       </div>
-      <pagination ng-model="maintenanceToday.args.page" total="maintenanceToday.total" page-size="maintenanceToday.args.pageSize"></pagination>
-    </div>
-    <div class="box">
-      <div ui-sref="maintenance_leads_issues" class="title">Outstanding Maintenance Issues</div>
-      <div ng-class="{empty:!maintenanceOutstanding.total}" class="box-number">{{maintenanceOutstanding.total}}</div>
-      <div ng-repeat="issue in maintenanceOutstanding.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
-        <div class="fad fa-home"></div>
-        <div class="details">
-          <div class="address">{{issue.address}}</div>
-          <div class="issue-title">{{issue.title}}</div>
+
+      <div class="col-xl-3 col-sm-6">
+        <div class="box">
+          <div ui-sref="maintenance_leads_issues" class="title">Outstanding Maintenance Issues <span ng-class="{empty:!maintenanceOutstanding.total}" class="box-number">{{maintenanceOutstanding.total}}</span></div>
+          
+          <div ng-repeat="issue in maintenanceOutstanding.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
+            <div class="details">
+              <div class="address">{{issue.address}}</div>
+              <div class="issue-title">{{issue.title}}</div>
+            </div>
+            <div class="status">
+              <div class="booked"> 
+                <div class="fad fa-file-medical"></div>
+              </div>
+              <div class="completed">
+                <div class="fad fa-file-check"></div>
+              </div>
+              <div class="invoiced">
+                <div class="fad fa-thumbs-up"></div>
+              </div>
+            </div>
+            <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
+          </div>
+          <pagination ng-model="maintenanceOutstanding.args.page" total="maintenanceOutstanding.total" page-size="maintenanceOutstanding.args.pageSize"></pagination>
         </div>
-        <div class="status">
-          <div class="booked"> 
-            <div class="fad fa-file-medical"></div>
-          </div>
-          <div class="completed">
-            <div class="fad fa-file-check"></div>
-          </div>
-          <div class="invoiced">
-            <div class="fad fa-thumbs-up"></div>
-          </div>
-        </div>
-        <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
       </div>
-      <pagination ng-model="maintenanceOutstanding.args.page" total="maintenanceOutstanding.total" page-size="maintenanceOutstanding.args.pageSize"></pagination>
-    </div>
-    <div class="box">
-      <div ui-sref="maintenance_leads_worksorders" class="title">Outstanding Works Orders</div>
-      <div ng-class="{empty:!worksOutstanding.total}" class="box-number">{{worksOutstanding.total}}</div>
-      <div ng-repeat="issue in worksOutstanding.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
-        <div class="fad fa-home"></div>
-        <div class="details">
-          <div class="address">{{issue.address}}</div>
-          <div class="issue-title">{{issue.title}}</div>
+
+      <div class="col-xl-3 col-sm-6">
+        <div class="box">
+          <div ui-sref="maintenance_leads_worksorders" class="title">Outstanding Works Orders <span ng-class="{empty:!worksOutstanding.total}" class="box-number">{{worksOutstanding.total}}</span></div>
+          <div ng-repeat="issue in worksOutstanding.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
+            <div class="details">
+              <div class="address">{{issue.address}}</div>
+              <div class="issue-title">{{issue.title}}</div>
+            </div>
+            <div class="status">
+              <div class="booked"> 
+                <div class="fad fa-file-medical"></div>
+              </div>
+              <div class="completed">
+                <div class="fad fa-file-check"></div>
+              </div>
+              <div class="invoiced">
+                <div class="fad fa-thumbs-up"></div>
+              </div>
+            </div>
+            <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
+          </div>
+          <pagination ng-model="worksOutstanding.args.page" total="worksOutstanding.total" page-size="worksOutstanding.args.pageSize"></pagination>
         </div>
-        <div class="status">
-          <div class="booked"> 
-            <div class="fad fa-file-medical"></div>
-          </div>
-          <div class="completed">
-            <div class="fad fa-file-check"></div>
-          </div>
-          <div class="invoiced">
-            <div class="fad fa-thumbs-up"></div>
-          </div>
-        </div>
-        <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
       </div>
-      <pagination ng-model="worksOutstanding.args.page" total="worksOutstanding.total" page-size="worksOutstanding.args.pageSize"></pagination>
-    </div>
-    <div class="box">
-      <div ui-sref="maintenance_leads_worksorders" class="title">Invoices Outstanding </div>
-      <div ng-class="{empty:!invoiceOutstanding.total}" class="box-number">{{invoiceOutstanding.total}}</div>
-      <div ng-repeat="issue in invoiceOutstanding.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
-        <div class="fad fa-home"></div>
-        <div class="details">
-          <div class="address">{{issue.address}}</div>
-          <div class="issue-title">{{issue.title}}</div>
+
+      <div class="col-xl-3 col-sm-6">
+        <div class="box">
+          <div ui-sref="maintenance_leads_worksorders" class="title">Invoices Outstanding <span ng-class="{empty:!invoiceOutstanding.total}" class="box-number">{{invoiceOutstanding.total}}</span></div>
+          
+          <div ng-repeat="issue in invoiceOutstanding.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
+            <div class="details">
+              <div class="address">{{issue.address}}</div>
+              <div class="issue-title">{{issue.title}}</div>
+            </div>
+            <div class="status">
+              <div class="booked"> 
+                <div class="fad fa-file-medical"></div>
+              </div>
+              <div class="completed">
+                <div class="fad fa-file-check"></div>
+              </div>
+              <div class="invoiced">
+                <div class="fad fa-thumbs-up"></div>
+              </div>
+            </div>
+            <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
+          </div>
+          <pagination ng-model="invoiceOutstanding.args.page" total="invoiceOutstanding.total" page-size="invoiceOutstanding.args.pageSize"></pagination>
         </div>
-        <div class="status">
-          <div class="booked"> 
-            <div class="fad fa-file-medical"></div>
-          </div>
-          <div class="completed">
-            <div class="fad fa-file-check"></div>
-          </div>
-          <div class="invoiced">
-            <div class="fad fa-thumbs-up"></div>
-          </div>
-        </div>
-        <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
       </div>
-      <pagination ng-model="invoiceOutstanding.args.page" total="invoiceOutstanding.total" page-size="invoiceOutstanding.args.pageSize"></pagination>
     </div>
   </div>
 </div>

@@ -6,21 +6,22 @@
     <div class="row">
       <div class="col-sm-8">
         <div class="form-holder">
-          <form name="myForm" novalidate="novalidate" ng-submit="save('lead')" class="panel" ng-show="editing">
-            
-            <div class="row"> 
+        <form name="myForm" novalidate="novalidate" ng-submit="save('lead')" ng-show="editing">
+          
+          <div class="radio-row">
+            <label for="rts">Selling
               <input id="rts" type="radio" name="roleType" ng-model="lead.item.roleType" value="Selling"/>
-              <label for="rts">Selling</label>
-
+            </label>
+            <label for="rtl">Letting
               <input id="rtl" type="radio" name="roleType" ng-model="lead.item.roleType" value="Letting"/>
-              <label for="rtl">Letting</label>
-
+            </label>
+            <label for="rtv">Valuation
               <input id="rtv" type="radio" name="roleType" ng-model="lead.item.roleType" value="Valuation"/>
-              <label for="rtv">Valuation</label>
-            </div>
+            </label>
+          </div>
 
             <div ng-if="!lead.item._id" ng-hide="lead.item.roleType===&quot;Valuation&quot;" class="form-row">
-              <div class="form-label">{{ mla('lead-property-label') }}</div>
+              <h3 class="orange">{{ mla('lead-property-label') }}</h3>
               <div ng-class="{warning: submitted &amp;&amp; myForm.selectedProperty.$invalid}" class="form-item c-select selectedProperty required  " ng-if="lead.item.roleType===&quot;Selling&quot;">
                 <label class="label">{{ mla('lead-selectedProperty-label') }}</label>
                 <div class="input-holder">
@@ -44,7 +45,7 @@
               <hr/>
             </div>
             <div class="form-row">
-              <div class="form-label">{{ mla('lead-name-label') }}</div>
+              <h3 class="orange">{{ mla('lead-name-label') }}</h3>
               <div class="user">
                 <div ng-class="{warning: submitted &amp;&amp; myForm.usertitle.$invalid}" class="form-item c-input usertitle required  ">
                   <label class="label">{{ mla('lead-usertitle-label') }}</label>
@@ -72,13 +73,13 @@
             </div>
             <div class="form-row">
               <div class="form-label"> </div>
-              <div ng-class="{warning: submitted &amp;&amp; myForm.email.$invalid}" class="form-item c-input email   ">
+              <div ng-class="{warning: submitted &amp;&amp; myForm.email.$invalid}" class="form-item c-input email-input ">
                 <label class="label">{{ mla('lead-email-label') }}</label>
                 <input type="text" name="email" ng-model="lead.item.email" placeholder="{{ mla('lead-email-placeholder') }}" title="{{ mla('lead-email-label') }}" ng-disabled="disabled"/>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-label">{{ mla('lead-addressSection-label') }}</div>
+              <h3 class="orange">{{ mla('lead-addressSection-label') }}</h3>
               <div class="address">
                 <div ng-class="{warning: submitted &amp;&amp; myForm.useraddress.$invalid}" class="form-item c-input useraddress required  ">
                   <label class="label">{{ mla('lead-useraddress-label') }}</label>
@@ -109,7 +110,7 @@
               </div>
             </div>
             <div class="controls">
-              <button type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)" class="btn cancel">{{ mla('forms-cancel') }}</button>
+              <button type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)" class="button-alt button cancel">{{ mla('forms-cancel') }}</button>
               <input type="submit" value="{{ mla('forms-submit') }}" ng-disabled="disabled || myForm.$pristine" class="btn"/>
             </div>
           </form>
