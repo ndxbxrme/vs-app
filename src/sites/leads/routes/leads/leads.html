@@ -7,7 +7,7 @@
         <button class="btn orangebtn" ui-sref="leads_lead-new" ng-show="auth.isAuthorized(&quot;lead-new&quot;)">{{mla('leads-button-add')}}<i class="fa fa-plus"></i></button>
       </div>
       <div class="col-sm-4 search">
-        <input type="text" ng-model="leads.args.where.s.$like"/>
+        <input type="text" ng-model="leads.args.where.s.$like" placeholder="Search leads"/>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
           </td>
           <td class="options">
             <label>{{ mla('leads-table-options') }}</label>
-            <button class="btn" ui-sref="leads_lead({_id:lead._id})">{{ mla('leads-button-view-lead') }}</button>
+            <button class="button small" ui-sref="leads_lead({_id:lead._id})">{{ mla('leads-button-view-lead') }}</button>
           </td>
         </tr>
       </tbody>
