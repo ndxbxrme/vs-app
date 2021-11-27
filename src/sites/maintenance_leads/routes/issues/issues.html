@@ -7,7 +7,7 @@
         <button ui-sref="maintenance_leads_issue({_id:&quot;&quot;})" class="button button-green"><i class="fas fa-plus"> </i>{{ m('issues-button-new') }}</button>
       </div>
       <div class="col-sm-4 search">
-        <input type="text" ng-model="mysearch.$like" placeholder="Search Cases" ng-change="page=1"/>
+        <input type="text" ng-model="mysearch.$like" placeholder="Search Issues" ng-change="page=1"/>
       </div>
     </div>
 
@@ -38,10 +38,10 @@
             <div class="source-icon {{issue.source}}">{{ issue.source }}</div>
           </td>
           <td class="date">{{ issue.date | date:medium }}</td>
-          <td class="address">{{ issue.address }}<i ng-show="issue.media.length" class="fad fa-camera-retro"></i></td>
+          <td class="address">{{ issue.address }}<span ng-show="issue.media.length"><i class="fad fa-camera-retro"></i></span></td>
           <td class="tenant">{{ issue.tenant }}</td>
           <td class="options">
-            <button ui-sref="maintenance_leads_issue({_id:issue._id})" class="button-grey"> <i class="fal fa-eye"></i>View</button>
+            <button ui-sref="maintenance_leads_issue({_id:issue._id})" class="button"> <i class="fal fa-eye"></i>View</button>
           </td>
         </tr>
       </tbody>
