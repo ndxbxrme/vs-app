@@ -1,4 +1,7 @@
-.agreed-route, .solicitors-route
+.agreed-route, 
+.solicitors-route, 
+.contractors-route,
+.landlords-route
   .years
     margin-bottom 20px
     a
@@ -10,11 +13,11 @@
       &.selected
         color vs-orange
         border-color vs-orange
-  .months, .solicitors
+  .months, .solicitors, .contractors, .landlords
     display flex
     flex-wrap wrap
     width 100%
-    .month, .solicitor
+    .month, .solicitor, .contractor, .landlord
       position relative
       &.disabled
         opacity 0.3
@@ -24,11 +27,11 @@
         border 1px solid vs-lightsilver
         background white
         position relative
-        .month-name, .solicitors-name
+        .month-name, .solicitors-name, .name
           min-width 10rem
           color vs-orange
           font-size 2rem
-        .solicitors-name
+        .solicitors-name, .name
           color vs-grey
           height 46px
         .target, .cases
@@ -88,3 +91,11 @@
               white-space nowrap
           .editor
             margin-bottom 10px
+.contractors-route,
+.landlords-route
+  .no-issues
+    text-align right
+    .number
+      color: vs-orange
+      font-size 3rem
+      line-height 3.2rem

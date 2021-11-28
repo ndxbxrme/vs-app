@@ -40,12 +40,13 @@ body
     thead
       th
         padding 20px
-        background vs-grey
+        background-color vs-grey
         text-align center
         color white
         font-size 2rem
         font-weight 100
         border-bottom 1px solid vs-lightgrey
+        vertical-align: middle
     tbody
       tr td
         background: white
@@ -79,6 +80,15 @@ body
             &:after
               opacity 0
               transform translateY(-.3rem)
+
+  // Issues Tables
+  .issue-table
+    tbody
+      tr
+        td
+          padding 10px
+          &.date
+            text-align center
               
     tbody
       tr

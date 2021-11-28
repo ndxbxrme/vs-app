@@ -17,7 +17,7 @@ vs-warning = #d17b36
 :root
   --fa-primary-color vs-orange
   --fa-secondary-color #333333
-  --fa-secondary-opacity 0.8
+  --fa-secondary-opacity 0.2
 
 html
   font-size 62.5%
@@ -46,3 +46,28 @@ chain-box()
   z-index 10
   background #fff
   box-sizing border-box
+
+.drop-box
+  border 1px dashed vs-grey
+  border-radius 3px
+  background white
+  width 100%
+  text-align center
+  margin 30px 0 10px
+  padding 20px
+  &.dragover
+    h3
+      color vs-orange
+.document
+  border 1px solid vs-lightgrey
+  border-radius 3px
+  background white
+  padding 20px
+  margin 0px 0px 10px 0px
+  font-weight 600
+  label
+    font-weight 500
+  svg
+    font-size 5rem
+  .controls
+    margin-top 10px

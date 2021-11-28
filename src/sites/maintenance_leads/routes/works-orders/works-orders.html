@@ -4,7 +4,7 @@
     <div class="row align-items-center">
       <div class="col-sm-8">
         <h1>{{ mml('works-heading') }}</h1>
-        <button ui-sref="maintenance_leads_issue({_id:&quot;&quot;})" class="button button-green"><i class="fas fa-plus"> </i>{{ m('issues-button-new') }}</button>
+        <button ui-sref="maintenance_leads_issue({_id:&quot;&quot;})" class="button button-green"><i class="fas fa-plus"> </i>{{ mml('issues-button-new') }}</button>
       </div>
       <div class="col-sm-4 search">
         <input type="text" ng-model="mysearch.$like" placeholder="Search Works Orders" ng-change="page=1"/>
@@ -51,7 +51,7 @@
             </div>
           </td>
           <td class="options">
-            <button class="button-grey" ui-sref="maintenance_leads_issue({_id:issue._id})"> 
+            <button class="button" ui-sref="maintenance_leads_issue({_id:issue._id})"> 
               <div class="fal fa-eye"></div>View
             </button>
           </td>

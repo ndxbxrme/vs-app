@@ -1,36 +1,41 @@
 
 <div class="contractors-route route">
-  <div class="space-between">
-    <div class="left">
-      <h1>{{ mml('contractors-heading') }}</h1>
-      <button ui-sref="maintenance_leads_contractor({_id:&quot;&quot;})" class="button-green"> <i class="fas fa-plus"> </i>{{ mml('contractors-button-new') }}</button>
-    </div>
-    <div class="right"> 
-      <div class="search">
-        <input type="text" ng-model="search" placeholder="Search Cases" ng-change="page=1"/>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-sm-8">
+        <h1>{{ mml('contractors-heading') }}</h1>
+        <button ui-sref="maintenance_leads_contractor({_id:&quot;&quot;})" class="button-green"> <i class="fas fa-plus"> </i>{{ mml('contractors-button-new') }}</button>
       </div>
-      <div class="showing">Showing {{filterData.length}} of {{contractors.items.length}} contractor{{totalProps!==1?'s':''}}</div>
+      <div class="col-sm-4 search">
+        <input type="text" ng-model="search" placeholder="Search Contractors" ng-change="page=1"/>
+      </div>
+      <div class="col-12 text-end">
+        <div class="showing">Showing:<br>{{filterData.length}} of {{contractors.items.length}} contractor{{totalProps!==1?'s':''}}</div>
+      </div>
     </div>
-  </div>
-  <div class="contractors">
-    <div ng-repeat="contractor in filterData =(contractors.items | filter:search | orderBy:sort) | limitTo:limit:limit*(page-1)" class="contractor"> 
-      <div ui-sref="maintenance_leads_contractor({_id:contractor._id})" ng-class="{empty:!contractor.issues.total}" class="contractor-heading">
-        <div class="name">{{ contractor.name }}</div>
-        <div class="no-issues">
-          <div class="label">Issues</div>
-          <div class="number">{{ contractor.issues.total }}</div>
+  
+    <div class="contractors">
+      <div ng-repeat="contractor in filterData =(contractors.items | filter:search | orderBy:sort) | limitTo:limit:limit*(page-1)" class="contractor col-lg-4 col-6">
+        <div class="inner">
+          <div ui-sref="maintenance_leads_contractor({_id:contractor._id})" ng-class="{empty:!contractor.issues.total}" class="contractor-heading row">
+            <div class="name col-8">{{ contractor.name }}</div>
+            <div class="no-issues col-4">
+              <div class="label">Issues</div>
+              <div class="number">{{ contractor.issues.total }}</div>
+            </div>
+          </div>
+          <button type="button" ng-click="contractor.showList=!contractor.showList" ng-show="contractor.issues.total" class="button"><span ng-show="contractor.showList"> <i class="fal fa-eye-slash"></i>Hide List</span><span ng-hide="contractor.showList"><i class="fal fa-eye"> </i>View List</span></button>
+          <button type="button" ng-click="deleteContractor(contractor)" ng-if="auth.isAuthorized([&quot;superadmin&quot;, &quot;admin&quot;])" class="button button-alt"> <i class="fal fa-trash-alt"></i>Delete</button>
+          <div ng-show="contractor.showList" class="issues">
+            <div ng-repeat="issue in contractor.issues.items" ui-sref="maintenance_leads_issue({_id:issue._id})" class="issue">
+              <div class="address">{{ issue.address }}</div>
+              <div class="title">{{ issue.title }}</div>
+            </div>
+          </div>
         </div>
       </div>
-      <button type="button" ng-click="contractor.showList=!contractor.showList" ng-show="contractor.issues.total" class="button-alt"><span ng-show="contractor.showList"> <i class="fal fa-eye-slash"></i>Hide List</span><span ng-hide="contractor.showList"><i class="fal fa-eye"> </i>View List</span></button>
-      <button type="button" ng-click="deleteContractor(contractor)" ng-if="auth.isAuthorized([&quot;superadmin&quot;, &quot;admin&quot;])" class="button-grey"> <i class="fal fa-trash-alt"></i>Delete</button>
-      <div ng-show="contractor.showList" class="issues">
-        <div ng-repeat="issue in contractor.issues.items" ui-sref="maintenance_leads_issue({_id:issue._id})" class="issue">
-          <div class="address">{{ issue.address }}</div>
-          <div class="title">{{ issue.title }}</div>
-        </div>
-      </div>
     </div>
-  </div>
-  <div ng-show="!filterData.length" class="empty-table">{{ mml('contractors-empty-table') }}</div>
-  <pagination ng-model="contractors.args.page" total="contractors.total" page-size="contractors.args.pageSize"></pagination>
+
+    <div ng-show="!filterData.length" class="empty-table">{{ mml('contractors-empty-table') }}</div>
+    <pagination ng-model="contractors.args.page" total="contractors.total" page-size="contractors.args.pageSize"></pagination>
 </div>
