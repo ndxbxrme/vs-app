@@ -1,13 +1,12 @@
 
 <div class="lead-route">
   <div class="container">
-    <h1 ng-show="lead.item &amp;&amp; !lead.item._id">{{mla('lead-heading-adding')}}</h1>
-    <h1 ng-show="lead.item &amp;&amp; lead.item._id">{{mla('lead-heading-editing', lead.item)}}</h1>
     <div class="row">
       <div class="col-sm-8">
-        <div class="form-holder">
-        <form name="myForm" novalidate="novalidate" ng-submit="save('lead')" ng-show="editing">
-          
+        <div class="form-holder" ng-show="editing">
+          <form name="myForm" novalidate="novalidate" ng-submit="save('lead')" ng-show="editing">
+          <h1 ng-show="lead.item &amp;&amp; !lead.item._id">{{mla('lead-heading-adding')}}</h1>
+          <h1 ng-show="lead.item &amp;&amp; lead.item._id">{{mla('lead-heading-editing', lead.item)}}</h1>
           <div class="radio-row">
             <label for="rts">Selling
               <input id="rts" type="radio" name="roleType" ng-model="lead.item.roleType" value="Selling"/>
