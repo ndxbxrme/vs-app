@@ -7,6 +7,7 @@
           <form name="myForm" novalidate="novalidate" ng-submit="save('lead')" ng-show="editing">
           <h1 ng-show="lead.item &amp;&amp; !lead.item._id">{{mla('lead-heading-adding')}}</h1>
           <h1 ng-show="lead.item &amp;&amp; lead.item._id">{{mla('lead-heading-editing', lead.item)}}</h1>
+          
           <div class="radio-row">
             <label for="rts">Selling
               <input id="rts" type="radio" name="roleType" ng-model="lead.item.roleType" value="Selling"/>
@@ -40,9 +41,7 @@
                 <p ng-show="submitted &amp;&amp; myForm.selectedProperty.$error.required" class="error">{{ mla('lead-selectedProperty-error-required') }}</p>
               </div>
             </div>
-            <div class="form-row">
-              <hr/>
-            </div>
+
             <div class="form-row">
               <h3 class="orange">{{ mla('lead-name-label') }}</h3>
               <div class="user">
@@ -114,46 +113,49 @@
             </div>
           </form>
         </div>
+      </div>
 
+      <div class="col-12">
         <div ng-show="!editing" class="lead">
-          <div class="row">
-            <div class="left">
+          <div class="row align-items-end">
+            <div class="col-8">
               <h1>{{ mla('lead-heading') }} <span>- {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}</span></h1>
             </div>
-            <div class="right">
-              <div class="price">{{ lead.item.price | currency:'£'}}</div>
+            <div class="col-4 text-end">
+              <p class="date">{{ lead.item.date | date:'mediumDate' }}</p>
+              <h2 class="price orange">{{ lead.item.price | currency:'£'}}</h2>
             </div>
           </div>
+
+          <hr>
+   
           <div class="row">
-            <hr/>
-          </div>
-          <div class="form-row lead-info">
-            <div class="form-label no-padding">
+            <div class="sources col-md-4">
+              <h3>Source</h3>
               <div class="source {{lead.item.source}} {{lead.item.method}}"></div>
               <h3>{{ mla('lead-contact-details-heading') }}</h3>
-              <div class="name">{{ lead.item.applicant }}</div><a href="mailto:{{ lead.item.email }}" class="email">{{ lead.item.email }}</a>
-              <div class="phone">{{ lead.item.user.phone_day }}</div>
+              <p class="name">{{ lead.item.applicant }}</p>
+              <a href="mailto:{{ lead.item.email }}" class="email">{{ lead.item.email }}</a>
+              <p class="phone">{{ lead.item.user.phone_day }}</p>
             </div>
-            <div class="details">
-              <div class="row">
-                <div class="left">
-                  <div class="date">{{ lead.item.date | date:'mediumDate' }}</div>
-                </div>
-                <div class="right"><a ng-click="editing=true" ng-hide="lead.item.deleted || lead.item.booked"><img src="public/img/icons/edit-icon.jpg" width="30" height="auto"/></a></div>
-              </div>
-              <div class="comment">
-                <h3>{{ mla('lead-comments-heading') }}</h3>
-                <p>{{ lead.item.comments }}</p>
-              </div>
-              <div class="controls">
-                <button type="button" ng-click="deleteLead()" ng-hide="lead.item.deleted || lead.item.booked" class="btn delete">{{ mla('lead-delete-button') }}</button>
-                <button type="button" ng-click="bookLead()" ng-hide="lead.item.deleted || lead.item.booked" class="btn booking">{{ mla('lead-booking-button') }}</button>
-                <button type="button" ng-click="restore()" ng-show="lead.item.deleted || lead.item.booked" class="btn restore">{{ mla('lead-restore-button') }}</button>
-              </div>
+            <div class="col-md-7 details">
+              <h3>{{ mla('lead-comments-heading') }}</h3>
+              <p>{{ lead.item.comments }}</p>
+            </div>
+            <div class="col-md-1 text-end">
+              <a class="edit-button" ng-click="editing=true" ng-hide="lead.item.deleted || lead.item.booked"><i class="fa-duotone fa-user-pen"></i>Edit</a>
+            </div>
+            <div class="controls col-12">
+              <button type="button" ng-click="deleteLead()" ng-hide="lead.item.deleted || lead.item.booked" class="button">{{ mla('lead-delete-button') }}</button>
+              <button type="button" ng-click="bookLead()" ng-hide="lead.item.deleted || lead.item.booked" class="button button-grey">{{ mla('lead-booking-button') }}</button>
+              <button type="button" ng-click="restore()" ng-show="lead.item.deleted || lead.item.booked" class="button button-alt">{{ mla('lead-restore-button') }}</button>
             </div>
           </div>
+
+          <hr class="orange">
+
           <div class="case-notes">
-            <h2 class="orange">{{ mla('lead-notes-heading') }}</h2>
+            <h2>{{ mla('lead-notes-heading') }}</h2>
             <div ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
               <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo &amp;&amp; !lead.item.deleted" class="delete">Delete</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo &amp;&amp; !lead.item.deleted" class="edit">Edit</a></div>
               <div class="note"> 

@@ -1,17 +1,22 @@
 .lead-route
+  .form-holder
+    margin-top 30px
+    padding 0 30px 30px 30px
   .radio-row
     border-bottom 1px solid vs-silver
     margin-bottom 10px
     padding-bottom 10px
   .source
     width 170px
-    height 70px
+    height 35px
     display block
+    margin-bottom 20px
     &.rightmove
       background url(./public/img/rm-logo.svg) center no-repeat
       background-size 170px 50px
     &.gravity
       background-size 170px 50px
+      background url(./public/img/vitalspace-logo.svg) center no-repeat
     &.local.onthemarket
       background url(./public/img/otm-logo.png) center no-repeat
       background-size 180px 40px
@@ -36,9 +41,14 @@
       height 80px
       display block
       zoom .6
+  .case-notes
+    border 1px solid vs-lightgrey
+    border-radius 3px
+    background white
+    padding 20px
   .add-note
     .CodeMirror
-      border 1px solid vs-lightgrey
+      border 1px solid vs-tablegrey
       border-radius 5px
       background #f1f1f1
       padding-left 15px
@@ -52,3 +62,34 @@
       border vs-orange
       &:hover
         background vs-grey
+  h2
+    margin-bottom 15px
+  p
+    &.date,
+    &.name
+      font-weight 600
+      margin-bottom 0px
+  .sources
+    h3
+      font-weight 600
+      margin-bottom 10px
+  .details
+    border 1px solid vs-lightgrey
+    border-radius 3px
+    background white
+    padding 20px
+    h3
+      font-weight 600      
+  .edit-button
+    margin-top 10px
+    display flex
+    flex-direction column
+    align-items center
+    float right
+    color vs-grey
+    svg
+      font-size 3rem
+      margin-bottom 2px
+  .controls
+    margin-top 30px
+    margin-bottom 30px
