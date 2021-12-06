@@ -1,25 +1,38 @@
 <div class="users">
-  <form name="newUserForm" ng-submit="makeNewUser(newUser.email, newUser.role)">
-    <input type="email" ng-model="newUser.email" />
-    <select ng-model="newUser.role">
-      <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
-    </select>
-    <input type="submit" value="Submit" />
-  </form>
-  <div class="user heading">
-    <div class="email">Email</div>
-    <div ng-repeat="site in sites" class="site">
-      <div class="site">
-        {{site.name}}
+  <div class="container">
+    <form name="newUserForm" ng-submit="makeNewUser(newUser.email, newUser.role)">
+      <h1>New User</h1>
+      <div class="row">
+        <div class="col-sm-4">
+          <input type="email" ng-model="newUser.email" placeholder="User email"/>
+        </div>
+        <div class="col-sm-4">
+          <select ng-model="newUser.role">
+            <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <input type="submit" value="Submit" />
+        </div>
+      </div>
+    </form>
+
+    <h2 class="orange">Existing Users</h2>
+    <div class="user heading">
+      <div class="email">Email</div>
+      <div ng-repeat="site in sites" class="site">
+        <div class="site">
+          {{site.name}}
+        </div>
       </div>
     </div>
-  </div>
-  <div ng-repeat="user in myusers.items" class="user">
-    <div class="email">{{user.email}}</div>
-    <div ng-repeat="site in sites" class="site">
-      <select ng-model="user.local.sites[site.id].role" ng-change="updateRole(user, user.local.sites[site.id], site)">
-        <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
-      </select>
+    <div ng-repeat="user in myusers.items" class="user">
+      <div class="email">{{user.email}}</div>
+      <div ng-repeat="site in sites" class="site">
+        <select ng-model="user.local.sites[site.id].role" ng-change="updateRole(user, user.local.sites[site.id], site)">
+          <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
+        </select>
+      </div>
     </div>
   </div>
 </div>

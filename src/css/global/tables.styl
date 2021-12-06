@@ -126,3 +126,33 @@ body
               vertical-align top
             a
               display table-cell
+  // Historic Tables
+  .history-table
+    tbody
+      tr
+        td
+          &.status
+            display flex
+            justify-content center
+            align-items center
+            height 62px
+            div
+              opacity 0.2
+              font-size 1.4rem
+              margin-right 4px
+            &.booked .booked
+              opacity 1
+            &.completed .completed
+              opacity 1
+            &.invoiced .invoiced
+              opacity 1
+            svg
+              font-size 2rem
+              padding 0 5px
+        .address
+          position relative
+          padding-right 30px
+          svg
+            position absolute
+            right 10px
+            top 10px
