@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cp -r ./src/public ./app/public && npm-run-all --parallel serve:webpack",
+    "start": "rm -rf app && mkdir app && cp -r ./src/public ./app/public && npm-run-all --parallel serve:webpack",
     "serve:webpack": "webpack-dev-server --host 0.0.0.0",
     "serve:nodemon": "nodemon ./server/index.js --watch server",
     "test": "echo \"Error: no test specified\" && exit 1",
