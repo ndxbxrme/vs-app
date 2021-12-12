@@ -64,7 +64,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="mobile-table small-mobile-show">
+    <!--<div class="mobile-table small-mobile-show">
       <div class="case-card" ng-repeat="property in filterData | limitTo:limit:limit*(page-1)">
         <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
           <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
@@ -78,7 +78,7 @@
           <div class="options"><a class="button" ui-sref="agency_case({roleId:property.RoleId})">View Case</a></div>
         </div>
       </div>
-    </div>
+    </div>-->
     <pagination class="pagination-sm pagination" total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true"></pagination>
     <div class="nothing-to-show" ng-show="filterData.length===0">
       <h3>Nothing to show</h3>
