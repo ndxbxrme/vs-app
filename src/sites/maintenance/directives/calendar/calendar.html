@@ -1,7 +1,7 @@
 
 <div class="maintenance-calendar-dir">
   <div class="controls"><a href="" tap="prev()">&lt;&lt; Prev</a><a href="" tap="goToToday()">Today</a><a href="" tap="next()">Next &gt;&gt;</a></div>
-  <div class="carousel">
+  <div class="carousel" ng-if="weeks.length">
     <div class="week" ng-repeat="week in weeks">
       <div class="day" ng-repeat="day in week.days" ng-class="{selected:isSelected(day.day)}">
         <div class="day-name"> 

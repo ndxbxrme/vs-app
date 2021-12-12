@@ -9,7 +9,7 @@ angular.module('vs-app')
       if(!hItem) {
         hItem = JSON.parse(JSON.stringify(item));
         hItem.count = 0;
-        console.log('fav push', hItem)
+        //console.log('fav push', hItem)
         res.push(hItem);
       }
       hItem.count++;

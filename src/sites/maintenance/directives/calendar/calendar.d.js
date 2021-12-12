@@ -28,44 +28,46 @@
         window.addEventListener('resize', resize);
         mapTasksToDays = function() {
           var day, dayDate, k, len, ref, results, task, taskDate, week;
-          if (scope.tasks && scope.tasks.items) {
-            ref = scope.weeks;
-            results = [];
-            for (k = 0, len = ref.length; k < len; k++) {
-              week = ref[k];
-              results.push((function() {
-                var l, len1, ref1, results1;
-                ref1 = week.days;
-                results1 = [];
-                for (l = 0, len1 = ref1.length; l < len1; l++) {
-                  day = ref1[l];
-                  day.tasks = [];
-                  results1.push((function() {
-                    var len2, m, ref2, results2;
-                    ref2 = scope.tasks.items;
-                    results2 = [];
-                    for (m = 0, len2 = ref2.length; m < len2; m++) {
-                      task = ref2[m];
-                      taskDate = new Date(task.date);
-                      if (day.day.getDate() === taskDate.getDate() && day.day.getMonth() === taskDate.getMonth() && day.day.getFullYear() === taskDate.getFullYear()) {
-                        task.date = taskDate;
-                        task.duration = new Date(task.duration);
-                        dayDate = new Date(day.day.getFullYear(), day.day.getMonth(), day.day.getDate(), 9);
-                        task.top = (taskDate.valueOf() - dayDate.valueOf()) / 3600000 * 6;
-                        task.height = task.duration.valueOf() / 3600000 * 6;
-                        results2.push(day.tasks.push(task));
-                      } else {
-                        results2.push(void 0);
+          $timeout(function() {
+            if (scope.tasks && scope.tasks.items) {
+              ref = scope.weeks;
+              results = [];
+              for (k = 0, len = ref.length; k < len; k++) {
+                week = ref[k];
+                results.push((function() {
+                  var l, len1, ref1, results1;
+                  ref1 = week.days;
+                  results1 = [];
+                  for (l = 0, len1 = ref1.length; l < len1; l++) {
+                    day = ref1[l];
+                    day.tasks = [];
+                    results1.push((function() {
+                      var len2, m, ref2, results2;
+                      ref2 = scope.tasks.items;
+                      results2 = [];
+                      for (m = 0, len2 = ref2.length; m < len2; m++) {
+                        task = ref2[m];
+                        taskDate = new Date(task.date);
+                        if (day.day.getDate() === taskDate.getDate() && day.day.getMonth() === taskDate.getMonth() && day.day.getFullYear() === taskDate.getFullYear()) {
+                          task.date = taskDate;
+                          task.duration = new Date(task.duration);
+                          dayDate = new Date(day.day.getFullYear(), day.day.getMonth(), day.day.getDate(), 9);
+                          task.top = (taskDate.valueOf() - dayDate.valueOf()) / 3600000 * 6;
+                          task.height = task.duration.valueOf() / 3600000 * 6;
+                          results2.push(day.tasks.push(task));
+                        } else {
+                          results2.push(void 0);
+                        }
                       }
-                    }
-                    return results2;
-                  })());
-                }
-                return results1;
-              })());
+                      return results2;
+                    })());
+                  }
+                  return results1;
+                })());
+              }
+              return results;
             }
-            return results;
-          }
+          })
         };
         scope.calculateDailyIncome = function(day) {
           var k, len, output, ref, task, taskDate;
@@ -153,6 +155,7 @@
           return window.removeEventListener('resize', resize);
         });
         makeWeek = function(startDate) {
+          console.log('make week', startDate);
           var hours, i, j, week;
           week = {
             date: startDate,
