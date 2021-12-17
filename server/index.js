@@ -35,6 +35,8 @@ require('ndx-server').config({
     else {
       cb(true);
     }
-  })
+  });
+  //ndx.app.use('public', ndx.static('./app/public'));
+  ndx.app.use('/*', ndx.static('./app', {redirect:false}));
 })
 .start();
