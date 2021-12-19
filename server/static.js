@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const port = process.env.PORT || 4023;
+const port = process.env.STATIC_PORT || 4010;
 const app = express();
 
 // serve static assets normally
