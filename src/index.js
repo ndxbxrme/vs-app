@@ -15,38 +15,40 @@ const sites = {
     "module": "ndx",
     "url1": "http://localhost:23232",
     "ws1": "ws://localhost:23232",
-    "url": "http://92.237.208.72:3001",
-    "ws": "ws://92.237.208.72:3001"
+    "url2": "http://92.237.208.72:3001",
+    "ws2": "ws://92.237.208.72:3001",
+    "url": "https://server.vitalspace.co.uk",
+    "ws": "wss://server.vitalspace.co.uk"
   },
   "lettings": {
     "name": "lettings",
     "module": "vs-lettings",
     "url": "https://lettings.vitalspace.co.uk",
-    "ws": "ws://lettings.vitalspace.co.uk"
+    "ws": "wss://lettings.vitalspace.co.uk"
   },
   "maintenance": {
     "name": "maintenance",
     "module": "vs-maintenance",
     "url": "https://maintenance.vitalspace.co.uk",
-    "ws": "ws://maintenance.vitalspace.co.uk"
+    "ws": "wss://maintenance.vitalspace.co.uk"
   },
   "maintenance_leads": {
     "name": "maintenance_leads",
     "module": "vs-maintenance-leads",
     "url": "https://maintenance-leads.vitalspace.co.uk",
-    "ws": "ws://maintenance-leads.vitalspace.co.uk"
+    "ws": "wss://maintenance-leads.vitalspace.co.uk"
   },
   "agency": {
     "name": "agency",
     "module": "vs-agency",
     "url": "https://conveyancing.vitalspace.co.uk",
-    "ws": "ws://conveyancing.vitalspace.co.uk"
+    "ws": "wss://conveyancing.vitalspace.co.uk"
   },
   "leads": {
     "name": "leads",
     "module": "vs-leads",
     "url": "https://leads.vitalspace.co.uk",
-    "ws": "ws://leads.vitalspace.co.uk"
+    "ws": "wss://leads.vitalspace.co.uk"
   }
 };
 const mainmodule = angular.module('vs-app', Object.values(sites).map(site => site.module));
