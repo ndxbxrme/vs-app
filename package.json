@@ -7,10 +7,12 @@
     "start": "rm -rf app && mkdir app && cp -r ./src/public ./app/public && npm-run-all --parallel serve:webpack",
     "serve:webpack": "webpack-dev-server --host 0.0.0.0",
     "serve:nodemon": "nodemon ./server/index.js --watch server",
-    "serve": "node ./server/index.js",
+    "serve:backend": "node ./server/index.js",
+    "serve:static": "node ./server/static.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "webpack --config webpack.prod.js && aws s3 sync app s3://www.aroofoveroneshead.com",
-    "build": "rm -rf app && mkdir app && cp -r ./src/public ./app/public && webpack --config webpack.prod.js"
+    "build": "rm -rf app && mkdir app && rm -rf public && cp -r ./src/public ./app/public && webpack --config webpack.prod.js",
+    "serve": "npm-run-all --parallel serve:backend serve:static"
   },
   "keywords": [],
   "author": "",

@@ -1,4 +1,6 @@
 const crypto = require('crypto-js');
+const path = require('path');
+const express = require('express');
 require('ndx-server').config({
   database: 'db',
   tables: ['users', 'emailtemplates'],
@@ -36,7 +38,5 @@ require('ndx-server').config({
       cb(true);
     }
   });
-  //ndx.app.use('public', ndx.static('./app/public'));
-  ndx.app.use('/*', ndx.static('./app', {redirect:false}));
 })
 .start();
