@@ -49,7 +49,6 @@
               <a ui-sref="leads_valuation", ng-class="{selected:state('leads_valuation')}" ng-show="auth.isAuthorized('leads_valuation')">Valuation</a>
               <a ui-sref="leads_history", ng-class="{selected:state('leads_history')}" ng-show="auth.isAuthorized('leads_history')">History</a>
               <a ui-sref="leads_lead-new", ng-class="{selected:state('leads_lead-new')}" ng-show="auth.isAuthorized('leads_lead-new')">New Lead</a>
-              <a ui-sref="leads_setup", ng-class="{selected:state('leads_setup')}" ng-show="auth.isAuthorized('leads_setup')">Setup</a>
             </pages>
           </site>
           <site ng-show="auth.isAuthorized('maintenance_leads_dashboard')">

@@ -5,7 +5,7 @@
     span.right
       float right
       font-size 2rem
-      font-weight 800
+      font-weight 500
       color vs-orange
   .case-row
     margin-bottom 30px
@@ -27,9 +27,7 @@
         background-size cover
         transform rotate(90deg)
         position relative
-        z-index 11
-        &:first-of-type
-          display none
+        z-index -1
       .current-property, .chain-property
         chain-box()
         display flex
@@ -38,10 +36,6 @@
           max-width 160px
       .details
         margin-left 1rem
-      .add-chain
-        position absolute
-        right 0px
-        top -68px
   .contacts
     .card
       position relative

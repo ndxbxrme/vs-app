@@ -18,10 +18,9 @@ vs-warning = #d17b36
   --fa-primary-color vs-orange
   --fa-secondary-color #333333
   --fa-secondary-opacity 0.2
-
 html
   font-size 62.5%
-	overflow-y scroll
+  overflow-y scroll
 
 body
   color vs-text
@@ -29,8 +28,13 @@ body
   line-height 2.4rem
   font-family proxima-nova, sans-serif
   background vs-lightsilver
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
   &.login
     background vs-grey
+.main-view
+  flex 1
 
 .orange
   color vs-orange

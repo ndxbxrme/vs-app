@@ -5,13 +5,19 @@
   width 100%
   .inner
     chain-box()
+    h1,
+    .chain-notes
+      text-align center
+    h1
+      margin-bottom 5px
     .chain-controls
       display flex
-      justify-content space-between
+      justify-content center
       margin-top 10px
     .chain-edit
       form
         display flex
         flex-direction column
+        min-width 300px
         .CodeMirror
           height 160px
