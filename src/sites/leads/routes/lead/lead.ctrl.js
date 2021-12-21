@@ -82,8 +82,8 @@
     });
     $scope.deleteLead = function() {
       return Confirmer.confirm({
-        title: $scope.m('lead-delete-title'),
-        message: $scope.m('lead-delete-message')
+        title: $scope.mla('lead-delete-title'),
+        message: $scope.mla('lead-delete-message')
       }, $http.sites["leads"].config).then(function() {
         $scope.lead.delete();
         return $scope.auth.goToLast();
