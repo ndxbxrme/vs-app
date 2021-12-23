@@ -46,7 +46,7 @@
           <div class="tenancy-terms col-md-2 col-sm-4 col-6">
             <label>Tenancy Terms</label>
             <select ng-model="property.item.$case.item.tenancyTerms">
-              <option value="6" selected="selected">6 Months</option>
+              <option value="6">6 Months</option>
               <option value="12">12 Months</option>
               <option value="24">24 Months</option>
             </select>
@@ -58,39 +58,49 @@
           <div class="agent-request col-md-2 col-sm-4 col-6">
             <label>Landlord/Agent Request</label>
             <select ng-model="property.item.$case.item.agentRequest">
-              <option value="no" selected="selected">No</option>
+              <option value="no"">No</option>
               <option value="yes">Yes</option>
             </select>
           </div>
           <div class="employer-ref col-md-2 col-sm-4 col-6">
             <label>Employer Reference</label>
             <select ng-model="property.item.$case.item.employerRef">
-              <option value="no" selected="selected">No</option>
+              <option value="no">No</option>
               <option value="yes">Yes</option>
             </select>
           </div>
           <div class="self-employed col-md-2 col-sm-4 col-6">
             <label>Self Employed Application</label>
             <select ng-model="property.item.$case.item.selfEmployed">
-              <option value="no" selected="selected">No</option>
+              <option value="no">No</option>
               <option value="yes">Yes</option>
             </select>
           </div>
           <div class="pet-deposit col-md-2 col-sm-4 col-6">
             <label>Pet Deposit</label>
             <select ng-model="property.item.$case.item.petDeposit">
-              <option value="no" selected="selected">No</option>
+              <option value="no">No</option>
               <option value="yes">Yes</option>
             </select>
           </div>
           <div class="special col-md-2 col-sm-4 col-6">
-            <label>Special Clauses</label>
-            <select ng-model="property.item.$case.item.specialClauses">
-              <option value="no" selected="selected">No</option>
+            <label>EICR in Place</label>
+            <select ng-model="property.item.$case.item.eicr">
+              <option value="no">No</option>
               <option value="yes">Yes</option>
+              <option value="vs-arranging">VS Arranging</option>
+              <option value="landlord-arranging">Landlord Arranging</option>
             </select>
           </div>
-          <div class="col-md-2 col-sm-4 col-6"></div>
+          <div class="special col-md-2 col-sm-4 col-6">
+            <label>Gas Cert in Place</label>
+            <select ng-model="property.item.$case.item.gasCert">
+              <option value="no" selected="selected">No</option>
+              <option value="yes">Yes</option>
+              <option value="vs-arranging">VS Arranging</option>
+              <option value="landlord-arranging">Landlord Arranging</option>
+            </select>
+          </div>
           <div class="col-md-2 col-sm-4 col-6 text-end">
             <input type="submit" value="Save"/>
           </div>
@@ -132,7 +142,7 @@
       <div class="col-sm-4">
         <lettings-contact-details title="Landlord"></lettings-contact-details>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-8">
         <tenant-details title="Tenants"></tenant-details>
       </div>
     </div>

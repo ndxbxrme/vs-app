@@ -93,3 +93,65 @@
   .controls
     margin-top 30px
     margin-bottom 30px
+  .case-notes
+    border 1px solid vs-lightgrey
+    padding 20px
+    margin 10px 0
+    border-radius 3px
+    border 1px solid vs-lightsilver
+    background vs-white
+    .case-note
+      border 1px solid vs-lightgrey
+      padding 20px
+      margin 10px 0
+      border-radius 3px
+      border 1px solid vs-lightsilver
+      background white
+      .date 
+        font-weight 600
+        .edit, .delete
+          display inline
+          float right
+          color vs-orange
+          margin-left 1rem
+      p, h1, h2, h3, h4, h5, h6
+        margin 0 0 0px 0
+      img
+        margin-right 5px
+      .details
+        border none
+        padding 0px
+  .add-note
+    margin-top 10px
+    .CodeMirror
+      border 1px solid vs-lightgrey
+      border-radius 5px
+      background #f1f1f1
+      padding-left 15px
+      height 120px
+      pre
+        font-size 1.8rem
+    button
+      margin-top 15px
+      background vs-orange
+      color white
+      border vs-orange
+      &:hover
+        background vs-grey
+    .connector
+      height 3rem
+      border none
+      width 8rem
+      background url(./public/img/icons/commercial-chain.jpg)
+      background-size cover
+    .current-property, .chain-property
+      chain-box()
+      max-width 420px
+      display flex
+      color vs-grey
+      img
+        max-width 160px
+      .details
+        margin-left 1rem
+    .add-chain
+      z-index 10

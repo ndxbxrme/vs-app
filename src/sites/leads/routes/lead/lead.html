@@ -155,7 +155,7 @@
           <hr class="orange">
 
           <div class="case-notes">
-            <h2>{{ mla('lead-notes-heading') }}</h2>
+            <h2 class="orange">{{ mla('lead-notes-heading') }}</h2>
             <div ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
               <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo &amp;&amp; !lead.item.deleted" class="delete">Delete</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo &amp;&amp; !lead.item.deleted" class="edit">Edit</a></div>
               <div class="note"> 
