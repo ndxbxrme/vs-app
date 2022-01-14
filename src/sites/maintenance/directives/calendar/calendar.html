@@ -9,7 +9,7 @@
           <div class="mobile">{{day.day | date:'EEE, MMM d'}}</div>
         </div>
         <div class="hours">
-          <div class="hour" ng-repeat="hour in day.hours" tap="openTask({date:hour}, $event)">
+          <div class="hour" ng-repeat="hour in day.hours" ng-click="openTask({date:hour}, $event)">
             <div class="legend"> 
               <div class="desktop">{{hour | date:'ha'}}</div>
               <div class="mobile">{{hour | date:'ha'}}</div>
@@ -26,7 +26,7 @@
               <label>Target</label><span>{{income.target | currency:'£'}}</span>
             </div>
             <div class="income-item">
-              <label>+/-</label><span class="total" ng-class="{loss:income.profitloss&lt;0}">{{income.profitloss | currency:'£'}}</span>
+              <label>+/-</label><span class="total" ng-class="{loss:income.profitLoss&lt;0}">{{income.profitLoss | currency:'£'}}</span>
             </div>
           </div>
           <div class="mobile">
@@ -37,7 +37,7 @@
               <label>Target</label><span>{{income.target | currency:'£':0}}</span>
             </div>
             <div class="income-item">
-              <label>+/-</label><span class="total" ng-class="{loss:income.profitloss&lt;0}">{{income.profitloss | currency:'£':0}}</span>
+              <label>+/-</label><span class="total" ng-class="{loss:income.profitLoss&lt;0}">{{income.profitLoss | currency:'£':0}}</span>
             </div>
           </div>
         </div>

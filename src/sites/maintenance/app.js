@@ -60,31 +60,31 @@
       return output;
     };
     Auth.onUser(function() {
+      console.log('got user')
       return root.users = $rootScope.list('maintenance:users', null, function(users) {
-        var j, len1, ref, results, user;
-        root.maintenance = [];
-        root.staff = [];
-        ref = users.items;
-        results = [];
-        for (j = 0, len1 = ref.length; j < len1; j++) {
-          user = ref[j];
-          if (user.roles) {
-            if (user.roles.maintenance) {
-              root.maintenance.push(user);
-              if (!$rootScope.selectedUser) {
-                $rootScope.selectedUser = user;
+        console.log('min users', users);
+        $timeout(() => {
+          var j, len1, ref, results, user;
+          root.maintenance = [];
+          root.staff = [];
+          ref = users.items;
+          for (j = 0, len1 = ref.length; j < len1; j++) {
+            user = ref[j];
+            if (user.roles) {
+              if (user.roles.maintenance) {
+                root.maintenance.push(user);
+                if (!$rootScope.selectedUser) {
+                  $rootScope.selectedUser = user;
+                }
+              }
+              if (user.roles.agency) {
+                root.staff.push(user);
               }
             }
-            if (user.roles.agency) {
-              results.push(root.staff.push(user));
-            } else {
-              results.push(void 0);
-            }
-          } else {
-            results.push(void 0);
           }
-        }
-        return results;
+          console.log('rs', root.maintenance);
+        })
+        
       });
     });
     return $rootScope.bodyTap = function(e) {

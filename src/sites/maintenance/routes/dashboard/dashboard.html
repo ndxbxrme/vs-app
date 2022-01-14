@@ -3,7 +3,7 @@
   <div class="toolbar">
     <div class="today">{{today | date:'EEEE, MMM dd, yyyy'}}</div>
     <div class="user-select">
-      <label>Select User</label>
+      <!--<label>Select User</label>-->
       <select class="usertheme" ng-model="$root.selectedUser" ui-select2="userSelectOptions" theme="usertheme" ng-change="hidePopup()" style="width:100%">
         <option ng-repeat="user in maintenance" value="{{user._id}}">{{user.displayName || user.local.email}}</option>
       </select>
@@ -36,7 +36,7 @@
           <label>Target</label><span>{{income.target | currency:'£'}}</span>
         </div>
         <div class="income-item">
-          <label>+/-</label><span class="total" ng-class="{loss:income.profitloss&lt;0}">{{income.profitloss | currency:'£'}}</span>
+          <label>+/-</label><span class="total" ng-class="{loss:income.profitLoss&lt;0}">{{income.profitLoss | currency:'£'}}</span>
         </div>
       </div>
       <div class="mobile">
@@ -47,7 +47,7 @@
           <label>Target</label><span>&nbsp;{{income.target | currency:'£':0}}</span>
         </div>
         <div class="income-item">
-          <label>+/-</label><span class="total" ng-class="{loss:income.profitloss&lt;0}">&nbsp;{{income.profitloss | currency:'£':0}}</span>
+          <label>+/-</label><span class="total" ng-class="{loss:income.profitLoss&lt;0}">&nbsp;{{income.profitLoss | currency:'£':0}}</span>
         </div>
       </div>
     </div>
