@@ -19,16 +19,17 @@
     $scope.save = function() {
       if ($scope.myForm.$valid) {
         $scope.template.save();
-        return $state.go('setup');
+        return $state.go('agency_setup');
       }
     };
     $scope.cancel = function() {
-      return $state.go('setup');
+      return $state.go('agency_setup');
     };
     $scope.defaultData = {
       displayAddress: "Apt 19 St Lawrence Street, Hulme, Manchester, M15 4DY",
       text: marked("## Advance Progression Request  \n#### Milestone  \n`Searches Completed`  \n#### Advance to  \n`Wed May 24 2017`  \n#### Requested by  \n`Dawn Wetherill`  \n#### Reason  \nA reason  \n"),
       link: "https://conveyancing.vitalspace.co.uk/case/4653108",
+      code: "https://conveyancing.vitalspace.co.uk/login/4653108",
       newSales: {
         address: "Apt 19 St Lawrence Street, Hulme, Manchester, M15 4DY",
         bedrooms: "3",

@@ -19,11 +19,11 @@
     $scope.save = function() {
       if ($scope.myForm.$valid) {
         $scope.template.save();
-        return $state.go('setup');
+        return $state.go('lettings_setup');
       }
     };
     $scope.cancel = function() {
-      return $state.go('setup');
+      return $state.go('lettings_setup');
     };
     $scope.defaultData = {
       displayAddress: "26 Chervil Close, Fallowfield, Manchester, M14 7DP",

@@ -50,7 +50,7 @@
         size: 'small'
       }, $http.sites["maintenance_leads"].config).then(function() {
         $scope.landlords.delete(landlord);
-        $state.go('landlords');
+        $state.go('maintenance_leads_landlords');
         return alert.log('landlord deleted');
       }, function(err) {
         return console.log('err', err);

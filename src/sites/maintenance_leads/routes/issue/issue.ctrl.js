@@ -136,7 +136,7 @@
         size: 'small'
       }, $http.sites["maintenance_leads"].config).then(function() {
         $scope.issue.delete();
-        $state.go('dashboard');
+        $state.go('maintenance_leads_dashboard');
         return alert.log('Issue deleted');
       }, function(err) {
         return console.log('err', err);

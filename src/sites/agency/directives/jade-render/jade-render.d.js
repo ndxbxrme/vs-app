@@ -15,6 +15,7 @@
         var doc, render;
         doc = elem[0].contentWindow.document;
         render = function() {
+          console.log('rendering');
           var e;
           try {
             return doc.body.innerHTML = jade.render(scope.ngModel, scope.data);
@@ -37,3 +38,4 @@
   });
 
 }).call(this);
+console.log('hi');

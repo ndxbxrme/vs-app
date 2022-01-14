@@ -19,11 +19,11 @@
     $scope.save = function() {
       if ($scope.myForm.$valid) {
         $scope.template.save();
-        return $state.go('setup');
+        return $state.go('maintenance_leads_setup');
       }
     };
     $scope.cancel = function() {
-      return $state.go('setup');
+      return $state.go('maintenance_leads_setup');
     };
     return $scope.defaultData = {
       address: "22 Flixton Road, Urmston, M41 5AA",

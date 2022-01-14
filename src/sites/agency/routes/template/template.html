@@ -31,11 +31,11 @@
           <div class="col-12">
             <h2 class="preview-title orange">Preview</h2>
             <section  class="email-preview" ng-if="type==='email'">   
-              <agency-template-render ng-model="template.item.subject" data="defaultData"></agency-template-render>
-              <agency-jade-render ng-model="template.item.body" data="defaultData"></agency-jade-render>
+              <template-render ng-model="template.item.subject" data="defaultData"></template-render>
+              <jade-render ng-model="template.item.body" data="defaultData"></jade-render>
             </section>
             <section class="sms-preview" ng-if="type==='sms'">
-              <agency-template-render ng-model="template.item.body" data="defaultData"></agency-template-render>
+              <template-render ng-model="template.item.body" data="defaultData"></template-render>
             </section>
           </div>
         </div>
