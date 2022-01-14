@@ -1,64 +1,45 @@
 
-<div class="works-route route"> 
+<div class="template">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-sm-8">
-        <h1>{{ mml('works-heading') }}</h1>
-      </div>
-      <div class="col-sm-4 search">
-        <input type="text" ng-model="mysearch.$like" placeholder="Search Cases" ng-change="page=1"/>
-      </div>
-    </div>
+    <h1>{{type==='email'?'Email':'Sms'}} template</h1>
+      <form name="myForm" ng-submit="save()">
+        <div class="row">
+          <section class="col-md-4 col-sm-6">
+            <label>Name</label>
+            <input type="text" ng-model="template.item.name"/>
+            <div class="subject" ng-show="type===&quot;email&quot;">
+              <label>Subject</label>
+              <input type="text" ng-model="template.item.subject"/>
+            </div>
+            <div class="from" ng-show="type===&quot;email&quot;">
+              <label>From</label>
+              <input type="text" ng-model="template.item.from"/>
+            </div>
+            <div>
+              <input class="button" type="submit" value="Save"/>
+              <button class="button" ng-click="cancel()">Cancel</button>
+            </div>
+          </section>
 
-    <div class="controls">
-      <div class="row">
-        <div class="col-sm-10"></div>
-        <div class="col-sm-2 text-end">
-          <div class="showing">Showing {{issues.items.length}} of {{issues.total}} lead{{issues.total!==1?'s':''}}</div>
+          <section class="col-md-8 col-sm-6">
+            <label>Body</label>
+            <code-mirror ng-model="template.item.body" options="{mode:lang, lineWrapping:true}"></code-mirror><small ng-show="type==='sms'">{{template.item.body.length || 0}} / 130</small>
+          </section>
         </div>
-      </div>
+
+        <div class="row">
+          <div class="col-12">
+            <h2 class="preview-title orange">Preview</h2>
+            <section  class="email-preview" ng-if="type==='email'">   
+              <template-render ng-model="template.item.subject" data="defaultData"></template-render>
+              <jade-render ng-model="template.item.body" data="defaultData"></jade-render>
+            </section>
+            <section class="sms-preview" ng-if="type==='sms'">
+              <template-render ng-model="template.item.body" data="defaultData"></template-render>
+            </section>
+          </div>
+        </div>
+      </form>
     </div>
-     
-    <table ng-show="issues.items.length &gt; 0" class="issue-table">
-      <thead>
-        <tr>
-          <th width="15%" ng-click="sort.set(&quot;date&quot;)" ng-class="sort.class(&quot;date&quot;)">{{ mml('works-heading-date') }}</th>
-          <th width="25%" ng-click="sort.set(&quot;address&quot;)" ng-class="sort.class(&quot;address&quot;)">{{ mml('works-heading-address') }}</th>
-          <th width="25%" ng-click="sort.set(&quot;tenant&quot;)" ng-class="sort.class(&quot;tenant&quot;)">{{ mml('works-heading-tenant') }}</th>
-          <th width="20%" ng-click="sort.set(&quot;contractorName&quot;)" ng-class="sort.class(&quot;contractorName&quot;)">{{ mml('works-heading-contractor') }}</th>
-          <th width="10%" ng-click="sort.set(&quot;status&quot;)" ng-class="sort.class(&quot;status&quot;)">{{ mml('works-heading-status') }}</th>
-          <th width="5%">{{ mml('works-heading-options') }}</th>
-        </tr>
-      </thead>
-      <tbody ng-repeat="issue in issues.items">
-        <tr>
-          <td class="date">{{ issue.date | date:medium }}</td>
-          <td class="address">{{ issue.address }}<i ng-show="issue.media.length" class="fad fa-camera-retro"></i></td>
-          <td class="tenant">{{ issue.tenant }}
-            <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
-          </td>
-          <td class="contractor">{{ issue.contractorName }}</td>
-          <td ng-class="issue.status" class="status">
-            <div class="booked"> 
-              <div class="fad fa-file-medical"></div>
-            </div>
-            <div class="completed">
-              <div class="fad fa-file-check"></div>
-            </div>
-            <div class="invoiced">
-              <div class="fad fa-thumbs-up"></div>
-            </div>
-          </td>
-          <td class="options">
-            <button ui-sref="maintenance_leads_issue({_id:issue._id})" class="button-grey"> 
-              <div class="fal fa-eye"></div>View
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div ng-show="!issues.items.length" class="empty-table">{{ mml('works-empty-table') }}</div>
-    <pagination ng-model="issues.args.page" total="issues.total" page-size="issues.args.pageSize"></pagination>
-    <hr class="white">
   </div>
 </div>

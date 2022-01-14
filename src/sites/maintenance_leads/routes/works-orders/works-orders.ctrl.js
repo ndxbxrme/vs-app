@@ -2,6 +2,7 @@
 (function() {
   'use strict';
   angular.module('vs-maintenance-leads').controller('maintenance_leadsWorksOrdersCtrl', function($scope, Sorter, DbItem) {
+    console.log('works orders');
     $scope.dbItem = DbItem;
     $scope.page = 1;
     $scope.limit = 15;
