@@ -13,12 +13,12 @@ const sites = {
   "main": {
     "name": "main",
     "module": "ndx",
-    "url": "http://localhost:23232",
-    "ws": "ws://localhost:23232",
+    "url1": "http://localhost:23232",
+    "ws1": "ws://localhost:23232",
     "url2": "http://92.237.208.72:3001",
     "ws2": "ws://92.237.208.72:3001",
-    "url1": "https://server.vitalspace.co.uk",
-    "ws1": "wss://server.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk",
+    "ws": "wss://server.vitalspace.co.uk"
   },
   "lettings": {
     "name": "lettings",
@@ -53,12 +53,12 @@ const sites = {
   "sms": {
     "name": "sms",
     "module": "vs-sms",
-    "url": "http://localhost:23232",
-    "ws": "ws://localhost:23232",
+    "url1": "http://localhost:23232",
+    "ws1": "ws://localhost:23232",
     "url2": "http://92.237.208.72:3001",
     "ws2": "ws://92.237.208.72:3001",
-    "url1": "https://server.vitalspace.co.uk",
-    "ws1": "wss://server.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk",
+    "ws": "wss://server.vitalspace.co.uk"
   }
 };
 const mainmodule = angular.module('vs-app', Object.values(sites).map(site => site.module));
