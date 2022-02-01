@@ -124,7 +124,6 @@ angular.module('vs-maintenance')
                   day.tasks.push(task);
                 }
               })
-              console.log(day);
             })
           })
         }
@@ -144,6 +143,7 @@ angular.module('vs-maintenance')
       });
       scope.prev = () => {
         startDate = new Date(startDate.valueOf() - dayOffset * 24 * 60 * 60 * 1000);
+        console.log(startDate);
         generateData();
       }
       scope.next = () => {
@@ -160,7 +160,6 @@ angular.module('vs-maintenance')
         generateData();
       }
       scope.isSelected = (day) => {
-        console.log('is', day, selectedDate);
         return day.getDate()===selectedDate.getDate() && day.getMonth()===selectedDate.getMonth() && day.getFullYear()===selectedDate.getFullYear();
       }
       scope.openTask = (task, ev) => {

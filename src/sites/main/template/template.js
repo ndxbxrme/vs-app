@@ -22,11 +22,11 @@ angular.module('vs-app')
       scope.save = function() {
         if (scope.myForm.$valid) {
           scope.template.save();
-          return $state.go('setup');
+          return $state.go('main_setup');
         }
       };
       scope.cancel = function() {
-        return $state.go('setup');
+        return $state.go('main_setup');
       };
     }
   }

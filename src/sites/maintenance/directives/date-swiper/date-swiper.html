@@ -6,11 +6,11 @@
         <div class="month month-{{$index+1}} month-{{m.year}}-{{m.month+1}}" ng-repeat="m in months track by $index">
           <div class="month-holder">
             <div class="left">
-              <div class="prev" tap="monthPrev()">&lt;</div>
+              <div class="prev" ng-click="monthPrev()">&lt;</div>
             </div>
             <div class="month-name">{{m.monthName}} <span class="month-year">{{m.year}}</span></div>
             <div class="right">
-              <div class="next" tap="monthNext()">&gt;</div>
+              <div class="next" ng-click="monthNext()">&gt;</div>
             </div>
           </div>
           <ul class="day-names">
@@ -19,7 +19,7 @@
             </li>
           </ul>
           <ul class="days">
-            <li ng-repeat="d in m.days track by $index" tap="setDate(d.date)" ng-class="setClass(d, m)">
+            <li ng-repeat="d in m.days track by $index" ng-click="setDate(d.date)" ng-class="setClass(d, m)">
               <div class="date">{{d.num}}</div>
             </li>
           </ul>

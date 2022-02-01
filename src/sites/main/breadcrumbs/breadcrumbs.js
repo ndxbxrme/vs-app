@@ -25,6 +25,7 @@ angular.module('vs-app')
         history.push({url,title,params,date:new Date()});
       }
       else {
+        console.log('splicing');
         history.splice(historyIndex, history.length);
         history.push({url,title,params,date:new Date()});
       }
@@ -42,7 +43,7 @@ angular.module('vs-app')
     getFavorites: () => favorites,
     getRecent: () => {
       const myhistory = allHistory.reduce((res, item) => {
-        const hItem = res.find(h => h.url === item.url);
+        let hItem = res.find(h => h.url === item.url);
         if(!hItem) {
           hItem = JSON.parse(JSON.stringify(item));
           hItem.count = 0;

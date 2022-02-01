@@ -71,6 +71,21 @@ angular.module('vs-app')
     }
     $scope.myusers.save(user);
   }
+  $scope.deleteUser = async (user) => {
+    if(confirm('Deleting ' + user.local.email + ', are you sure?')) {
+      await Promise.all(Object.values($http.sites).map(site => new Promise(async resolve => {
+        const siteUser = (await $http.post($http.sites[site.id].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[site.id].config)).data.items[0];
+        if(siteUser) {
+          siteUser.deleted = true;
+          siteUser.roles = {};
+          await $http.put($http.sites[site.id].url + '/api/users/' + siteUser._id, siteUser, $http.sites[site.id].config);
+        }
+        resolve();
+      })));
+      user.deleted = true;
+      $scope.myusers.save(user);
+    }
+  }
 })
 .config(($stateProvider) => $stateProvider.state('main_users', {
   url: '/users',

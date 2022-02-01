@@ -21,7 +21,7 @@
       config: function(args) {
         return angular.extend(settings, args);
       },
-      $get: function($http, $q, $state, $window, $injector) {
+      $get: function($http, $q, $state, $window, $interval, $injector) {
         var checkRoles, current, currentParams, errorRedirect, errorRedirectParams, genId, getUserPromise, hasRole, loading, prev, prevParams, socket, sockets, user, userCallbacks;
         user = null;
         loading = false;
@@ -54,6 +54,31 @@
           }
           return output;
         };
+		const handleUser = function(data) {
+			user = data;
+			localStorage.setItem('token', user.local.sites.main.token);
+			Object.keys(user.local.sites).forEach(key => {
+			  $http.sites[key].token = user.local.sites[key].token;
+			  console.log('setting token', key);
+			  $http.sites[key].config = {
+				"headers": {
+				  "Authorization": "Bearer " + user.local.sites[key].token
+				}
+			  };
+			})
+		};
+		const refreshTokens = function() {
+		  $interval(() => {
+			$http.post($http.sites.main.url + '/api/refresh-login', null, $http.sites.main.config).then(function(data) {
+			  var callback, error1, j, len1;
+			  loading = false;
+			  if (data && data.data && data.data !== 'error' && data.status !== 401) {
+				handleUser(data.data);
+			  }
+			});
+		  }, 15 * 60 * 1000);
+		};
+		refreshTokens();
         getUserPromise = function() {
           var defer;
           loading = true;
@@ -70,16 +95,7 @@
               var callback, error1, j, len1;
               loading = false;
               if (data && data.data && data.data !== 'error' && data.status !== 401) {
-                user = data.data;
-                localStorage.setItem('token', user.local.sites.main.token);
-                Object.keys(user.local.sites).forEach(key => {
-                  $http.sites[key].token = user.local.sites[key].token;
-                  $http.sites[key].config = {
-                    "headers": {
-                      "Authorization": "Bearer " + user.local.sites[key].token
-                    }
-                  };
-                })
+				handleUser(data.data);
                 for (j = 0, len1 = userCallbacks.length; j < len1; j++) {
                   callback = userCallbacks[j];
                   try {

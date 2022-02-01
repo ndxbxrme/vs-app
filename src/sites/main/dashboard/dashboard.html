@@ -39,6 +39,12 @@
             Diary
           </a>
         </div>
+        <div class="col-sm-4 col-6">
+          <a ui-sref="sms_dashboard" ng-show="auth.isAuthorized('sms_dashboard')" class="big-link">
+            <i class="fa-duotone fa-mobile"></i>
+            SMS
+          </a>
+        </div>
       </div>
     </div>
   </div>

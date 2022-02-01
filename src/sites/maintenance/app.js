@@ -73,16 +73,20 @@
             if (user.roles) {
               if (user.roles.maintenance) {
                 root.maintenance.push(user);
-                if (!$rootScope.selectedUser) {
-                  $rootScope.selectedUser = user;
-                }
+                /*if (!$rootScope.selectedUser) {
+                  $rootScope.selectedUser = user._id;
+                }*/
               }
               if (user.roles.agency) {
                 root.staff.push(user);
               }
             }
           }
-          console.log('rs', root.maintenance);
+          if(root.maintenance.length && !$rootScope.selectedUser) {
+            $timeout(() => {
+              $rootScope.selectedUser = root.maintenance[0]._id;
+            })
+          }
         })
         
       });

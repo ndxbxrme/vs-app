@@ -8,6 +8,7 @@
       replace: true,
       link: function(scope, elem, attrs) {
         return scope.openTask = function(task, ev) {
+          console.log('ev', ev);
           MaintenanceTaskPopup.setTask(task);
           MaintenanceTaskPopup.show(elem);
           return ev.stopPropagation();

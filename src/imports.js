@@ -13,6 +13,12 @@ import './third_party/select2/select2.css';
 //import '../../../vs-property/bower/fancybox/source/fancybox_sprite.png';
 //import '../../../vs-property/bower/fancybox/source/fancybox_sprite@2x.png';*/
 
+//SMS
+import './sites/sms/app.js';
+import './sites/sms/routes/dashboard/dashboard.ctrl.js';
+import './sites/sms/routes/dashboard/dashboard.routes.js';
+import './sites/sms/routes/schedule/schedule.ctrl.js';
+import './sites/sms/routes/schedule/schedule.routes.js';
 
 //LETTINGS
 

@@ -26,7 +26,7 @@
       </select>
     </div>
     <div class="form-item half">
-      <label class="title">Date:</label><a class="date" tap="setDate()">{{task.date | date:"mediumDate"}}</a>
+      <label class="title">Date:</label><a class="date" ng-click="setDate()">{{task.date | date:"mediumDate"}}</a>
     </div>
     <div class="form-item half">
       <label class="title">Time:</label>
@@ -70,7 +70,7 @@
       <label class="title">Created by:</label><span>{{task.createdDate | date:'mediumDate'}}, {{task.createdDate | date:'shortTime'}} | &nbsp;<img gravatar-src="task.createdBy.local.email"/><span>{{task.createdBy.displayName || task.createdBy.local.email}}</span></span>
     </div>
     <div class="controls bottom">
-      <button class="delete" type="button" tap="delete()" ng-show="task._id">Delete</button>
+      <button class="delete" type="button" ng-click="delete()" ng-show="task._id">Delete</button>
       <input class="submit" type="submit" value="Submit"/>
     </div>
   </form><a class="close-reveal-modal" ng-click="cancel()">&times;</a>
