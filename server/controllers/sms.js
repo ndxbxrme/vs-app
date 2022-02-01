@@ -13,14 +13,12 @@ module.exports = (ndx) => {
           while(i++ < numsplit.length - 1) {
             data['$' + i] = numsplit[i].trim();
           }
-          console.log('body', item.message.trim());
-          console.log('data', data);
-          /*ndx.sms.send({
+          ndx.sms.send({
             originator: item.from.trim(),
             numbers: [numsplit[0].trim()],
             body: item.message.trim(),
             EmailAddressToSendReplies: ((item.receiveReplies==='Yes' && item.emailAddress) || '').trim()
-          }, data)*/
+          }, data)
         })
       }
     }
