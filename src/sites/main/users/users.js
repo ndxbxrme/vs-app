@@ -55,11 +55,11 @@ angular.module('vs-app')
     */
   };
   $scope.updateRole = async (user, role, site) => {
-    const siteUser = (await $http.post($http.sites[site.id].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[site.id].config)).data.items[0];
+    const siteUser = (await $http.post($http.sites[site.name].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[site.name].config)).data.items[0];
     if(siteUser) {
       siteUser.roles = {};
       siteUser.roles[role.role] = {};
-      await $http.put($http.sites[site.id].url + '/api/users/' + siteUser._id, siteUser, $http.sites[site.id].config);
+      await $http.put($http.sites[site.name].url + '/api/users/' + siteUser._id, siteUser, $http.sites[site.name].config);
     }
     else {
       const newSiteUser = JSON.parse(JSON.stringify(user));
@@ -67,18 +67,22 @@ angular.module('vs-app')
       newSiteUser.local.password = bcrypt.hashSync(Math.floor(Math.random() * 9999).toString(36), bcrypt.genSaltSync(8), null);
       newSiteUser.roles = {};
       newSiteUser.roles[role.role] = {};
-      await $http.put($http.sites[site.id].url + '/api/users/', newSiteUser, $http.sites[site.id].config);
+      await $http.put($http.sites[site.name].url + '/api/users/', newSiteUser, $http.sites[site.name].config);
     }
     $scope.myusers.save(user);
   }
   $scope.deleteUser = async (user) => {
     if(confirm('Deleting ' + user.local.email + ', are you sure?')) {
       await Promise.all(Object.values($http.sites).map(site => new Promise(async resolve => {
-        const siteUser = (await $http.post($http.sites[site.id].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[site.id].config)).data.items[0];
-        if(siteUser) {
-          siteUser.deleted = true;
-          siteUser.roles = {};
-          await $http.put($http.sites[site.id].url + '/api/users/' + siteUser._id, siteUser, $http.sites[site.id].config);
+        try {
+          const siteUser = (await $http.post($http.sites[site.name].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[site.name].config)).data.items[0];
+          if(siteUser) {
+            siteUser.deleted = true;
+            siteUser.roles = {};
+            await $http.put($http.sites[site.name].url + '/api/users/' + siteUser._id, siteUser, $http.sites[site.name].config);
+          }
+        } catch(e) {
+          
         }
         resolve();
       })));
