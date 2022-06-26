@@ -35,6 +35,7 @@
       property = res.item;
       property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
       breadcrumbs.setInfo(property.displayAddress);
+      if(property.AvailableDate.indexOf('Z')===-1) property.AvailableDate = property.AvailableDate + 'Z';
       property.$case = $scope.single('lettings:properties', property.RoleId + '_' + new Date(property.AvailableDate).valueOf(), function(item) {
         var branch, i, len, milestone, progression, ref1, results, timeLeft;
         item.parent.search = `${item.parent.displayAddress}||${item.vendor}||${item.purchaser}`;
