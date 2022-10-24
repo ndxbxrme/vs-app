@@ -158,6 +158,7 @@ import './sites/agency/directives/progression/progression.d.js';
 //import './sites/agency/directives/template-render/template-render.d.js';
 import './sites/agency/filters/currency-format.js';
 import './sites/agency/filters/timeago.js';
+import './sites/agency/filters/get-fees.js';
 import './sites/agency/modals/advance-progression/advance-progression.ctrl.js';
 import './sites/agency/modals/dashboard-income/dashboard-income.ctrl.js';
 import './sites/agency/modals/yesnocancel.ctrl.js';
