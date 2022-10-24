@@ -4,7 +4,7 @@
   angular.module('vs-agency').config(function($stateProvider) {
     return $stateProvider.state('agency_client-management-details', {
       url: '/agency/client-management/:id',
-      templateUrl: require("./client-management-details.html").default,
+      template: require("./client-management-details.html").default,
       controller: 'agencyClientManagementDetailsCtrl',
       data: {
         title: 'Vitalspace Conveyancing - Client Management',
