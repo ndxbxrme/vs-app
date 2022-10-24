@@ -3,7 +3,7 @@
 }
 .main_users-page .users .user {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-auto-columns: 1fr;
   grid-gap: .5em;
   align-items: baseline;

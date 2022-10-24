@@ -55,6 +55,8 @@ angular.module('vs-app')
     */
   };
   $scope.updateRole = async (user, role, site) => {
+    console.log('update role', user, role, site);
+    return;
     const siteUser = (await $http.post($http.sites[site.name].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[site.name].config)).data.items[0];
     if(siteUser) {
       siteUser.roles = {};

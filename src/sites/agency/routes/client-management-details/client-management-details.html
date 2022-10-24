@@ -1,0 +1,130 @@
+
+<div class="client-management-details">
+  <h1>Case </h1>
+  <h2>At a glance</h2>
+  <div class="property">
+    <h5 ng-show="property.loading" class="loading">Contacting Dezrez</h5>
+    <div class="property-item">
+      <div style="background-image: url({{property.item.Images[0].Url}})" class="property-image"></div>
+      <div class="property-status">
+        <div class="item">
+          <label>Address:</label>
+          <h4>{{property.item.displayAddress}}</h4>
+        </div>
+        <div class="item">
+          <label>Property Status</label>
+          <h4>{{property.item.RoleStatus.DisplayName}}</h4>
+        </div>
+      </div>
+      <div class="property-marketing">
+        <div ng-show="!loading(&quot;offers&quot;)" class="item">
+          <label>Offers:</label>
+          <h4>{{property.item.offers.TotalCount}}</h4>
+        </div>
+        <div ng-show="!loading(&quot;all&quot;)" class="item">
+          <label>Viewings:</label>
+          <h4>{{property.item.viewings.length}}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="header1">
+      <div class="info">
+        <h2> <i class="mortgage ic50"></i> Property Report</h2>
+        <p>Date Instructed <span>{{property.item.DateInstructed | date:'mediumDate'}}</span></p>
+      </div>
+    </div>
+    <div class="row results">
+      <div class="col-md-3 col-sm-6"><i class="vs-iconsale ic50"></i>
+        <p>{{property.item.DateInstructed | daysSince}}</p>
+        <p class="small">On Market</p>
+      </div>
+      <div ng-show="!loading(&quot;all&quot;)" class="col-md-3 col-sm-6"><i class="vs-iconstaff ic50"></i>
+        <p>{{property.item.viewings.length}}</p>
+        <p class="small">Viewings Arranged</p>
+      </div>
+      <div ng-show="!loading(&quot;all&quot;)" class="col-md-3 col-sm-6"><i class="vs-iconstaff ic50"></i>
+        <p>{{property.item | viewingContacted}}</p>
+        <p class="small">Viewings Conducted</p>
+      </div>
+      <div ng-show="!loading(&quot;all&quot;)" class="col-md-3 col-sm-6"><i class="guarantor ic50"></i>
+        <p>{{property.item | getFeedbackCount}}</p>
+        <p class="small">Feedback Received</p>
+      </div>
+      <div class="col-md-3 col-sm-6"><i class="mail"></i>
+        <p>{{property.item | numMailouts}}</p>
+        <p class="small">Mail Outs</p>
+      </div>
+      <div class="col-md-3 col-sm-6"><i class="vs-iconphoto ic50"></i>
+        <p>{{property.item.Images.length}}</p>
+        <p class="small">Photographs</p>
+      </div>
+      <div class="col-md-3 col-sm-6"><i class="vs-iconvideo ic50"></i>
+        <p>{{ property.item | hasDocument:'Virtual Tour' }}</p>
+        <p class="small">Video Walkthrough</p>
+      </div>
+      <div class="col-md-3 col-sm-6"><i class="offer ic50"></i>
+        <p>{{property.item.offers.TotalCount}}</p>
+        <p class="small">Offers Received</p>
+      </div>
+    </div>
+    <div class="rightmove-stats">
+      <div class="info"><img src="../../public/img/rm-logo.svg" width="300"/>
+        <p>Online Stats - Updated <span>{{property.item.rightmove.RightmoveStatsLastExportedDate | date:'mediumDate'}}</span></p>
+      </div>
+    </div>
+    <div class="row stats">
+      <div class="col-md-3 col-sm-6"><i class="vs-iconsearch ic50"></i>
+        <p>{{property.item.rightmove.TotalSummaryViews}}</p>
+        <p class="small">Summary Views</p>
+      </div>
+      <div class="col-md-3 col-sm-6"><i class="vs-icondocument ic50"></i>
+        <p>{{property.item.rightmove.TotalDetailedViews}}</p>
+        <p class="small">Detail Views</p>
+      </div>
+      <div class="col-md-3 col-sm-6"><i class="reserving ic50"></i>
+        <p>{{property.item.rightmove.IsCurrentlyAPremiumListing ? 'Yes' : 'No'}}</p>
+        <p class="small">Premium Listing</p>
+      </div>
+      <div class="col-md-3 col-sm-6"><i class="vs-iconthumb ic50"></i>
+        <p>{{property.item.rightmove.IsCurrentlyAFeaturedProperty ? 'Yes' : 'No'}}</p>
+        <p class="small">Feature Property</p>
+      </div>
+    </div>
+    <div class="header1">
+      <div class="info">
+        <h2> <i class="mortgage ic50"></i> Our Client(s)</h2>
+        <p>Fee<span>&nbsp;{{property.item | getFees | currency : "£" : 0}} + VAT</span></p>
+      </div>
+    </div>
+    <div class="contacts row">
+      <div ng-repeat="vendor in property.item.vendor.Members" class="contact-details col-sm-6">
+        <h4>{{$index===0?"Vendor's Contact":""}}</h4>
+        <div class="card">
+          <div>
+            <div class="name"><span>{{vendor.Person.ContactName}}</span></div>
+            <div class="communication">
+              <div class="telephone"><span>{{vendor.Person.PrimaryTelephone.Value}}</span></div>
+              <div class="email"><span><a href="mailto:{{vendor.Person.PrimaryEmail.Value}}" class="mail-link">{{vendor.Person.PrimaryEmail.Value}}</a></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="case-notes">
+      <h2 class="orange">Case Notes</h2>
+      <div ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
+        <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo" class="delete">Delete</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo" class="edit">Edit</a></div>
+        <div class="note"> 
+          <div class="details"><span ng-show="note.side">- {{note.side}}</span>
+            <div ng-bind-html="note.text | markdown:true" class="note-body"></div>
+          </div>
+        </div>
+      </div>
+      <pagination total="notesData.length" ng-model="notesPage" page-size="notesLimit" class="pagination-sm pagination"></pagination>
+      <div class="add-note">
+        <code-mirror ng-model="note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
+        <button ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
+      </div>
+    </div>
+  </div>
+</div>
