@@ -1,0 +1,285 @@
+.client-management-list
+  // Controls
+  .controls
+    .order-item, .filter-item
+      display inline-block
+      position relative
+      color vs-orange
+      margin 0px 15px 5px 0px
+      &.icon-green, &.icon-red, &.icon-orange
+        padding-left 2rem
+        &:before
+          content ''
+          position absolute
+          top 0.5rem
+          left 0.5rem
+          width 1rem
+          height 1rem
+          background vs-green
+          border-radius 50%
+      &.icon-red:before
+        background vs-red
+      &.icon-orange:before
+        background vs-amber
+      &.selected
+        font-weight 600
+      
+  // Table
+  table.table
+    margin-bottom 0px
+    tbody
+      border-top 5px solid vs-lightsilver
+      border-bottom 5px solid vs-lightsilver
+    tr 
+      td
+        vertical-align top
+        p
+          margin-bottom 0px
+        .address
+          color vs-orange
+          font-weight bold
+        .dates
+          font-size 1.1rem
+          .date
+            margin-top 0.5rem
+        .title
+          font-weight 600
+          font-size 1.4rem
+        .milestone
+          transform translateY(1rem)
+        &.offer
+          font-weight bold
+          font-size 1.8rem
+          p
+            font-weight 300
+            font-size 1.4rem
+            margin-top 0
+        &.has-request
+            font-weight 600
+      &.meta
+        td
+          background vs-white
+          border-bottom 1px solid vs-grey
+          padding 10px 15px
+          .purchase-price
+            color vs-orange
+            font-size 1.8rem
+            font-weight 600
+  .milestone
+    text-align left
+    align-items flex-start
+    margin-top -10px
+    .icon
+      height 30px
+      width 30px
+      border none
+      &:after
+        height 30px
+        width 30px
+  .pagination-holder
+    display flex
+    justify-content center
+    .pagination
+      a
+        color vs-orange
+      a:hover
+        color vs-orange
+      li.active
+        a
+          background vs-orange
+          border-color vs-orange
+          color #fff
+  .pagination
+    justify-content center
+    text-align center
+    .page
+      padding 5px 10px 3px 10px
+      border 1px solid vs-lightgrey
+      border-left none
+      transition all 0.4s ease-in-out
+      &:first-of-type 
+        border-left: 1px solid vs-lightgrey
+        border-bottom-left-radius 5px
+        border-top-left-radius 5px
+      &:last-of-type 
+        border-bottom-right-radius 5px
+        border-top-right-radius 5px
+      &.last, &.first 
+        padding 5px 20px 3px 20px
+      &.selected, &:hover
+        background vs-orange
+        color white
+.mobile
+  .cases
+    .controls
+      .order-item, .filter-item
+        margin-left 1rem
+    .mobile-table
+      .address-row
+        flex 1
+
+.client-management-details
+  .client-row
+    margin-bottom 30px
+    padding-bottom 30px
+    border-bottom 1px solid #fff
+  .property-item
+    align-items center
+    position relative
+    border 1px solid vs-lightgrey
+    border-radius 3px
+    background white
+    padding 20px
+    overflow hidden
+    .property-status
+      flex 1
+    .property-marketing
+      .item
+        justify-content flex-end
+     p
+      display block
+      margin-bottom 0px
+      &.address,
+      &.numbers
+        color vs-orange
+        font-weight bold
+      &.numbers
+        font-weight bold
+        font-size 1.8rem
+      &.title
+        font-weight 600
+        font-size 1.4rem  
+  .property-image 
+    width 170px
+    height 120px
+    background #eee
+    background-position center
+    background-size cover
+    margin-right 2rem
+  .results, .stats
+    .ic50
+      display inline-block
+      zoom .5
+    .col-sm-6
+      margin-bottom 30px
+      .stat
+        background rgba(255,255,255,0.5)
+        border-radius 3px
+        padding 30px 30px 20px 30px
+        display flex
+        align-items center
+        justify-content center
+        flex-direction column
+      p
+        font-size 2rem
+        line-height 1
+        padding-bottom 0
+        font-weight 600
+        color vs-orange
+        &.small
+          font-size 1.4rem
+          color vs-grey
+      i
+        background url(./public/img/icons/vs_icons.png) no-repeat
+        width 80px
+        height 80px
+        zoom .4
+        margin-bottom: 40px
+        &.vs-iconsale
+          background-position -340px -252px
+        &.vs-iconstaff
+          background-position -256px -336px
+        &.guarantor
+          background url(./public/img/icons/icons3.png) no-repeat
+          background-position -2px -82px
+        &.mail
+          background url(./public/img/icons/vs_mail.png) no-repeat
+          display inline-block
+          background-size contain
+          width: 80px;
+          height: 80px;
+        &.vs-iconphoto
+          background-position -340px -168px
+        &.vs-iconvideo
+          background-position -4px -420px
+        &.offer
+          background url(./public/img/icons/vs-icons2.png) no-repeat
+          background-position -82px -81px
+        &.vs-iconsearch
+          background-position -4px -336px
+        &.vs-icondocument
+          background-position -88px -84px
+        &.reserving
+          background url(./public/img/icons/icons3.png) no-repeat
+          background-position -84px -82px
+        &.vs-iconthumb
+          background-position -340px -336px
+  .rightmove-stats
+    text-align center
+    margin 60px 0 30px 0
+    .info
+      padding 20px 20px 0
+      p span
+        color vs-orange
+  .contacts
+    .card
+      position relative
+      border 1px solid vs-lightgrey
+      border-radius 3px
+      background white
+      padding 20px 20px 10px 20px
+      min-height 170px
+      overflow hidden
+      div
+        margin-bottom 5px
+      .edit-btn
+        position absolute
+        top 10px
+        right 10px
+      .role
+        font-weight 600
+      .mail-link
+        width 200px
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+  .case-notes
+    border 1px solid vs-lightgrey
+    padding 20px
+    margin 10px 0 30px
+    border-radius 3px
+    background vs-white
+    .case-note
+      border 1px solid vs-lightgrey
+      padding 20px
+      margin 10px 0
+      border-radius 3px
+      background white
+      .date 
+        font-weight 600
+        .edit, .delete
+          display inline
+          float right
+          color vs-orange
+          margin-left 1rem
+      p, h1, h2, h3, h4, h5, h6
+        margin 0 0 0px 0
+      img
+        margin-right 5px
+  .add-note
+    margin-top 10px
+    .CodeMirror
+      border 1px solid vs-lightgrey
+      border-radius 5px
+      background #f1f1f1
+      padding-left 15px
+      height 120px
+      pre
+        font-size 1.8rem
+    button
+      margin-top 15px
+      background vs-orange
+      color white
+      border vs-orange
+      &:hover
+        background vs-grey

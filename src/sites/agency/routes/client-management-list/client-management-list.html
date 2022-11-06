@@ -1,51 +1,75 @@
 
+
 <div class="client-management-list">
-  <h1>Client management </h1>
-  <div class="controls">
-    <div class="left">
-      <div class="sort">Order By:<a href="" ng-click="sort=&quot;-DateInstructed&quot;;page=1" ng-class="{selected:sort===&quot;-DateInstructed&quot;}" class="order-item">First Listed</a><a href="" ng-click="sort=&quot;-viewings.length&quot;;page=1" ng-class="{selected:sort===&quot;-viewings.length&quot;}" class="order-item">Viewings</a><a href="" ng-click="sort=&quot;-Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-Price.PriceValue&quot;}" class="order-item">Asking Price</a></div>
-    </div>
-    <div class="right">
-      <div class="search">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-sm-8">
+        <h1>Client management</h1>
+      </div>
+      <div class="col-sm-4 search">
         <input type="text" ng-model="search" placeholder="Search Cases" ng-change="page=1"/>
       </div>
-      <div class="showing">Showing {{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
     </div>
-  </div>
-  <table ng-show="filterData.length &gt; 0" class="table table-responsive small-mobile-hide">
-    <thead>
-      <tr>
-        <th width="35%">Property Address</th>
-        <th width="15%">Vendor</th>
-        <th width="40%">Viewing Arrangements</th>
-        <th width="10%">Listed</th>
-      </tr>
-    </thead>
-    <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
-      <tr ng-click="property.open = !property.open">
-        <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}"><img src="{{property.Images[0].Url}}?width=200" width="100" class="image"/>
-          <div class="address">{{property.displayAddress}}</div>
-          <div class="rental-price">{{property.Price.PriceValue | currency : "£" : 0}} ({{property | getFees | currency : "£" : 0}})</div>
-        </td>
-        <td class="vendor">{{property.vendor.Name}}</td>
-        <td class="viewing-next">
-          <p class="title">{{property.extendedData.SpecialArrangements[0].SpecialArrangementType.Name}}</p>
-          <p>{{property.extendedData.SpecialArrangements[0].Text}}</p>
-          <p class="title">{{property.extendedData.SpecialArrangements[1].SpecialArrangementType.Name}}</p>
-          <p>{{property.extendedData.SpecialArrangements[1].Text}}</p>
-          <p class="title">{{property.extendedData.SpecialArrangements[2].SpecialArrangementType.Name}}</p>
-          <p>{{property.extendedData.SpecialArrangements[2].Text}}</p>
-        </td>
-        <td class="listed"> 
-          <div class="instructed">Instructed on: {{property.DateInstructed | date:'dd/MM/yy'}}</div>
-          <div class="time-ago">({{property.DateInstructed | timeAgo}})</div>
-          <div class="viewings-count">Viewings: {{property.viewings.length}}</div><a ui-sref="agency_client-management-details({id:property._id})">View Case</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <pagination total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true" class="pagination-sm pagination"></pagination>
-  <div ng-show="filterData.length===0" class="nothing-to-show">
-    <h3>Nothing to show</h3>
+
+    <div class="controls">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="sort">Order By: <a href="" ng-click="sort=&quot;-DateInstructed&quot;;page=1" ng-class="{selected:sort===&quot;-DateInstructed&quot;}" class="order-item">First Listed</a><a href="" ng-click="sort=&quot;-viewings.length&quot;;page=1" ng-class="{selected:sort===&quot;-viewings.length&quot;}" class="order-item">Viewings</a><a href="" ng-click="sort=&quot;-Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-Price.PriceValue&quot;}" class="order-item">Asking Price</a></div>
+        </div>
+        <div class="col-sm-6 text-end">
+          <div class="showing">Showing {{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+        </div>
+      </div>
+    </div>
+
+    <table ng-show="filterData.length &gt; 0" class="table table-responsive small-mobile-hide">
+      <thead>
+        <tr>
+          <th width="10%"></th>
+          <th width="35%">Property Address</th>
+          <th width="15%">Vendor</th>
+          <th width="40%">Viewing Arrangements</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
+        <tr ng-click="property.open = !property.open">
+          <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
+            <img src="{{property.Images[0].Url}}?width=200" width="100" class="image"/>
+          </td>
+          <td class="address">
+            <div>{{property.displayAddress}}</div>
+          </td>
+          <td class="vendor">{{property.vendor.Name}}</td>
+          <td class="viewing-next">
+            <p class="title">{{property.extendedData.SpecialArrangements[0].SpecialArrangementType.Name}}</p>
+            <p>{{property.extendedData.SpecialArrangements[0].Text}}</p>
+            <p class="title">{{property.extendedData.SpecialArrangements[1].SpecialArrangementType.Name}}</p>
+            <p>{{property.extendedData.SpecialArrangements[1].Text}}</p>
+            <p class="title">{{property.extendedData.SpecialArrangements[2].SpecialArrangementType.Name}}</p>
+            <p>{{property.extendedData.SpecialArrangements[2].Text}}</p>
+          </td>
+          <td class="listed"> 
+            <a class="button" ui-sref="agency_client-management-details({id:property._id})">View Case</a>
+          </td>
+        </tr>
+        <tr class="meta">
+          <td colspan="2">
+            <div class="purchase-price">{{property.Price.PriceValue | currency : "£" : 0}} ({{property | getFees | currency : "£" : 0}})</div>
+          </td>
+          <td colspan="3" class="text-end">
+            <div class="listed"> 
+              <span class="instructed">Instructed on: <strong>{{property.DateInstructed | date:'dd/MM/yy'}}</strong></span>
+              <span class="time-ago">({{property.DateInstructed | timeAgo}})</span> |
+              <span class="viewings-count">Viewings: <strong class="orange">{{property.viewings.length}}</strong></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true" class="pagination-sm pagination"></pagination>
+    <div ng-show="filterData.length===0" class="nothing-to-show">
+      <h3>Nothing to show</h3>
+    </div>
   </div>
 </div>
