@@ -17,8 +17,10 @@ const sites = {
     "ws1": "ws://localhost:23232",
     "url2": "http://92.237.208.72:3001",
     "ws2": "ws://92.237.208.72:3001",
-    "url": "https://server.vitalspace.co.uk",
-    "ws": "wss://server.vitalspace.co.uk"
+    //"url": "https://server.vitalspace.co.uk",
+    //"ws": "wss://server.vitalspace.co.uk"
+    "url": "https://app.vitalspace.co.uk",
+    "ws": "wss://app.vitalspace.co.uk"
   },
   "lettings": {
     "name": "lettings",
@@ -41,8 +43,8 @@ const sites = {
   "agency": {
     "name": "agency",
     "module": "vs-agency",
-    "url": "https://conveyancing.vitalspace.co.uk",
-    "ws": "wss://conveyancing.vitalspace.co.uk"
+    "url": "https://agency.vitalspace.co.uk",
+    "ws": "wss://agency.vitalspace.co.uk"
   },
   "leads": {
     "name": "leads",
@@ -57,8 +59,8 @@ const sites = {
     "ws1": "ws://localhost:23232",
     "url2": "http://92.237.208.72:3001",
     "ws2": "ws://92.237.208.72:3001",
-    "url": "https://server.vitalspace.co.uk",
-    "ws": "wss://server.vitalspace.co.uk"
+    "url": "https://app.vitalspace.co.uk",
+    "ws": "wss://app.vitalspace.co.uk"
   }
 };
 const mainmodule = angular.module('vs-app', Object.values(sites).map(site => site.module));
