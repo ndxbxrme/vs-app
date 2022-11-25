@@ -19,38 +19,38 @@ const sites = {
     "ws2": "ws://92.237.208.72:3001",
     //"url": "https://server.vitalspace.co.uk",
     //"ws": "wss://server.vitalspace.co.uk"
-    "url": "https://app.vitalspace.co.uk",
-    "ws": "wss://app.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk/app",
+    "ws": "wss://server.vitalspace.co.uk/app"
   },
   "lettings": {
     "name": "lettings",
     "module": "vs-lettings",
-    "url": "https://lettings.vitalspace.co.uk",
-    "ws": "wss://lettings.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk/lettings",
+    "ws": "wss://server.vitalspace.co.uk/lettings"
   },
   "maintenance": {
     "name": "maintenance",
     "module": "vs-maintenance",
-    "url": "https://maintenance.vitalspace.co.uk",
-    "ws": "wss://maintenance.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk/maintenance",
+    "ws": "wss://server.vitalspace.co.uk/maintenance"
   },
   "maintenance_leads": {
     "name": "maintenance_leads",
     "module": "vs-maintenance-leads",
-    "url": "https://maintenance-leads.vitalspace.co.uk",
-    "ws": "wss://maintenance-leads.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk/maintenance-leads",
+    "ws": "wss://server.vitalspace.co.uk/maintenance-leads"
   },
   "agency": {
     "name": "agency",
     "module": "vs-agency",
-    "url": "https://agency.vitalspace.co.uk",
-    "ws": "wss://agency.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk/agency",
+    "ws": "wss://server.vitalspace.co.uk/agency"
   },
   "leads": {
     "name": "leads",
     "module": "vs-leads",
-    "url": "https://leads.vitalspace.co.uk",
-    "ws": "wss://leads.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk/leads",
+    "ws": "wss://server.vitalspace.co.uk/leads"
   },
   "sms": {
     "name": "sms",
@@ -59,8 +59,8 @@ const sites = {
     "ws1": "ws://localhost:23232",
     "url2": "http://92.237.208.72:3001",
     "ws2": "ws://92.237.208.72:3001",
-    "url": "https://app.vitalspace.co.uk",
-    "ws": "wss://app.vitalspace.co.uk"
+    "url": "https://server.vitalspace.co.uk/app",
+    "ws": "wss://server.vitalspace.co.uk/app"
   }
 };
 const mainmodule = angular.module('vs-app', Object.values(sites).map(site => site.module));
