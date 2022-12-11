@@ -1,0 +1,1 @@
+sed -i -r 's/main\.([0-9a-f]+)\.js"/main\.\1\.js" charset="utf-8"/' app/index.html

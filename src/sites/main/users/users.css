@@ -15,3 +15,53 @@
 .main_users-page .users select {
   width: 100%;
 }
+.main_users-page .td_sites span {
+  margin-right: 0.5em;
+  background: white;
+  padding: 0.2em;
+  font-size: .8em;
+  margin-bottom: 0.2em;
+  white-space: nowrap;
+  display: inline-block;
+}
+.main_users-page .td_sites span svg {
+  margin-right: 0.3em;
+}
+.main_users-page table {
+  width: 100%;
+}
+.main_users-page tbody:nth-child(even) {
+  background: rgba(255,255,255,0.2);
+}
+.main_users-page td {
+  padding-right: 1em;
+  white-space: nowrap;
+  padding-top: .2em;
+}
+.main_users-page td.td_delete {
+  padding-right: 0;
+}
+.main_users-page td.td_icon {
+  padding-right: .2em;
+}
+.main_users-page td.td_sites {
+  width: 99%;
+  white-space:normal;
+}
+.new-user-modal {
+  padding: 1em;
+}
+.new-user-modal .form-item {
+  display: flex;
+  align-items: baseline;
+}
+.new-user-modal label {
+  min-width: 10em;
+}
+.new-user-modal select {
+  line-height: 1em;
+}
+.new-user-modal .controls {
+  display: flex;
+  justify-content: flex-end;
+}

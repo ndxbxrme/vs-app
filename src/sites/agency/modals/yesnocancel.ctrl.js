@@ -15,3 +15,19 @@
   });
 
 }).call(this);
+(function() {
+  'use strict';
+  angular.module('vs-agency').controller('YesNoCancelCtrl', function($scope, data, ndxModalInstance) {
+    $scope.data = data;
+    $scope.cancel = function() {
+      return ndxModalInstance.dismiss();
+    };
+    $scope.yes = function() {
+      return ndxModalInstance.close();
+    };
+    return $scope.no = function() {
+      return ndxModalInstance.close();
+    };
+  });
+
+}).call(this);

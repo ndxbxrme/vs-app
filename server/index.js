@@ -20,6 +20,8 @@ require('ndx-server').config({
 })
 .use(function(ndx) {
   ndx.addPublicRoute('/api/refresh-login');
+  ndx.addPublicRoute('/api/user-code');
+  ndx.addPublicRoute('/api/complete-registration');
   ndx.database.on('select', (args, cb) => {
     if(args.table==='users' && args.objs.length===1) {
       const makeToken = (userId, key, hours) => {

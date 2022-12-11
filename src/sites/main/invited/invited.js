@@ -4,19 +4,19 @@ angular.module('vs-app')
   return {
     template: require('./invited.html').default,
     scope: {},
-    link: function(scope, elem) {
-      scope.user = scope.single('main:users', {code:$stateParams.code}, (user) => {
-        $timeout(() => {
-          scope.loaded = true;
-          scope.codeGood = user.item;
-        });
-      });
+    link: async function(scope, elem) {
+      scope.user = (await $http.post($http.sites['main'].url + '/api/user-code', {code:$stateParams.code}, $http.sites['main'].config)).data.items[0];
+      if(scope.user) {
+        scope.loaded = true;
+        scope.codeGood = user.item;
+      }
       scope.submit = () => {
         scope.submitted = true;
         if(scope.myform.isValid() && scope.codeGood && scope.password && (scope.password===scope.repeatPassword)) {
           scope.user.item.local.password = bcrypt.hashSync(scope.password, bcrypt.genSaltSync(8), null);
           delete scope.user.code;
-          scope.user.save();
+          await $http.post($http.sites['main'].url + '/api/complete-registration', {user:scope.user});
+          //scope.user.save();
         }
       };
     }

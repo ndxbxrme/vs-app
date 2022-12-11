@@ -1,41 +1,58 @@
 <div class="users">
   <div class="container">
-    <form name="newUserForm" ng-submit="makeNewUser(newUser.email, newUser.role)">
-      <h1>New User</h1>
-      <div class="row">
-        <div class="col-sm-4">
-          <input type="email" ng-model="newUser.email" placeholder="User email"/>
-        </div>
-        <div class="col-sm-4">
-          <select ng-model="newUser.role">
-            <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
-          </select>
-        </div>
-        <div class="col-sm-4">
-          <input type="submit" value="Submit" />
-        </div>
-      </div>
-    </form>
 
-    <h2 class="orange">Existing Users</h2>
-    <div class="user heading">
-      <div class="email">Email</div>
-      <div ng-repeat="site in sites" class="site">
-        <div class="site">
-          {{site.name}}
-        </div>
-      </div>
-    </div>
-    <div ng-repeat="user in myusers.items" class="user">
-      <div class="email">{{user.email}}</div>
-      <div ng-repeat="site in sites" class="site">
-        <select ng-model="user.local.sites[site.id].role" ng-change="updateRole(user, user.local.sites[site.id], site)">
-          <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
-        </select>
-      </div>
-      <div class="user-options">
-        <input type="button" ng-click="deleteUser(user)" value="Delete" />
-      </div>
-    </div>
+
+    <h2 class="orange">Users</h2>
+    <input type="button" ng-click="addEditUser()" value="Add new user" />
+    <table class="table_users">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Sites</th>
+          <th>Reset</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="user in myusers.items | orderBy:'name'">
+        <tr>
+          <td class="td_icon"><img gravatar-src="user.local.email" /></td>
+          <td class="td_name">{{user.displayName || user.local.email}}</td>
+          <td class="td_email">{{user.local.email}}</td>
+          <td class="td_status">{{user.code ? 'Awaiting password reset' : 'Active'}}</td>
+          <td class="td_sites"><a href="" ng-click="addEditUser(user)"><span ng-repeat="site in user.siteRoles"><i class="fa-light {{site.icon}}"></i>{{site.name}}</span></a></td>
+          <td><a href="" ng-click="resetUser(user)">Reset</a></td>
+          <td class="td_delete"><a href="" ng-click="deleteUser(user)">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 class="orange">Pending Users</h2>
+    <table class="table_users">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Sites</th>
+          <th>Invite</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="user in pendingUsers">
+        <tr>
+          <td class="td_icon"><img gravatar-src="user.local.email" /></td>
+          <td class="td_name">{{user.displayName || user.local.email}}</td>
+          <td class="td_email">{{user.local.email}}</td>
+          <td class="td_sites">
+            
+            <span ng-repeat="site in user.siteRoles"><i class="fa-light {{site.icon}}"></i>{{site.name}}</span>
+          </td>
+          <td><a href="" ng-click="inviteExistingUser(user)">Invite</a></td>
+          <td class="td_delete"><a href="" ng-click="deleteUser(user)">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

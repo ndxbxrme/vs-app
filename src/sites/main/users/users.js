@@ -10,9 +10,39 @@ angular.module('vs-app')
     {id:'maintenance',name:'Maintenance'},
     {id:'maintenance_leads',name:'Maintenance Leads'}
   ];
+  $scope.sites.forEach(site => site.users = $scope.list(site.id + ':users', null, (users) => {
+    getPendingUsers();
+  }))
   $scope.roles = ['no access', 'agency', 'maintenance', 'admin', 'superadmin'];
+  $scope.roleIcons = ['fa-ban', 'fa-users', 'fa-screwdriver-wrench', 'fa-user-vneck-hair', 'fa-user-crown'];
   $scope.usersByEmail = {};
-  $scope.myusers = $scope.list('main:users');
+  $scope.pendingUsers = [];
+  const getPendingUsers = () => {
+    const pendingUsers = {};
+    const allUserEmails = ($scope.myusers.items || []).map(user => user.local.email);
+    $scope.sites.forEach(site => {
+      if(site.users && site.users.items && site.users.items.length) {
+        site.users.items.forEach(user => {
+          pendingUsers[user.local.email] = pendingUsers[user.local.email] || JSON.parse(JSON.stringify(user));
+          const myUser = pendingUsers[user.local.email];
+          myUser.sites = myUser.sites || [];
+          myUser.sites.push(site);
+          if(user.local.email==='matthew@vitalspace.co.uk') {
+            console.log(user.sites);
+          }
+        })
+      }
+    });
+    $scope.pendingUsers = Object.keys(pendingUsers).map(key => pendingUsers[key]).filter(user => !allUserEmails.includes(user.local.email) && !/^cors-/.test(user.displayName)).sort((a,b) => a.displayName > b.displayName ? 1 : -1);
+    $scope.pendingUsers.forEach(user => user.siteRoles = $scope.getSites(user));
+  }
+  $scope.myusers = $scope.list('main:users', null, (users) => {
+    getPendingUsers();
+    users.items.forEach(user => {
+      user.siteRoles = $scope.getExistingUserSites(user);
+    })
+  });
+  $scope.makeCode = () => [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase();
   $scope.makeNewUser = async (email, role) => {
     const prevUser = $scope.myusers.items.find(prevUser => prevUser.email===email);
     if(prevUser) {
@@ -55,7 +85,6 @@ angular.module('vs-app')
     */
   };
   $scope.updateRole = async (user, role, site) => {
-    console.log('update role', user, role, site);
     return;
     const siteUser = (await $http.post($http.sites[site.name].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[site.name].config)).data.items[0];
     if(siteUser) {
@@ -91,7 +120,140 @@ angular.module('vs-app')
       user.deleted = true;
       $scope.myusers.save(user);
     }
+  };
+  $scope.getPermissions = (user) => {
+    return Object.keys(Object.keys(user.local.sites).reduce((res,key) => {const site = user.local.sites[key]; res[site.role] = res[site.role] || []; res[site.role].push(site); return res;},{})).join(', ');
+  };
+  $scope.getSites = (user) => {
+    const siteUsers = user.sites.map((site) => {
+      const siteUser = site.users.items.find(siteUser => siteUser.local.email===user.local.email);
+      const userRole = Object.keys(siteUser.roles)[0];
+      return {
+        id: siteUser._id,
+        role: userRole,
+        siteId: site.id,
+        name: site.name,
+        icon: $scope.roleIcons[$scope.roles.indexOf(userRole)] || $scope.roleIcons[0]
+      };
+    });
+    return siteUsers;
   }
+  $scope.getExistingUserSites = (user) => {
+    return Object.keys(user.local.sites).map(siteId => {
+      const siteRole = user.local.sites[siteId];
+      return {
+        id: siteRole.id,
+        role: siteRole.role,
+        siteId: siteId,
+        name: $scope.sites.find(site => site.id===siteId).name,
+        icon: $scope.roleIcons[$scope.roles.indexOf(siteRole.role)] || $scope.roleIcons[0]
+        
+      }
+    })
+  }
+  $scope.inviteExistingUser = (user) => {
+    let maxRole = -1;
+    const siteUsers = user.sites.reduce((res, site) => {
+      const siteUser = site.users.items.find(siteUser => siteUser.local.email===user.local.email);
+      const userRole = Object.keys(siteUser.roles)[0];
+      res[site.id] = {
+        id: siteUser._id,
+        role: userRole
+      };
+      maxRole = Math.max(maxRole, $scope.roles.indexOf(userRole));
+      return res;
+    }, {});
+    const newUser = {
+      email: user.local.email,
+      local: {
+        email: user.local.email,
+        password: '',
+        sites: siteUsers
+      },
+      displayName: user.displayName,
+      telephone: user.telephone,
+      code: $scope.makeCode(),
+      roles: {}
+    }
+    if(maxRole > -1) {
+      newUser.roles[$scope.roles[maxRole]] = {};
+    }
+    $scope.myusers.save(newUser);
+  };
+  $scope.addEditUser = async (user) => {
+    user = user || {
+      email: '',
+      local: {
+        email: '',
+        password: bcrypt.hashSync('tempPassword1!', bcrypt.genSaltSync(8), null),
+        sites: {}
+      },
+      code: [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase(),
+      roles: {}
+    }
+    const newUser = !user.email;
+    try {
+      const result = await $scope.modal({
+        template: require('../modals/new-user.html').default,
+        controller: 'mainNewUserCtrl',
+        data: {
+          user: user,
+          roles: $scope.roles
+        }
+      });
+      if(result.changes.email) user.email = result.changes.email;
+      user.local.email = user.email;
+      await Promise.all(Object.keys(result.changes).map(async key => {
+        if(/^role_/.test(key)) {
+          const siteName = key.replace(/^role_/, '');
+          const siteRole = result.changes[key];
+          if(siteName!=='main') {
+            let siteUser = (await $http.post($http.sites[siteName].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[siteName].config)).data.items[0];
+            if(siteUser) {
+              //console.log('siteuser', siteUser);
+            }
+            else {
+              siteUser = JSON.parse(JSON.stringify(user));
+            }
+            siteUser.roles = {};
+            siteUser.roles[siteRole] = {};
+            await $http.put($http.sites[siteName].url + '/api/users/', siteUser, $http.sites[siteName].config)
+          } else {
+            user.roles = {};
+            user.roles[siteRole] = {};
+          }
+          user.local.sites[siteName] = {
+            role: siteRole
+          }
+        }
+      }));
+      $scope.myusers.save(user);
+      if(newUser) {
+        user.email = 'lewis_the_cat@hotmail.com';
+        user.local.email = user.email;
+        await $http.post($http.sites.main.url + '/api/send-new-user-email', user, $http.sites.main.config);
+      }
+      //console.log(result);
+    } catch (e) {}
+  };
+})
+.controller('mainNewUserCtrl', function($scope, data, $http, ndxModalInstance) {
+  $scope.forms = {};
+  $scope.user = data.user;
+  $scope.allRoles = data.roles;
+  $scope.roles = Object.keys($http.sites).map(siteId => {
+    const site = $http.sites[siteId];
+    return {
+      name: site.name,
+      displayName: site.displayName,
+      role: (data.user.local.sites[siteId] || {}).role
+    }
+  }).filter(site => site.name!=='sms');
+  $scope.cancel = () => ndxModalInstance.dismiss();
+  $scope.submit = () => {
+    const changes = $scope.forms.userForm.$$controls.filter(control => control.$dirty).reduce((res,control) => {res[control.$name] = control.$modelValue; return res}, {});
+    ndxModalInstance.close({changes,roles:$scope.roles});
+  };
 })
 .config(($stateProvider) => $stateProvider.state('main_users', {
   url: '/users',
