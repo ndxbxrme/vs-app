@@ -4,18 +4,25 @@ angular.module('vs-app')
   return {
     template: require('./invited.html').default,
     scope: {},
-    link: async function(scope, elem) {
-      scope.user = (await $http.post($http.sites['main'].url + '/api/user-code', {code:$stateParams.code}, $http.sites['main'].config)).data.items[0];
-      if(scope.user) {
-        scope.loaded = true;
-        scope.codeGood = user.item;
-      }
+    link: function(scope, elem) {
+      $timeout(async () => {
+        scope.user = (await $http.post($http.sites['main'].url + '/api/user-code', {code:$stateParams.code}, $http.sites['main'].config)).data.user;
+        console.log(scope.user);
+        if(scope.user) {
+          $timeout(() => {
+            scope.loaded = true;
+            scope.codeGood = scope.user.code;
+            scope.newUser = !scope.user.displayName;
+          })
+        }
+      })
       scope.submit = async () => {
         scope.submitted = true;
-        if(scope.myform.isValid() && scope.codeGood && scope.password && (scope.password===scope.repeatPassword)) {
-          scope.user.item.local.password = bcrypt.hashSync(scope.password, bcrypt.genSaltSync(8), null);
-          delete scope.user.code;
-          await $http.post($http.sites['main'].url + '/api/complete-registration', {user:scope.user});
+        if(scope.myform.$valid && scope.codeGood && scope.password && (scope.password===scope.repeatPassword)) {
+          //scope.user.local.password = bcrypt.hashSync(scope.password, bcrypt.genSaltSync(8), null);
+          //console.log(scope.user.local.password);
+          //delete scope.user.code;
+          await $http.post($http.sites['main'].url + '/api/complete-registration', {user:scope.user,password:scope.password});
           //scope.user.save();
         }
       };

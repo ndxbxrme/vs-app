@@ -9,68 +9,69 @@ import 'codemirror/lib/codemirror.css';
 window.jade = require('jade');
 require('./services/ndx-auth.js');
 require('./imports.js');
-const serverHost = 'server.vitalspace.co.uk';
+//const serverHost = 'server.vitalspace.co.uk';
+const serverHost = 'localhost';
 const sites = {
   "main": {
     "displayName": "Main",
     "name": "main",
     "module": "ndx",
-    "url": "https://" + serverHost + "/app",
+    "url": "http://" + serverHost + "/app",
     "ws": "app"
   },
   "lettings": {
     "displayName": "Lettings",
     "name": "lettings",
     "module": "vs-lettings",
-    "url": "https://" + serverHost + "/lettings",
+    "url": "http://" + serverHost + "/lettings",
     "ws": "lettings"
   },
   "maintenance": {
     "displayName": "Maintenance",
     "name": "maintenance",
     "module": "vs-maintenance",
-    "url": "https://" + serverHost + "/maintenance",
+    "url": "http://" + serverHost + "/maintenance",
     "ws": "maintenance"
   },
   "maintenance_leads": {
     "displayName": "Maintenance Leads",
     "name": "maintenance_leads",
     "module": "vs-maintenance-leads",
-    "url": "https://" + serverHost + "/maintenance-leads",
+    "url": "http://" + serverHost + "/maintenance-leads",
     "ws": "maintenance-leads"
   },
   "agency": {
     "displayName": "Conveyancing",
     "name": "agency",
     "module": "vs-agency",
-    "url": "https://" + serverHost + "/agency",
+    "url": "http://" + serverHost + "/agency",
     "ws": "agency"
   },
   "leads": {
     "displayName": "Leads",
     "name": "leads",
     "module": "vs-leads",
-    "url": "https://" + serverHost + "/leads",
+    "url": "http://" + serverHost + "/leads",
     "ws": "leads"
   },
   "sms": {
     "displayName": "SMS",
     "name": "sms",
     "module": "vs-sms",
-    "url": "https://" + serverHost + "/app",
+    "url": "http://" + serverHost + "/app",
     "ws": "app"
   }
 };
 const mainmodule = angular.module('vs-app', Object.values(sites).map(site => site.module));
 mainmodule.factory('socket', () => {
   return Object.values(sites).reduce((res, site) => {
-    if(site.ws) res.push({name:site.name, io:io("wss://" + serverHost + "", {path:'/' + site.ws + '/socket.io', transports:['websocket']})});
+    if(site.ws) res.push({name:site.name, io:io("ws://" + serverHost + "", {path:'/' + site.ws + '/socket.io', transports:['websocket']})});
     return res;
   }, []);
 });
 RestClient(mainmodule);
 angular.module('vs-lettings').constant('env', {
-  PROPERTY_URL: `https://${serverHost}/property/api`,
+  PROPERTY_URL: `http://${serverHost}/property/api`,
   PROPERTY_TOKEN: `U2FsdGVkX1+gN0j3nIuDrf4S1KtTl0vRhxunxFOeDtCZL4szHbINhQMSl3TY+PNFXXcO98NFsIhbVx8rAYArkMQRaW+Yy2jh58LtGwFfwQdp`
 })
 .run(($rootScope, $http) => {

@@ -27,6 +27,7 @@ module.exports = (ndx) => {
   ndx.app.post('/api/complete-registration', async (req, res, next) => {
     const user = req.body.user;
     if(user) {
+      user.local.password = ndx.generateHash(req.body.password);
       await ndx.database.upsert('users', user);
       return res.json({error:false});
     }
