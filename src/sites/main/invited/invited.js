@@ -10,7 +10,7 @@ angular.module('vs-app')
         scope.loaded = true;
         scope.codeGood = user.item;
       }
-      scope.submit = () => {
+      scope.submit = async () => {
         scope.submitted = true;
         if(scope.myform.isValid() && scope.codeGood && scope.password && (scope.password===scope.repeatPassword)) {
           scope.user.item.local.password = bcrypt.hashSync(scope.password, bcrypt.genSaltSync(8), null);
