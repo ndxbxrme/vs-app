@@ -6,7 +6,7 @@ angular.module('vs-app')
     link: function(scope, elem) {
       scope.submit = () => {
         scope.submitted = true;
-        if(scope.myform.isValid()) {
+        if(scope.myform.$valid) {
           $http.post($http.sites.main.url + '/api/forgot-password', {email:scope.email}, $http.sites.main.config);
           $timeout(() => $scope.sent = true);
         }

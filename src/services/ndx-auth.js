@@ -319,7 +319,8 @@
             if(sockets) socket.emit('user', null);
             user = null;
             localStorage.setItem('token', '');
-            $http.get($http.sites.main.url + '/api/logout', $http.sites.main.config);
+            Object.keys($http.sites).forEach(key => $http.sites[key].token = null);
+            //$http.get($http.sites.main.url + '/api/logout', $http.sites.main.config);
             $state.go('dashboard');
           },
           onUser: function(func) {
