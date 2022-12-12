@@ -1,5 +1,5 @@
 .main_users-page .users {
-  
+  padding-bottom: 4em;
 }
 .main_users-page .users .user {
   display: grid;
@@ -47,6 +47,15 @@
 .main_users-page td.td_sites {
   width: 99%;
   white-space:normal;
+}
+.main_users-page .table_heading {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+.main_users-page .table_heading h3 {
+  margin: 0;
 }
 .new-user-modal {
   padding: 1em;

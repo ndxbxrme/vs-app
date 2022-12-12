@@ -109,7 +109,15 @@ angular.module('vs-app')
   }
   $scope.deleteUser = async (user) => {
     if(confirm('Deleting ' + user.local.email + ', are you sure?')) {
-      await Promise.all(Object.values($http.sites).map(site => new Promise(async resolve => {
+      $scope.sites.forEach(site => {
+        site.users.items.forEach(siteUser => {
+          if(siteUser.local.email===user.local.email) {
+            site.users.delete(siteUser);
+          }
+        })
+      })
+      alert.log('User deleted');
+      /*await Promise.all(Object.values($http.sites).map(site => new Promise(async resolve => {
         try {
           const siteUser = (await $http.post($http.sites[site.name].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[site.name].config)).data.items[0];
           if(siteUser) {
@@ -123,7 +131,7 @@ angular.module('vs-app')
         resolve();
       })));
       user.deleted = true;
-      $scope.myusers.save(user);
+      $scope.myusers.save(user);*/
     }
   };
   $scope.getPermissions = (user) => {

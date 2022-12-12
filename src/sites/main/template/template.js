@@ -22,6 +22,7 @@ angular.module('vs-app')
       scope.save = function() {
         if (scope.myForm.$valid) {
           scope.template.save();
+          scope.myForm.$setPristine();
           return $state.go('main_setup');
         }
       };

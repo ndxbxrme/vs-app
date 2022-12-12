@@ -1,18 +1,34 @@
 module.exports = (ndx) => {
-  ndx.app.post('/api/send-new-user-email', ndx.authenticate(), async (req, res, next) => {
-    console.log('send email', req.body.code);
+  const sendInviteEmail = async (templateName, code, user) => {
     if(ndx.email) {
-      const template = await ndx.database.selectOne('emailtemplates', {name:'New User'});
+      const template = await ndx.database.selectOne('emailtemplates', {name:templateName});
       if(template) {
         template.email = req.body.email.trim();
         template.to = template.email;
         const host = 'https://app.vitalspace.co.uk' || process.env.HOST || ndx.settings.HOST || `${req.protocol}://${req.hostname}`;
-        template.code = `${host}/invited/${req.body.code}`;
+        template.code = `${host}/invited/${code}`;
         ndx.email.send(template);
-        return res.end(template.code);
+        return true;
       }
     }
+    return false;
+  }
+  ndx.app.post('/api/send-new-user-email', ndx.authenticate(), async (req, res, next) => {
+    console.log('send email', req.body.code);
+    await sendInviteEmail('New User', req.body.code);
     res.end('error: no emails setup');
+  });
+  ndx.app.post('/api/forgot-password', async (req, res, next) => {
+    const email = req.body.email;
+    if(email) {
+      const user = await ndx.database.selectOne('users', {local:{email:email}});
+      if(user) {
+        user.code = [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase();
+        user.local.password = '';
+        await sendInviteEmail('Reset Password', user.code);
+      }
+    }
+    res.json({error:'bad email'});
   });
   ndx.app.post('/api/user-code', async (req, res, next) => {
     const code = req.body.code;
