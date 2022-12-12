@@ -1,5 +1,5 @@
 angular.module('vs-app')
-.directive('forgot', function($http, $timeout) {
+.directive('forgot', function($http, $timeout, $state, alert) {
   return {
     template: require('./forgot.html').default,
     scope: {},
@@ -8,7 +8,9 @@ angular.module('vs-app')
         scope.submitted = true;
         if(scope.myform.$valid) {
           $http.post($http.sites.main.url + '/api/forgot-password', {email:scope.email}, $http.sites.main.config);
-          $timeout(() => $scope.sent = true);
+          alert.log('Reset Email Sent');
+          scope.myform.$setPristine();
+          $state.go('dashboard');
         }
       };
     }

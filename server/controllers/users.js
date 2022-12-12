@@ -25,7 +25,9 @@ module.exports = (ndx) => {
       if(user) {
         user.code = [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase();
         user.local.password = '';
+        await ndx.database.upsert('users', user);
         await sendInviteEmail('Reset Password', email, user.code);
+        return res.json({error:null});
       }
     }
     res.json({error:'bad email'});

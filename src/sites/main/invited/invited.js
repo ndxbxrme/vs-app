@@ -8,13 +8,13 @@ angular.module('vs-app')
       $timeout(async () => {
         scope.user = (await $http.post($http.sites['main'].url + '/api/user-code', {code:$stateParams.code}, $http.sites['main'].config)).data.user;
         console.log(scope.user);
-        if(scope.user) {
-          $timeout(() => {
-            scope.loaded = true;
+        $timeout(() => {
+          scope.loaded = true;
+          if(scope.user) {
             scope.codeGood = scope.user.code;
             scope.newUser = !scope.user.displayName;
-          })
-        }
+          }
+        })
       })
       scope.submit = async () => {
         scope.submitted = true;
