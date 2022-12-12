@@ -1,7 +1,7 @@
 import './users.css';
 const bcrypt = require('bcrypt-nodejs');
 angular.module('vs-app')
-.controller('mainUsersCtrl', function($scope, $http, $timeout) {
+.controller('mainUsersCtrl', function($scope, $http, $timeout, alert) {
   $scope.sites = [
     {id:'main',name:'Main'},
     {id:'agency',name:'Conveyancing'},
@@ -42,7 +42,7 @@ angular.module('vs-app')
       user.siteRoles = $scope.getExistingUserSites(user);
     })
   });
-  $scope.makeCode = () => [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase();
+  const makeCode = () => [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase();
   $scope.makeNewUser = async (email, role) => {
     const prevUser = $scope.myusers.items.find(prevUser => prevUser.email===email);
     if(prevUser) {
@@ -102,6 +102,11 @@ angular.module('vs-app')
     }
     $scope.myusers.save(user);
   }
+  $scope.resetUser = async (user) => {
+    user.local.password = '';
+    user.code = makeCode();
+    await $http.post($http.sites.main.url + '/api/send-new-user-email', user, $http.sites.main.config);
+  }
   $scope.deleteUser = async (user) => {
     if(confirm('Deleting ' + user.local.email + ', are you sure?')) {
       await Promise.all(Object.values($http.sites).map(site => new Promise(async resolve => {
@@ -151,7 +156,7 @@ angular.module('vs-app')
       }
     })
   }
-  $scope.inviteExistingUser = (user) => {
+  $scope.inviteExistingUser = async (user) => {
     let maxRole = -1;
     const siteUsers = user.sites.reduce((res, site) => {
       const siteUser = site.users.items.find(siteUser => siteUser.local.email===user.local.email);
@@ -172,13 +177,17 @@ angular.module('vs-app')
       },
       displayName: user.displayName,
       telephone: user.telephone,
-      code: $scope.makeCode(),
+      code: makeCode(),
       roles: {}
     }
     if(maxRole > -1) {
       newUser.roles[$scope.roles[maxRole]] = {};
     }
     $scope.myusers.save(newUser);
+    newUser.email = 'lewis_the_cat@hotmail.com';
+    newUser.local.email = newUser.email;
+    await $http.post($http.sites.main.url + '/api/send-new-user-email', newUser, $http.sites.main.config);
+    alert.log('User invited');
   };
   $scope.addEditUser = async (user) => {
     user = user || {
@@ -188,7 +197,7 @@ angular.module('vs-app')
         password: bcrypt.hashSync('tempPassword1!', bcrypt.genSaltSync(8), null),
         sites: {}
       },
-      code: [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase(),
+      code: makeCode(),
       roles: {}
     }
     const newUser = !user.email;
@@ -207,8 +216,9 @@ angular.module('vs-app')
         if(/^role_/.test(key)) {
           const siteName = key.replace(/^role_/, '');
           const siteRole = result.changes[key];
+          let siteUser;
           if(siteName!=='main') {
-            let siteUser = (await $http.post($http.sites[siteName].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[siteName].config)).data.items[0];
+            siteUser = (await $http.post($http.sites[siteName].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[siteName].config)).data.items[0];
             if(siteUser) {
               //console.log('siteuser', siteUser);
             }
@@ -227,11 +237,39 @@ angular.module('vs-app')
           }
         }
       }));
-      $scope.myusers.save(user);
+      console.log('saving user', user);
       if(newUser) {
-        user.email = 'lewis_the_cat@hotmail.com';
-        user.local.email = user.email;
-        await $http.post($http.sites.main.url + '/api/send-new-user-email', user, $http.sites.main.config);
+        await $http.put($http.sites['main'].url + '/api/users/', user, $http.sites['main'].config);
+      }
+      const mainSiteUser = (await $http.post($http.sites['main'].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites['main'].config)).data.items[0];
+      if(!newUser) {
+        mainSiteUser.roles = user.roles;
+        mainSiteUser.local.sites = user.local.sites;
+      }
+      await Promise.all(Object.keys(mainSiteUser.local.sites).map(async key => {
+        console.log('getting id from', key);
+        return new Promise(async res => {
+          const siteRole = mainSiteUser.local.sites[key];
+          if(!siteRole.id) {
+            const siteUser = (await $http.post($http.sites[key].url + '/api/users/search', {where:{local:{email:user.local.email}}}, $http.sites[key].config)).data.items[0];
+            if(siteUser) {
+              siteRole.id = siteUser._id;
+            }
+          }
+          res();
+        })
+      }));
+      console.log('saving user again', user);
+      $scope.myusers.save(mainSiteUser);
+      if(newUser) {
+        console.log('seinging email');
+        mainSiteUser.email = 'lewis_the_cat@hotmail.com';
+        mainSiteUser.local.email = mainSiteUser.email;
+        await $http.post($http.sites.main.url + '/api/send-new-user-email', mainSiteUser, $http.sites.main.config);
+        alert.log('User added');
+      }
+      else {
+        alert.log('User updated');
       }
       //console.log(result);
     } catch (e) {}

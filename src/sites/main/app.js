@@ -106,7 +106,7 @@ angular.module('vs-app')
     }
     return output;
   };
-  Auth.onUser(function() {
+  /*Auth.onUser(function() {
     return root.users = $rootScope.list('maintenance:users', null, function(users) {
       var j, len1, ref, results, user;
       root.maintenance = [];
@@ -133,7 +133,7 @@ angular.module('vs-app')
       }
       return results;
     });
-  });
+  });*/
   $rootScope.bodyTap = function(e) {
     var elm, isPopup;
     $rootScope.mobileMenuOut = false;

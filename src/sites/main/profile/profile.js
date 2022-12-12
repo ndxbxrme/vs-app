@@ -1,5 +1,5 @@
 angular.module('vs-app')
-.directive('profile', function($http, $stateParams) {
+.directive('profile', function($http, $stateParams, alert) {
   return {
     template: require('./profile.html').default,
     scope: {},
@@ -8,6 +8,7 @@ angular.module('vs-app')
       scope.user = scope.single('main:users', id);
       scope.submit = () => {
         scope.user.save();
+        alert.log('Profile updated');
       };
     }
   }
