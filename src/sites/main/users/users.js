@@ -103,9 +103,8 @@ angular.module('vs-app')
     $scope.myusers.save(user);
   }
   $scope.resetUser = async (user) => {
-    user.local.password = '';
-    user.code = makeCode();
-    await $http.post($http.sites.main.url + '/api/send-new-user-email', user, $http.sites.main.config);
+    await $http.post($http.sites.main.url + '/api/forgot-password', {email:user.local.email}, $http.sites.main.config);
+    alert.log('Reset Email Sent');
   }
   $scope.deleteUser = async (user) => {
     if(confirm('Deleting ' + user.local.email + ', are you sure?')) {
