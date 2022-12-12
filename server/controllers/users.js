@@ -21,7 +21,7 @@ module.exports = (ndx) => {
   ndx.app.post('/api/forgot-password', async (req, res, next) => {
     const email = req.body.email;
     if(email) {
-      const user = await ndx.database.selectOne('users', {local:{email:email}});
+      const user = await ndx.database.selectOne('users', {local:{email:email},deleted:null});
       if(user) {
         user.code = [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase();
         user.local.password = '';
