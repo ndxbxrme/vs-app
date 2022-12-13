@@ -123,7 +123,6 @@ angular.module('vs-app')
     });
   });
   $rootScope.bodyTap = function(e) {
-    console.log('body tap');
     var elm, isPopup;
     $rootScope.mobileMenuOut = false;
     elm = e.target;

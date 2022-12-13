@@ -7,7 +7,6 @@ angular.module('vs-app')
     link: function(scope, elem) {
       $timeout(async () => {
         scope.user = (await $http.post($http.sites['main'].url + '/api/user-code', {code:$stateParams.code}, $http.sites['main'].config)).data.user;
-        console.log(scope.user);
         $timeout(() => {
           scope.loaded = true;
           if(scope.user) {
@@ -20,8 +19,6 @@ angular.module('vs-app')
         scope.submitted = true;
         if(scope.myform.$valid && scope.codeGood && scope.password && (scope.password===scope.repeatPassword)) {
           scope.user.local.password = bcrypt.hashSync(scope.password, bcrypt.genSaltSync(8), null);
-          console.log(scope.user.local.password);
-          console.log(bcrypt.compareSync('test', scope.user.local.password));
           //return
           //delete scope.user.code;
           scope.user.code = null;

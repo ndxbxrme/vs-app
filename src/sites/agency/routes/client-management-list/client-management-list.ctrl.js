@@ -19,7 +19,6 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         property = ref[i];
-        console.log(property);
         results.push(property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`);
       }
       return results;

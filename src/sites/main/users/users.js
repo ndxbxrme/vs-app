@@ -27,9 +27,6 @@ angular.module('vs-app')
           const myUser = pendingUsers[user.local.email];
           myUser.sites = myUser.sites || [];
           myUser.sites.push(site);
-          if(user.local.email==='matthew@vitalspace.co.uk') {
-            console.log(user.sites);
-          }
         })
       }
     });

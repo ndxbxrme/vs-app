@@ -10,7 +10,6 @@ angular.module('vs-app')
           scope.loaded = true;
           scope.codeGood = user.item;
         });
-        console.log('user response', user);
       });
       scope.submit = () => {
         scope.submitted = true;

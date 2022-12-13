@@ -25,7 +25,6 @@ angular.module('vs-app')
         history.push({url,title,params,date:new Date()});
       }
       else {
-        console.log('splicing');
         history.splice(historyIndex, history.length);
         history.push({url,title,params,date:new Date()});
       }

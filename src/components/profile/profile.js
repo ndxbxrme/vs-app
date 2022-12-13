@@ -4,7 +4,6 @@ angular.module('vs-app')
     template: require('./profile.html').default,
     scope: {},
     link: function(scope, elem) {
-      console.log('hello profile');
       const id = $stateParams.id || scope.auth.getUser()._id;
       scope.user = scope.single('main:users', id);
       scope.submit = () => {

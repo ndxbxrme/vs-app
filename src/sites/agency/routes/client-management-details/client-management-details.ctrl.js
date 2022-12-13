@@ -6,14 +6,13 @@
       var property;
       property = res.item;
       property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
-      return console.log(property);
+      return;
     });
     $scope.date = {
       date: 'today'
     };
     $scope.addNote = function() {
       var i, len, mynote, property, ref;
-      console.log('add note', $scope);
       if ($scope.note) {
         property = $scope.property.item;
         if (property) {

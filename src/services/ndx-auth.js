@@ -59,7 +59,6 @@
 			localStorage.setItem('token', user.local.sites.main.token);
 			Object.keys(user.local.sites).forEach(key => {
 			  $http.sites[key].token = user.local.sites[key].token;
-			  console.log('setting token', key);
 			  $http.sites[key].config = {
 				"headers": {
 				  "Authorization": "Bearer " + user.local.sites[key].token

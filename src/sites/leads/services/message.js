@@ -138,7 +138,7 @@
           }
         }
       }
-      return console.log(key);
+      return;
     };
     return {
       m: m
