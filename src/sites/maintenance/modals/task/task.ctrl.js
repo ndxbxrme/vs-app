@@ -43,7 +43,6 @@
       return deref();
     });
     $scope.cancel = function() {
-      console.log('want to cancel');
       return ndxModalInstance.close();
     };
     $scope.save = function() {

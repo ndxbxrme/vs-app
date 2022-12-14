@@ -12,12 +12,11 @@ angular.module('vs-sms')
       scope.when = new Date();
       scope.when = new Date(scope.when.getFullYear(), scope.when.getMonth(), scope.when.getDate(), scope.when.getHours() + 1);
       scope.numberlists = scope.list('main:numberlists', {}, (data) => {
-        console.log('numberlists', data);
+        //console.log('numberlists', data);
       });
       scope.smstemplates = scope.list('main:smstemplates');
       scope.schedule = scope.list('main:schedule', {page:0,pageSize:0});
       scope.goToStage = (stage) => {
-        console.log('go to stage', stage);
         scope.stage = stage;
       };
       scope.requirementsFulfilled = (stage) => {
@@ -31,7 +30,6 @@ angular.module('vs-sms')
       };
       scope.selectList = () => {
         let list = scope.numberlists.items.find(l => l._id===scope.selectedList);
-        console.log('change', list);
         scope.listName = '';
         scope.numbers = '';
         if(list) {
@@ -92,7 +90,6 @@ angular.module('vs-sms')
           });
           alert.log('Send scheduled');
         }
-        console.log('changing state1');
         $state.go('sms_schedule');
       }
       

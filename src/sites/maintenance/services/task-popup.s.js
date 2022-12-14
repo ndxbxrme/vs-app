@@ -27,7 +27,6 @@
         offset.top += 5;
         //offset.top += elem.clientHeight;
         //offset.left -= +$('.maintenance-calendar-dir').width();
-        console.log('offset', event);
         elemLeft = offset.left;
         popupWidth = $('.maintenance-task-popup-dir').width();
         popupHeight = $('.maintenance-task-popup-dir .popup').height();

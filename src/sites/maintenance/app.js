@@ -62,7 +62,6 @@
     Auth.onUser(function() {
       if(!Auth.isAuthorized('agency_dashboard')) return;
       return root.users = $rootScope.list('maintenance:users', null, function(users) {
-        console.log('min users', users);
         $timeout(() => {
           var j, len1, ref, results, user;
           root.maintenance = [];

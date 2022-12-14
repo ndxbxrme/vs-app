@@ -143,7 +143,6 @@ angular.module('vs-maintenance')
       });
       scope.prev = () => {
         startDate = new Date(startDate.valueOf() - dayOffset * 24 * 60 * 60 * 1000);
-        console.log(startDate);
         generateData();
       }
       scope.next = () => {
@@ -163,7 +162,6 @@ angular.module('vs-maintenance')
         return day.getDate()===selectedDate.getDate() && day.getMonth()===selectedDate.getMonth() && day.getFullYear()===selectedDate.getFullYear();
       }
       scope.openTask = (task, ev) => {
-        console.log('openTask');
         if (MaintenanceTaskPopup.getHidden()) {
           task = task || {};
           task.duration = task.duration || new Date(3600000);

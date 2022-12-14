@@ -265,6 +265,8 @@
                   const bits = stateName.split(/_/g);
                   let site = bits[0];
                   if(bits.length===3) site = bits[0] + '_' + bits[1];
+                  const userSite = user.local.sites[site];
+                  return (userSite || {role:'no access'}).role !== 'no access';
                   return user.local.sites[site];
                 }
                 return checkRoles(roles);

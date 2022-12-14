@@ -47,7 +47,7 @@
         $state.go('contractors');
         return alert.log('Contractor deleted');
       }, function(err) {
-        return console.log('err', err);
+        return;
       });
     };
   });

@@ -42,10 +42,10 @@
         return $http.get('api/restore/' + issue._id, $http.sites["maintenance_leads"].config).then(function() {
           return alert.log('Issue restored');
         }, function(err) {
-          return console.log(err);
+          return;
         });
       }, function(err) {
-        return console.log('err', err);
+        return;
       });
     };
   });

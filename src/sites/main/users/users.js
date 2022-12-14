@@ -241,7 +241,6 @@ angular.module('vs-app')
           }
         }
       }));
-      console.log('saving user', user);
       if(newUser) {
         await $http.put($http.sites['main'].url + '/api/users/', user, $http.sites['main'].config);
       }
@@ -251,7 +250,6 @@ angular.module('vs-app')
         mainSiteUser.local.sites = user.local.sites;
       }
       await Promise.all(Object.keys(mainSiteUser.local.sites).map(async key => {
-        console.log('getting id from', key);
         return new Promise(async res => {
           const siteRole = mainSiteUser.local.sites[key];
           if(!siteRole.id) {
@@ -263,10 +261,8 @@ angular.module('vs-app')
           res();
         })
       }));
-      console.log('saving user again', user);
       $scope.myusers.save(mainSiteUser);
       if(newUser) {
-        console.log('seinging email');
         //mainSiteUser.email = 'lewis_the_cat@hotmail.com';
         mainSiteUser.local.email = mainSiteUser.email;
         await $http.post($http.sites.main.url + '/api/send-new-user-email', mainSiteUser, $http.sites.main.config);
