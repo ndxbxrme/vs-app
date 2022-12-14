@@ -188,7 +188,7 @@ angular.module('vs-app')
       newUser.roles[$scope.roles[maxRole]] = {};
     }
     $scope.myusers.save(newUser);
-    newUser.email = 'lewis_the_cat@hotmail.com';
+    //newUser.email = 'lewis_the_cat@hotmail.com';
     newUser.local.email = newUser.email;
     await $http.post($http.sites.main.url + '/api/send-new-user-email', newUser, $http.sites.main.config);
     alert.log('User invited');
@@ -267,7 +267,7 @@ angular.module('vs-app')
       $scope.myusers.save(mainSiteUser);
       if(newUser) {
         console.log('seinging email');
-        mainSiteUser.email = 'lewis_the_cat@hotmail.com';
+        //mainSiteUser.email = 'lewis_the_cat@hotmail.com';
         mainSiteUser.local.email = mainSiteUser.email;
         await $http.post($http.sites.main.url + '/api/send-new-user-email', mainSiteUser, $http.sites.main.config);
         alert.log('User added');
