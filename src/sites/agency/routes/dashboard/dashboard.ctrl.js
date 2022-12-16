@@ -9,9 +9,10 @@
       }
     };
     $scope.properties = $scope.list('agency:properties', {
-      where: null,
+      where: {startDate:{$gt:new Date().getTime() - 2.5 * 365 * 24 * 60 * 60 * 1000}},
       transformer: 'dashboard/properties'
     }, function(properties) {
+      console.log('agency properties', properties.items.length);
       var completeBeforeDelisted, i, milestone, progression, property, results;
       i = properties.items.length;
       results = [];
@@ -29,6 +30,7 @@
         }
         results.push(property.completeBeforeDelisted = completeBeforeDelisted);
       }
+      console.log('bam', results);
       return results;
     });
     $scope.dashboard = $scope.list('agency:dashboard', {
@@ -106,6 +108,19 @@
         return output;
       } else {
         return count;
+      }
+    };
+    $scope.countNew = (di, list) => {
+      const output = [];
+      let count = 0;
+      let minIndex = 0;
+      let maxIndex = 100;
+      if($scope.properties.items && $scope.progressions.items) {
+        const progression = $scope.progressions.items.find(progression => progression._id===di.progression);
+        progression.milestones.forEach((branch, b) => {
+          if(branch.find(milestone => milestone._id===di.minms)) minIndex = b;
+          if(branch.find(milestone => milestone._id===di.maxms)) maxIndex = b;
+        });
       }
     };
     $scope.total = function(items) {
