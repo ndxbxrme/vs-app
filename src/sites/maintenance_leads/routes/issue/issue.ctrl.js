@@ -183,6 +183,8 @@
       var myissue;
       myissue = $scope.issue;
       if (files) {
+        $scope.uploadProgress = 0;
+        $scope.documentUploading = true;
         return Upload.upload({
           url: '/maintenance_leads/api/upload',
           data: {
@@ -191,6 +193,7 @@
           }
         }, $http.sites["maintenance_leads"].config).then(function(response) {
           var document, i, len, ref;
+		  $scope.documentUploading = false;
           if (response.data) {
             $scope.uploadProgress = 0;
             if (!myissue.item.documents) {
@@ -205,6 +208,7 @@
             return myissue.save();
           }
         }, function(err) {
+		  $scope.documentUploading = false;
           return false;
         }, function(progress) {
           return $scope.uploadProgress = Math.min(100, parseInt(100.0 * progress.loaded / progress.total));

@@ -32,7 +32,6 @@
       uploadFn: function($scope, errFn) {
         return function(path, files, errFiles) {
           var type;
-          $scope.uploading = true;
           if (errFiles && errFiles.length) {
             $scope.uploading = false;
             if (typeof errFn === "function") {
@@ -42,6 +41,8 @@
           }
           type = Object.prototype.toString.call(files);
           if (files && ((type === '[object Array]' && files.length) || (type === '[object File]'))) {
+			$scope.uploading = true;
+			$scope.uploadProgress = 0;
             return Upload.upload({
               url: '/lettings/api/upload',
               data: {

@@ -52,8 +52,16 @@
       <label class="title">Job card:</label>
       <div class="documents">
         <div class="drop-box" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
-          <h3>Drop files here to upload</h3>
-          <button class="file-upload" type="file" ngf-select="uploadFiles($file, $invalidFiles)">Or click here to choose</button>
+          <div ng-hide="documentUploading">
+            <h3>Drop files here to upload</h3>
+            <button class="file-upload" type="file" ngf-select="uploadFiles($file, $invalidFiles)">Or click here to choose</button>
+          </div>
+          <div ng-show="documentUploading" class="uploading">
+            <h3>Uploading</h3>
+            <div class="progressBar">
+              <div class="bar" style="width: {{uploadProgress}}%"></div>
+            </div>
+          </div>
         </div>
         <div class="document-list" ng-show="task.documents.length">
           <div class="document" ng-repeat="document in task.documents"><a class="document-link" ng-href="{{makeDownloadUrl('maintenance',document)}}" target="_self"><img ng-src="{{makeDownloadUrl('maintenance',document)}}" ng-if="document.basetype===&quot;image&quot;"/>

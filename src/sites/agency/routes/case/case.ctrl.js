@@ -2,6 +2,7 @@
 (function() {
   'use strict';
   angular.module('vs-agency').controller('agencyCaseCtrl', function($scope, $stateParams, $state, $timeout, $window, $http, Auth, progressionPopup, agencyProperty, Upload, env, alert, breadcrumbs) {
+    $scope.uploadProgress = 0;
     $scope.propsOpts = {
       where: {
         RoleStatus: 'OfferAccepted',
@@ -286,14 +287,18 @@
       var mycase;
       mycase = $scope.property.item.$case;
       if (files) {
+        $scope.uploadProgress = 0;
+        $scope.documentUploading = true;
         return Upload.upload({
-          url: '/agency/api/upload',
+          url: $http.sites["agency"].url + '/api/upload',
           data: {
             file: files,
             user: Auth.getUser()
-          }
-        }, $http.sites["agency"].config).then(function(response) {
+          },
+          headers: $http.sites["agency"].config.headers
+        }).then(function(response) {
           var document, i, len, ref;
+          $scope.documentUploading = false;
           if (response.data) {
             $scope.uploadProgress = 0;
             if (!mycase.item.documents) {
@@ -302,12 +307,14 @@
             ref = response.data;
             for (i = 0, len = ref.length; i < len; i++) {
               document = ref[i];
-              mycase.item.documents.push(document);
+              if(ref[i].filename)
+                mycase.item.documents.push(document);
             }
             alert.log('Document uploaded');
             return mycase.save();
           }
         }, function(err) {
+          $scope.documentUploading = false;
           return false;
         }, function(progress) {
           return $scope.uploadProgress = Math.min(100, parseInt(100.0 * progress.loaded / progress.total));

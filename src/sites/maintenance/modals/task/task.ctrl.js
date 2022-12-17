@@ -76,6 +76,8 @@
     };
     $scope.uploadFiles = function(files, errFiles) {
       if (files) {
+        $scope.uploadProgress = 0;
+        $scope.documentUploading = true;
         return Upload.upload({
           url: '/maintenance/api/upload',
           data: {
@@ -84,6 +86,7 @@
           }
         }, $http.sites["maintenance"].config).then(function(response) {
           var document, i, len, ref;
+          $scope.documentUploading = false;
           if (response.data) {
             $scope.uploadProgress = 0;
             if (!$scope.task.documents) {
@@ -97,6 +100,7 @@
             return alert.log('Document uploaded');
           }
         }, function(err) {
+          $scope.documentUploading = false;
           return false;
         }, function(progress) {
           return $scope.uploadProgress = Math.min(100, parseInt(100.0 * progress.loaded / progress.total));

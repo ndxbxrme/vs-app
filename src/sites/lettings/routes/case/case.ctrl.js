@@ -365,6 +365,8 @@
       var mycase;
       mycase = $scope.property.item.$case;
       if (files) {
+        $scope.uploadProgress = 0;
+        $scope.documentUploading = true;
         return Upload.upload({
           url: '/lettings/api/upload',
           data: {
@@ -373,6 +375,7 @@
           }
         }, $http.sites["lettings"].config).then(function(response) {
           var document, i, len, ref1;
+          $scope.documentUploading = false;
           if (response.data) {
             $scope.uploadProgress = 0;
             if (!mycase.item.documents) {
@@ -387,6 +390,7 @@
             return mycase.save();
           }
         }, function(err) {
+          $scope.documentUploading = false;
           return false;
         }, function(progress) {
           return $scope.uploadProgress = Math.min(100, parseInt(100.0 * progress.loaded / progress.total));
