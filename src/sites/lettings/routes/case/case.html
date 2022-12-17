@@ -127,19 +127,27 @@
             </div>
           </div>
           <div class="document-list" ng-show="property.item.$case.item.documents.length">
-            <div class="document" ng-repeat="document in property.item.$case.item.documents"><a class="document-link" ng-href="{{makeDownloadUrl('agency',document)}}" target="_self"><img ng-src="{{makeDownloadUrl('agency',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
-                <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;"><img class="logo" src="public/img/icons/vs-document.png"/></div></a>
-              <div class="filename"> 
-                <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
-                <input type="text" ng-model="document.name" ng-show="document.editing" placeholder="Name"/>
+            <div class="document row" ng-repeat="document in property.item.$case.item.documents">
+              <div class="col-2">
+                <a class="document-link" ng-href="{{makeDownloadUrl('agency',document)}}" target="_self"><img ng-src="{{makeDownloadUrl('lettings',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
+                  <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;"><img class="logo" src="public/img/icons/vs-document.png"/></div></a>
               </div>
-              <div class="by"> 
-                <label>Created by: </label>{{document.user.local.email}}
+              <div class="col-10">
+                <div class="filename"> 
+                  <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
+                  <input type="text" ng-model="document.name" ng-show="document.editing" placeholder="Name"/>
+                </div>
+                <div class="by"> 
+                  <label>Created by: </label> {{document.user.local.email}}
+                </div>
+                <div class="on"> 
+                  <label>Created on: </label> {{document.date | date:'mediumDate'}}, {{document.date | date:'shortTime'}}
+                </div>
+                <div class="controls" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">
+                  <a class="edit small button" href="" ng-click="document.editing=!document.editing" ng-show="!document.editing">Edit</a>
+                  <a class="save small button button-alt" href="" ng-click="saveDocument(document)" ng-show="document.editing">Save</a>
+                  <a class="delete small button button-grey" href="" ng-click="deleteDocument(document)">Delete</a></div>
               </div>
-              <div class="on"> 
-                <label>Created on: </label>{{document.date | date:'mediumDate'}}, {{document.date | date:'shortTime'}}
-              </div>
-              <div class="controls" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])"><a class="edit" href="" ng-click="document.editing=!document.editing" ng-show="!document.editing">Edit</a><a class="save" href="" ng-click="saveDocument(document)" ng-show="document.editing">Save</a><a class="delete" href="" ng-click="deleteDocument(document)">Delete</a></div>
             </div>
           </div>
         </div>

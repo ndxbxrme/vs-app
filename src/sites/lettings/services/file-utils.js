@@ -44,7 +44,7 @@
 			$scope.uploading = true;
 			$scope.uploadProgress = 0;
             return Upload.upload({
-              url: '/lettings/api/upload',
+              url: '/api/upload',
               data: {
                 file: files
               }

@@ -9,12 +9,12 @@ import 'codemirror/lib/codemirror.css';
 window.jade = require('jade');
 require('./services/ndx-auth.js');
 require('./imports.js');
-//const serverHost = 'server.vitalspace.co.uk';
-//const httpProtocol = 'https';
-//const wsProtocol = 'wss';
-const serverHost = 'localhost';
-const httpProtocol = 'http';
-const wsProtocol = 'ws';
+const serverHost = 'server.vitalspace.co.uk';
+const httpProtocol = 'https';
+const wsProtocol = 'wss';
+//const serverHost = 'localhost';
+//const httpProtocol = 'http';
+//const wsProtocol = 'ws';
 const sites = {
   "main": {
     "displayName": "Main",

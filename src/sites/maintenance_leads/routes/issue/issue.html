@@ -325,8 +325,8 @@
             <div ng-show="issue.item.documents.length" class="document-list">
               <div ng-repeat="document in issue.item.documents" class="document row">
                 <div class="col-2">
-                  <a ng-href="{{makeDownloadUrl(document)}}" target="_self" class="document-link">
-                    <img ng-src="{{makeDownloadUrl(document)}}" ng-if="document.basetype===&quot;image&quot;"/>
+                  <a ng-href="{{makeDownloadUrl('maintenance_leads', document)}}" target="_self" class="document-link">
+                    <img ng-src="{{makeDownloadUrl('maintenance_leads', document)}}" ng-if="document.basetype===&quot;image&quot;"/>
                     <div ng-hide="document.basetype===&quot;image&quot;" class="document-icon {{document.basetype}}">
                       <i class="fa-duotone fa-file-lines"></i>
                     </div>
@@ -338,15 +338,15 @@
                     <input type="text" ng-model="document.name" ng-show="document.editing" placeholder="Name"/>
                   </div>
                   <div class="by"> 
-                    <label>Created by: </label>{{document.user.local.email}}
+                    <label>Created by: </label> {{document.user.local.email}}
                   </div>
                   <div class="on"> 
-                    <label>Created on: </label>{{document.date | date:'mediumDate'}}
+                    <label>Created on: </label> {{document.date | date:'mediumDate'}}
                   </div>
                   <div ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" class="controls">
-                    <a href="" ng-click="document.editing=!document.editing" ng-show="!document.editing" class="edit">Edit</a>
-                    <a href="" ng-click="saveDocument(document)" ng-show="document.editing" class="save">Save</a>
-                    <a href="" ng-click="deleteDocument(document)" class="delete">Delete</a>
+                    <a href="" ng-click="document.editing=!document.editing" ng-show="!document.editing" class="edit small button">Edit</a>
+                    <a href="" ng-click="saveDocument(document)" ng-show="document.editing" class="save small button button-alt">Save</a>
+                    <a href="" ng-click="deleteDocument(document)" class="delete small button button-grey">Delete</a>
                   </div>
                 </div>
               </div>

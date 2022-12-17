@@ -42,8 +42,9 @@
           }
           type = Object.prototype.toString.call(files);
           if (files && ((type === '[object Array]' && files.length) || (type === '[object File]'))) {
+			$scope.uploadProgress = 0;
             return Upload.upload({
-              url: '/maintenance_leads/api/upload',
+              url: '/api/upload',
               data: {
                 file: files
               }

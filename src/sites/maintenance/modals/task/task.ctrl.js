@@ -79,11 +79,12 @@
         $scope.uploadProgress = 0;
         $scope.documentUploading = true;
         return Upload.upload({
-          url: '/maintenance/api/upload',
+          url: $http.sites["maintenance"].url + '/api/upload',
           data: {
             file: files,
             user: $scope.auth.getUser()
-          }
+          },
+          headers: $http.sites["maintenance"].config.headers
         }, $http.sites["maintenance"].config).then(function(response) {
           var document, i, len, ref;
           $scope.documentUploading = false;

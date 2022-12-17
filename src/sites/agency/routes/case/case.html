@@ -27,7 +27,7 @@
       <div class="col-sm-6">
         <h2>Documents<sup ng-show="property.item.$case.item.documents.length">{{property.item.$case.item.documents.length}}</sup></h2>
         <button class="view-documents" ng-click="showDocuments = !showDocuments">{{showDocuments?'Hide':'View'}} Documents</button>
-        <div class="documents" ng-show="!showDocuments">
+        <div class="documents" ng-show="showDocuments">
           <div class="drop-box" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
             <div ng-hide="documentUploading">
               <h3>Drop files here to upload</h3>
