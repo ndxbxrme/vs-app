@@ -97,7 +97,7 @@
           $http.post($http.sites["agency"].url + '/api/milestone/completed', {
             milestone: data._id,
             roleId: agencyProperty.get().RoleId
-          });
+          }, $http.sites["agency"].config);
           return alert.log('Milestone updated');
         }
       },
@@ -117,7 +117,7 @@
           $http.post($http.sites["agency"].url + '/api/milestone/start', {
             milestone: data._id,
             roleId: agencyProperty.get().RoleId
-          });
+          }, $http.sites["agency"].config);
           return alert.log('Milestone started');
         }
       },

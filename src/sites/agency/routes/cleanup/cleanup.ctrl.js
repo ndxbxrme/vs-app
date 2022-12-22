@@ -78,7 +78,7 @@
         progressions: property.progressions,
         milestone: property.milestone,
         milestoneIndex: property.milestoneIndex
-      });
+      }, $http.sites.main.config);
       return true;
     };
     $scope.delete = function(property) {
@@ -88,7 +88,7 @@
           deleted: true,
           reason: 'deleted'
         }
-      });
+      }, $http.sites.main.config);
     };
     return $scope.fallenThrough = function(property) {
       property.processing = true;
@@ -97,7 +97,7 @@
           deleted: true,
           reason: 'fallenThrough'
         }
-      });
+      }, $http.sites.main.config);
       return true;
     };
   });

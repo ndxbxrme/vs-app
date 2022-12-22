@@ -47,7 +47,7 @@ angular.module('vs-app')
     })));
     await $http.put($http.sites.main.url + '/api/users/' + insertedUser._id, insertedUser, $http.sites.main.config);
     //send email
-    await $http.post($http.sites.main.url + '/api/send-new-user-email', insertedUser);
+    await $http.post($http.sites.main.url + '/api/send-new-user-email', insertedUser, $http.sites.main.config);
     /*
     if email already exists do nothing
     get roles and ids for this email address from all sites

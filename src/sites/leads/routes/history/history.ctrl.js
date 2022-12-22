@@ -31,7 +31,7 @@
       return $http.post($http.sites["leads"].url + `/api/leads/${lead._id}`, {
         deleted: null,
         booked: null
-      });
+      }, $http.sites.leads.config);
     };
   });
 

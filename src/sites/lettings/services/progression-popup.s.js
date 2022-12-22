@@ -97,7 +97,7 @@
           $http.post($http.sites["lettings"].url + '/api/milestone/completed', {
             milestone: data._id,
             roleId: lettingsProperty.get().RoleId
-          });
+          }, $http.sites.lettings.config);
           return alert.log('Milestone updated');
         }
       },
@@ -117,7 +117,7 @@
           $http.post($http.sites["lettings"].url + '/api/milestone/start', {
             milestone: data._id,
             roleId: lettingsProperty.get().RoleId
-          });
+          }, $http.sites.lettings.config);
           return alert.log('Milestone started');
         }
       },

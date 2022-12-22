@@ -126,18 +126,18 @@
         override: {
           deleted: true
         }
-      });
+      }, $http.sites.lettings.config);
     };
     $scope.save = function(property) {
       return $http.post($http.sites["lettings"].url + `/api/properties/${property._id}`, {
         override: property.$override
-      });
+      }, $http.sites.lettings.config);
     };
     $scope.cancel = function(property) {
       return property.$editing = false;
     };
     return $scope.saveTarget = function(month) {
-      $http.post($http.sites["lettings"].url + `/api/targets/${month.target._id || ''}`, month.target);
+      $http.post($http.sites["lettings"].url + `/api/targets/${month.target._id || ''}`, month.target, $http.sites.lettings.config);
       return month.editing = false;
     };
   });

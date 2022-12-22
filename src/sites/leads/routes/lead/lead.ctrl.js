@@ -152,7 +152,7 @@
       $http.post($http.sites["leads"].url + `/api/leads/${$scope.lead.item._id}`, {
         deleted: null,
         booked: null
-      });
+      }, $http.sites.leads.config);
       return Auth.goToLast('selling');
     };
     return $scope.saveFn = function(cb) {

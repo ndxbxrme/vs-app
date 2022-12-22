@@ -64,12 +64,21 @@
           </div>
         </div>
         <div class="document-list" ng-show="task.documents.length">
-          <div class="document" ng-repeat="document in task.documents"><a class="document-link" ng-href="{{makeDownloadUrl('maintenance',document)}}" target="_self"><img ng-src="{{makeDownloadUrl('maintenance',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
-              <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;"><img class="logo" src="public/img/icons/vs-document.png"/></div></a>
-            <div class="filename"> 
-              <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
+          <div class="document" ng-repeat="document in task.documents">
+            <div class="col-2">
+              <a class="document-link" ng-href="{{makeDownloadUrl('maintenance',document)}}" target="_self">
+                <img ng-src="{{makeDownloadUrl('maintenance',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
+                <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;"><img class="logo" src="public/img/icons/vs-document.png"/></div>
+              </a>
             </div>
-            <div class="controls" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])"><a class="delete" href="" ng-click="deleteDocument(document)">Delete</a></div>
+            <div class="col-10">
+              <div class="filename"> 
+                <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
+              </div>
+              <div class="controls" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">
+                <a class="delete small button button-grey" href="" ng-click="deleteDocument(document)">Delete</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
