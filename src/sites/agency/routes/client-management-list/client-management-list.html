@@ -35,7 +35,7 @@
       <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
         <tr ng-click="property.open = !property.open">
           <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
-            <img src="{{property.Images[0].Url}}?width=200" width="100" class="image"/>
+            <img src="{{property.Images[0].Url}}&width=200" width="100" class="image"/>
           </td>
           <td class="address">
             <div>{{property.displayAddress}}</div>

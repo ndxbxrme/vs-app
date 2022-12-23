@@ -36,7 +36,7 @@
     <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
       <tr ng-click="property.open = !property.open">
         <td>
-          <img class="image" src="{{property.$case.item.Images[0].Url}}?width=200" width="100"/>
+          <img class="image" src="{{property.$case.item.Images[0].Url}}&width=200" width="100"/>
         </td>
         <td class="address">
           <div>{{property.$case.item.override.address || property.displayAddress}}</div>
