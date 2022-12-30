@@ -108,4 +108,22 @@
         border none
       .title
         font-size 1.2rem
-      
+@media screen and (max-width:768px)
+  .agreed-route, 
+  .solicitors-route, 
+  .contractors-route,
+  .landlords-route
+    .months, .solicitors, .contractors, .landlords
+      .month, .solicitor, .contractor, .landlord
+        .inner
+          .actual,
+          .commission
+            font-size 2rem
+@media screen and (max-width: 576px)
+  .agreed-route, 
+  .solicitors-route, 
+  .contractors-route,
+  .landlords-route
+    .months, .solicitors, .contractors, .landlords
+      .month, .solicitor, .contractor, .landlord
+        width 100%

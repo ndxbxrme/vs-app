@@ -1,3 +1,51 @@
+.nav-icon 
+  display none
+  width 25px
+  height 30px
+  transform rotate(0deg)
+  transition .5s ease-in-out
+  cursor pointer
+  span
+    background vs-grey
+    display block
+    position absolute
+    height 1px
+    width 100%
+    opacity 1
+    left 0
+    transform rotate(0deg)
+    transition .25s ease-in-out
+    &:nth-child(1) 
+      top 3px
+    &:nth-child(2),
+    &:nth-child(3) 
+      top 15px
+    &:nth-child(4) 
+      top 27px
+	&.open 
+		span 
+			&:nth-child(1) 
+				top 18px
+				width 0%
+				left 50%
+			&:nth-child(2) 
+				-webkit-transform rotate(45deg)
+				-moz-transform rotate(45deg)
+				-o-transform rotate(45deg)
+				transform rotate(45deg)
+			&:nth-child(3) 
+				-webkit-transform rotate(-45deg)
+				-moz-transform rotate(-45deg)
+				-o-transform rotate(-45deg)
+				transform rotate(-45deg)
+			&:nth-child(4) 
+				top 18px
+				width 0%
+				left 50%
+.menu-controls
+  display flex
+  flex-direction row
+  justify-content flex-end
 .site-menu
   height 80px
   z-index 400
@@ -11,7 +59,9 @@
   border-bottom 1px solid #e0e0e0
   sites
     display flex
+    justify-content center
     flex-direction row
+    flex-wrap wrap
     &.site-settings
       justify-content flex-end
       site
@@ -26,7 +76,7 @@
         pages
           left auto
           right 0
-          top 40px
+          top 38px
           a
            text-align right 
   pages
@@ -35,8 +85,7 @@
   site
     display flex
     flex-direction column
-    min-width 9em
-    min-height 2.8em
+
     position relative
     justify-content center
     a
@@ -46,7 +95,7 @@
       padding 10px 20px
       text-transform capitalize
       transition all 0.4s ease-in-out
-      text-align center
+      text-align left
     a:hover, a:focus
       color #f15b25
     &:hover, &:focus
@@ -58,11 +107,74 @@
         position absolute
         top 45px
         left 0
-        a
-          text-align left
         a:hover, a:focus
           color #f15b25
           background rgba(0,0,0,0.05)
     .favorites-site
       font-size .8em
       margin-right .5em
+
+@media screen and (max-width:1400px)
+  .site-menu site a
+    padding 10px 15px
+@media screen and (max-width:1200px)
+  .vs-logo
+    width auto
+    max-width 220px
+@media screen and (max-width:992px)
+  .site-menu sites
+    justify-content space-between
+  .menu-col
+    order 12
+    margin-top 20px
+@media screen and (max-width:576px)
+  .site-menu
+    height 76px
+    site a
+      text-align center
+  .nav-icon 
+    display block
+  .slide-menu
+    background: white
+    pointer-events auto
+    width 400px
+    max-width 100%
+    height 100vh
+    transition left 0.7s ease 0s
+    position absolute
+    left -800px
+    top 55px
+    -webkit-backdrop-filter blur(2px)
+    padding 50px 0px 30px 0px
+    &.menushow 
+      left 0
+    sites
+      flex-direction: column
+      a 
+        display block
+        font-size 2rem
+        text-align center
+        padding 13px 30px
+        font-weight normal
+      site 
+        &:hover
+          pages
+            position relative
+            top auto
+            left auto
+            width 100%
+            justify-content center
+            align-items center
+            box-shadow none
+      pages 
+        background vs-lightsilver
+        display flex
+        display none
+        flex-direction column
+        flex-wrap wrap
+        a 
+          font-size 1.4rem
+          padding 10px 15px
+          display block
+          width 100%
+          text-align center

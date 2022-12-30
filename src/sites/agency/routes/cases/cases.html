@@ -1,5 +1,5 @@
 <div class="cases">
-  <div class="container">
+  <div class="container-xl">
 
     <div class="row align-items-center">
       <div class="col-sm-8">
@@ -12,73 +12,74 @@
 
     <div class="controls">
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-lg-4">
           <div class="sort">Order By<br><a class="order-item" href="" ng-click="sort=&quot;-$case.item.modifiedAt&quot;;page=1" ng-class="{selected:sort===&quot;-LastUpdated&quot;}">Last updated</a><a class="order-item" href="" ng-click="sort=&quot;-$case.item.offer.DateTime&quot;;page=1" ng-class="{selected:sort===&quot;-$case.item.offer.DateTime&quot;}">Offer accepted date</a></div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-md-6">
           <div class="show">Show<br><a class="filter-item icon-green" href="" ng-click="filter=&quot;completed&quot;;page=1" ng-class="{selected:filter===&quot;completed&quot;}">Up-to-date</a><a class="filter-item icon-orange" href="" ng-click="filter=&quot;progressing&quot;;page=1" ng-class="{selected:filter===&quot;progressing&quot;}">In Progress</a><a class="filter-item icon-red" href="" ng-click="filter=&quot;overdue&quot;;page=1" ng-class="{selected:filter===&quot;overdue&quot;}">Overdue</a><a class="filter-item" href="" ng-click="filter=&quot;&quot;;page=1" ng-class="{selected:!filter}">All</a></div>
         </div>
-        <div class="col-sm-2 text-end">
+        <div class="col-lg-2 col-md-6 text-end">
           <div class="showing">Showing<br>{{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
         </div>
       </div>
     </div>
-    
-    <table class="table table-responsive small-mobile-hide" ng-show="filterData.length &gt; 0">
-      <thead>
-        <tr>
-          <th width="5%">Status</th>
-          <th width="30%">Property Address</th>
-          <th width="20%">Vendor</th>
-          <th width="20%">Purchaser</th>
-          <th width="10%">Offer</th>
-          <th width="5%">Options</th>
-        </tr>
-      </thead>
-      <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
-        <tr ng-click="property.open = !property.open">
-          <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
-            <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
-              <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
-            </div>
-          </td>
-          <td>
-            <div class="address">{{property.$case.item.override.address || property.displayAddress}}</div>
-          </td>
-          <td class="vendor">{{property.$case.item.vendor}}</td>
-          <td class="purchaser">{{property.$case.item.purchaser}}</td>
-          <td class="offer">{{property.$case.item.offer.Value | currency : "£" : 0}}
-            <p ng-show="property.Fees[0].FeeValueType.SystemName===&quot;Absolute&quot;">({{ property.Fees[0].DefaultValue | currency : "£" : 0 }})</p>
-            <p ng-show="property.Fees[0].FeeValueType.SystemName===&quot;Percentage&quot;">({{ property.$case.item.offer.Value * (property.Fees[0].DefaultValue / 100) | currency : "£" : 0 }})</p>
-          </td>
-          <td class="options"><a class="button" ui-sref="agency_case({roleId:property.RoleId})">View Case</a></td>
-        </tr>
-        <tr class="meta">
-          <td colspan="2"><div class="title"><strong>{{property.$case.item.milestone.title}}</strong></div></td>
-          <td colspan="4" class="text-end">
-            <div class="dates">
-              <div class="date">Last Updated: <strong>{{property.$case.item.modifiedAt | timeAgo}} </strong>-- {{property.$case.item.modifiedAt | date:'mediumDate'}}, {{property.$case.item.modifiedAt | date:'shortTime'}} |
-              <span ng-show="needsDate">Date added to the Case: {{property.$case.item.estCompletedTime}}</span>
-              <span ng-show="property.$case.item.offer.DateTime">Start Date: <strong>{{property.$case.item.offer.DateTime | date:'mediumDate'}}</strong></div>
-          </div></td>
-        </tr>
-      </tbody>
-    </table>
-    <!--<div class="mobile-table small-mobile-show">
-      <div class="case-card" ng-repeat="property in filterData | limitTo:limit:limit*(page-1)">
-        <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
-          <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
-          <div class="title">{{property.$case.item.milestone.title}}</div>
+    <div class="table-responsive">
+      <table class="table small-mobile-hide" ng-show="filterData.length &gt; 0">
+        <thead>
+          <tr>
+            <th width="5%">Status</th>
+            <th width="30%">Property Address</th>
+            <th width="20%">Vendor</th>
+            <th width="20%">Purchaser</th>
+            <th width="10%">Offer</th>
+            <th width="5%">Options</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
+          <tr ng-click="property.open = !property.open">
+            <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
+              <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
+                <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
+              </div>
+            </td>
+            <td>
+              <div class="address">{{property.$case.item.override.address || property.displayAddress}}</div>
+            </td>
+            <td class="vendor">{{property.$case.item.vendor}}</td>
+            <td class="purchaser">{{property.$case.item.purchaser}}</td>
+            <td class="offer">{{property.$case.item.offer.Value | currency : "£" : 0}}
+              <p ng-show="property.Fees[0].FeeValueType.SystemName===&quot;Absolute&quot;">({{ property.Fees[0].DefaultValue | currency : "£" : 0 }})</p>
+              <p ng-show="property.Fees[0].FeeValueType.SystemName===&quot;Percentage&quot;">({{ property.$case.item.offer.Value * (property.Fees[0].DefaultValue / 100) | currency : "£" : 0 }})</p>
+            </td>
+            <td class="options"><a class="button" ui-sref="agency_case({roleId:property.RoleId})">View Case</a></td>
+          </tr>
+          <tr class="meta">
+            <td colspan="2"><div class="title"><strong>{{property.$case.item.milestone.title}}</strong></div></td>
+            <td colspan="4" class="text-end">
+              <div class="dates">
+                <div class="date">Last Updated: <strong>{{property.$case.item.modifiedAt | timeAgo}} </strong>-- {{property.$case.item.modifiedAt | date:'mediumDate'}}, {{property.$case.item.modifiedAt | date:'shortTime'}} |
+                <span ng-show="needsDate">Date added to the Case: {{property.$case.item.estCompletedTime}}</span>
+                <span ng-show="property.$case.item.offer.DateTime">Start Date: <strong>{{property.$case.item.offer.DateTime | date:'mediumDate'}}</strong></div>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--<div class="mobile-table small-mobile-show">
+        <div class="case-card" ng-repeat="property in filterData | limitTo:limit:limit*(page-1)">
+          <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
+            <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
+            <div class="title">{{property.$case.item.milestone.title}}</div>
+          </div>
+          <div class="address-row">
+            <div class="address">{{property.displayAddress}}</div>
+            <div class="offer">{{property.$case.item.offer.Value | currency : "£" : 0}}</div>
+            <div class="vendor">Vendor: <strong>{{property.$case.item.vendor}}</strong></div>
+            <div class="purchaser">Purchaser: <strong>{{property.$case.item.purchaser}}</strong></div>
+            <div class="options"><a class="button" ui-sref="agency_case({roleId:property.RoleId})">View Case</a></div>
+          </div>
         </div>
-        <div class="address-row">
-          <div class="address">{{property.displayAddress}}</div>
-          <div class="offer">{{property.$case.item.offer.Value | currency : "£" : 0}}</div>
-          <div class="vendor">Vendor: <strong>{{property.$case.item.vendor}}</strong></div>
-          <div class="purchaser">Purchaser: <strong>{{property.$case.item.purchaser}}</strong></div>
-          <div class="options"><a class="button" ui-sref="agency_case({roleId:property.RoleId})">View Case</a></div>
-        </div>
-      </div>
-    </div>-->
+      </div>-->
+    </div>
     <pagination class="pagination-sm pagination" total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true"></pagination>
     <div class="nothing-to-show" ng-show="filterData.length===0">
       <h3>Nothing to show</h3>
