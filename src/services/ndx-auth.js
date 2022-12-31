@@ -34,7 +34,7 @@
         userCallbacks = [];
         sockets = false;
         socket = null;
-        if (false && $injector.has('socket')) {
+        if (/*false && */$injector.has('socket')) {
           sockets = true;
           socket = $injector.get('socket');
           socket.on('connect', function() {
