@@ -22,37 +22,39 @@
       </div>
     </div>
 
-    <table class="table list-table" ng-show="leads.total">
-      <thead>
-        <tr>
-          <th class="source"><span>{{ mla('leads-table-source') }}</span></th>
-          <th class="address"><span>{{ mla('leads-table-address') }}</span></th>
-          <th class="applicant"><span>{{ mla('leads-table-applicant') }}</span></th>
-          <th class="date"><span>{{ mla('leads-table-date') }}</span></th>
-          <th class="options"><span>{{ mla('leads-table-options') }}</span></th>
-        </tr>
-      </thead>
-      <tbody ng-repeat="lead in leads.items">
-        <tr>
-          <td class="source">
-            <label>{{ mla('leads-table-source') }}</label><span class="{{ lead.source }} {{lead.method}}"></span>
-          </td>
-          <td class="address">
-            <label>{{ mla('leads-table-address') }}</label><a ui-sref="leads_lead({_id:lead._id})">{{ lead.property.address || lead.user.address}}, {{ lead.property.postcode || lead.user.postcode}}, {{ lead.price | currency:'£'}}</a>
-          </td>
-          <td class="applicant">
-            <label>{{ mla('leads-table-applicant') }}</label><span>{{lead.applicant}}</span>
-          </td>
-          <td class="date">
-            <label>{{ mla('leads-table-date') }}</label><span>{{lead.date | date:'medium'}}</span>
-          </td>
-          <td class="options">
-            <label>{{ mla('leads-table-options') }}</label>
-            <button class="button small" ui-sref="leads_lead({_id:lead._id})">{{ mla('leads-button-view-lead') }}</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table list-table" ng-show="leads.total">
+        <thead>
+          <tr>
+            <th class="source"><span>{{ mla('leads-table-source') }}</span></th>
+            <th class="address"><span>{{ mla('leads-table-address') }}</span></th>
+            <th class="applicant"><span>{{ mla('leads-table-applicant') }}</span></th>
+            <th class="date"><span>{{ mla('leads-table-date') }}</span></th>
+            <th class="options"><span>{{ mla('leads-table-options') }}</span></th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="lead in leads.items">
+          <tr>
+            <td class="source">
+              <label>{{ mla('leads-table-source') }}</label><span class="{{ lead.source }} {{lead.method}}"></span>
+            </td>
+            <td class="address">
+              <label>{{ mla('leads-table-address') }}</label><a ui-sref="leads_lead({_id:lead._id})">{{ lead.property.address || lead.user.address}}, {{ lead.property.postcode || lead.user.postcode}}, {{ lead.price | currency:'£'}}</a>
+            </td>
+            <td class="applicant">
+              <label>{{ mla('leads-table-applicant') }}</label><span>{{lead.applicant}}</span>
+            </td>
+            <td class="date">
+              <label>{{ mla('leads-table-date') }}</label><span>{{lead.date | date:'medium'}}</span>
+            </td>
+            <td class="options">
+              <label>{{ mla('leads-table-options') }}</label>
+              <button class="button small" ui-sref="leads_lead({_id:lead._id})">{{ mla('leads-button-view-lead') }}</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <p ng-show="leads.items &amp;&amp; !leads.total">{{ mla('leads-message-no-items') }}</p>
     <paging total="leads.total" opts="leads.args"></paging>
   </div>

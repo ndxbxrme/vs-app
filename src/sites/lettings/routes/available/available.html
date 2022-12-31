@@ -1,5 +1,5 @@
 
-<div class="available container">
+<div class="available container-xl">
   <div class="row align-items-center">
     <div class="col-sm-8">
       <h1>Available Properties </h1>
@@ -23,51 +23,53 @@
     </div>
   </div>
   
-  <table class="table table-responsive small-mobile-hide" ng-show="filterData.length &gt; 0">
-    <thead>
-      <tr>
-        <th width="10%"></th>
-        <th width="20%">Property Address</th>
-        <th width="20%">Landlord</th>
-        <th width="30%">Viewing Arrangements</th>
-        <th width="20%" ></th>
-      </tr>
-    </thead>
-    <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
-      <tr ng-click="property.open = !property.open">
-        <td>
-          <img class="image" src="{{property.$case.item.Images[0].Url}}&width=200" width="100"/>
-        </td>
-        <td class="address">
-          <div>{{property.$case.item.override.address || property.displayAddress}}</div>
-        </td>
-        <td class="vendor">{{property.$case.item.LandlordName}} This is currently missing.</td>
-        <td class="viewing-next">
-          <p class="title">{{property.$case.item.SpecialArrangements[0].SpecialArrangementType.Name}}</p>
-          <p>{{property.$case.item.SpecialArrangements[0].Text}}</p>
-          <p class="title">{{property.$case.item.SpecialArrangements[1].SpecialArrangementType.Name}}</p>
-          <p>{{property.$case.item.SpecialArrangements[1].Text}}</p>
-          <p class="title">{{property.$case.item.SpecialArrangements[2].SpecialArrangementType.Name}}</p>
-          <p>{{property.$case.item.SpecialArrangements[2].Text}}</p>
-        </td>
-        <td class="text-end">
-          <a class="button" ui-sref="lettings_case({roleId:property.RoleId})">View Case</a>
-        </td>
-      </tr>
-      <tr class="meta">
-        <td colspan="2">
-          <div class="rental-price">{{property.$case.item.Price.PriceValue | currency : "£" : 0}} {{property.$case.item.Price.PriceType.DisplayName}}</div>
-        </td>
-        <td colspan="4" class="text-end">
-          <div class="listed"> 
-            <span class="instructed">Instructed on: <strong>{{property.$case.item.DateInstructed | date:'dd/MM/yy'}}</strong></span>
-            <span class="time-ago">({{property.$case.item.DateInstructed | timeAgo}})</span> | 
-            <span class="viewings-count">Viewings: <strong class="orange">{{property.$case.item.Viewings.length}}</strong></span>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table small-mobile-hide" ng-show="filterData.length &gt; 0">
+      <thead>
+        <tr>
+          <th width="10%"></th>
+          <th width="20%">Property Address</th>
+          <th width="20%">Landlord</th>
+          <th width="30%">Viewing Arrangements</th>
+          <th width="20%" ></th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
+        <tr ng-click="property.open = !property.open">
+          <td>
+            <img class="image" src="{{property.$case.item.Images[0].Url}}&width=200" width="100"/>
+          </td>
+          <td class="address">
+            <div>{{property.$case.item.override.address || property.displayAddress}}</div>
+          </td>
+          <td class="vendor">{{property.$case.item.LandlordName}} This is currently missing.</td>
+          <td class="viewing-next">
+            <p class="title">{{property.$case.item.SpecialArrangements[0].SpecialArrangementType.Name}}</p>
+            <p>{{property.$case.item.SpecialArrangements[0].Text}}</p>
+            <p class="title">{{property.$case.item.SpecialArrangements[1].SpecialArrangementType.Name}}</p>
+            <p>{{property.$case.item.SpecialArrangements[1].Text}}</p>
+            <p class="title">{{property.$case.item.SpecialArrangements[2].SpecialArrangementType.Name}}</p>
+            <p>{{property.$case.item.SpecialArrangements[2].Text}}</p>
+          </td>
+          <td class="text-end">
+            <a class="button" ui-sref="lettings_case({roleId:property.RoleId})">View Case</a>
+          </td>
+        </tr>
+        <tr class="meta">
+          <td colspan="2">
+            <div class="rental-price">{{property.$case.item.Price.PriceValue | currency : "£" : 0}} {{property.$case.item.Price.PriceType.DisplayName}}</div>
+          </td>
+          <td colspan="4" class="text-end">
+            <div class="listed"> 
+              <span class="instructed">Instructed on: <strong>{{property.$case.item.DateInstructed | date:'dd/MM/yy'}}</strong></span>
+              <span class="time-ago">({{property.$case.item.DateInstructed | timeAgo}})</span> | 
+              <span class="viewings-count">Viewings: <strong class="orange">{{property.$case.item.Viewings.length}}</strong></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <pagination class="pagination-sm pagination" total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true"></pagination>
   <div class="nothing-to-show" ng-show="filterData.length===0">
     <h3>Nothing to show</h3>
