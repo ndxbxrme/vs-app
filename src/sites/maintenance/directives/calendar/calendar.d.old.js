@@ -65,7 +65,6 @@
                   return results1;
                 })());
               }
-              console.log(results);
               return results;
             }
           })
@@ -122,7 +121,6 @@
           return output;
         };
         scope.tasks = scope.list('maintenance:tasks', null, function() {
-          console.log('got tasks');
           return mapTasksToDays();
         });
         getTasks = function(date, time) {
@@ -157,7 +155,6 @@
           return window.removeEventListener('resize', resize);
         });
         makeWeek = function(startDate) {
-          console.log('make week', startDate);
           var hours, i, j, week;
           week = {
             date: startDate,

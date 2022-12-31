@@ -29,7 +29,6 @@
           scope.options.tabSize = 2;
         }
         editor = CodeMirror.fromTextArea(elem[0], scope.options);
-        console.log(typeof scope.options);
         if (typeof scope.editor !== 'undefined') {
           scope.editor = {
             editor: editor,

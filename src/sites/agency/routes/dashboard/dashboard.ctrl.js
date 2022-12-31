@@ -12,7 +12,6 @@
       where: {startDate:{$gt:new Date().getTime() - 2.5 * 365 * 24 * 60 * 60 * 1000}},
       transformer: 'dashboard/properties'
     }, function(properties) {
-      console.log('agency properties', properties.items.length);
       var completeBeforeDelisted, i, milestone, progression, property, results;
       i = properties.items.length;
       results = [];
@@ -30,7 +29,6 @@
         }
         results.push(property.completeBeforeDelisted = completeBeforeDelisted);
       }
-      console.log('bam', results);
       return results;
     });
     $scope.dashboard = $scope.list('agency:dashboard', {

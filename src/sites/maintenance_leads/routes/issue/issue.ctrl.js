@@ -49,7 +49,6 @@
     $scope.messageRecipients = [];
     $scope.issue = $scope.single('maintenance_leads:issues', myParams, function(issue) {
       var i, len, message, ref;
-      console.log(issue.item);
       breadcrumbs.setInfo(issue.item.address);
       if ($scope.issue.item.messages) {
         ref = $scope.issue.item.messages;

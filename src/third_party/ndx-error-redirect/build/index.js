@@ -27,7 +27,6 @@
       $get: function($state, $q) {
         return {
           responseError: function(rejection) {
-            console.log($state.current);
             if ($state.current.name) {
               if (rejection.status === 401) {
                 if ($state.current.name !== loggedOutState) {

@@ -36,12 +36,14 @@
         socket = null;
         if (/*false && */$injector.has('socket')) {
           sockets = true;
-          socket = $injector.get('socket');
-          socket.on('connect', function() {
-            if (user) {
-              return socket.emit('user', user);
-            }
-          });
+          const allSockets = $injector.get('socket');
+          allSockets.forEach(socket => {
+            socket.io.on('connect', function() {
+              if (user) {
+                return socket.io.emit('user', user);
+              }
+            });
+          })
         }
         genId = function(len) {
           var chars, i, output;
@@ -108,7 +110,11 @@
                 }
                 userCallbacks = [];
                 if (sockets) {
-                  socket.emit('user', user);
+                  const allSockets = $injector.get('socket');
+                  allSockets.forEach(socket => {
+
+                    socket.io.emit('user', user);
+                  })
                 }
                 return defer.resolve(user);
               } else {

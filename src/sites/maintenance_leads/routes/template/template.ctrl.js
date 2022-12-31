@@ -2,7 +2,6 @@
 (function() {
   'use strict';
   angular.module('vs-maintenance-leads').controller('maintenance_leadsTemplateCtrl', function($scope, $stateParams, $state, $http) {
-    console.log('template');
     var cb;
     $scope.type = $stateParams.type;
     cb = function(template) {

@@ -65,7 +65,6 @@
               var callback, error1, j, len1;
               loading = false;
               if (data && data.data && data.data !== 'error' && data.status !== 401) {
-				console.log('relog', data.data);
                 user = data.data;
                 for (j = 0, len1 = userCallbacks.length; j < len1; j++) {
                   callback = userCallbacks[j];
