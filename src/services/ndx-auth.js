@@ -323,7 +323,13 @@
             }
           },
           logOut: function() {
-            if(sockets) socket.emit('user', null);
+            if (sockets) {
+              const allSockets = $injector.get('socket');
+              allSockets.forEach(socket => {
+
+                socket.io.emit('user', null);
+              })
+            }
             user = null;
             localStorage.setItem('token', '');
             Object.keys($http.sites).forEach(key => $http.sites[key].token = null);
