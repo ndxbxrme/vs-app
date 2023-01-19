@@ -159,18 +159,18 @@
         override: {
           deleted: true
         }
-      }, $http.sites.main.config);
+      }, $http.sites.agency.config);
     };
     $scope.save = function(property) {
       return $http.post($http.sites["agency"].url + `/api/properties/${property._id}`, {
         override: property.$override
-      }, $http.sites.main.config);
+      }, $http.sites.agency.config);
     };
     $scope.cancel = function(property) {
       return property.$editing = false;
     };
     return $scope.saveTarget = function(month) {
-      $http.post($http.sites["agency"].url + `/api/targets/${month.target._id || ''}`, month.target, $http.sites.main.config);
+      $http.post($http.sites["agency"].url + `/api/targets/${month.target._id || ''}`, month.target, $http.sites.agency.config);
       return month.editing = false;
     };
   });
