@@ -8,7 +8,7 @@ angular.module('vs-app')
     rating: 'pg'
   };
 })
-.run(function($rootScope, $state, progressionPopup, $http, $transitions, $timeout, ndxModal, env, TaskPopup, MaintenanceTaskPopup, socket, Auth, breadcrumbs) {
+.run(function($rootScope, $state, LettingsProgressionPopup, $http, $transitions, $timeout, ndxModal, env, TaskPopup, MaintenanceTaskPopup, socket, Auth, breadcrumbs) {
   var root;
   $http.defaults.headers.common.Authorization = `Bearer ${env.PROPERTY_TOKEN}`;
   $rootScope.state = function(route) {
@@ -31,7 +31,7 @@ angular.module('vs-app')
       return MaintenanceTaskPopup.cancelBubble = true;
     }
     if (trans.$from().name) {
-      progressionPopup.hide();
+      LettingsProgressionPopup.hide();
       document.body.className = document.body.className.replace(/\s*.*?-page/g, '');
       return $('body').removeClass(`${trans.$from().name}-page`);
     }
@@ -72,7 +72,7 @@ angular.module('vs-app')
     return output;
   };
   root.hidePopup = function(ev) {
-    return progressionPopup.hide();
+    return LettingsProgressionPopup.hide();
   };
   root.modal = function(args) {
     var backdrop, controller, modalInstance, size;

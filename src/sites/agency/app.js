@@ -9,7 +9,7 @@
       "default": 'mm',
       rating: 'pg'
     };
-  }).run(function($rootScope, $state, progressionPopup, $http, $transitions, ndxModal, env) {
+  }).run(function($rootScope, $state, AgencyProgressionPopup, $http, $transitions, ndxModal, env) {
     var root;
     $http.defaults.headers.common.Authorization = `Bearer ${env.PROPERTY_TOKEN}`;
     $rootScope.state = function(route) {
@@ -24,7 +24,7 @@
     };
     $transitions.onBefore({}, function(trans) {
       if (trans.$from().name) {
-        progressionPopup.hide();
+        AgencyProgressionPopup.hide();
         return $('body').removeClass(`${trans.$from().name}-page`);
       }
     });
@@ -45,7 +45,7 @@
       return output;
     };
     root.hidePopup = function(ev) {
-      return progressionPopup.hide();
+      return AgencyProgressionPopup.hide();
     };
     return root.modal = function(args) {
       var backdrop, controller, modalInstance, size;
