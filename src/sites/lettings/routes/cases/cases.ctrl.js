@@ -29,7 +29,9 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         property = ref[i];
-        property.$case = $scope.single('lettings:properties', property.RoleId + '_' + new Date(property.AvailableDate).valueOf(), function(item) {
+	    const availableDate = new Date(property.AvailableDate);
+	    let availableDateVal = availableDate.valueOf() - (availableDate.getTimezoneOffset() * 60 * 1000);
+        property.$case = $scope.single('lettings:properties', property.RoleId + '_' + availableDateVal, function(item) {
           var ref1;
           item.$parent.search = `${item.item.displayAddress}||${item.item.TenantName}||${item.item.LandlordName}`;
           item.$parent.milestoneStatus = item.item.milestoneStatus;

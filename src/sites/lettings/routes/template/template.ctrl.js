@@ -67,7 +67,9 @@
       }, $http.sites["lettings"].config).then(function(response) {
         if (response.data && response.data.Collection && response.data.Collection.length) {
           $scope.defaultData.property = response.data.Collection[0];
-          return $http.get($http.sites["lettings"].url + `/api/properties/${$scope.defaultData.property.RoleId + '_' + new Date($scope.defaultData.property.AvailableDate).valueOf()}`, $http.sites["lettings"].config).then(function(response) {
+	      const availableDate = new Date($scope.defaultData.property.AvailableDate);
+	      let availableDateVal = availableDate.valueOf() - (availableDate.getTimezoneOffset() * 60 * 1000);
+          return $http.get($http.sites["lettings"].url + `/api/properties/${$scope.defaultData.property.RoleId + '_' + availableDateVal}`, $http.sites["lettings"].config).then(function(response) {
             if (response.data) {
               $scope.defaultData.property.case = response.data;
               return $scope.defaultData.contact = response.data.vendorsContact;
