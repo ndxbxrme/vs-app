@@ -83,7 +83,7 @@
           }
           if(root.maintenance.length && !$rootScope.selectedUser) {
             $timeout(() => {
-              $rootScope.selectedUser = root.maintenance[0]._id;
+              $rootScope.selectedUser = root.maintenance[1]._id;
             })
           }
         })

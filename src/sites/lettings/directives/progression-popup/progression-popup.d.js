@@ -75,6 +75,7 @@
           return title === 'Start';
         };
         scope.addNote = function() {
+          console.log('lettings add note');
           return addingNote = true;
         };
         scope.addingNote = function() {

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
   var e, error, module;
 
@@ -11,17 +11,17 @@
     module = angular.module('ndx', []);
   }
 
-  module.provider('Auth', function() {
+  module.provider('Auth', function () {
     var settings;
     settings = {
       redirect: 'dashboard',
       site: 'main'
     };
     return {
-      config: function(args) {
+      config: function (args) {
         return angular.extend(settings, args);
       },
-      $get: function($http, $q, $state, $window, $interval, $injector) {
+      $get: function ($http, $q, $state, $window, $interval, $injector) {
         var checkRoles, current, currentParams, errorRedirect, errorRedirectParams, genId, getUserPromise, hasRole, loading, prev, prevParams, socket, sockets, user, userCallbacks;
         user = null;
         loading = false;
@@ -38,14 +38,14 @@
           sockets = true;
           const allSockets = $injector.get('socket');
           allSockets.forEach(socket => {
-            socket.io.on('connect', function() {
+            socket.io.on('connect', function () {
               if (user) {
                 return socket.io.emit('user', user);
               }
             });
           })
         }
-        genId = function(len) {
+        genId = function (len) {
           var chars, i, output;
           output = '';
           chars = 'abcdef0123456789';
@@ -56,31 +56,31 @@
           }
           return output;
         };
-		const handleUser = function(data) {
-			user = data;
-			localStorage.setItem('token', user.local.sites.main.token);
-			Object.keys(user.local.sites).forEach(key => {
-			  $http.sites[key].token = user.local.sites[key].token;
-			  $http.sites[key].config = {
-				"headers": {
-				  "Authorization": "Bearer " + user.local.sites[key].token
-				}
-			  };
-			})
-		};
-		const refreshTokens = function() {
-		  $interval(() => {
-			$http.post($http.sites.main.url + '/api/refresh-login', null, $http.sites.main.config).then(function(data) {
-			  var callback, error1, j, len1;
-			  loading = false;
-			  if (data && data.data && data.data !== 'error' && data.status !== 401) {
-				handleUser(data.data);
-			  }
-			});
-		  }, 15 * 60 * 1000);
-		};
-		refreshTokens();
-        getUserPromise = function() {
+        const handleUser = function (data) {
+          user = data;
+          localStorage.setItem('token', user.local.sites.main.token);
+          Object.keys(user.local.sites).forEach(key => {
+            $http.sites[key].token = user.local.sites[key].token;
+            $http.sites[key].config = {
+              "headers": {
+                "Authorization": "Bearer " + user.local.sites[key].token
+              }
+            };
+          })
+        };
+        const refreshTokens = function () {
+          $interval(() => {
+            $http.post($http.sites.main.url + '/api/refresh-login', null, $http.sites.main.config).then(function (data) {
+              var callback, error1, j, len1;
+              loading = false;
+              if (data && data.data && data.data !== 'error' && data.status !== 401) {
+                handleUser(data.data);
+              }
+            });
+          }, 1 * 60 * 1000);
+        };
+        refreshTokens();
+        getUserPromise = function () {
           var defer;
           loading = true;
           defer = $q.defer();
@@ -88,15 +88,15 @@
             defer.resolve(user);
             loading = false;
           } else {
-            if(!$http.sites.main.token) {
+            if (!$http.sites.main.token) {
               $http.sites.main.token = localStorage.getItem('token');
-              $http.sites.main.config = {headers:{Authorization:'Bearer ' + $http.sites.main.token}};
+              $http.sites.main.config = { headers: { Authorization: 'Bearer ' + $http.sites.main.token } };
             }
-            $http.post($http.sites.main.url + '/api/refresh-login', null, $http.sites.main.config).then(function(data) {
+            $http.post($http.sites.main.url + '/api/refresh-login', null, $http.sites.main.config).then(function (data) {
               var callback, error1, j, len1;
               loading = false;
               if (data && data.data && data.data !== 'error' && data.status !== 401) {
-				handleUser(data.data);
+                handleUser(data.data);
                 for (j = 0, len1 = userCallbacks.length; j < len1; j++) {
                   callback = userCallbacks[j];
                   try {
@@ -121,7 +121,7 @@
                 user = null;
                 return defer.reject({});
               }
-            }, function() {
+            }, function () {
               loading = false;
               user = null;
               return defer.reject({});
@@ -129,13 +129,13 @@
           }
           return defer.promise;
         };
-        hasRole = function(role) {
+        hasRole = function (role) {
           var allgood, getKey, j, k, key, keys, len1, root;
-          getKey = function(root, key) {
+          getKey = function (root, key) {
             return root[key];
           };
           let site = null;
-          if(/:/.test(role)) [site, role] = role.split(/:/);
+          if (/:/.test(role)) [site, role] = role.split(/:/);
           site = site || settings.site;
           keys = role.split(/\./g);
           allgood = false;
@@ -163,10 +163,10 @@
           }
           return allgood;
         };
-        checkRoles = function(role, isAnd) {
+        checkRoles = function (role, isAnd) {
           var getRole, j, len1, r, rolesToCheck, truth;
           rolesToCheck = [];
-          getRole = function(role) {
+          getRole = function (role) {
             var j, len1, r, results, type;
             type = Object.prototype.toString.call(role);
             if (type === '[object Array]') {
@@ -198,13 +198,13 @@
           return truth;
         };
         return {
-          getPromise: function(role, isAnd) {
+          getPromise: function (role, isAnd) {
             var defer;
             defer = $q.defer();
             if (Object.prototype.toString.call(role) === '[object Boolean]' && role === false) {
               defer.resolve({});
             } else {
-              getUserPromise().then(function() {
+              getUserPromise().then(function () {
                 var truth;
                 if (role) {
                   truth = checkRoles(role, isAnd);
@@ -217,7 +217,7 @@
                 } else {
                   return defer.resolve(user);
                 }
-              }, function() {
+              }, function () {
                 if (!role) {
                   return defer.resolve({});
                 } else {
@@ -228,29 +228,29 @@
             }
             return defer.promise;
           },
-          clearUser: function() {
+          clearUser: function () {
             return user = null;
           },
-          getUser: function() {
+          getUser: function () {
             return user;
           },
-          loggedIn: function() {
+          loggedIn: function () {
             return user || $state.current.name === 'invited' || $state.current.name === 'forgot' || $state.current.name === 'forgot-response';
           },
-          loading: function() {
+          loading: function () {
             return loading;
           },
-          checkRoles: function(role) {
+          checkRoles: function (role) {
             if (user) {
               return checkRoles(role);
             }
           },
-          checkAllRoles: function(role) {
+          checkAllRoles: function (role) {
             if (user) {
               return checkRoles(role, true);
             }
           },
-          isAuthorized: function(stateName) {
+          isAuthorized: function (stateName) {
             var j, len1, ref, ref1, ref2, ref3, roles, sName;
             if (user) {
               if (Object.prototype.toString.call(stateName) === '[object Array]') {
@@ -270,16 +270,16 @@
                 if (!roles) {
                   const bits = stateName.split(/_/g);
                   let site = bits[0];
-                  if(bits.length===3) site = bits[0] + '_' + bits[1];
+                  if (bits.length === 3) site = bits[0] + '_' + bits[1];
                   const userSite = user.local.sites[site];
-                  return (userSite || {role:'no access'}).role !== 'no access';
+                  return (userSite || { role: 'no access' }).role !== 'no access';
                   return user.local.sites[site];
                 }
                 return checkRoles(roles);
               }
             }
           },
-          canEdit: function(stateName) {
+          canEdit: function (stateName) {
             var ref, ref1, ref2, ref3, roles;
             if (user) {
               roles = ((ref = $state.get(stateName)) != null ? (ref1 = ref.data) != null ? ref1.edit : void 0 : void 0) || ((ref2 = $state.get(stateName)) != null ? (ref3 = ref2.data) != null ? ref3.auth : void 0 : void 0);
@@ -287,7 +287,7 @@
             }
           },
           redirect: settings.redirect,
-          goToNext: function() {
+          goToNext: function () {
             if (current) {
               $state.go(current, currentParams);
               if (current !== prev || JSON.stringify(currentParams) !== JSON.stringify(prevParams)) {
@@ -300,7 +300,7 @@
               }
             }
           },
-          goToErrorRedirect: function() {
+          goToErrorRedirect: function () {
             if (errorRedirect) {
               $state.go(errorRedirect, errorRedirectParams);
               errorRedirect = '';
@@ -311,7 +311,7 @@
               }
             }
           },
-          goToLast: function(_default, defaultParams) {
+          goToLast: function (_default, defaultParams) {
             if (prev) {
               return $state.go(prev, prevParams);
             } else if (_default) {
@@ -322,7 +322,7 @@
               }
             }
           },
-          logOut: function() {
+          logOut: function () {
             if (sockets) {
               const allSockets = $injector.get('socket');
               allSockets.forEach(socket => {
@@ -336,7 +336,7 @@
             //$http.get($http.sites.main.url + '/api/logout', $http.sites.main.config);
             $state.go('dashboard');
           },
-          onUser: function(func) {
+          onUser: function (func) {
             if (user) {
               return typeof func === "function" ? func(user) : void 0;
             } else {
@@ -345,11 +345,11 @@
               }
             }
           },
-          config: function(args) {
+          config: function (args) {
             return angular.extend(settings, args);
           },
           settings: settings,
-          current: function(_current, _currentParams) {
+          current: function (_current, _currentParams) {
             if (_current === 'logged-out') {
               return;
             }
@@ -360,21 +360,21 @@
             current = _current;
             return currentParams = _currentParams;
           },
-          errorRedirect: function(_errorRedirect, _errorRedirectParams) {
+          errorRedirect: function (_errorRedirect, _errorRedirectParams) {
             errorRedirect = _errorRedirect;
             return errorRedirectParams = _errorRedirectParams;
           },
-          setPrev: function(_prev, _prevParams) {
+          setPrev: function (_prev, _prevParams) {
             prev = _prev;
             return prevParams = _prevParams || null;
           },
-          setTitle: function(title) {
+          setTitle: function (title) {
             var ref;
             title = title || ((ref = $state.current.data) != null ? ref.title : void 0);
             return document.title = "" + (settings.titlePrefix || '') + title + (settings.titleSuffix || '');
           },
           genId: genId,
-          regenerateAnonId: function() {
+          regenerateAnonId: function () {
             var anonId;
             anonId = genId(24);
             localStorage.setItem('anonId', anonId);
@@ -383,7 +383,7 @@
         };
       }
     };
-  }).run(function($rootScope, $state, $stateParams, $transitions, $q, $http, Auth) {
+  }).run(function ($rootScope, $state, $stateParams, $transitions, $q, $http, Auth) {
     var anonId, root;
     if (Auth.settings.anonymousUser) {
       if (localStorage) {
@@ -395,37 +395,37 @@
     }
     root = Object.getPrototypeOf($rootScope);
     root.auth = Auth;
-    $transitions.onBefore({}, function(trans) {
+    $transitions.onBefore({}, function (trans) {
       var data, defer;
       Auth.settings.site = 'main';
       const pattern = trans.$to().url.pattern;
       ['lettings', 'leads', 'maintenance_leads', 'maintenance', 'agency', 'myproperty'].forEach(name => {
-        if(pattern.indexOf(name)===1) Auth.settings.site = name;
+        if (pattern.indexOf(name) === 1) Auth.settings.site = name;
       });
       defer = $q.defer();
       data = trans.$to().data || {};
       if (data.auth) {
-        Auth.getPromise(data.auth).then(function() {
+        Auth.getPromise(data.auth).then(function () {
           Auth.current(trans.$to().name, trans.params());
           return defer.resolve();
-        }, function() {
+        }, function () {
           trans.abort();
           $state.go('main_dashboard');
           Auth.errorRedirect('main_dashboard', trans.params());
           return defer.resolve();
         });
       } else {
-        Auth.getPromise(null).then(function() {
+        Auth.getPromise(null).then(function () {
           Auth.current(trans.$to().name, trans.params());
           return defer.resolve();
-        }, function() {
+        }, function () {
           Auth.current(trans.$to().name, trans.params());
           return defer.resolve();
         });
       }
       return defer.promise;
     });
-    return $transitions.onStart({}, function(trans) {
+    return $transitions.onStart({}, function (trans) {
       var title;
       title = (trans.$to().data || {}).title || '';
       if (Auth.settings) {

@@ -34,7 +34,7 @@
         offset = getOffset(elem);
         elemLeft = offset.left;
         offset.top += elem.clientHeight;
-        popupWidth = $('.progression-popup').width();
+        popupWidth = $('.lettings-progression-popup').width();
         if (offset.left + (popupWidth + 20) > window.innerWidth) {
           offset.left = window.innerWidth - (popupWidth + 10);
         }
@@ -45,13 +45,13 @@
         if (window.innerWidth < 410) {
           offset.left = 2;
         }
-        $('.progression-popup').css(offset);
+        $('.lettings-progression-popup').css(offset);
         pointerLeft = elemLeft - offset.left + 10;
         pointerDisplay = 'block';
         if (pointerLeft + 40 > popupWidth) {
           pointerDisplay = 'none';
         }
-        return $('.progression-popup .pointer').css({
+        return $('.lettings-progression-popup .pointer').css({
           left: pointerLeft,
           display: pointerDisplay
         });
@@ -148,6 +148,7 @@
         }
       },
       addNote: function(note) {
+        console.log('lettings add note');
         if (data && note) {
           data.notes.push({
             date: new Date(),

@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <base href="/">
    <!-- Favicons -->
@@ -20,6 +21,7 @@
   <div ui-view="" ng-if="auth.getUser() || state('invited') || state('forgot') || state('forgot-response')" class="main-view"></div>
   <footer ng-if="auth.getUser()"></footer>
   <agency-progression-popup ng-if="auth.isAuthorized('agency_dashboard')"></agency-progression-popup>
+  <lettings-progression-popup ng-if="auth.isAuthorized('lettings_dashboard')"></lettings-progression-popup>
   <maintenance-date-swiper config="{prefix:&quot;swiper&quot;, modifier:1.5, show:false}"></maintenance-date-swiper>
   <maintenance-task-popup ng-if="auth.isAuthorized('maintenance_dashboard')"></maintenance-task-popup>
   <date-swiper config="{prefix:&quot;swiper&quot;, modifier:1.5, show:false}"></date-swiper>

@@ -19,23 +19,27 @@ require('ndx-server').config({
   }
 })
 .use(function(ndx) {
+  const updateUserTokens = (user) => {
+    const makeToken = (userId, key, hours) => {
+      let text = userId + '||' + new Date(new Date().setHours(new Date().getHours() + hours)).toString();
+      return crypto.Rabbit.encrypt(text, key).toString();
+    }
+    if(user && user.local && user.local.sites) {
+      Object.values(user.local.sites).forEach(site => {
+        site.token = makeToken(site.id, "thisismysecretdontforgetit", 1);
+      });
+    }
+  };
   ndx.addPublicRoute('/api/refresh-login');
   ndx.addPublicRoute('/api/user-code');
   ndx.addPublicRoute('/api/complete-registration');
   ndx.addPublicRoute('/api/forgot-password');
   ndx.addPublicRoute('/api/logout');
   ndx.database.on('select', (args, cb) => {
+    console.log('database select', args.table, args.objs.length);
     if(args.table==='users' && args.objs.length===1) {
-      const makeToken = (userId, key, hours) => {
-        let text = userId + '||' + new Date(new Date().setHours(new Date().getHours() + hours)).toString();
-        return crypto.Rabbit.encrypt(text, key).toString();
-      }
       const user = args.objs[0];
-      if(user && user.local && user.local.sites) {
-        Object.values(user.local.sites).forEach(site => {
-          site.token = makeToken(site.id, "thisismysecretdontforgetit", 1);
-        });
-      }
+      updateUserTokens(user);
       return cb(true);
     }
     else {
