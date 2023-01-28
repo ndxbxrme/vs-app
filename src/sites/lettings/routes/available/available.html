@@ -42,7 +42,7 @@
           <td class="address">
             <div>{{property.$case.item.override.address || property.displayAddress}}</div>
           </td>
-          <td class="vendor">{{property.$case.item.LandlordName}} This is currently missing.</td>
+          <td class="vendor">{{property.$case.item.LandlordName || 'This is currently missing.'}}</td>
           <td class="viewing-next">
             <p class="title">{{property.$case.item.SpecialArrangements[0].SpecialArrangementType.Name}}</p>
             <p>{{property.$case.item.SpecialArrangements[0].Text}}</p>
