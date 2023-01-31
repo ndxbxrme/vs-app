@@ -4,11 +4,11 @@
   angular.module('vs-agency').filter('getFeedbackCount', function() {
     return function(property) {
       var count, i, len, ref, viewing;
-      if (!property) {
+      if (!property || !property.viewings || !property.viewings.Collection) {
         return;
       }
       count = 0;
-      ref = property.viewings;
+      ref = property.viewings.Collection;
       for (i = 0, len = ref.length; i < len; i++) {
         viewing = ref[i];
         count += (viewing.Feedback || []).length;

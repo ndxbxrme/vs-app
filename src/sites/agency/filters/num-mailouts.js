@@ -7,7 +7,7 @@
         return;
       }
       return (property.events.Collection || []).reduce(function(res, event) {
-        if (event.EventType.Name === 'Mailout') {
+        if (event.EventType && event.EventType.Name === 'Mailout') {
           res++;
         }
         return res;

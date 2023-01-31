@@ -4,11 +4,11 @@
   angular.module('vs-agency').filter('viewingContacted', function() {
     return function(property) {
       var i, len, nocompleted, ref, viewing;
-      if (!property) {
+      if (!property || !property.viewings || !property.viewings.Collection) {
         return;
       }
       nocompleted = 0;
-      ref = property.viewings;
+      ref = property.viewings.Collection;
       for (i = 0, len = ref.length; i < len; i++) {
         viewing = ref[i];
         if (viewing.EventStatus.Name === 'Completed') {
