@@ -128,13 +128,14 @@
             dateVal: {$gt:new Date('2022-12-20').valueOf()}
           }
         }, function() {
-          return scope.issues = scope.list('maintenance_leads:issues', {
-            where: {
-              statusName: 'Booked'
-            }
-          }, function() {
-            return scope.filterTasks();
-          });
+          if(scope.issues.items && scope.allTasks.items) scope.filterTasks();
+        });
+        scope.issues = scope.list('maintenance_leads:issues', {
+          where: {
+            statusName: 'Booked'
+          }
+        }, function() {
+          if(scope.issues.items && scope.allTasks.items) scope.filterTasks();
         });
         scope.filterTasks = function() {
           var k, len, ref, ref1, ref2, task;
