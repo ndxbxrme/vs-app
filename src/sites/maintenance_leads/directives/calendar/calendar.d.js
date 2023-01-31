@@ -77,7 +77,7 @@
             profitloss: 0
           };
           if (scope.tasks && scope.tasks.items) {
-            ref = $filter('filter')(scope.tasks.items, scope.selectedUser);
+            ref = $filter('filter')(scope.tasks.items, scope.selectedMLUser);
             for (k = 0, len = ref.length; k < len; k++) {
               task = ref[k];
               if (task.status === 'confirmed' || task.status === 'completed') {
@@ -103,7 +103,7 @@
           };
           weekEnd = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 7);
           if (scope.tasks && scope.tasks.items) {
-            ref = $filter('filter')(scope.tasks.items, scope.selectedUser);
+            ref = $filter('filter')(scope.tasks.items, scope.selectedMLUser);
             for (k = 0, len = ref.length; k < len; k++) {
               task = ref[k];
               taskDate = new Date(task.date);
@@ -123,7 +123,11 @@
         scope.tasks = {
           items: []
         };
-        scope.allTasks = scope.list('maintenance_leads:tasks', null, function() {
+        scope.allTasks = scope.list('maintenance_leads:tasks', {
+          where: {
+            dateVal: {$gt:new Date('2022-12-20').valueOf()}
+          }
+        }, function() {
           return scope.issues = scope.list('maintenance_leads:issues', {
             where: {
               statusName: 'Booked'
@@ -239,7 +243,7 @@
             }
             task = task || {};
             task.duration = task.duration || 3600000;
-            task.assignedTo = task.assignedTo || scope.selectedUser;
+            task.assignedTo = task.assignedTo || scope.selectedMLUser;
             task.status = task.status || {
               booked: true
             };

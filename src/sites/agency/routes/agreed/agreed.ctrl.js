@@ -73,6 +73,17 @@
         return results;
       }
     };
+    let historic = {};
+    ['2017', '2018', '2019', '2020', '2021', '2022'].map(year => $http.get('/public/data/conveyancing-agreed-' + year + '.json').then(res => {
+
+      historic[year] = res.data.map(m => m.map(p => ({
+        roleId: p.roleId,
+        address: p.address,
+        commission: p.commission,
+        delisted: p.delisted,
+        date: p.date
+      })));
+    }));
     updateProperties = function() {
       var completeBeforeDelisted, i, j, k, len, len1, milestone, month, progression, property, ref, ref1, results;
       ref = $scope.months;
@@ -82,6 +93,13 @@
         month.commission = 0;
       }
       if ($scope.properties && $scope.properties.items) {
+        if(historic && historic[$scope.currentYear.toString()]) {
+          for(let f = 0; f<$scope.months.length; f++) {
+            $scope.months[f].properties = historic[$scope.currentYear.toString()][f];
+            $scope.months[f].properties.forEach(p => {$scope.months[f].commission += p.commission});
+          }
+          return;
+        }
         ref1 = $scope.properties.items;
         results = [];
         for (k = 0, len1 = ref1.length; k < len1; k++) {
@@ -101,7 +119,7 @@
                 }
                 property.override = property.override || {};
                 if (!property.override.deleted) {
-                  month.commission += +property.override.commission || property.role.Commission;
+                  month.commission += +property.override.commission || +property.role.Commission;
                   month.properties.push({
                     _id: property._id,
                     address: property.override.address || `${property.offer.Property.Address.Number} ${property.offer.Property.Address.Street}, ${property.offer.Property.Address.Locality}`,
@@ -129,6 +147,11 @@
       }
     }, updateTargets);
     $scope.properties = $scope.list('agency:properties', {
+      where: {
+        startDate: {
+          $gt: new Date('2022-12-20').valueOf()
+        }
+      },
       sort: 'startDate',
       sortDir: 'ASC'
     }, updateProperties);

@@ -21,7 +21,7 @@
   /*
 task = task or {}
 task.duration = task.duration or new Date 3600000
-task.assignedTo = task.assignedTo or scope.selectedUser
+task.assignedTo = task.assignedTo or scope.selectedMLUser
 task.status = task.status or 'quote'
 task.createdDate = task.createdDate or new Date().valueOf()
 task.createdBy = task.createdBy or scope.auth.getUser()
