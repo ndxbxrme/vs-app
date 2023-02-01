@@ -1,5 +1,5 @@
 
-<div class="modal issue-book small">
+<div class="modal issue-book small" ng-click="$event.preventDefault()">
   <h1>{{ mml('modal-issue-book-title') }}</h1>
   <form name="forms.myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('forms.myForm')">
     <div ng-class="{warning: submitted &amp;&amp; forms.myForm.jobnumber.$invalid}" class="form-item c-input jobnumber required  ">

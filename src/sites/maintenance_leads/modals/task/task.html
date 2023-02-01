@@ -1,5 +1,5 @@
 
-<div class="modal task-modal">
+<div class="modal task-modal" ng-click="$event.preventDefault()">
   <h1 ng-show="!task._id">Book a maintenance appointment</h1>
   <h1 ng-show="task._id">Edit maintenance appointment</h1>
   <form name="forms.myForm" ng-submit="save()" novalidate="novalidate">

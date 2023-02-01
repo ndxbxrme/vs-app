@@ -234,6 +234,7 @@
           return false;
         };
         scope.openTask = function(task, ev) {
+          if(ev) return;
           var notasks, ref;
           if (TaskPopup.getHidden() && scope.issue.item._id) {
             notasks = scope.tasks.items.filter(function(task) {
@@ -267,7 +268,7 @@
                   return task._id || !scope.selectedContractors || !scope.selectedContractors.length || scope.selectedContractors.includes(contractor._id);
                 })
               }
-            }, $http.sites["maintenance_leads"].config).then(function(result) {
+            }).then(function(result) {
               return true;
             }, function(err) {
               return false;
