@@ -160,6 +160,7 @@
       .date-swiper-holder
         position relative
         display block
+        z-index 10
         .day-names
           color inherit
           margin-top 1.6rem
@@ -211,6 +212,7 @@
       display flex
       flex-direction column
       background vs-grey
+      z-index 1000001
       //height 40px
       label 
         padding 10px
@@ -219,6 +221,7 @@
         .select2-arrow
           display none
         .select2-choice
+          height 50px
           background none
           background-image none
           border none
@@ -226,7 +229,7 @@
           padding 0.5rem
           color white
         .select2-chosen
-          padding 0 0 0 0.5rem
+          padding 10px
     .filters
       .filter
         width 100px
@@ -284,6 +287,7 @@
     padding 3px
     &:before
       height 0
+      display none
 @media screen and (max-width:819px)
   .dashboard-state
     .holder

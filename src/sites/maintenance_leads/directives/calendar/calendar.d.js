@@ -202,7 +202,7 @@
             hours = [];
             startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 9);
             j = 0;
-            while (j++ < 12) {
+            while (j++ < 16) {
               hours.push(startDate);
               startDate = new Date(startDate.valueOf() + 60 * 60 * 1000);
             }

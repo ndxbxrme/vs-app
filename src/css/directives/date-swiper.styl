@@ -6,7 +6,7 @@ $base = vs-orange
 $alert = #f06292
 // structural/functional
 .date-swiper-holder
-  z-index 100
+  z-index 100000
   display flex
   align-items center
   justify-content center
@@ -46,6 +46,8 @@ $alert = #f06292
           flex: 1 0 14.285714286%
           text-align: center
           text-indent 0px
+          &:before
+            display none
       .carousel
         display: flex
         flex-direction: row
@@ -131,7 +133,7 @@ $alert = #f06292
     background: rgba($dark, 0.25)
   .is-selected
     .date
-      background: $alert
+      background: $base
       color: $lighter
       box-shadow: 0 0 0 .1em
   .toggle
