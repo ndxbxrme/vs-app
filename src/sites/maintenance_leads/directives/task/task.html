@@ -1,10 +1,11 @@
 <span class="task-dir">{{assigned = selectById(users.items,task.assignedTo); '' }}
   <div class="contractor"> 
-    <h2>Contractor</h2>{{task.contractorName}}
-  </div>
-  <div class="title"> 
-    <h2>Task</h2>{{task.title}}
+    {{task.contractorName}}
   </div>
   <div class="address"> 
-    <h2>Address</h2>{{task.address}}
-  </div></span>
+    {{task.address}}
+  </div>
+  <div class="title"> 
+    {{task.title}}
+  </div>
+</span>
