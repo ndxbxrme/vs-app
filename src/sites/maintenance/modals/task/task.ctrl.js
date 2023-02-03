@@ -45,7 +45,8 @@
     $scope.cancel = function() {
       return ndxModalInstance.close();
     };
-    $scope.save = function() {
+    $scope.saveTask = function() {
+      console.log('save got pressed');
       var property;
       $scope.submitted = true;
       if ($scope.forms.myForm.$valid || $scope.task.status === 'quote') {
@@ -59,7 +60,7 @@
         });
       }
     };
-    $scope.delete = function() {
+    $scope.deleteTask = function() {
       if ($window.confirm('Are you sure you want to delete this task?')) {
         return $http.delete($http.sites["maintenance"].url + `/api/tasks/${$scope.task._id}`, $http.sites["maintenance"].config).then(function(response) {
           return ndxModalInstance.dismiss();

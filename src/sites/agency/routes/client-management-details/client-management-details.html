@@ -66,7 +66,7 @@
         <div class="col-md-3 col-sm-6">
           <div class="stat">
             <i class="mail"></i>
-            <p>{{property.item | numMailouts}}</p>
+            <p>{{{events:events} | numMailouts}}</p>
             <p class="small">Mail Outs</p>
           </div>
         </div>
@@ -94,35 +94,35 @@
       </div>
       <div class="rightmove-stats text-center">
         <div class="info"><img src="./public/img/rm-logo.svg" width="300"/>
-          <p>Online Stats - Updated <strong class="orange">{{property.item.rightmove.RightmoveStatsLastExportedDate | date:'mediumDate'}}</strong></p>
+          <p>Online Stats - Updated <strong class="orange">{{rightmove.RightmoveStatsLastExportedDate | date:'mediumDate'}}</strong></p>
         </div>
       </div>
       <div class="row stats client-row">
         <div class="col-md-3 col-sm-6">
           <div class="stat">
             <i class="vs-iconsearch ic50"></i>
-            <p>{{property.item.rightmove.TotalSummaryViews}}</p>
+            <p>{{rightmove.TotalSummaryViews || '...'}}</p>
             <p class="small">Summary Views</p>
           </div>
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="stat">
             <i class="vs-icondocument ic50"></i>
-            <p>{{property.item.rightmove.TotalDetailedViews}}</p>
+            <p>{{rightmove.TotalDetailedViews || '...'}}</p>
             <p class="small">Detail Views</p>
           </div>
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="stat">
             <i class="reserving ic50"></i>
-            <p>{{property.item.rightmove.IsCurrentlyAPremiumListing ? 'Yes' : 'No'}}</p>
+            <p>{{rightmove.IsCurrentlyAPremiumListing ? 'Yes' : 'No'}}</p>
             <p class="small">Premium Listing</p>
           </div>
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="stat">
             <i class="vs-iconthumb ic50"></i>
-            <p>{{property.item.rightmove.IsCurrentlyAFeaturedProperty ? 'Yes' : 'No'}}</p>
+            <p>{{rightmove.IsCurrentlyAFeaturedProperty ? 'Yes' : 'No'}}</p>
             <p class="small">Feature Property</p>
           </div>
         </div>

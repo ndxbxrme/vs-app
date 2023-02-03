@@ -9,7 +9,7 @@
           <div class="mobile">{{day.day | date:'EEE, MMM d'}}</div>
         </div>
         <div class="hours">
-          <div ng-repeat="hour in day.hours" tap="openTask({date:hour}, $event)" class="hour">
+          <div ng-repeat="hour in day.hours" ng-click="openTask({date:hour}, $event)" class="hour">
             <div class="legend"> 
               <div class="desktop">{{hour | date:'ha'}}</div>
               <div class="mobile">{{hour | date:'ha'}}</div>

@@ -72,9 +72,10 @@
         for (m = 0, len3 = ref2.length; m < len3; m++) {
           property = ref2[m];
           if (property && property.milestoneIndex && angular.isDefined(property.milestoneIndex[di.progression])) {
-            if ((ref3 = property.override) != null ? ref3.deleted : void 0) {
+            if(property.override && property.override.deleted) {
               continue;
             }
+
             if ((minIndex <= (ref4 = property.milestoneIndex[di.progression]) && ref4 <= maxIndex)) {
               propertyGood = true;
               if (di.min && di.max) {

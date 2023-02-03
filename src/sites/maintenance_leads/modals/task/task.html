@@ -2,7 +2,7 @@
 <div class="modal task-modal" ng-click="$event.preventDefault()">
   <h1 ng-show="!task._id">Book a maintenance appointment</h1>
   <h1 ng-show="task._id">Edit maintenance appointment</h1>
-  <form name="forms.myForm" ng-submit="save()" novalidate="novalidate">
+  <form name="forms.myForm" ng-submit="saveMLTask()" novalidate="novalidate">
     <div class="form-item half">
       <label class="title">Property:</label>
       <p>{{task.address}}</p>
@@ -45,7 +45,7 @@
     </div>
     <div class="controls bottom">
       <button type="button" tap="delete()" ng-show="task._id" class="delete">Delete</button>
-      <input type="submit" value="Submit" class="submit"/>
+      <input type="button" value="Submit" ng-click="saveMLTask()"/>
     </div>
   </form><a ng-click="cancel()" class="close-reveal-modal">&times;</a>
 </div>
