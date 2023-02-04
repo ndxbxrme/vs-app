@@ -120,7 +120,7 @@ angular.module('vs-maintenance')
                   task.duration = new Date(task.duration);
                   const dayDate = new Date(day.day.getFullYear(), day.day.getMonth(), day.day.getDate(), 9);
                   task.top = (taskDate.valueOf() - dayDate.valueOf()) / 3600000 * 6;
-                  task.height = task.duration.valueOf() / 3600000 * 6;
+                  task.height = (task.duration.valueOf() - (task.duration.getTimezoneOffset() * 60 * 1000)) / 3600000 * 6;
                   day.tasks.push(task);
                 }
               })
