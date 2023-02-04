@@ -27,10 +27,10 @@
           <button type="button" ng-click="contractor.showList=!contractor.showList" ng-show="contractor.issues.total" class="button"><span ng-show="contractor.showList"> <i class="fal fa-eye-slash"></i>Hide List</span><span ng-hide="contractor.showList"><i class="fal fa-eye"> </i>View List</span></button>
           <button type="button" ng-click="deleteContractor(contractor)" ng-if="auth.isAuthorized([&quot;superadmin&quot;, &quot;admin&quot;])" class="button button-alt"> <i class="fal fa-trash-alt"></i>Delete</button>
           <div ng-show="contractor.showList" class="issues">
-            <div ng-repeat="issue in contractor.issues.items" ui-sref="maintenance_leads_issue({_id:issue._id})" class="issue">
+            <a ng-repeat="issue in contractor.issues.items" href="maintenance_leads/issue/{{issue._id}}" target="_blank" class="issue">
               <div class="address">{{ issue.address }}</div>
               <div class="title">{{ issue.title }}</div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
