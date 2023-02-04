@@ -36,6 +36,6 @@
       </div>
     </div>
 
-    <div ng-show="!filterData.length" class="empty-table">{{ mml('contractors-empty-table') }}</div>
+    <div ng-show="!filterData.length" class="empty-table">No contractors match your current search</div>
     <pagination ng-model="page" total="contractors.total" page-size="limit"></pagination>
 </div>

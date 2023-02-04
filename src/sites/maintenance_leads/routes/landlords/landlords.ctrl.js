@@ -13,8 +13,6 @@
       }, 200);
     };
     $scope.landlords = $scope.list('maintenance_leads:landlords', {
-      page: 1,
-      pageSize: $scope.limit,
       sort: 'name',
       sortDir: 'ASC',
       where: {
