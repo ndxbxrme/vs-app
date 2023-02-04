@@ -15,7 +15,7 @@
     </div>
   
     <div class="contractors">
-      <div ng-repeat="contractor in filterData =(contractors.items | filter:search | orderBy:sort) | limitTo:limit:limit*(page-1)" class="contractor col-lg-4 col-6">
+      <div ng-repeat="contractor in filterData =(contractors.items | filter:search | orderBy:sort | limitTo:limit:((page-1) * limit))" class="contractor col-lg-4 col-6">
         <div class="inner">
           <div ui-sref="maintenance_leads_contractor({_id:contractor._id})" ng-class="{empty:!contractor.issues.total}" class="contractor-heading row">
             <div class="name col-8">{{ contractor.name }}</div>
@@ -37,5 +37,5 @@
     </div>
 
     <div ng-show="!filterData.length" class="empty-table">{{ mml('contractors-empty-table') }}</div>
-    <pagination ng-model="contractors.args.page" total="contractors.total" page-size="contractors.args.pageSize"></pagination>
+    <pagination ng-model="page" total="contractors.total" page-size="limit"></pagination>
 </div>

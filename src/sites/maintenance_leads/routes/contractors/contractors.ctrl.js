@@ -10,8 +10,6 @@
       }, 200);
     };
     $scope.contractors = $scope.list('maintenance_leads:contractors', {
-      page: 1,
-      pageSize: $scope.limit,
       sort: 'name',
       sortDir: 'ASC'
     }, function(contractors) {
