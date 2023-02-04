@@ -46,7 +46,7 @@
         template: require('../../modals/landlord-delete/landlord-delete.html').default,
         controller: 'maintenance_leadsIssueDeleteCtrl',
         size: 'small'
-      }, $http.sites["maintenance_leads"].config).then(function() {
+      }).then(function() {
         $scope.landlords.delete(landlord);
         $state.go('maintenance_leads_landlords');
         return alert.log('landlord deleted');
