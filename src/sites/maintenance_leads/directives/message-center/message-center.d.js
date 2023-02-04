@@ -105,6 +105,7 @@
             scope.outgoingEmail.item = scope.outgoingEmail.item || {};
             scope.outgoingEmail.item.subject = selectedTemplate.subject;
             scope.outgoingEmail.body = selectedTemplate.body;
+            scope.issue.item.userName = scope.auth.getUser().displayName;
             scope.templateize();
           }
         };
