@@ -40,7 +40,7 @@
         template: require('../../modals/contractor-delete/contractor-delete.html').default,
         controller: 'maintenance_leadsIssueDeleteCtrl',
         size: 'small'
-      }, $http.sites["maintenance_leads"].config).then(function() {
+      }).then(function() {
         $scope.contractors.delete(contractor);
         $state.go('contractors');
         return alert.log('Contractor deleted');
