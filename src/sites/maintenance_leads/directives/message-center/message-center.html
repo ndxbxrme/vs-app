@@ -30,7 +30,7 @@
       <div class="form-controls">
         <div ng-class="{warning: submitted &amp;&amp; myForm.subject.$invalid}" class="form-item c-input subject   ">
           <label class="label">{{ mml('outgoingEmail-subject-label') }}</label>
-          <input type="text" name="subject" ng-model="outgoingEmail.item.subject" placeholder="{{ mml('outgoingEmail-subject-placeholder') }}" title="{{ mml('outgoingEmail-subject-label') }}" ng-disabled="disabled"/>
+          <input type="text" name="subject" ng-model="outgoingEmail.item.subject" ng-change="templateize()" placeholder="{{ mml('outgoingEmail-subject-placeholder') }}" title="{{ mml('outgoingEmail-subject-label') }}" ng-disabled="disabled"/>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
     <div class="form-section">
       <div class="form-item">
         <label>{{ mml('outgoingEmail-messageBody-label') }}</label>
-        <code-mirror name="messageBody" ng-model="outgoingEmail.body" options="{lineWrapping:true}"></code-mirror>
+        <code-mirror name="messageBody" ng-model="outgoingEmail.body"  ng-change="templateize()" options="{lineWrapping:true}"></code-mirror>
       </div>
     </div>
     <div class="form-section">

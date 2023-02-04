@@ -22,6 +22,9 @@
         scope.single('maintenance_leads:landlords', {
           _id: scope.issue.item.landlordId || 'noone'
         }, function (landlord) {
+          scope.issue.item.landlordName = landlord.item.name;
+          scope.issue.item.landlordPhone = landlord.item.phone;
+          scope.issue.item.landlordEmail = landlord.item.email;
           scope.messageRecipients = [
             {
               name: 'Tenant: ' + scope.issue.item.tenant + ' - ' + scope.issue.item.tenantEmail,
@@ -38,6 +41,9 @@
             return scope.single('maintenance_leads:contractors', {
               _id: scope.tasks.items[0].contractor
             }, function (contractor) {
+              scope.issue.item.contractorName = contractor.item.name;
+              scope.issue.item.contractorPhone = contractor.item.phone;
+              scope.issue.item.contractorEmail = contractor.item.email;
               return scope.messageRecipients.push({
                 name: 'Contractor: ' + contractor.item.name + ' - ' + contractor.item.email,
                 _id: 'Contractor::' + contractor.item.name + '::' + contractor.item.email
@@ -76,31 +82,33 @@
           };
           return document.querySelector('.page').scrollIntoView();
         };
+        scope.templateize = () => {
+          const $t = (s, data) => (s).replace(/\{\{(.+?)\}\}/g, (all, m) => {
+            try {
+              return (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data))
+            } catch(e) {
+              return '';
+            }
+          });
+          $timeout(() => {
+            try {
+              scope.outgoingEmail.item.subject = $t(scope.outgoingEmail.item.subject, scope.issue.item);
+              scope.outgoingEmail.body = $t(scope.outgoingEmail.body, scope.issue.item);
+            } catch(e) {}
+          });
+        }
         scope.selectTemplate = async () => {
           const selectedTemplate = scope.emailTemplates.items.find(item => item._id === scope.template);
           if (selectedTemplate) {
             console.log(selectedTemplate);
             scope.outgoingEmail = scope.outgoingEmail || { item: {} };
             scope.outgoingEmail.item = scope.outgoingEmail.item || {};
-            const landlordRes = await $http.get($http.sites["maintenance_leads"].url + '/api/landlords/' + scope.issue.item.landlordId, $http.sites["maintenance_leads"].config);
-            const myissue = JSON.parse(JSON.stringify(scope.issue.item));
-            if (landlordRes.data) {
-              myissue.landlordName = landlordRes.data.name;
-            }
-            console.log(myissue);
-            const $t = (s, data) => (s).replace(/\{\{(.+?)\}\}/g, (all, m) => {
-              try {
-                return (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data))
-              } catch(e) {
-                return '';
-              }
-            });
-            $timeout(() => {
-              scope.outgoingEmail.item.subject = $t(selectedTemplate.subject, myissue);
-              scope.outgoingEmail.body = $t(selectedTemplate.body, myissue);
-            });
+            scope.outgoingEmail.item.subject = selectedTemplate.subject;
+            scope.outgoingEmail.body = selectedTemplate.body;
+            scope.templateize();
           }
         };
+
         return scope.noAttachments = function () {
           var ref;
           return (ref = scope.issue.item.documents) != null ? ref.filter(function (doc) {
