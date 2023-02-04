@@ -21,7 +21,7 @@
         <label class="label">Template</label>
         <div class="input-holder">
           <select sumoselect="{placeholder:mml('outgoingEmail-messageTo-placeholder'), search:true}" ng-model="template" name="template" ng-disabled="disabled" ng-change="selectTemplate()">
-            <option ng-repeat="template in emailTemplates.items" value="{{template._id}}">{{ template.name }}</option>
+            <option ng-repeat="template in emailTemplates.items | filter:{name:'Template'}" value="{{template._id}}">{{ template.name }}</option>
           </select>
         </div>
       </div>
