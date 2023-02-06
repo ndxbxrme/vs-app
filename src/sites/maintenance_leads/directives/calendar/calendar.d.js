@@ -201,7 +201,7 @@
           while (i++ < daysToShow) {
             hours = [];
             startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 9);
-            const startDateVal = startDate;
+            const startDateVal = startDate.valueOf();
             j = 0;
             while (j++ < 16) {
               hours.push(startDate);
