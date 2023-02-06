@@ -38,8 +38,8 @@
         template: require('../../modals/issue-restore/issue-restore.html').default,
         controller: 'maintenance_leadsIssueDeleteCtrl',
         size: 'small'
-      }, $http.sites["maintenance_leads"].config).then(function() {
-        return $http.get('api/restore/' + issue._id, $http.sites["maintenance_leads"].config).then(function() {
+      }).then(function() {
+        return $http.get($http.sites["maintenance_leads"].url + 'api/restore/' + issue._id, $http.sites["maintenance_leads"].config).then(function() {
           return alert.log('Issue restored');
         }, function(err) {
           return;
