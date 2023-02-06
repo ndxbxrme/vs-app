@@ -208,7 +208,7 @@
               startDate = new Date(startDate.valueOf() + 60 * 60 * 1000);
             }
             week.days.push({
-              day: startDate,
+              day: new Date(startDate.valueOf() - 120 * 60 * 1000),
               tasks: [], //getTasks startDate, i + 9
               hours: hours
             });
@@ -219,7 +219,7 @@
         generateData = function(startDate) {
           TaskPopup.hide();
           scope.startDate = startDate;
-          scope.weeks = [makeWeek(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - dayOffset)), makeWeek(startDate), makeWeek(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + dayOffset))];
+          scope.weeks = [makeWeek(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - dayOffset)), makeWeek(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())), makeWeek(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + dayOffset))];
           return mapTasksToDays();
         };
         while (startDate.getDay() !== 1) {
