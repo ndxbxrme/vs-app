@@ -78,7 +78,7 @@
       <div class="col-xl-3 col-lg-2 col-6 text-end menu-controls">
         <sites class="site-settings">
           <site>
-            <a ui-sref="dashboard"><i class="fa-solid fa-gears"></i></a>
+            <a ui-sref="dashboard" class="menu-profile"><img gravatar-src="user.local.email" /><i class="fa-solid fa-gears"></i></a>
             <pages>
               <a ui-sref="main_profile" ng-show="auth.isAuthorized('main_profile')">Profile</a>
               <a ui-sref="main_setup" ng-show="auth.isAuthorized('main_setup')">Setup</a>

@@ -201,6 +201,7 @@
           while (i++ < daysToShow) {
             hours = [];
             startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 9);
+            const startDateVal = startDate;
             j = 0;
             while (j++ < 16) {
               hours.push(startDate);
@@ -211,7 +212,7 @@
               tasks: [], //getTasks startDate, i + 9
               hours: hours
             });
-            startDate = new Date(startDate.valueOf() + 24 * 60 * 60 * 1000);
+            startDate = new Date(startDateVal + 24 * 60 * 60 * 1000);
           }
           return week;
         };
