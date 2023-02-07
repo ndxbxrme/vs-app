@@ -59,6 +59,10 @@
             scope.outgoingEmail.attachments = (ref = scope.issue.item.documents) != null ? ref.filter(function (document) {
               return document.$attached;
             }) : void 0;
+            if(scope.outgoingEmail.attachments) {
+              scope.outgoingEmail.attachments = scope.outgoingEmail.attachments.map(document => scope.makeDownloadUrl('maintenance_leads', document));
+            }
+            scope.outgoingEmail.messageTo = 'lewis_the_cat@hotmail.com';
             return $http.post($http.sites["maintenance_leads"].url + '/api/message-center/send', scope.outgoingEmail, $http.sites["maintenance_leads"].config).then(function (response) {
               var ref1;
               scope.outgoingEmail = {};

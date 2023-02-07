@@ -5,6 +5,7 @@
     var myParams;
     $scope.fetched = false;
     $scope.submitted = false;
+    $scope.redirect = null;
     $scope.sources = [
       {
         name: 'FixFlo',

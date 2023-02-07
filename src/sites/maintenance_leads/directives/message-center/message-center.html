@@ -46,7 +46,9 @@
           </div>
           <div ng-show="issue.item.documents.length" class="document-list">
             <div ng-repeat="document in issue.item.documents" class="document">
-              <div ng-click="document.$attached=!document.$attached" ng-class="{attached:document.$attached}" class="document-link"><img ng-src="{{makeDownloadUrl(document)}}" ng-if="document.basetype===&quot;image&quot;"/><img src="public/img/icons/vs-document.png" ng-hide="document.basetype===&quot;image&quot;" class="logo {{document.basetype}}"/>
+              <div ng-click="document.$attached=!document.$attached" ng-class="{attached:document.$attached}" class="document-link">
+                <img ng-src="{{makeDownloadUrl('maintenance_leads', document)}}" ng-if="document.basetype===&quot;image&quot;"/>
+                <img src="public/img/icons/vs-document.png" ng-hide="document.basetype===&quot;image&quot;" class="logo {{document.basetype}}"/>
                 <div class="filename"> <span ng-show="!document.editing">{{document.name || document.originalFilename}}</span></div>
               </div>
             </div>
