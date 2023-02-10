@@ -47,9 +47,9 @@
               </div>
             </td>
             <td class="view-button">
-              <button type="button" ui-sref="maintenance_leads_issue({_id:issue._id})" class="button-alt"> 
+              <a ui-sref="maintenance_leads_issue({_id:issue._id})" target="_blank" class="button-alt"> 
                 <div class="fal fa-eye"></div>View Issue
-              </button>
+              </a>
             </td>
             <td class="restore">
               <button type="button" ng-click="restoreIssue(issue)" ng-show="issue.deleted || issue.statusName===&quot;Completed&quot;" class="button-grey">
