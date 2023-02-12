@@ -28,12 +28,12 @@
       template: require("./lead.html").default,
       controller: 'leadsLeadCtrl',
       params: {
-        $or: {
-          deleted: {
+        $or: [
+          {deleted: {
             $nn: true
-          },
-          booked: true
-        }
+          }},
+          {booked: true}
+        ]
       },
       data: {
         title: 'Vitalspace Leads - Lead',
