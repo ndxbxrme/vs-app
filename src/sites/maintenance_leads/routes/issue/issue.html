@@ -185,7 +185,7 @@
 
             <div class="edit-icons">
               <h3><strong>View/Edit</strong></h3>
-              <a href="/maintenance_leads/api/fixflo/pdf/{{issue.item.fixfloId}}" target="_blank"><i class="fad fa-file-pdf"></i></a>
+              <a href="https://server.vitalspace.co.uk/maintenance-leads/api/fixflo/pdf/{{issue.item.fixfloId}}" target="_blank"><i class="fad fa-file-pdf"></i></a>
               <span ng-click="$parent.showLightbox(issue.item.media)"><i ng-show="issue.item.media.length" class="fad fa-camera-retro"></i></span>
               <span ng-click="$parent.editing=true" ng-hide="editing" ng-class="{disabled:issue.item.statusName===&quot;Completed&quot;}"><i class="fad fa-edit"></i></span>
             </div>

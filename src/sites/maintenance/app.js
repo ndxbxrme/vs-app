@@ -70,6 +70,7 @@
           for (j = 0, len1 = ref.length; j < len1; j++) {
             user = ref[j];
             if (user.roles) {
+              if(user.deleted) continue;
               if (user.roles.maintenance) {
                 root.maintenance.push(user);
                 /*if (!$rootScope.selectedUser) {
@@ -83,7 +84,7 @@
           }
           if(root.maintenance.length && !$rootScope.selectedUser) {
             $timeout(() => {
-              $rootScope.selectedUser = root.maintenance[1]._id;
+              //$rootScope.selectedUser = root.maintenance[1]._id;
             })
           }
         })
