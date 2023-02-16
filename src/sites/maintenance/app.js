@@ -60,7 +60,7 @@
       return output;
     };
     Auth.onUser(function() {
-      if(!Auth.isAuthorized('agency_dashboard')) return;
+      //if(!Auth.isAuthorized('agency_dashboard')) return;
       return root.users = $rootScope.list('maintenance:users', null, function(users) {
         $timeout(() => {
           var j, len1, ref, results, user;
@@ -84,7 +84,7 @@
           }
           if(root.maintenance.length && !$rootScope.selectedUser) {
             $timeout(() => {
-              //$rootScope.selectedUser = root.maintenance[1]._id;
+              $rootScope.selectedUser = root.maintenance[1]._id;
             })
           }
         })

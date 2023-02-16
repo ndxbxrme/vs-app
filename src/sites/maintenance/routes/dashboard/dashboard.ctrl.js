@@ -5,6 +5,7 @@
     var userFormat;
     userFormat = function(data) {
       var user;
+      if(!$scope.users) return;
       if (user = $scope.selectById($scope.users.items, data.id)) {
         return $compile(`<img gravatar-src='\"${user.local.email}\"' /> <span>${user.displayName || user.local.email}</span>`)($scope);
       }

@@ -13,7 +13,7 @@
           var task;
           task = MaintenanceTaskPopup.getTask();
           if (task) {
-            return new Date(task.date.valueOf() + task.duration.valueOf());
+            return new Date(task.date.valueOf() + (task.duration.valueOf() - (task.duration.getTimezoneOffset() * 60 * 1000)));
           }
         };
         scope.save = function() {
