@@ -27,7 +27,17 @@ angular.module('vs-app')
           const myUser = pendingUsers[user.local.email];
           myUser.sites = myUser.sites || [];
           myUser.sites.push(site);
-        })
+        });
+        if(site.name==='Conveyancing') {
+          site.users.items.forEach(user => {
+            if(user.deleted) return;
+            if(user.local.email==='superadmin@admin.com') return;
+            if(user.sendEmail) return;
+            user.sendEmail = true;
+            site.users.save(user);
+            console.log(user.local.email);
+          })
+        }
       }
     });
     $scope.pendingUsers = Object.keys(pendingUsers).map(key => pendingUsers[key]).filter(user => !allUserEmails.includes(user.local.email) && !/^cors-/.test(user.displayName)).sort((a,b) => a.displayName > b.displayName ? 1 : -1);

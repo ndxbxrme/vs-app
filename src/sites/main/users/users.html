@@ -31,10 +31,10 @@
         </tbody>
       </table>
     </div>
-    <div class="table_heading">
+    <div class="table_heading" ng-hide="!pendingUsers.length">
       <h3 class="orange">Pending Users</h3>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive" ng-hide="!pendingUsers.length">
       <table class="table_users">
         <thead>
           <tr>
