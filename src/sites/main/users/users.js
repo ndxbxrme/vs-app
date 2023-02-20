@@ -39,23 +39,25 @@ angular.module('vs-app')
       user.siteRoles = $scope.getExistingUserSites(user);
     });
     $scope.sites.forEach(site => {
-      if(site.name==='Conveyancing') {
-        const userEmails = $scope.myusers.items.filter(user => {
-          const agencyRole = user.siteRoles.find(role => role.siteId==='agency');
-          return agencyRole && agencyRole.role!=='no access';
-        }).map(user => user.local.email);
-        console.log(site);
-        site.users.items.forEach(user => {
-          if(user.deleted) return;
-          if(user.local.email==='superadmin@admin.com') return;
-          const sendEmail = user.local.email && user.local.email!=='superadmin@admin.com' && userEmails.includes(user.local.email);
-          if(sendEmail!==user.sendEmail) {
-            user.sendEmail = sendEmail;
-            site.users.save(user);
-            console.log(user.local.email);
-          }
-        })
-      }
+      ['agency', 'lettings'].forEach(siteId => {
+        if(site.id===siteId) {
+          const userEmails = $scope.myusers.items.filter(user => {
+            const agencyRole = user.siteRoles.find(role => role.siteId===siteId);
+            return agencyRole && agencyRole.role!=='no access';
+          }).map(user => user.local.email);
+          console.log(site);
+          site.users.items.forEach(user => {
+            if(user.deleted) return;
+            if(user.local.email==='superadmin@admin.com') return;
+            const sendEmail = user.local.email && user.local.email!=='superadmin@admin.com' && userEmails.includes(user.local.email);
+            if(sendEmail!==user.sendEmail) {
+              user.sendEmail = sendEmail;
+              site.users.save(user);
+              console.log(user.local.email);
+            }
+          })
+        }
+      })
     })
   });
   const makeCode = () => [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase();
