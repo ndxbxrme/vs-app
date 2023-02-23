@@ -145,7 +145,7 @@
           return scope.editingAction = false;
         };
         scope.reset = AgencyProgressionPopup.reset;
-        deregister = $rootScope.$on('set-date', function(e, date) {
+        deregister = $rootScope.$on('set-date-agency', function(e, date) {
           var ref;
           if (scope.auth.checkRoles(['superadmin', 'admin'])) {
             return AgencyProgressionPopup.setDate(date);
