@@ -17,6 +17,7 @@
           }
         };
         scope.save = function() {
+          const task = scope.getTask();
           return $http.post($http.sites["maintenance"].url + `/api/tasks/${scope.getTask()._id || ''}`, scope.getTask(), $http.sites["maintenance"].config).then(function(response) {
             return alert.log('Task updated');
           }, function(err) {

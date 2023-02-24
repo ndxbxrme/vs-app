@@ -53,6 +53,8 @@
         property = maintenanceProperty.getProperty($scope.task.property);
         $scope.task.title = `${$scope.task.job}, ${$scope.task.property}`;
         $scope.task.dateVal = $scope.task.date.valueOf();
+        $scope.task.documents && $scope.task.documents.forEach(doc => {delete doc.user});
+        $http.sites["maintenance"].config.headers['Content-Type'] = 'application/json';
         return $http.post($http.sites["maintenance"].url + `/api/tasks/${$scope.task._id || ''}`, $scope.task, $http.sites["maintenance"].config).then(function(response) {
           return ndxModalInstance.dismiss();
         }, function(err) {
