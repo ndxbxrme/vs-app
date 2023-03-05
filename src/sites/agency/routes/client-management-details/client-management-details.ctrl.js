@@ -2,6 +2,7 @@
 (function() {
   'use strict';
   angular.module('vs-agency').controller('agencyClientManagementDetailsCtrl', function($scope, $stateParams, $state, $timeout, $interval, $http, $window, Auth, AgencyProgressionPopup, agencyProperty, Upload, env, alert) {
+    console.log('i\'m real');
     let fetchedFirst = false;
     $scope.property = $scope.single('agency:clientmanagement', $stateParams.id, function(res) {
       var property;
