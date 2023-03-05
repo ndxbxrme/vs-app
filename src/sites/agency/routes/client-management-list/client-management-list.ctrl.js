@@ -9,7 +9,7 @@
         scrollTop: 0
       }, 200);
     };
-    return $scope.properties = $scope.list('agency:clientmanagement', {
+    $scope.properties = $scope.list('agency:clientmanagement', {
       where: {
         active: true
       }
@@ -22,6 +22,16 @@
         results.push(property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`);
       }
       return results;
+    });
+    const fetchDetails = async () => {
+      if(!$scope.property.items || !$scope.property.items.length) return;
+      for(let property of $scope.property.items) {
+        await $http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + (property.RoleId || property.roleId));
+      }
+    }
+    const iv = $interval(fetchDetails, 10 * 60 * 1000)
+    $scope.$on('$destroy', () => {
+      $interval.cancel(iv);
     });
   });
 

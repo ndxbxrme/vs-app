@@ -278,7 +278,7 @@
               return _setMonths(scope.snap);
             };
             scope.done = function() {
-              $rootScope.$emit('set-date-maintenance',
+              $rootScope.$emit('set-date',
       scope.date);
               return scope.config.show = false;
             };

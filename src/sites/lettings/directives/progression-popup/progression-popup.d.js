@@ -135,7 +135,7 @@
           return scope.editingAction = false;
         };
         scope.reset = LettingsProgressionPopup.reset;
-        deregister = $rootScope.$on('set-date-lettings', function(e, date) {
+        deregister = $rootScope.$on('set-date', function(e, date) {
           var ref;
           if (scope.auth.checkRoles(['superadmin', 'admin'])) {
             return LettingsProgressionPopup.setDate(date);

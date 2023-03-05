@@ -52,7 +52,7 @@
       }
       return results;
     });
-    return $scope.hasRequest = function(property) {
+    $scope.hasRequest = function(property) {
       var i, len, ref, request;
       if ($scope.auth.checkRoles(['superadmin', 'admin']) && property.$case.item && property.$case.item.advanceRequests && property.$case.item.advanceRequests.length) {
         ref = property.$case.item.advanceRequests;
@@ -65,6 +65,16 @@
       }
       return false;
     };
+    const fetchDetails = async () => {
+      if(!$scope.property.items || !$scope.property.items.length) return;
+      for(let property of $scope.property.items) {
+        await $http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + (property.RoleId || property.roleId));
+      }
+    }
+    const iv = $interval(fetchDetails, 10 * 60 * 1000)
+    $scope.$on('$destroy', () => {
+      $interval.cancel(iv);
+    });
   });
 
 }).call(this);

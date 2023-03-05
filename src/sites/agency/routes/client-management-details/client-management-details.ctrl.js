@@ -88,8 +88,9 @@
           $scope.events = {Collection:res.data};
         })
       }
+      $http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + $scope.property.item.RoleId);
     }
-    const iv = $interval(fetchDetails, 5 * 60 * 1000)
+    const iv = $interval(fetchDetails, 10 * 60 * 1000)
     $scope.$on('$destroy', () => {
       $interval.cancel(iv);
     });

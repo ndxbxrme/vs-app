@@ -38,7 +38,7 @@
     $scope.setDate = function() {
       return $rootScope.$emit('swiper:show', $scope.task.date);
     };
-    deref = $rootScope.$on('set-date-ml', function(e, date) {
+    deref = $rootScope.$on('set-date', function(e, date) {
       var sel;
       sel = new Date(date);
       return $scope.task.date = new Date(sel.getFullYear(), sel.getMonth(), sel.getDate(), $scope.task.date.getHours(), $scope.task.date.getMinutes());
