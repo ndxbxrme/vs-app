@@ -89,7 +89,7 @@
           $scope.events = {Collection:res.data};
         })
       }
-      $http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + $scope.property.item.RoleId);
+      //$http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + $scope.property.item.RoleId);
     }
     const iv = $interval(fetchDetails, 10 * 60 * 1000);
     fetchDetails();

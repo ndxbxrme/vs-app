@@ -66,9 +66,9 @@
       return false;
     };
     const fetchDetails = async () => {
-      if(!$scope.property.items || !$scope.property.items.length) return;
-      for(let property of $scope.property.items) {
-        await $http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + (property.RoleId || property.roleId));
+      if(!$scope.properties.items || !$scope.properties.items.length) return;
+      for(let property of $scope.properties.items) {
+        //await $http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + (property.RoleId || property.roleId));
       }
     }
     const iv = $interval(fetchDetails, 10 * 60 * 1000)
