@@ -144,6 +144,9 @@
             <multi-check ng-model="action.to">
               <multi-check-item ng-repeat="contact in contactOptions" value="{{contact.id}}">{{contact.name}}</multi-check-item>
             </multi-check>
+            <select ng-model="action.specificUser">
+              <option ng-repeat="user in myusers = (users.items | filter:&quot;!superadmin&quot; | filter:&quot;!cors&quot;)" value="{{user._id}}">{{user.displayName}}</option>
+            </select>
             <label class="large">Template</label>
             <select ng-model="action.template">
               <option ng-repeat="template in emailTemplates.items" value="{{template._id}}">{{template.name}}</option>
