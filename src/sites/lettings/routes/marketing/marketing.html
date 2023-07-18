@@ -26,9 +26,13 @@
               <div class="error" ng-show="submitted &amp;&amp; marketingEmail.tendDate.$invalid">Please enter the tenancy end date</div>
             </div>
             <div class="col-sm-4">
-              <label>Current Rental Amount</label>
-              <input type="text" name="rent" ng-model="marketing.rent" required="required"/>
-              <div class="error" ng-show="submitted &amp;&amp; marketingEmail.rent.$invalid">Please enter the rent</div>
+              <label>Property Status</label>
+              <select name="terms" ng-model="marketing.pStatus" required="required">
+                <option value="Furnished" selected="selected">Furnished</option>
+                <option value="Unfurnished">Unfurnished</option>
+                <option value="Part-Furnished">Part-Furnished</option>
+              </select>
+              <div class="error" ng-show="submitted &amp;&amp; marketingEmail.pStatus.$invalid">Please select the property status</div>
             </div>
           </div>
 
@@ -43,13 +47,14 @@
               <div class="error" ng-show="submitted &amp;&amp; marketingEmail.terms.$invalid">Please select the terms</div>
             </div>
             <div class="col-sm-4">
-              <label>Property Status</label>
-              <select name="terms" ng-model="marketing.pStatus" required="required">
-                <option value="Furnished" selected="selected">Furnished</option>
-                <option value="Unfurnished">Unfurnished</option>
-                <option value="Part-Furnished">Part-Furnished</option>
-              </select>
-              <div class="error" ng-show="submitted &amp;&amp; marketingEmail.pStatus.$invalid">Please select the property status</div>
+              <label>Historic Rental Amount</label>
+              <input type="text" name="historicRent" ng-model="marketing.historicRent" required="required"/>
+              <div class="error" ng-show="submitted &amp;&amp; marketingEmail.historicRent.$invalid">Please enter the historic rent</div>
+            </div>
+            <div class="col-sm-4">
+              <label>New Rental Amount</label>
+              <input type="text" name="rent" ng-model="marketing.rent" required="required"/>
+              <div class="error" ng-show="submitted &amp;&amp; marketingEmail.rent.$invalid">Please enter the rent</div>
             </div>
           </div>
 
@@ -132,9 +137,21 @@
 
           <div class="error" ng-show="submitted &amp;&amp; marketingEmail.gas.$invalid">Please select an Gas Cert status</div>
         </div>
+        
+        <div class="col-sm-4 checkbox-holder">
+          <h3 class="orange">EICR</h3>
+          <label class="checkbox-label" for="eicryes">Yes
+            <input id="eicryes" type="radio" name="eicr" ng-model="marketing.eicr" value="Yes" required="required"/>
+          </label>
+          <label class="checkbox-label" for="eicrno">No
+            <input id="eicrno" type="radio" name="eicr" ng-model="marketing.eicr" value="No" required="required"/>
+          </label>
+
+          <div class="error" ng-show="submitted &amp;&amp; marketingEmail.eicr.$invalid">Please select an EICR status</div>
+        </div>
 
         <div class="col-sm-4 checkbox-holder">
-          <h3 class="orange">Property added on CFP</h3>
+          <h3 class="orange">Property added on SME</h3>
           <label class="checkbox-label" for="cfpyes">Yes
             <input id="cfpyes" type="radio" name="cfp" ng-model="marketing.cfp" value="Yes" required="required"/>
           </label>
@@ -142,7 +159,7 @@
             <input id="cfpno" type="radio" name="cfp" ng-model="marketing.cfp" value="No" required="required"/>
           </label>
 
-          <div class="error" ng-show="submitted &amp;&amp; marketingEmail.gas.$invalid">Please select an CFP status</div>
+          <div class="error" ng-show="submitted &amp;&amp; marketingEmail.cfp.$invalid">Please select an SME status</div>
         </div>
       </div>
 

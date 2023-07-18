@@ -43,6 +43,7 @@
         availableDate: "2019-01-15T00:00:00.000Z",
         tendDate: "2019-01-15T00:00:00.000Z",
         rent: "1000",
+        historicRent: "800",
         terms: "12",
         pStatus: "Furnished",
         access: "A load of text about the access details",
@@ -55,7 +56,8 @@
         windowcard: "Yes",
         epc: "Yes",
         gas: "Yes",
-        cfp: "Yes"
+        cfp: "Yes",
+        eicr: "Yes"
       }
     };
     fetchDefaultProp = function() {
