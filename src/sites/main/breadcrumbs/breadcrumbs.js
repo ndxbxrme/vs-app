@@ -1,6 +1,7 @@
 angular.module('vs-app')
 .factory('breadcrumbs', () => {
-  const allHistory = JSON.parse(localStorage.getItem('allHistory') || '[]');
+  let allHistory = JSON.parse(localStorage.getItem('allHistory') || '[]');
+  allHistory = allHistory.slice(-100);
   const history = [];
   let favorites = [];
   const updateFavorites = () => {
@@ -29,12 +30,14 @@ angular.module('vs-app')
         history.push({url,title,params,date:new Date()});
       }
       allHistory.push({url,title,params,date:new Date()});
+      allHistory = allHistory.slice(-100);
       updateFavorites();
       localStorage.setItem('allHistory', JSON.stringify(allHistory));
     },
     setInfo: (info) => {
       history[history.length-1].info = info;
       allHistory[allHistory.length-1].info = info;
+      allHistory = allHistory.slice(-100);
       localStorage.setItem('allHistory', JSON.stringify(allHistory));
       updateFavorites();
     },
