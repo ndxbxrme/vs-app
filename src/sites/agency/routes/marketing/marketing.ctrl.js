@@ -13,6 +13,17 @@
         });
       }
     };
+    $scope.submitNewLettings = function() {
+      $scope.submitted = true;
+      if ($scope.newLettingsEmail.$valid) {
+        return $http.post($http.sites["agency"].url + '/api/properties/send-new-lettings-email', {
+          newLettings: $scope.newLettings
+        }, $http.sites["agency"].config).then(function() {
+          $scope.lettingsEmailSent = true;
+          return $scope.submitted = false;
+        });
+      }
+    };
     return $scope.submitReduction = function() {
       $scope.submitted = true;
       if ($scope.reductionEmail.$valid) {

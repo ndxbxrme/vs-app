@@ -389,6 +389,12 @@
         return $state.go('cases');
       }
     };
+    $scope.refreshDetails = function() {
+      const roleId = $scope.property.item.RoleId;
+      fetch(`https://server.vitalspace.co.uk/dezrez/refresh/${roleId}`, {
+        method: 'POST'
+      })
+    };
     return $scope.$on('$destroy', function() {
       return AgencyProgressionPopup.hide();
     });

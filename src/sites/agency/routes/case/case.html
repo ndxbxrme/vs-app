@@ -102,6 +102,9 @@
 
     
     <div class="contacts">
+      <div class="row case-row" ng-hide="property.item.$case.item.vendorsSolicitor && property.item.$case.item.purchasersSolicitor">
+        <button ng-click="refreshDetails()">Refresh Details</button>
+      </div>
       <div class="row case-row">
         <div class="col-md-3 col-sm-6">
           <contact-details title="Vendor's Solicitor"></contact-details>
