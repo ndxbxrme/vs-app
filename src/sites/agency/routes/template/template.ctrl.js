@@ -38,6 +38,14 @@
         newSalesPropertyPrice: "200 000",
         newSalesPropertyUrl: "https://conveyancing.vitalspace.co.uk/case/4653108"
       },
+      newLettings: {
+        address: "Apt 19 St Lawrence Street, Hulme, Manchester, M15 4DY",
+        bedrooms: "3",
+        propertyType: "Apartment",
+        access: "Access Instructions",
+        newLettingsPropertyPrice: "200 000",
+        newLettingsPropertyUrl: "https://conveyancing.vitalspace.co.uk/case/4653108"
+      },
       reduction: {
         address: "Apt 19 St Lawrence Street, Hulme, Manchester, M15 4DY",
         reductionPropertyPrice: "1000000"
