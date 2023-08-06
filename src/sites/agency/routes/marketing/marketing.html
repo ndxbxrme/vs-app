@@ -113,15 +113,31 @@
                 <div class="error" ng-show="submitted &amp;&amp; newLettingsEmail.propertyType.$invalid">Please select the property Type</div>
               </div>
             </div>
-
-            <div class="input-holder">
-              <label>VitalSpace URL</label>
-              <input type="text" name="newLettingsPropertyUrl" ng-model="newLettings.newLettingsPropertyUrl" placeholder="https://..."/>
+            <div class="row">
+              <div class="input-holder col-sm-6">
+                <label>VitalSpace URL</label>
+                <input type="text" name="newLettingsPropertyUrl" ng-model="newLettings.newLettingsPropertyUrl" placeholder="https://..."/>
+              </div>
+              <div class="input-holder col-sm-6">
+                <label>Property Status</label>
+                <select name="propertyStatus" ng-model="newLettings.propertyStatus" required="required">
+                  <option value="" selected="selected">Please Select</option>
+                  <option>Furnished</option>
+                  <option>Unfurnished</option>
+                  <option>Part-Furnished</option>
+                </select>
+                <div class="error" ng-show="submitted &amp;&amp; newLettingsEmail.propertyType.$invalid">Please select the property Type</div>
+              </div>
             </div>
 
             <div class="input-holder">
               <label>Access Arrangements</label>
               <textarea name="access" ng-model="newLettings.access"></textarea>
+            </div>
+
+            <div class="input-holder">
+              <label>Property Notes</label>
+              <textarea name="propertyNotes" ng-model="newLettings.propertyNotes"></textarea>
             </div>
 
             <div class="controls">
