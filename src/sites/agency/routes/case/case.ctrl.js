@@ -393,7 +393,8 @@
       const roleId = $scope.property.item.RoleId;
       fetch(`https://server.vitalspace.co.uk/dezrez/refresh/${roleId}`, {
         method: 'POST'
-      })
+      });
+      alert.log('Solicitor Details Incoming');
     };
     return $scope.$on('$destroy', function() {
       return AgencyProgressionPopup.hide();
