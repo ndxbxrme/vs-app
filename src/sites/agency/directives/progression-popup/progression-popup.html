@@ -1,7 +1,19 @@
 
 <div class="progression-popup agency-progression-popup" ng-hide="getHidden()" ng-click="$event.stopPropagation()">
   <div class="popup">
-    <div class="content">
+    <div class="completion" ng-show="needs_birthday">
+      <h4>Completion</h4>
+      <p>Enter the completion date</p>
+      <div class="row">
+        <div class="col-sm-8">
+          <input type="date" ng-model="birthdayDate" />
+        </div>
+        <div class="col-sm-4">
+          <input type="button" ng-click="saveBirthday()" value="Save" />
+        </div>
+      </div>
+    </div>
+    <div class="content" ng-hide="needs_birthday">
       <h4>{{getTitle()}}</h4>
       <div class="start" ng-show="isStart() &amp;&amp; !getCompleted()">
         <button ng-click="setCompleted()">Start</button>

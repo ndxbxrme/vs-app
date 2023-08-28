@@ -169,6 +169,8 @@ import './sites/agency/modals/dashboard-income/dashboard-income.ctrl.js';
 import './sites/agency/modals/yesnocancel.ctrl.js';
 import './sites/agency/routes/agreed/agreed.ctrl.js';
 import './sites/agency/routes/agreed/agreed.routes.js';
+import './sites/agency/routes/birthdays/birthdays.ctrl.js';
+import './sites/agency/routes/birthdays/birthdays.routes.js';
 import './sites/agency/routes/case/case.ctrl.js';
 import './sites/agency/routes/case/case.routes.js';
 import './sites/agency/routes/cases/cases.ctrl.js';

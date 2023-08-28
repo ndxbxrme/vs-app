@@ -61,6 +61,7 @@
     return {
       show: function(_elem, _data, _property) {
         elem = _elem;
+        console.log(elem);
         data = _data;
         property = _property;
         /*
@@ -91,7 +92,11 @@
           return data.completed;
         }
       },
-      setCompleted: function() {
+      setCompleted: function(skipBirthday) {
+        if(skipBirthday || (data.title==='Completion' && elem.parentElement.parentElement.parentElement.innerText.contains('Purchase Workflow'))) {
+          scope.needs_birthday = true;
+          return;
+        }
         if (data) {
           hidden = true;
           $http.post($http.sites["agency"].url + '/api/milestone/completed', {

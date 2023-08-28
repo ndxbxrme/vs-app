@@ -53,6 +53,7 @@
             return templateDeref();
           }
         });
+        scope.birthdays = scope.list('agency:birthdays');
         scope.getData = AgencyProgressionPopup.getData;
         scope.getTitle = AgencyProgressionPopup.getTitle;
         scope.setCompleted = AgencyProgressionPopup.setCompleted;
@@ -70,6 +71,27 @@
         scope.setProgressing = function() {
           return AgencyProgressionPopup.setProgressing();
         };
+        scope.saveBirthday = function() {
+          const property = AgencyProgressionPopup.getProperty();
+          //if(!scope.birthdayDate) return;
+          if(scope.birthdayDate) {
+            const birthday = {
+              address: property.item.displayAddress,
+              name: property.item.$case.item.purchaser,
+              email: property.item.$case.item.purchasersContact.email,
+              full_date: scope.birthdayDate,
+              date: scope.birthdayDate.getDate(),
+              month: scope.birthdayDate.getMonth(),
+              year: scope.birthdayDate.getFullYear()
+            }
+            if(birthday.email) {
+              scope.birthdays.save(birthday);
+            }
+            scope.needs_birthday = false;
+            scope.birthdayDate = null;
+            scope.setCompleted(true);
+          }
+        }
         getDateDiff = function(startDate, endDate) {
           var end, nodays, start;
           end = moment(endDate);

@@ -1,0 +1,59 @@
+<div class="birthdays">
+  <div class="container-xl">
+    <div class="row align-items-center">
+      <div class="col-sm-8">
+        <h1>Birthdays &#127874;</h1>
+        <input type="button" ng-click="showBirthdayControls()" value="{{controlsHidden?'Add':'Cancel'}}" />
+      </div>
+      <div class="col-sm-4 search">
+        <input type="text" ng-model="search" placeholder="Search Birthdays" ng-change="page=1"/>
+      </div>
+    </div>
+    <div class="birthday-controls" ng-hide="controlsHidden">
+      <div class="row">
+        <div class="col-md-2 col-sm-4 col-6">
+          <label>Address</label>
+          <input type="text" ng-model="birthday.address"/>
+        </div>
+        <div class="col-md-2 col-sm-4 col-6">
+          <label>Client Name</label>
+          <input type="text" ng-model="birthday.name"/>
+        </div>
+        <div class="col-md-2 col-sm-4 col-6">
+          <label>Client Email</label>
+          <input type="text" ng-model="birthday.email"/>
+        </div>
+        <div class="col-md-2 col-sm-4 col-6">
+          <label>Date</label>
+          <input type="date" ng-model="birthday.full_date"/>
+        </div>
+        <div class="col-md-2 col-sm-4 col-6">
+          <label style="width: 100%">&nbsp;</label>
+          <input type="button" ng-click="submitBirthday()" value="Submit" />
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table small-mobile-hide" ng-show="filterData.length>0">
+        <thead>
+          <th>Address</th>
+          <th>Completion Date</th>
+          <th>Client Name</th>
+          <th>Client Email</th>
+          <th></th>
+        </thead>
+        <tr ng-repeat="birthday in filterData = (birthdays.items | filter:{&quot;search&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
+          <td>{{ birthday.address }}</td>
+          <td>{{ birthday.full_date | date:'dd/MM/yyyy' }}</td>
+          <td>{{ birthday.name }}</td>
+          <td>{{ birthday.email }}</td>
+          <td><input type="button" ng-click="deleteBirthday(birthday)" value="Delete" /></td>
+        </tr>
+      </table>
+    </div>
+    <pagination class="pagination-sm pagination" total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true"></pagination>
+    <div class="nothing-to-show" ng-show="filterData.length===0">
+      <h3>Nothing to show</h3>
+    </div>
+  </div>
+</div>
