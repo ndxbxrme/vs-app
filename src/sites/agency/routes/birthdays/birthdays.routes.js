@@ -11,7 +11,7 @@
       },
       resolve: {
         user: function(Auth) {
-          return Auth.getPromise(['agency:superadmin']);
+          return Auth.getPromise(['agency:superadmin', 'agency:admin']);
         }
       }
     });
