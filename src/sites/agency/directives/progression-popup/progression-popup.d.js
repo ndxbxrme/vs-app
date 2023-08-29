@@ -73,7 +73,6 @@
         };
         scope.saveBirthday = function() {
           const property = AgencyProgressionPopup.getProperty();
-          //if(!scope.birthdayDate) return;
           if(scope.birthdayDate) {
             const birthday = {
               address: property.item.displayAddress,

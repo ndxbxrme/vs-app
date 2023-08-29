@@ -61,7 +61,6 @@
     return {
       show: function(_elem, _data, _property) {
         elem = _elem;
-        console.log(elem);
         data = _data;
         property = _property;
         /*
@@ -93,7 +92,7 @@
         }
       },
       setCompleted: function(skipBirthday) {
-        if(skipBirthday || (data.title==='Completion' && elem.parentElement.parentElement.parentElement.innerText.contains('Purchase Workflow'))) {
+        if(!skipBirthday && (data.title==='Completion' && elem.parentElement.parentElement.parentElement.innerText.contains('Purchase Workflow'))) {
           scope.needs_birthday = true;
           return;
         }
