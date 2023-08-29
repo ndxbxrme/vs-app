@@ -1,4 +1,5 @@
 angular.module('vs-agency').controller('agencyBirthdaysCtrl', function($scope) {
+  
   $scope.birthdays = $scope.list('agency:birthdays', {
   }, (items) => {
     items.items.forEach(item => {item.search = `${item.address.toLowerCase()}|${item.name.toLowerCase()}|${item.email.toLowerCase()}`});
