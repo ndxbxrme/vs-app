@@ -137,7 +137,11 @@
           purchasingSolicitor: true,
           vendingSolicitor: true
         }
-      ]
+      ],
+      birthday: {
+        name: 'Richard Antrobus',
+        address: '123 Station Road, Stretford, M32 9RF',
+      }
     };
     fetchDefaultProp = function() {
       return $http.post(`${env.PROPERTY_URL}/search`, {
