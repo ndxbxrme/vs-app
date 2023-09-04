@@ -141,6 +141,11 @@
       birthday: {
         name: 'Richard Antrobus',
         address: '123 Station Road, Stretford, M32 9RF',
+        image: 'https://docs.rezi.cloud/hv6f7VD5lVO9Mvn13PtL00SCXJ4tkDU2PyqWS2E9UUk%3d/37788148.jpg?v=000000000bb2ca14',
+        full_date: new Date(),
+        year: 2022,
+        month: 10,
+        date: 15
       }
     };
     fetchDefaultProp = function() {

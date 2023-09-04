@@ -24,6 +24,10 @@
           <input type="text" ng-model="birthday.email"/>
         </div>
         <div class="col-md-2 col-sm-4 col-6">
+          <label>Image Url</label>
+          <input type="text" ng-model="birthday.image"/>
+        </div>
+        <div class="col-md-2 col-sm-4 col-6">
           <label>Date</label>
           <input type="date" ng-model="birthday.full_date"/>
         </div>
@@ -37,6 +41,7 @@
       <table class="table small-mobile-hide" ng-show="filterData.length>0">
         <thead>
           <th>Address</th>
+          <th></th>
           <th>Completion Date</th>
           <th>Client Name</th>
           <th>Client Email</th>
@@ -44,7 +49,8 @@
         </thead>
         <tr ng-repeat="birthday in filterData = (birthdays.items | filter:{&quot;search&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
           <td>{{ birthday.address }}</td>
-          <td>{{ birthday.full_date | date:'dd/MM/yyyy' }}</td>
+          <td><img src="{{birthday.image}}&width=200" style="max-width: 100px; max-height: 100px" /></td>
+          <td><strong>{{age(birthday.full_date)}}</strong> {{ birthday.full_date | date:'dd/MM/yyyy' }}</td>
           <td>{{ birthday.name }}</td>
           <td>{{ birthday.email }}</td>
           <td><input type="button" ng-click="deleteBirthday(birthday)" value="Delete" /></td>

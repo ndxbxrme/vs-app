@@ -75,13 +75,15 @@
           const property = AgencyProgressionPopup.getProperty();
           if(scope.birthdayDate) {
             const birthday = {
-              address: property.item.displayAddress,
+              address: `${property.item.Address.BuildingName || ''} ${property.item.Address.Number || ''} ${property.item.Address.Street}`.trim(),
               name: property.item.$case.item.purchaser,
               email: property.item.$case.item.purchasersContact.email,
               full_date: scope.birthdayDate,
               date: scope.birthdayDate.getDate(),
               month: scope.birthdayDate.getMonth(),
-              year: scope.birthdayDate.getFullYear()
+              year: scope.birthdayDate.getFullYear(),
+              roleId: property.item.RoleId,
+              image: property.item.Images && property.item.Images.length ? property.item.Images[0] : ''
             }
             if(birthday.email) {
               scope.birthdays.save(birthday);

@@ -33,4 +33,10 @@ angular.module('vs-agency').controller('agencyBirthdaysCtrl', function($scope) {
       $scope.birthdays.delete(birthday);
     }
   }
+  $scope.age = (birthday) => {
+    const then = new Date(birthday);
+    const now = new Date();
+    const age = Math.floor((now - then) / 1000 / 60 / 60/ 24 / 365);
+    return age + ' Year' + (age > 1 ? 's':'');
+  }
 })
