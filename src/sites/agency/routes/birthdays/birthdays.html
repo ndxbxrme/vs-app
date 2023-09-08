@@ -7,6 +7,7 @@
       </div>
       <div class="col-sm-4 search">
         <input type="text" ng-model="search" placeholder="Search Birthdays" ng-change="page=1"/>
+        <div class="total" style="text-align: right">Showing<br>{{((page - 1) * limit) + 1}} to {{topLimit(page, limit, birthdays.total)}} of {{birthdays.total}} leads</div>
       </div>
     </div>
     <div class="birthday-controls" ng-hide="controlsHidden">

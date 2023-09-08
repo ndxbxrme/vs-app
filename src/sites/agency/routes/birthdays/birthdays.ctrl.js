@@ -58,4 +58,5 @@ angular.module('vs-agency').controller('agencyBirthdaysCtrl', function($scope) {
     const age = Math.floor((now - then) / 1000 / 60 / 60/ 24 / 365);
     return age + ' Year' + (age === 1 ? '':'s');
   }
+  $scope.topLimit = (page, limit, total) => Math.min(page * limit, total);
 })
