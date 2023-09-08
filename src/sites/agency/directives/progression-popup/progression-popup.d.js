@@ -83,7 +83,7 @@
               month: scope.birthdayDate.getMonth(),
               year: scope.birthdayDate.getFullYear(),
               roleId: property.item.RoleId,
-              image: property.item.Images && property.item.Images.length ? property.item.Images[0] : ''
+              image: property.item.Images && property.item.Images.length && property.item.Images[0].Url ? property.item.Images[0].Url : ''
             }
             if(birthday.email) {
               scope.birthdays.save(birthday);
