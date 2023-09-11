@@ -145,7 +145,8 @@
         full_date: new Date(),
         year: 2022,
         month: 10,
-        date: 15
+        date: 15,
+        _id: 'o23ih5oi3hh'
       }
     };
     fetchDefaultProp = function() {
