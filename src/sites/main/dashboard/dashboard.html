@@ -45,6 +45,12 @@
             SMS
           </a>
         </div>
+        <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('sms_dashboard')">
+          <a ui-sref="admin_dashboard" class="big-link">
+            <i class="fa-duotone fa-screwdriver-wrench"></i>
+            Admin
+          </a>
+        </div>
       </div>
     </div>
   </div>

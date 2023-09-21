@@ -1,0 +1,25 @@
+<div class="dashboard">
+  <div class="container-xl">
+    <h1>Admin <strong class="orange">Dashboard</strong></h1>
+    <div class="row text-center g-3">
+      <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('admin_boards')">
+        <a ui-sref="admin_boards" class="big-link">
+          <i class="fa-duotone fa-handshake"></i>
+          Boards Management
+        </a>
+      </div>
+      <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('admin_epc')">
+        <a ui-sref="admin_epc" class="big-link">
+          <i class="fa-duotone fa-money-check-pen"></i>
+          EPC Management
+        </a>
+      </div>
+      <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('admin_misdescriptions')">
+        <a ui-sref="admin_misdescriptions" class="big-link">
+          <i class="fa-duotone fa-house-person-return"></i>
+          Property Misdescriptions
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

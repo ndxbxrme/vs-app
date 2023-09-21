@@ -64,6 +64,13 @@ const sites = {
     "module": "vs-sms",
     "url": httpProtocol + "://" + serverHost + "/app",
     "ws": "app"
+  },
+  "admin": {
+    "displayName": "ADMIN",
+    "name": "admin",
+    "module": "vs-admin",
+    "url": httpProtocol + "://" + serverHost + "/admin",
+    "ws": "app"
   }
 };
 const mainmodule = angular.module('vs-app', Object.values(sites).map(site => site.module));
