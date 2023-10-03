@@ -1,5 +1,95 @@
-<div class="dashboard">
+<div ng-show="auth.getUser()" class="dashboard-route route admin-boards maintenance-leads-dashboard">
   <div class="container-xl">
-    <h1>Boards</h1>
+    <h1>Boards Management <strong class="orange">Dashboard</strong></h1>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <h3>Board Date: <strong class="orange"><input type="date" class="board-date" ng-change="selectDate()" ng-model="selectedDate" /></strong></h3>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <input type="text" ng-model="search" ng-change="searchBoards()" ng-keyup="searchBoards()" placeholder="Search..." />
+      </div>
+    </div>
+    <div class="row">
+      <table class="boards-search-results" ng-show="searchResults && searchResults.length">
+        <tr>
+          <th>Address</th>
+          <th>Date</th>
+          <th>Board type</th>
+          <th>Completed</th>
+        </tr>
+        <tr ng-repeat="board in searchResults" ng-click="selectSearchResult(board.date)">
+          <td>{{board.address}}</td>
+          <td>{{board.date | date:'dd/MM/yyyy'}}</td>
+          <td>{{boardName(board.type)}}</td>
+          <td>{{board.completed | date:'dd/MM/yyyy'}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="row boxes">
+      <div class="col-xl-3 col-sm-6" ng-repeat="board in boards">
+        <div class="box">
+          <div class="title">{{board.name}} <span ng-class="{empty:!board.items.length}" class="box-number">{{board.items.length}}</span></div>
+          <div ng-repeat="item in board.items" ng-class="issue.status" class="issue">
+            <div class="details">
+              <div class="address">{{item.address}}</div>
+            </div>
+            <div class="status1">
+              <div class="completed" ng-show="item.completed">
+                <div class="fad fa-thumbs-up"></div>
+              </div>
+              <div class="delete" ng-show="!item.completed" ng-click="deleteItem(item)">
+                <div class="fad fa-trash"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row form">
+      <div class="form-holder col-sm-12 col-md-8">
+        <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save()">
+          <h2>Adding a board</h2>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <h3>Property Address</h3>
+              <div class="form-controls">
+                <input type="text" ng-model="newBoard.address" />
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <h3>Board Date</h3>
+              <div class="form-controls">
+                <div class="input-holder">
+                  <select ng-model="newBoard.date">
+                    <option ng-repeat="thursday in upcomingThursdays" ng-value="thursday">{{thursday | date:'dd/MM/yyyy'}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <h3>Board Type</h3>
+              <div class="form-controls">
+                <div class="input-holder">
+                  <select ng-model="newBoard.type">
+                    <option ng-repeat="board in boards" ng-value="board.type">{{board.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <h3>&nbsp;</h3>
+              <div class="flex-right">
+                <input type="submit" value="ADD BOARD" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="form-holder col-sm-12 col-md-4">
+        <input type="button" ng-click="printBoards()" value="Print Boards" />
+        <input type="button" ng-click="completeBoards()" value="{{currentBoardsCompleted?'Reset':'Complete Boards'}}" />
+      </div>
+    </div>
   </div>
 </div>

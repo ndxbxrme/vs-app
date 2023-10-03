@@ -28,6 +28,62 @@
           </div>
         </div>
       </div>
+      <div class="instruction-to-market">
+        <div class="text-center"><h4>Instruction To Market</h4></div>
+        <div class="row">
+          <div class="col-md-3">
+            <label>Update client details</label>
+            <select ng-model="property.item.instructionToMarket.updateClientDetails">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Board ordered date</label>
+            <select ng-model="property.item.instructionToMarket.boardOrderedDate" ng-if="!property.item.instructionToMarket.boardOrderedDate">
+              <option>No board</option>
+              <option ng-repeat="date in boardDates" ng-value="date">{{date | date:'dd/MM/yyyy'}}</option>
+            </select>
+            <input type="text" disabled="true" ng-model="property.item.instructionToMarket.boardOrderedDate" ng-if="property.item.instructionToMarket.boardOrderedDate" />
+          </div>
+          <div class="col-md-3">
+            <label>Windows card</label>
+            <select ng-model="property.item.instructionToMarket.windowsCard">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Epc ordered date</label>
+            <select ng-model="property.item.instructionToMarket.epcOrderedDate" ng-if="!property.item.instructionToMarket.epcOrderedDate">
+              <option ng-repeat="option in epcOptions">{{option==='No'?option:(option | date:'dd/MM/yyyy')}}</option>
+            </select>
+            <input type="text" disabled="true" ng-model="property.item.instructionToMarket.epcOrderedDate" ng-if="property.item.instructionToMarket.epcOrderedDate" />
+          </div>
+          <div class="col-md-3">
+            <label>Staff intro</label>
+            <select ng-model="property.item.instructionToMarket.staffIntro">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Misdescriptions Received</label>
+            <select ng-model="property.item.instructionToMarket.misdescriptionsReceived">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-3">
+            <label>&nbsp;</label>
+            <div class="flex-right">
+              <input type="button" ng-click="clearITMDetails()" value="Clear" />
+              <input type="button" ng-click="saveITMDetails()" value="Save" />
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="text-center">
         <div class="info">
           <h4>Property Report</h4>

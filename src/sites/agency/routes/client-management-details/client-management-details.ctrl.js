@@ -2,7 +2,25 @@
 (function() {
   'use strict';
   angular.module('vs-agency').controller('agencyClientManagementDetailsCtrl', function($scope, $stateParams, $state, $timeout, $interval, $http, $window, Auth, AgencyProgressionPopup, agencyProperty, Upload, env, alert) {
-    console.log('i\'m real');
+    function getNextThursdays() {
+      const today = new Date();
+      const currentDayOfWeek = today.getDay();
+      let daysUntilNextThursday = (4 - currentDayOfWeek + 7) % 7;
+    
+      const thursdays = [];
+      for (let i = 0; i < 4; i++) {
+        const nextThursday = new Date(today);
+        nextThursday.setDate(today.getDate() + daysUntilNextThursday);
+        thursdays.push(nextThursday.toISOString().split('T')[0]);
+        daysUntilNextThursday += 7;
+      }
+      return thursdays;
+    }
+    $scope.boardDates = getNextThursdays();
+    $scope.epcOptions = [
+      'No',
+      new Date().toISOString().split('T')[0]
+    ]
     let fetchedFirst = false;
     $scope.property = $scope.single('agency:clientmanagement', $stateParams.id, function(res) {
       var property;
@@ -75,6 +93,15 @@
       var ref, ref1;
       return (ref = $scope.property) != null ? (ref1 = ref.item) != null ? ref1.notes : void 0 : void 0;
     };
+    $scope.saveITMDetails = function() {
+      $scope.property.save();
+      alert.log('Instruction to market details saved');
+    }
+    $scope.clearITMDetails = function() {
+      $scope.property.item.instructionToMarket = null;
+      $scope.property.save();
+      alert.log('Instruction to market details cleared');
+    }
     console.log('starting');
     $scope.events = {Collection:[]};
     $scope.rightmove = {};

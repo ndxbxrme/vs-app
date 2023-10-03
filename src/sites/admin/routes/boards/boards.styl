@@ -1,0 +1,26 @@
+.flex-right
+  display flex
+  justify-content flex-end
+.board-date
+  width auto!important
+.boards-search-results
+  margin-bottom 20px
+  background white
+  tr
+    cursor pointer
+  td
+    padding 5px
+  tr:hover td
+    color orange
+.printScreen
+  padding 20px 40px
+  display none
+@media print
+  .site-menu, .breadcrumbs, .main-view, .footer
+    display none!important
+  .printScreen
+    display block!important
+    p
+      margin 5px
+  body, html
+    background none!important
