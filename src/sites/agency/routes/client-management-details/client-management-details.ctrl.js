@@ -30,6 +30,7 @@
       fetchedFirst = true;
       return;
     });
+    $scope.boardsList = $scope.list('main:boards');
     $scope.date = {
       date: 'today'
     };
@@ -94,10 +95,25 @@
       return (ref = $scope.property) != null ? (ref1 = ref.item) != null ? ref1.notes : void 0 : void 0;
     };
     $scope.saveITMDetails = function() {
+      const board = $scope.boardsList.items.find(item => (item.RoleId===$scope.property.item.RoleId) && (item.date===$scope.property.item.instructionToMarket.boardOrderedDate) && (item.type==='FOR_SALE'));
+      if(!board) {
+        if($scope.property.item.instructionToMarket.boardOrderedDate && ($scope.property.item.instructionToMarket.boardOrderedDate!=='No board')) {
+          $scope.boardsList.save({
+            address: $scope.property.item.displayAddress,
+            RoleId: $scope.property.item.RoleId,
+            date: $scope.property.item.instructionToMarket.boardOrderedDate,
+            type: 'FOR_SALE'
+          });
+        }
+      }
       $scope.property.save();
       alert.log('Instruction to market details saved');
     }
     $scope.clearITMDetails = function() {
+      const board = $scope.boardsList.items.find(item => (item.RoleId===$scope.property.item.RoleId) && (item.date===$scope.property.item.instructionToMarket.boardOrderedDate) && (item.type==='FOR_SALE'));
+      if(board) {
+        $scope.boardsList.delete(board);
+      }
       $scope.property.item.instructionToMarket = null;
       $scope.property.save();
       alert.log('Instruction to market details cleared');
