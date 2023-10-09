@@ -29,6 +29,7 @@
             <th width="10%"></th>
             <th width="35%">Property Address</th>
             <th width="15%">Vendor</th>
+            <th>Ordered</th>
             <th width="10%"></th>
           </tr>
         </thead>
@@ -41,6 +42,7 @@
               <div>{{property.displayAddress}}</div>
             </td>
             <td class="vendor">{{property.vendor.Name}}</td>
+            <td>{{property.instructionToMarket.epcOrderedDate | date:'dd/MM/yyyy'}}</td>
             <td class="listed" style="white-space:nowrap"> 
               <input type="button" ng-click="deleteEPC(property)" value="Delete" />
               <input type="button" ng-click="completedEPC(property)" value="Completed" />

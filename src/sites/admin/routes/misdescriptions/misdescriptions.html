@@ -42,7 +42,7 @@
             </td>
             <td class="vendor">{{property.vendor.Name}}</td>
             <td class="listed" style="white-space:nowrap"> 
-              <a class="button" href="mailto:richard@vitalspace.co.uk?subject=Chase Subject&body=Dear tester%0D%0A%0D%0AI hope you are well.%0D%0A%0D%0A">Chase</a>
+              <a class="button" href="mailto:{{property.vendor.Members[0].Person.PrimaryEmail.Value}}?subject=Subject - Outstanding Property Misdescriptions Form&body=Dear {{property.vendor.Members[0].Person.ContactName}}%0D%0A%0D%0AI do hope you are well.%0D%0A%0D%0AI am sorry to trouble you, but we have conducted an internal review on your property file and notice that you have not completed and returned our Property Misdescriptions Act sign off form.%0D%0A%0D%0ACould you kindly visit the below web link to sign off your marketing material%0D%0A%0D%0Ahttps://vitalspace.co.uk/property-misdescriptions-act/%0D%0A%0D%0AThanking you in advance.%0D%0A%0D%0ARegards%0D%0A%0D%0A">Chase</a>
               <input type="button" ng-click="received(property)" value="Received" />
             </td>
           </tr>

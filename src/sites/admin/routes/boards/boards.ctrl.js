@@ -25,8 +25,8 @@ angular.module('vs-admin')
           items: []
         },
         {
-          type: 'FIX',
-          name: 'FIX',
+          type: 'REMOVE_SLIP',
+          name: 'REMOVE SLIP',
           items: []
         },
         {

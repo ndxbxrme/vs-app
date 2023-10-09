@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 require('ndx-server').config({
   database: 'db',
-  tables: ['users', 'emailtemplates', 'smstemplates', 'numberlists', 'schedule', 'boards'],
+  tables: ['users', 'emailtemplates', 'smstemplates', 'numberlists', 'schedule', 'boards', 'propertyadmin'],
   localStorage: './data',
   hasInvite: true,
   hasForgot: true,

@@ -31,7 +31,8 @@
           <div class="title">{{board.name}} <span ng-class="{empty:!board.items.length}" class="box-number">{{board.items.length}}</span></div>
           <div ng-repeat="item in board.items" ng-class="issue.status" class="issue">
             <div class="details">
-              <div class="address">{{item.address}}</div>
+              <a class="address" ui-sref="agency_client-management-details({id:item.PropertyId})" ng-show="item.PropertyId">{{item.address}}</a>
+              <div class="address" ng-show="!item.PropertyId">{{item.address}}</div>
             </div>
             <div class="status1">
               <div class="completed" ng-show="item.completed">

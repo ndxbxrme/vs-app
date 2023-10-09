@@ -16,17 +16,17 @@ angular.module('vs-admin')
         where: {
           active:true,
           instructionToMarket:{
-            epcOrderedDate:'No'
+            epcReceived:false
           }
         }
       });
       scope.deleteEPC = (property) => {
-        property.instructionToMarket.epcOrderedDate = null;
+        property.instructionToMarket.epcReceived = null;
         scope.properties.save(property);
         alert.log('Property EPC deleted');
       }
       scope.completedEPC = (property) => {
-        property.instructionToMarket.epcOrderedDate = new Date().toISOString().split('T')[0];
+        property.instructionToMarket.epcReceived = true;
         scope.properties.save(property);
         alert.log('Property EPC completed');
       }

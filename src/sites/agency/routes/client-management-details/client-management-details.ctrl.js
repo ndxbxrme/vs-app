@@ -2,13 +2,13 @@
 (function() {
   'use strict';
   angular.module('vs-agency').controller('agencyClientManagementDetailsCtrl', function($scope, $stateParams, $state, $timeout, $interval, $http, $window, Auth, AgencyProgressionPopup, agencyProperty, Upload, env, alert) {
-    function getNextThursdays() {
+    function getNextThursdays(count) {
       const today = new Date();
       const currentDayOfWeek = today.getDay();
       let daysUntilNextThursday = (4 - currentDayOfWeek + 7) % 7;
     
       const thursdays = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < count; i++) {
         const nextThursday = new Date(today);
         nextThursday.setDate(today.getDate() + daysUntilNextThursday);
         thursdays.push(nextThursday.toISOString().split('T')[0]);
@@ -16,17 +16,43 @@
       }
       return thursdays;
     }
-    $scope.boardDates = getNextThursdays();
+    $scope.boardDates = getNextThursdays(4);
     $scope.epcOptions = [
       'No',
       new Date().toISOString().split('T')[0]
     ]
+    $scope.ftOptions = ['No board', ...getNextThursdays(2)];
     let fetchedFirst = false;
     $scope.property = $scope.single('agency:clientmanagement', $stateParams.id, function(res) {
       var property;
       property = res.item;
       property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
-      if(!fetchedFirst) fetchDetails();
+      if(!fetchedFirst) {
+        fetchDetails();
+        /*if(property.exchangedCompleted) {
+          $scope.showEC = true;
+        }
+        else if(property.fallenThrough) {
+          $scope.showFT = true;
+        }
+        else if(property.priceReduction) {
+          $scope.showPR = true;
+        }
+        else if(property.soldSubjectToContract) {
+          $scope.showSSTC = true;
+        }
+        else if(property.instructionToMarket) {
+          $scope.showITM = true;
+        }*/
+      }
+      if(property.priceReduction && property.priceReduction.dateOfReduction)
+        property.priceReduction.dateOfReduction = new Date(property.priceReduction.dateOfReduction);
+      if(property.fallenThrough && property.fallenThrough.date)
+        property.fallenThrough.date = new Date(property.fallenThrough.date);
+      if(property.exchangedCompleted && property.exchangedCompleted.dateExchange)
+        property.exchangedCompleted.dateExchange = new Date(property.exchangedCompleted.dateExchange);
+      if(property.exchangedCompleted && property.exchangedCompleted.dateCompletion)
+        property.exchangedCompleted.dateCompletion = new Date(property.exchangedCompleted.dateCompletion);
       fetchedFirst = true;
       return;
     });
@@ -101,10 +127,14 @@
           $scope.boardsList.save({
             address: $scope.property.item.displayAddress,
             RoleId: $scope.property.item.RoleId,
+            PropertyId: $scope.property.item._id,
             date: $scope.property.item.instructionToMarket.boardOrderedDate,
             type: 'FOR_SALE'
           });
         }
+      }
+      if($scope.property.item.instructionToMarket.epcOrderedDate && $scope.property.item.instructionToMarket.epcOrderedDate!=='No') {
+        $scope.property.item.instructionToMarket.epcReceived = $scope.property.item.instructionToMarket.epcReceived || false;
       }
       $scope.property.save();
       alert.log('Instruction to market details saved');
@@ -117,6 +147,154 @@
       $scope.property.item.instructionToMarket = null;
       $scope.property.save();
       alert.log('Instruction to market details cleared');
+    }
+    $scope.saveSSTCDetails = function() {
+      const board = $scope.boardsList.items.find(item => (item.RoleId===$scope.property.item.RoleId) && (item.date===$scope.property.item.soldSubjectToContract.boardUpdated) && (item.type===$scope.property.item.soldSubjectToContract.boardType));
+      if(!board) {
+        if($scope.property.item.soldSubjectToContract.boardUpdated && ($scope.property.item.soldSubjectToContract.boardUpdated!=='No board')) {
+          $scope.boardsList.save({
+            address: $scope.property.item.displayAddress,
+            RoleId: $scope.property.item.RoleId,
+            PropertyId: $scope.property.item._id,
+            date: $scope.property.item.soldSubjectToContract.boardUpdated,
+            type: $scope.property.item.soldSubjectToContract.boardType
+          });
+        }
+      }
+      $scope.property.save();
+      alert.log('Sold Subject To Contract details saved');
+    }
+    $scope.clearSSTCDetails = function() {
+      const board = $scope.boardsList.items.find(item => (item.RoleId===$scope.property.item.RoleId) && (item.date===$scope.property.item.soldSubjectToContract.boardUpdated) && (item.type===$scope.property.item.soldSubjectToContract.boardType));
+      if(board) {
+        $scope.boardsList.delete(board);
+      }
+      $scope.property.item.soldSubjectToContract = null;
+      $scope.property.save();
+      alert.log('Sold Subject To Contract details cleared');
+    }
+    $scope.savePRDetails = function() {
+      $scope.property.save();
+      alert.log('Price Reduction details saved');
+    }
+    $scope.clearPRDetails = function() {
+      $scope.property.item.priceReduction = null;
+      $scope.property.save();
+      alert.log('Price Reduction details cleared');
+    }
+    $scope.saveFTDetails = function() {
+      const board = $scope.boardsList.items.find(item => (item.RoleId===$scope.property.item.RoleId) && (item.date===$scope.property.item.fallenThrough.boardUpdated) && (item.type==='REMOVE_SLIP'));
+      if(!board) {
+        if($scope.property.item.fallenThrough.boardUpdated && ($scope.property.item.fallenThrough.boardUpdated!=='No board')) {
+          $scope.boardsList.save({
+            address: $scope.property.item.displayAddress,
+            RoleId: $scope.property.item.RoleId,
+            PropertyId: $scope.property.item._id,
+            date: $scope.property.item.fallenThrough.boardUpdated,
+            type: 'REMOVE_SLIP'
+          });
+        }
+      }
+      $scope.property.save();
+      alert.log('Fallen Through details saved');
+    }
+    $scope.clearFTDetails = function() {
+      const board = $scope.boardsList.items.find(item => (item.RoleId===$scope.property.item.RoleId) && (item.date===$scope.property.item.fallenThrough.boardUpdated) && (item.type==='REMOVE_SLIP'));
+      if(board) {
+        $scope.boardsList.delete(board);
+      }
+      $scope.property.item.fallenThrough = null;
+      $scope.property.save();
+      alert.log('Fallen Through details cleared');
+    }
+    $scope.saveECDetails = function() {
+      const board = $scope.boardsList.items.find(item => (item.RoleId===$scope.property.item.RoleId) && (item.date===$scope.property.item.exchangedCompleted.boardUpdated) && (item.type==='REMOVE'));
+      if(!board) {
+        if($scope.property.item.exchangedCompleted.boardUpdated && ($scope.property.item.exchangedCompleted.boardUpdated!=='No board')) {
+          $scope.boardsList.save({
+            address: $scope.property.item.displayAddress,
+            RoleId: $scope.property.item.RoleId,
+            PropertyId: $scope.property.item._id,
+            date: $scope.property.item.exchangedCompleted.boardUpdated,
+            type: 'REMOVE'
+          });
+        }
+      }
+      $scope.property.save();
+      alert.log('Exchanged and Completed details saved');
+    }
+    $scope.clearECDetails = function() {
+      const board = $scope.boardsList.items.find(item => (item.RoleId===$scope.property.item.RoleId) && (item.date===$scope.property.item.exchangedCompleted.boardUpdated) && (item.type==='REMOVE'));
+      if(board) {
+        $scope.boardsList.delete(board);
+      }
+      $scope.property.item.exchangedCompleted = null;
+      $scope.property.save();
+      alert.log('Exchanged and Completed details cleared');
+    }
+    function sanitizeFilename(inputString, maxLength = 255) {
+      // Replace invalid characters and commas with underscores
+      const sanitizedString = inputString.replace(/[/?%*:|"<>,: ]+/g, '_');
+      
+      // Trim and limit the length of the filename
+      const filename = sanitizedString.substring(0, maxLength).trim();
+    
+      return filename;
+    }
+    $scope.downloadPdf = function() {
+      // Define the HTML element that you want to convert to PDF
+      const element = document.createElement('div');
+      let html = `
+        <style type="text/css">
+          .mygrid, .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+          }
+          .mygrid h3 {
+            background: #f15b25;
+            color: white;
+            font-weight: bold;
+            grid-gap: 10px;
+            padding: 0px 5px;
+          }
+        </style>
+        <div class="title"><h3>${$scope.property.item.displayAddress}</h3><div class="date">${new Date().toDateString()}</div>
+        <div class="mygrid">`;
+      const titles = ['Instruction to Market', 'Sold Subject to Contract', 'Price Reduction', 'Fallen Through', 'Exchanged &amp; Completed'];
+      html += ['.instruction-to-market', '.sold-subject-to-contract', '.price-reduction', '.fallen-through', '.exchanged-and-completed'].map((selector, index) => {
+        const details = Array.from(document.querySelectorAll(selector +' .col-md-3')).map(elm => {
+          const label = elm.querySelector('label');
+          if(label && label.textContent.trim()) {
+            const input = elm.querySelector('select,input');
+            console.log(input.value);
+            if(input && input.value && !input.value.includes('undefined')){
+                return '<label>' + label.textContent + '</label><div>' + (/\d{4}-\d{2}-\d{2}/.test(input.value) ? new Date(input.value).toDateString() : input.value) + '</div>';
+            }
+          }
+          return null;
+        }).filter(i => i);
+        if(details.length) {
+          return `<div><h3>${titles[index]}</h3><div class="details">${details.join('')}</div></div>`;
+        }
+        return null;
+      }).filter(i => i).join('');
+      html += '</div>';
+      element.innerHTML = html;
+      // Create configuration options for html2pdf
+      const pdfOptions = {
+        margin: 10,
+        filename: sanitizeFilename($scope.property.item.displayAddress + '_' + new Date().toISOString().split('T')[0]) + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      };
+
+      // Use html2pdf to generate the PDF
+      html2pdf()
+      .from(element)
+      .set(pdfOptions)
+      .save();  
     }
     console.log('starting');
     $scope.events = {Collection:[]};
@@ -135,7 +313,7 @@
       //$http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + $scope.property.item.RoleId);
     }
     const iv = $interval(fetchDetails, 10 * 60 * 1000);
-    fetchDetails();
+    //fetchDetails();
     $scope.$on('$destroy', () => {
       $interval.cancel(iv);
     });
