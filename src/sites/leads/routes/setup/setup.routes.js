@@ -2,7 +2,6 @@
 (function() {
   'use strict';
   angular.module('vs-leads').config(function($stateProvider) {
-    console.log('leads setup getting set up');
     return $stateProvider.state('leads_setup', {
       url: '/leads/setup',
       template: require("./setup.html").default,

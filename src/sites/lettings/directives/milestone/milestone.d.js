@@ -19,7 +19,6 @@
           };
         };
         return scope.itemClick = function() {
-          console.log('lettings click');
           var myscope, property;
           if (scope.disabled !== 'true') {
             myscope = scope;

@@ -127,6 +127,8 @@ import './sites/maintenance_leads/routes/dashboard/dashboard.ctrl.js';
 import './sites/maintenance_leads/routes/dashboard/dashboard.routes.js';
 import './sites/maintenance_leads/routes/diary/diary.ctrl.js';
 import './sites/maintenance_leads/routes/diary/diary.routes.js';
+import './sites/maintenance_leads/routes/create-works-order/create-works-order.ctrl.js';
+import './sites/maintenance_leads/routes/create-works-order/create-works-order.routes.js';
 //import './sites/maintenance_leads/routes/forgot/forgot.ctrl.js';
 //import './sites/maintenance_leads/routes/forgot/forgot.routes.js';
 import './sites/maintenance_leads/routes/historic/historic.ctrl.js';

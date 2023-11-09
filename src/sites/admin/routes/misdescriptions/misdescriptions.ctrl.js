@@ -19,9 +19,15 @@ angular.module('vs-admin')
             misdescriptionsReceived:'No'
           }
         }
+      }, (properties) => {
+        properties.items.forEach(property => {
+          property.$admin = scope.single('main:propertyadmin', {RoleId:property.RoleId});
+        })
       });
       scope.received = (property) => {
         property.instructionToMarket.misdescriptionsReceived = 'Yes';
+        property.$admin.item.instructionToMarket.misdescriptionsReceived = 'Yes';
+        property.$admin.save();
         scope.properties.save(property);
         alert.log('Property Misdescriptions Received');
       }

@@ -23,10 +23,10 @@
           <site ng-show="auth.isAuthorized('agency_dashboard')">
             <a ui-sref="agency_dashboard", ng-class="{selected:state('agency_dashboard')}" ng-click="menuOpen = false">Sales</a>
             <pages ng-click="menuOpen = false">
+              <a ui-sref="agency_client-management-list", ng-class="{selected:state('agency_client-management-list')}" ng-show="auth.isAuthorized('agency_client-management-list')">Client Management</a>
               <a ui-sref="agency_cases", ng-class="{selected:state(['agency_cases','agency_case'])}" ng-show="auth.isAuthorized('agency_cases')">Conveyancing</a>
               <a ui-sref="agency_agreed", ng-class="{selected:state('agency_agreed')}" ng-show="auth.isAuthorized('agency_agreed')">Agreed Sales</a>
               <a ui-sref="agency_solicitors", ng-class="{selected:state('agency_solicitors')}" ng-show="auth.isAuthorized('agency_solicitors')">Solicitors</a>
-              <a ui-sref="agency_client-management-list", ng-class="{selected:state('agency_client-management-list')}" ng-show="auth.isAuthorized('agency_client-management-list')">Client Management</a>
               <a ui-sref="agency_setup", ng-class="{selected:state('agency_setup')}" ng-show="auth.isAuthorized('agency_setup')">Setup</a>
               <!--<a ui-sref="agency_cleanup", ng-class="{selected:state('agency_cleanup')}" ng-show="auth.isAuthorized('agency_cleanup')">Cleanup</a>-->
             </pages>
@@ -70,6 +70,16 @@
             <a ui-sref="maintenance_dashboard", ng-class="{selected:state('maintenance_dashboard')}" ng-click="menuOpen = false">Diary</a>
             <pages ng-click="menuOpen = false">
               <a ui-sref="maintenance_setup", ng-class="{selected:state('maintenance_setup')}" ng-show="auth.isAuthorized('maintenance_setup')">Setup</a>
+            </pages>
+          </site>
+          <site ng-show="auth.isAuthorized('admin_dashboard')">
+            <a ui-sref="admin_dashboard", ng-class="{selected:state('admin_dashboard')}" ng-click="menuOpen = false">Admin</a>
+            <pages ng-click="menuOpen = false">
+              <a ui-sref="admin_boards", ng-class="{selected:state('admin_boards')}" ng-show="auth.isAuthorized('admin_boards')">Boards Management</a>
+              <a ui-sref="admin_epc", ng-class="{selected:state(['admin_epc'])}" ng-show="auth.isAuthorized('admin_epc')">EPC Management</a>
+              <a ui-sref="admin_misdescriptions", ng-class="{selected:state(['admin_misdescriptions'])}" ng-show="auth.isAuthorized('admin_misdescriptions')">Misdescriptions</a>
+              <a ui-sref="agency_marketing", ng-class="{selected:state(['agency_marketing'])}" ng-show="auth.isAuthorized('agency_marketing')">Property Marketing</a>
+              <a ui-sref="sms_dashboard", ng-class="{selected:state(['sms_dashboard'])}" ng-show="auth.isAuthorized('sms_dashboard')">SMS</a>
             </pages>
           </site>
 

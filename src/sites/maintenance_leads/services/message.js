@@ -188,7 +188,6 @@
         val = messages[key];
         output += '\n    "' + key + '": "' + val + '"';
       }
-      //console.log output
       return '';
     };
     return {

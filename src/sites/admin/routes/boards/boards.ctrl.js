@@ -12,37 +12,44 @@ angular.module('vs-admin')
         {
           type: 'FOR_SALE',
           name: 'FOR SALE',
-          items: []
+          items: [],
+          link: 'clientmanagement'
         },
         {
           type: 'SOLD',
           name: 'SOLD',
-          items: []
+          items: [],
+          link: 'conveyancing'
         },
         {
           type: 'SOLD_1_WEEK',
           name: 'SOLD IN 1 WEEK',
-          items: []
+          items: [],
+          link: 'conveyancing'
         },
         {
           type: 'REMOVE_SLIP',
           name: 'REMOVE SLIP',
-          items: []
+          items: [],
+          link: 'lettings'
         },
         {
           type: 'TO_LET',
           name: 'TO LET',
-          items: []
+          items: [],
+          link: 'lettings'
         },
         {
           type: 'LET_MANAGED',
           name: 'LET & MANAGED',
-          items: []
+          items: [],
+          link: 'lettings'
         },
         {
           type: 'SORRY_LET',
           name: 'SORRY I\'M LET',
-          items: []
+          items: [],
+          link: 'lettings'
         },
         {
           type: 'REMOVE',
@@ -71,7 +78,6 @@ angular.module('vs-admin')
             scope.currentBoardsCompleted = scope.currentBoardsCompleted || board.items[0].completed;
           }
         });
-        console.log('boards', items);
       }
       scope.boardsList = scope.list('main:boards', null, (items) => {
         drawBoards(items.items);
@@ -111,7 +117,6 @@ angular.module('vs-admin')
         }
       }
       scope.selectDate = () => {
-        console.log('select date', scope.selectedDate);
         scope.currentBoardDate = getPreviousThursday(scope.selectedDate);
         drawBoards(scope.boardsList.items);
       }
@@ -144,7 +149,6 @@ angular.module('vs-admin')
         })
       }
       scope.deleteItem = (item) => {
-        console.log('delete item', item);
         if(confirm('Are you sure?')) {
           scope.boardsList.delete(item);
         }

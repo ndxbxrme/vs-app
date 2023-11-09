@@ -249,17 +249,19 @@ module.exports = (mymodule) => {
           return function(data) {
             var id, key, type;
             if (!lockAll) {
-              if (data) {
+              if (data && data.table && socketName) {
                 clearCache(socketName + ':' + data.table);
-                endpoints[socketName + ':' + data.table].needsRefresh = true;
-                endpoints[socketName + ':' + data.table].refreshAt = new Date().valueOf() + 400;
-                type = Object.prototype.toString.call(data.id);
-                if (type === '[object Array]') {
-                  for (id in data.id) {
-                    endpoints[socketName + ':' + data.table].ids.push(id);
+                if(endpoints[socketName + ':' + data.table]) {
+                  endpoints[socketName + ':' + data.table].needsRefresh = true;
+                  endpoints[socketName + ':' + data.table].refreshAt = new Date().valueOf() + 400;
+                  type = Object.prototype.toString.call(data.id);
+                  if (type === '[object Array]') {
+                    for (id in data.id) {
+                      endpoints[socketName + ':' + data.table].ids.push(id);
+                    }
+                  } else if (type === '[object String]') {
+                    endpoints[socketName + ':' + data.table].ids.push(data.id);
                   }
-                } else if (type === '[object String]') {
-                  endpoints[socketName + ':' + data.table].ids.push(data.id);
                 }
               } else {
                 clearCache();

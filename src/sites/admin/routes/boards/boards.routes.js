@@ -4,7 +4,7 @@ angular.module('vs-admin').config(function($stateProvider) {
     template: '<admin-boards></admin-boards>',
     data: {
       title: 'Vitalspace Admin - Boards Management',
-      auth: ['superadmin', 'admin']
+      auth: ['superadmin', 'admin', 'agency']
     }
   });
 })

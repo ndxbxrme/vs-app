@@ -46,7 +46,6 @@
       return ndxModalInstance.close();
     };
     $scope.saveTask = function() {
-      console.log('save got pressed');
       var property;
       $scope.submitted = true;
       if ($scope.forms.myForm.$valid || $scope.task.status === 'quote') {

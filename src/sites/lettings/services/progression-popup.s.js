@@ -148,7 +148,6 @@
         }
       },
       addNote: function(note) {
-        console.log('lettings add note');
         if (data && note) {
           data.notes.push({
             date: new Date(),

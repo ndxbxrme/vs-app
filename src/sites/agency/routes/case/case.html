@@ -100,6 +100,346 @@
       </div>
     </div>
 
+
+
+    <div class="accordian">
+      <div ng-click="showITM = !showITM; showSSTC = showPR = showFT = showEC = showW = false"><h4>Instruction To Market</h4></div>
+      <div class="instruction-to-market" ng-show="showITM">
+        <div class="row">
+          <div class="col-md-3">
+            <label>Update client details</label>
+            <select ng-model="propertyadmin.item.instructionToMarket.updateClientDetails">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Board ordered date</label>
+            <select ng-model="propertyadmin.item.instructionToMarket.boardOrderedDate" ng-if="!propertyadmin.item.instructionToMarket.boardOrderedDate">
+              <option>No board</option>
+              <option ng-repeat="date in boardDates" ng-value="date">{{date | date:'dd/MM/yyyy'}}</option>
+            </select>
+            <input type="text" disabled="true" value="{{propertyadmin.item.instructionToMarket.boardOrderedDate | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.instructionToMarket.boardOrderedDate" />
+          </div>
+          <div class="col-md-3">
+            <label>Windows card</label>
+            <select ng-model="propertyadmin.item.instructionToMarket.windowsCard">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Epc ordered date</label>
+            <select ng-model="propertyadmin.item.instructionToMarket.epcOrderedDate" ng-if="!propertyadmin.item.instructionToMarket.epcOrderedDate">
+              <option ng-repeat="option in epcOptions" ng-value="option">{{option==='No'?option:(option | date:'dd/MM/yyyy')}}</option>
+            </select>
+            <input type="text" disabled="true" value="{{propertyadmin.item.instructionToMarket.epcOrderedDate | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.instructionToMarket.epcOrderedDate" />
+          </div>
+          <div class="col-md-3">
+            <label>Staff intro</label>
+            <select ng-model="propertyadmin.item.instructionToMarket.staffIntro">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Misdescriptions Received</label>
+            <select ng-model="propertyadmin.item.instructionToMarket.misdescriptionsReceived">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-3">
+            <label>&nbsp;</label>
+            <div class="flex-right">
+              <input type="button" ng-click="clearITMDetails()" value="Clear" />
+              <input type="button" ng-click="saveITMDetails()" value="Save" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-click="showSSTC = !showSSTC; showITM = showPR = showFT = showEC = showW = false"><h4>Sold Subject To Contact</h4></div>
+      <div class="sold-subject-to-contract" ng-show="showSSTC">
+        <div class="row">
+          <div class="col-md-3">
+            <label>Chain Updated On Conveyancing</label>
+            <select ng-model="propertyadmin.item.soldSubjectToContract.chainUpdated">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Board Updated</label>
+            <select ng-model="propertyadmin.item.soldSubjectToContract.boardUpdated" ng-if="!propertyadmin.item.soldSubjectToContract.boardUpdated">
+              <option ng-repeat="option in ftOptions" ng-value="option">{{option==='No board'?option:(option | date:'dd/MM/yyyy')}}</option>
+            </select>
+            <input type="text" disabled="true" value="{{propertyadmin.item.soldSubjectToContract.boardUpdated | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.soldSubjectToContract.boardUpdated" />
+          </div>
+          <div class="col-md-3">
+            <label>Board Type</label>
+            <select ng-model="propertyadmin.item.soldSubjectToContract.boardType">
+              <option value="SOLD">Sold</option>
+              <option value="SOLD_1_WEEK">Sold In One Week</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Memo of Sale Issued</label>
+            <select ng-model="propertyadmin.item.soldSubjectToContract.memoOfSale">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Sold In Window</label>
+            <select ng-model="propertyadmin.item.soldSubjectToContract.soldInWindow">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Property File Moved</label>
+            <select ng-model="propertyadmin.item.soldSubjectToContract.propertyFile">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Whatsapp Group Created (V &amp; P)</label>
+            <select ng-model="propertyadmin.item.soldSubjectToContract.whatsappGroup">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>&nbsp;</label>
+            <div class="flex-right">
+              <input type="button" ng-click="clearSSTCDetails()" value="Clear" />
+              <input type="button" ng-click="saveSSTCDetails()" value="Save" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-click="showPR = !showPR; showITM = showSSTC = showFT = showEC = showW = false"><h4>Price Reduction</h4></div>
+      <div class="price-reduction" ng-show="showPR">
+        <div class="row">
+          <div class="col-md-3">
+            <label>New Price</label>
+            <input type="text" ng-model="propertyadmin.item.priceReduction.newPrice" />
+          </div>
+          <div class="col-md-3">
+            <label>Date Of Reduction</label>
+            <input type="date" ng-model="propertyadmin.item.priceReduction.dateOfReduction" />
+          </div>
+          <div class="col-md-3">
+            <label>New Window Card</label>
+            <select ng-model="propertyadmin.item.priceReduction.newWindowCard">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Reduction Letter Sent</label>
+            <select ng-model="propertyadmin.item.priceReduction.reductionLetterSent">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Dezrez Updated</label>
+            <select ng-model="propertyadmin.item.priceReduction.dezrezUpdated">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Re-Matched</label>
+            <select ng-model="propertyadmin.item.priceReduction.reMatched">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-3">
+            <label>&nbsp;</label>
+            <div class="flex-right">
+              <input type="button" ng-click="clearPRDetails()" value="Clear" />
+              <input type="button" ng-click="savePRDetails()" value="Save" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-click="showFT = !showFT; showITM = showSSTC = showPR = showEC = showW = false"><h4>Fallen Through</h4></div>
+      <div class="fallen-through" ng-show="showFT">
+        <div class="row">
+          <div class="col-md-3">
+            <label>Date of Fall Through</label>
+            <input type="date" ng-model="propertyadmin.item.fallenThrough.date" />
+          </div>
+          <div class="col-md-3">
+            <label>Updated On Conveyancing</label>
+            <select ng-model="propertyadmin.item.fallenThrough.updatedOnConveyancing">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Board Updated</label>
+            <select ng-model="propertyadmin.item.fallenThrough.boardUpdated" ng-if="!propertyadmin.item.fallenThrough.boardUpdated">
+              <option ng-repeat="option in ftOptions" ng-value="option">{{option==='No board'?option:(option | date:'dd/MM/yyyy')}}</option>
+            </select>
+            <input type="text" disabled="true" value="{{propertyadmin.item.fallenThrough.boardUpdated | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.fallenThrough.boardUpdated" />
+          </div>
+          <div class="col-md-3">
+            <label>Property Back In Window</label>
+            <select ng-model="propertyadmin.item.fallenThrough.backInWindow">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Dezrez Updated</label>
+            <select ng-model="propertyadmin.item.fallenThrough.dezrezUpdated">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Re-Matched</label>
+            <select ng-model="propertyadmin.item.fallenThrough.reMatched">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Property File Moved</label>
+            <select ng-model="propertyadmin.item.fallenThrough.fileMoved">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>&nbsp;</label>
+            <div class="flex-right">
+              <input type="button" ng-click="clearFTDetails()" value="Clear" />
+              <input type="button" ng-click="saveFTDetails()" value="Save" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-click="showEC = !showEC; showITM = showSSTC = showPR = showFT = showW = false"><h4>Exchanged &amp; Completed</h4></div>
+      <div class="exchanged-and-completed" ng-show="showEC">
+        <div class="row">
+          <div class="col-md-3">
+            <label>Date of Exchange</label>
+            <input type="date" ng-model="propertyadmin.item.exchangedCompleted.dateExchange" />
+          </div>
+          <div class="col-md-3">
+            <label>Keys Released</label>
+            <select ng-model="propertyadmin.item.exchangedCompleted.keysReleased">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Invoice Number</label>
+            <input type="text" ng-model="propertyadmin.item.exchangedCompleted.invoiceNumber" />
+          </div>
+          <div class="col-md-3">
+            <label>Board Updated</label>
+            <select ng-model="propertyadmin.item.exchangedCompleted.boardUpdated" ng-if="!propertyadmin.item.exchangedCompleted.boardUpdated">
+              <option ng-repeat="option in ftOptions" ng-value="option">{{option==='No board'?option:(option | date:'dd/MM/yyyy')}}</option>
+            </select>
+            <input type="text" disabled="true" value="{{propertyadmin.item.exchangedCompleted.boardUpdated | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.exchangedCompleted.boardUpdated" />
+          </div>
+          <div class="col-md-3">
+            <label>Date of Completion</label>
+            <input type="date" ng-model="propertyadmin.item.exchangedCompleted.dateCompletion" />
+          </div>
+          <div class="col-md-3">
+            <label>Key Number</label>
+            <input type="text" ng-model="propertyadmin.item.exchangedCompleted.keyNumber" />
+          </div>
+          <div class="col-md-3">
+            <label>Completed on Dezrez</label>
+            <select ng-model="propertyadmin.item.exchangedCompleted.dezrezCompleted">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>&nbsp;</label>
+            <div class="flex-right">
+              <input type="button" ng-click="clearECDetails()" value="Clear" />
+              <input type="button" ng-click="saveECDetails()" value="Save" />
+              <input type="button" ng-click="saveECDetails() || downloadPdf()" value="Download" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-click="showW = !showW; showITM = showSSTC = showPR = showFT = showEC = false"><h4>Withdrawn</h4></div>
+      <div class="withdrawn" ng-show="showW">
+        <div class="row">
+          <div class="col-md-3">
+            <label>Date to Withdraw</label>
+            <input type="date" ng-model="propertyadmin.item.withdrawn.dateWithdrawn" />
+          </div>
+          <div class="col-md-3">
+            <label>Board Removed</label>
+            <select ng-model="propertyadmin.item.withdrawn.boardRemoved" ng-if="!propertyadmin.item.withdrawn.boardRemoved">
+              <option>No board</option>
+              <option ng-repeat="date in boardDates" ng-value="date">{{date | date:'dd/MM/yyyy'}}</option>
+            </select>
+            <input type="text" disabled="true" value="{{propertyadmin.item.withdrawn.boardRemoved | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.withdrawn.boardRemoved" />
+          </div>
+          <div class="col-md-3">
+            <label>Email to Staff</label>
+            <select ng-model="propertyadmin.item.withdrawn.emailToStaff">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Window Card Removed</label>
+            <select ng-model="propertyadmin.item.withdrawn.windowCardRemoved">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Letter Confirming Withdrawal</label>
+            <select ng-model="propertyadmin.item.withdrawn.letterConfirming">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Dezrez Updated</label>
+            <select ng-model="propertyadmin.item.withdrawn.dezrezUpdated">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>Property Info File Moved</label>
+            <select ng-model="propertyadmin.item.withdrawn.infoFileMoved">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>&nbsp;</label>
+            <div class="flex-right">
+              <input type="button" ng-click="clearWDetails()" value="Clear" />
+              <input type="button" ng-click="saveWDetails()" value="Save" />
+              <input type="button" ng-click="saveWDetails() || downloadPdf()" value="Download" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     
     <div class="contacts">
       <div class="row case-row" ng-hide="property.item.$case.item.vendorsSolicitor.name && property.item.$case.item.purchasersSolicitor.name">

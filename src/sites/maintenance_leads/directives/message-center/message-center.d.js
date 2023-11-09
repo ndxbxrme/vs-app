@@ -104,7 +104,6 @@
         scope.selectTemplate = async () => {
           const selectedTemplate = scope.emailTemplates.items.find(item => item._id === scope.template);
           if (selectedTemplate) {
-            console.log(selectedTemplate);
             scope.outgoingEmail = scope.outgoingEmail || { item: {} };
             scope.outgoingEmail.item = scope.outgoingEmail.item || {};
             scope.outgoingEmail.item.subject = selectedTemplate.subject;

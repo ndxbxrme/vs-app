@@ -20,6 +20,18 @@
           Property Misdescriptions
         </a>
       </div>
+      <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('agency_marketing')">
+        <a ui-sref="agency_marketing" class="big-link">
+          <i class="fa-duotone fa-money-check-pen"></i>
+          Property Marketing
+        </a>
+      </div>
+      <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('sms_dashboard')">
+        <a ui-sref="sms_dashboard" class="big-link">
+          <i class="fa-duotone fa-mobile"></i>
+          SMS
+        </a>
+      </div>
     </div>
   </div>
 </div>

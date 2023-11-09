@@ -45,7 +45,6 @@ angular.module('vs-app')
             const agencyRole = user.siteRoles.find(role => role.siteId===siteId);
             return agencyRole && agencyRole.role!=='no access';
           }).map(user => user.local.email);
-          console.log(site);
           site.users.items.forEach(user => {
             if(user.deleted) return;
             if(user.local.email==='superadmin@admin.com') return;
@@ -53,7 +52,6 @@ angular.module('vs-app')
             if(sendEmail!==user.sendEmail) {
               user.sendEmail = sendEmail;
               site.users.save(user);
-              console.log(user.local.email);
             }
           })
         }
@@ -292,7 +290,6 @@ angular.module('vs-app')
       else {
         alert.log('User updated');
       }
-      //console.log(result);
     } catch (e) {}
   };
 })

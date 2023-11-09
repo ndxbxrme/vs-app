@@ -1,6 +1,12 @@
 const crypto = require('crypto-js');
 const path = require('path');
 const express = require('express');
+const AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: process.env.AWS_ID,
+  secretAccessKey: process.env.AWS_KEY,
+  region: process.env.AWS_REGION, // Specify your S3 bucket's region
+});
 require('ndx-server').config({
   database: 'db',
   tables: ['users', 'emailtemplates', 'smstemplates', 'numberlists', 'schedule', 'boards', 'propertyadmin'],
@@ -45,6 +51,29 @@ require('ndx-server').config({
     else {
       cb(true);
     }
+  });
+  ndx.app.post('/api/upload-pdf', (req, res) => {
+    const { base64, filename } = req.body;
+    if (!base64 || !filename) {
+      return res.status(400).send('Invalid PDF data.');
+    }
+    const pdfBuffer = Buffer.from(base64, 'base64');
+    const s3 = new AWS.S3();
+    const params = {
+      Bucket: 'vitalspace-worksorders',
+      Key: filename,
+      Body: pdfBuffer,
+      ContentType: 'application/pdf',
+    };
+    s3.upload(params, (err, data) => {
+      if (err) {
+        console.error('Error uploading to S3', err);
+        res.status(500).send('Error uploading to S3');
+      } else {
+        console.log('Uploaded to S3', data.Location);
+        res.status(200).send('PDF uploaded to S3');
+      }
+    });
   });
 })
 .start();

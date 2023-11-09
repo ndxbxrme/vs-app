@@ -50,7 +50,6 @@
       return ndxModalInstance.dismiss();
     };
     $scope.saveMLTask = function() {
-      console.log('task submitted');
       $scope.submitted = true;
       if ($scope.forms.myForm.$valid || $scope.task.status === 'quote') {
         $scope.submitTask = Object.assign({}, $scope.task);

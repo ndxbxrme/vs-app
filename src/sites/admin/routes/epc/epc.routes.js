@@ -4,7 +4,7 @@ angular.module('vs-admin').config(function($stateProvider) {
     template: '<admin-epc></admin-epc>',
     data: {
       title: 'Vitalspace Admin - EPC Management',
-      auth: ['superadmin', 'admin']
+      auth: ['superadmin', 'admin', 'agency']
     }
   });
 })

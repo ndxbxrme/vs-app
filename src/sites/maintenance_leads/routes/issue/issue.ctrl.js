@@ -100,7 +100,6 @@
         }
         $http.post($http.sites["maintenance_leads"].url + '/api/notes/' + $scope.issue.item._id, {
           notes: $scope.issue.item.notes
-        //console.log res.data
         }, $http.sites["maintenance_leads"].config).then(function(res) {}, function(err) {
           return console.log('error saving notes');
         });

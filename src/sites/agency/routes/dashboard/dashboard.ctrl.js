@@ -112,9 +112,6 @@
       if (list) {
         return output;
       } else {
-        if(di._id === "5e1a64d53bc011eef4e220ea") {
-          console.log('got it', count);
-        }
         return count;
       }
     };

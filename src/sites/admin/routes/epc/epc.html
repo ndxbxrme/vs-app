@@ -17,7 +17,7 @@
           <div class="sort">Order By: <a href="" ng-click="sort=&quot;-DateInstructed&quot;;page=1" ng-class="{selected:sort===&quot;-DateInstructed&quot;}" class="order-item">First Listed</a><a href="" ng-click="sort=&quot;-viewings.length&quot;;page=1" ng-class="{selected:sort===&quot;-viewings.length&quot;}" class="order-item">Viewings</a><a href="" ng-click="sort=&quot;-Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-Price.PriceValue&quot;}" class="order-item">Asking Price</a></div>
         </div>
         <div class="col-md-6 text-end">
-          <div class="showing">Showing {{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+          <div class="showing">Showing {{filterData.length}} of {{totalProps = epcs.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
         </div>
       </div>
     </div>
@@ -33,30 +33,30 @@
             <th width="10%"></th>
           </tr>
         </thead>
-        <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
-          <tr ng-click="property.open = !property.open">
-            <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
-              <img src="{{property.Images[0].Url}}&width=200" width="100" class="image"/>
+        <tbody ng-repeat="epc in filterData =(epcs.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
+          <tr ng-click="epc.$open = !epc.$open">
+            <td>
+              <img src="{{epc.$property.item.Images[0].Url}}&width=200" width="100" class="image"/>
             </td>
             <td class="address">
-              <div>{{property.displayAddress}}</div>
+              <div>{{epc.$property.item.displayAddress}}</div>
             </td>
-            <td class="vendor">{{property.vendor.Name}}</td>
-            <td>{{property.instructionToMarket.epcOrderedDate | date:'dd/MM/yyyy'}}</td>
+            <td class="vendor">{{epc.$property.item.vendor.Name}}</td>
+            <td>{{epc.$property.item.instructionToMarket.epcOrderedDate | date:'dd/MM/yyyy'}}</td>
             <td class="listed" style="white-space:nowrap"> 
-              <input type="button" ng-click="deleteEPC(property)" value="Delete" />
-              <input type="button" ng-click="completedEPC(property)" value="Completed" />
+              <input type="button" ng-click="deleteEPC(epc)" value="Delete" />
+              <input type="button" ng-click="completedEPC(epc)" value="Completed" />
             </td>
           </tr>
           <tr class="meta">
             <td colspan="2">
-              <div class="purchase-price">{{property.Price.PriceValue | currency : "£" : 0}} ({{property | getFees | currency : "£" : 0}})</div>
+              <div class="purchase-price">{{epc.$property.item.Price.PriceValue | currency : "£" : 0}} ({{epc.$property.item | getFees | currency : "£" : 0}})</div>
             </td>
             <td colspan="3" class="text-end">
               <div class="listed"> 
-                <span class="instructed">Instructed on: <strong>{{property.DateInstructed | date:'dd/MM/yy'}}</strong></span>
-                <span class="time-ago">({{property.DateInstructed | timeAgo}})</span> |
-                <span class="viewings-count">Viewings: <strong class="orange">{{property.viewings.TotalCount}}</strong></span>
+                <span class="instructed">Instructed on: <strong>{{epc.$property.item.DateInstructed | date:'dd/MM/yy'}}</strong></span>
+                <span class="time-ago">({{epc.$property.item.DateInstructed | timeAgo}})</span> |
+                <span class="viewings-count">Viewings: <strong class="orange">{{epc.$property.item.$case ? epc.$property.item.$case.item.Viewings.length : epc.$property.item.viewings.TotalCount}}</strong></span>
               </div>
             </td>
           </tr>

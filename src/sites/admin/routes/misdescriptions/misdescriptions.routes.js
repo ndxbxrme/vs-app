@@ -4,7 +4,7 @@ angular.module('vs-admin').config(function($stateProvider) {
     template: '<admin-misdescriptions></admin-misdescriptions>',
     data: {
       title: 'Vitalspace Admin - Property Misdescriptions',
-      auth: ['superadmin', 'admin']
+      auth: ['superadmin', 'admin', 'agency']
     }
   });
 })

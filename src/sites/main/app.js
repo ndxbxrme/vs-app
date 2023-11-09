@@ -46,7 +46,6 @@ angular.module('vs-app')
           title: trans.$to().data.title
         })
       },10)
-      //console.log(trans.$to());
     }
     if (trans.$to().name) {
       return $('body').addClass(`${trans.$to().name}-page`);

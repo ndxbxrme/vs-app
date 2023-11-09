@@ -236,12 +236,10 @@
         };
         scope.openTask = function(task, ev) {
           var notasks, ref;
-          console.log(TaskPopup.getHidden(), task);
           if (TaskPopup.getHidden() && scope.issue.item._id) {
             /*notasks = scope.tasks.items.filter(function(task) {
               return task.issue === scope.issue.item._id;
             }).length;
-            console.log(notasks, !task._id);
             if (notasks > 0 && !task._id) {
               return;
             }*/
@@ -259,7 +257,6 @@
             if (!task.contractor && ((ref = scope.selectedContractors) != null ? ref.length : void 0) === 1) {
               task.contractor = scope.selectedContractors[0];
             }
-            console.log('about to open modal');
             return scope.modal({
               template: require('../../modals/task/task.html').default,
               controller: 'maintenance_leadsTaskCtrl',

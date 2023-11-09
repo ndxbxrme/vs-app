@@ -2,7 +2,7 @@
 (function() {
   'use strict';
   angular.module('vs-agency').config(function($stateProvider) {
-    return $stateProvider.state('agency_case', {
+    $stateProvider.state('agency_case', {
       url: '/agency/case/:roleId',
       template: require("./case.html").default,
       controller: 'agencyCaseCtrl',

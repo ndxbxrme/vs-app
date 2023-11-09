@@ -294,12 +294,23 @@
           </div>
         </div>
 
-        <div class="row justify-content-end button-row">
-          <div ng-show="issue.item.statusName===&quot;Booked&quot;" class="col-xl-2 col-sm-4 col-6">
-            <button type="button" ng-click="completeIssue(issue)" class="button-green"> <i class="fal fa-check"></i>{{ mml('issue-label-complete') }}</button>
+        <div class="row">
+          <div class="col-6">
+            <div class="row button-row">
+              <div class="col-xl-6 col-sm-10 col-12">
+                <button type="button" ui-sref="maintenance_leads_createworksorder({_id:issue.item._id})" class="button"> <i class="fal fa-check"></i>Create Works Order</button>
+              </div>
+            </div>
           </div>
-          <div class="col-xl-2 col-sm-4 col-6">
-            <button type="button" ng-click="deleteIssue(issue)" class="button"> <i class="fal fa-trash-alt"></i>{{ mml('forms-delete') }}</button>
+          <div class="col-6">
+            <div class="row justify-content-end button-row">
+              <div ng-show="issue.item.statusName===&quot;Booked&quot;" class="col-xl-4 col-sm-8 col-12">
+                <button type="button" ng-click="completeIssue(issue)" class="button-green"> <i class="fal fa-check"></i>{{ mml('issue-label-complete') }}</button>
+              </div>
+              <div class="col-xl-4 col-sm-8 col-12">
+                <button type="button" ng-click="deleteIssue(issue)" class="button"> <i class="fal fa-trash-alt"></i>{{ mml('forms-delete') }}</button>
+              </div>
+            </div>
           </div>
         </div>
 

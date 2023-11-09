@@ -161,6 +161,18 @@
 
           <div class="error" ng-show="submitted &amp;&amp; marketingEmail.cfp.$invalid">Please select an SME status</div>
         </div>
+
+        <div class="col-sm-4 checkbox-holder">
+          <h3 class="orange">Ultimate Management</h3>
+          <label class="checkbox-label" for="umyes">Yes
+            <input id="umyes" type="radio" name="um" ng-model="marketing.um" value="Yes" required="required"/>
+          </label>
+          <label class="checkbox-label" for="umno">No
+            <input id="umno" type="radio" name="um" ng-model="marketing.um" value="No" required="required"/>
+          </label>
+
+          <div class="error" ng-show="submitted &amp;&amp; marketingEmail.um.$invalid">Please select an Ultimate Management status</div>
+        </div>
       </div>
 
       <div class="row">
