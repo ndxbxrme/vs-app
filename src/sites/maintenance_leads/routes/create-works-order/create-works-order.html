@@ -35,20 +35,30 @@
             <div class="row">
               <div class="col-sm-12">
                 <h2 class="orange">Address</h2>
-                <p>{{issue.item.address}}</p>
+                <p ng-show="issue.item._id">{{issue.item.address}}</p>
+                <input type="text" ng-model="worksOrder.address" ng-hide="issue.item._id" placeholder="Address" />
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-12"><h2 class="orange">Tenant</h2><p>{{ issue.item.tenantFirstName }} {{ issue.item.tenantLastName }}</p></div>
+              <div class="col-sm-12">
+                <h2 class="orange">Tenant</h2>
+                <p ng-show="issue.item._id">{{ issue.item.tenantFirstName }} {{ issue.item.tenantLastName }}</p>
+                <input type="text" ng-model="worksOrder.tenant" ng-hide="issue.item._id" placeholder="Tenant name" />
+                <input type="text" ng-model="worksOrder.tenantPhone" ng-hide="issue.item._id" placeholder="Tenant phone" />
+                <input type="text" ng-model="worksOrder.tenantEmail" ng-hide="issue.item._id" placeholder="Tenant email" />
+
+              </div>
             </div>
             <div class="row">
               <div class="col-sm-12">
                 <div class="issue-details">
                   <h2 class="orange">Issue Details</h2>
                   <h3><strong>{{ mml('issue-heading-issue-title') }}</strong></h3>
-                  <p>{{ issue.item.title }}</p>
+                  <p ng-show="issue.item._id">{{ issue.item.title }}</p>
+                  <input type="text" ng-model="worksOrder.issueTitle" ng-hide="issue.item._id" placeholder="Issue Title" />
                   <h3><strong>{{ mml('issue-heading-fault-detail') }}</strong></h3>
-                  <p>{{ issue.item.details }}</p>
+                  <p ng-show="issue.item._id">{{ issue.item.details }}</p>
+                  <input type="text" ng-model="worksOrder.issueDetails" ng-hide="issue.item._id" placeholder="Issue Detail" />
                 </div>
               </div>
             </div>
