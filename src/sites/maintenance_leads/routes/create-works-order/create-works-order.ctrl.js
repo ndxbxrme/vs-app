@@ -6,41 +6,70 @@
     $scope.issue = $scope.single('maintenance_leads:issues', $stateParams, function(issue) {
       console.log('issue', issue);
     });
-    $scope.contractors = $scope.list('maintenance_leads:contractors');
+    $scope.contractors = $scope.list('maintenance_leads:contractors', null, (contractors) => {
+      contractors.items.sort((a, b) => a.name > b.name ? 1 : -1);
+    });
     $scope.landlords = $scope.list('maintenance_leads:landlords');
     $scope.submit = () => {
       console.log('worksOrder', $http.sites);
       $scope.submitted = true;
+      if(!$scope.worksOrderForm.$valid) {
+        return;
+      }
       const contractor = $scope.contractors.items.find(contractor => contractor._id === $scope.worksOrder.contractor);
       const htmldiv = document.createElement('div');
       const newIssue = !$scope.issue.item._id;
       htmldiv.innerHTML = `
         <style>
           p, h1 {margin:0!important}
-          h3 {margin:10px 0 0 0!important}
-          h2 {margin:20px 0 0 0!important}
+          h3 {margin:5px 0 0 0!important}
+          h2 {margin:10px 0 0 0!important}
+          .worksorder-body {
+            height: 950px;
+            min-height: 950px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          img {
+            max-width: 100%;
+          }
+          p {
+            font-size: 1.4rem!important;
+          }
+          h1 {
+            font-size: 1.8rem!important;
+          }
+          h2 {
+            font-size: 1.6rem!important;
+          }
+          h3 {
+            font-size: 1.4rem!important;
+          }
         </style>
-        <center><img src="/public/img/vitalspace-logo.png" /></center>
-        <h3><strong>${contractor.name}</strong></h3>
-        <p>${contractor.phone}</p>
-        <p>${contractor.email}</p>
-        <h2>VITALSPACE</h2>
-        <h1 class="orange">WORKSHEET</h1>
-        <h3><strong>Date</strong></h3>
-        <p>${new Date($scope.worksOrder.date).toDateString()}</p>
-        <h3><strong>Priority</strong></h3>
-        <p>${$scope.worksOrder.priority || ''}</p>
-        <h2 class="orange">Property Address</h2>
-        <p>${(newIssue ? $scope.worksOrder.address : $scope.issue.item.address) || ''}</p>
-        <h2 class="orange">Tenant Details</h2>
-        <p>${(newIssue ? $scope.worksOrder.tenant : $scope.issue.item.tenant) || ''}</p>
-        <p>${(newIssue ? $scope.worksOrder.tenantPhone : $scope.issue.item.tenantPhone) || ''}</p>
-        <p>${(newIssue ? $scope.worksOrder.tenantEmail : $scope.issue.item.tenantEmail) || ''}</p>
-        <h2 class="orange">Issue Details</h2>
-        <h3><strong>Issue Title</strong></h3>
-        <p>${ (newIssue ? $scope.worksOrder.issueTitle : $scope.issue.item.title) || '' }</p>
-        <h3><strong>Fault Detail</strong></h3>
-        <p>${ (newIssue ? $scope.worksOrder.issueDetails : $scope.issue.item.details) || '' }</p>
+        <div class="worksorder-body">
+          <div class="worksorder-main">
+            <center><img src="/public/img/worksorder-header.jpeg" /></center>
+            <h3><strong>${contractor.name}</strong></h3>
+            <p>${contractor.phone}</p>
+            <p>${contractor.email}</p>
+            <h2>VITALSPACE</h2>
+            <h1 class="orange">WORKSHEET</h1>
+            <h3><strong>Date</strong></h3>
+            <p>${new Date($scope.worksOrder.date).toDateString()}</p>
+            <h3><strong>Priority</strong></h3>
+            <p>${$scope.worksOrder.priority || ''}</p>
+            <h2 class="orange">Property Address</h2>
+            <p>${(newIssue ? $scope.worksOrder.address : $scope.issue.item.address) || ''}</p>
+            <h2 class="orange">Tenant Details</h2>
+            <p>${(newIssue ? $scope.worksOrder.tenant : $scope.issue.item.tenant) || ''}</p>
+            <p>${(newIssue ? $scope.worksOrder.tenantPhone : $scope.issue.item.tenantPhone) || ''}</p>
+            <p>${(newIssue ? $scope.worksOrder.tenantEmail : $scope.issue.item.tenantEmail) || ''}</p>
+            <h2 class="orange">Issue Details</h2>
+            <h3><strong>Issue Title</strong></h3>
+            <p>${ (newIssue ? $scope.worksOrder.issueTitle : $scope.issue.item.title) || '' }</p>
+            <h3><strong>Fault Detail</strong></h3>
+            <p>${ (newIssue ? $scope.worksOrder.issueDetails : $scope.issue.item.details) || '' }</p>
       `;
       if($scope.worksOrder.notes) {
         htmldiv.innerHTML += `
@@ -48,12 +77,19 @@
           <p>${ $scope.worksOrder.notes }</p>
         `
       }
+      htmldiv.innerHTML += `
+          </div>
+          <div class="worksorder-footer">
+            <center><img src="/public/img/worksorder-footer.jpeg" /></center>
+          </div>
+        </div>
+      `
       const htmlContent = htmldiv;
       const pdfOptions = {
         margin: 10,
         filename: 'generated.pdf',
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
+        html2canvas: { scale: 1 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       };
       console.log('pdf start');
@@ -64,7 +100,6 @@
         .toPdf()
         .get('pdf')
         .then(pdf => {
-          console.log('about to upload', pdf);
           const pdfBlob = pdf.output('blob');
 
           const reader = new FileReader();
@@ -86,7 +121,8 @@
                       date: new Date().getTime(),
                       item: 'Note',
                       side: '',
-                      text: `## Works order created  \n### ${$scope.issue.item.title}  \n<https://vitalspace-worksorders.s3.eu-west-1.amazonaws.com/${pdfFileName}>`
+                      text: `## **Works order created**  \n<https://vitalspace-worksorders.s3.eu-west-1.amazonaws.com/${pdfFileName}>`,
+                      user: $scope.auth.getUser()
                     })
                     $scope.issue.save();
                   }
@@ -97,6 +133,7 @@
                     link.click();
                   }
                   $scope.worksOrder = {};
+                  $scope.cancel();
                 } else {
                   alert.log('Error uploading PDF');
                 }

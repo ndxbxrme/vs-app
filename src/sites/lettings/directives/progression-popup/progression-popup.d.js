@@ -32,6 +32,13 @@
             name: 'All admin users'
           }
         ];
+        scope.emailUsers = scope.list('main:users', null, (emailUsers) => {
+          emailUsers.items = emailUsers.items.filter(user => {
+            const lettingsId = ((user.siteRoles || []).find(role => role.siteId==='lettings') || {}).id;
+            user.id = lettingsId;
+            return lettingsId;
+          });
+        });
         scope.users = scope.list('lettings:users');
         templateDeref = scope.$watch(function() {
           return scope.auth.getUser();

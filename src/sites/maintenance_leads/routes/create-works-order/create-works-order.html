@@ -13,9 +13,10 @@
               </div>
               <div class="col-sm-4">
                 <label>Contractor</label>
-                <select sumoselect="{placeholder:'Contractor', search:true}" ng-model="worksOrder.contractor" name="contractor">
+                <select sumoselect="{placeholder:'Contractor', search:true}" ng-model="worksOrder.contractor" name="contractor" required="required">
                   <option ng-repeat="contractor in contractors.items" value="{{contractor._id}}" ng-hide="contractor.hidden">{{ contractor.name }}</option>
                 </select>
+                <div class="error" ng-show="submitted &amp;&amp; worksOrderForm.contractor.$invalid">Please select a contractor</div>
               </div>
               <div class="col-sm-4">
                 <label>Priority</label>
@@ -24,6 +25,7 @@
                   <option>Medium</option>
                   <option>High</option>
                 </select>
+                <div class="error" ng-show="submitted &amp;&amp; worksOrderForm.priority.$invalid">Please select a priority</div>
               </div>
             </div>
             <div class="row">

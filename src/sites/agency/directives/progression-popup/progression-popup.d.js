@@ -53,6 +53,13 @@
             return templateDeref();
           }
         });
+        scope.emailUsers = scope.list('main:users', null, (emailUsers) => {
+          emailUsers.items = emailUsers.items.filter(user => {
+            const agencyId = ((user.siteRoles || []).find(role => role.siteId==='agency') || {}).id;
+            user.id = agencyId;
+            return agencyId;
+          });
+        });
         scope.birthdays = scope.list('agency:birthdays');
         scope.getData = AgencyProgressionPopup.getData;
         scope.getTitle = AgencyProgressionPopup.getTitle;
