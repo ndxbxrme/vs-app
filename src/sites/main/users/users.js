@@ -10,13 +10,50 @@ angular.module('vs-app')
     {id:'maintenance',name:'Maintenance'},
     {id:'maintenance_leads',name:'Maintenance Leads'}
   ];
+  let firstTime = true;
   $scope.sites.forEach(site => site.users = $scope.list(site.id + ':users', null, (users) => {
     getPendingUsers();
+    const unloaded = $scope.sites.find(site => !site.users || !site.users.items || !site.users.items.length);
+    if(unloaded) {
+      console.log('unloaded', unloaded.id);
+    }
+    else {
+      console.log('all loaded');
+      //checkPermissions();
+    }
   }))
   $scope.roles = ['no access', 'agency', 'maintenance', 'admin', 'superadmin'];
   $scope.roleIcons = ['fa-ban', 'fa-users', 'fa-screwdriver-wrench', 'fa-user-vneck-hair', 'fa-user-crown'];
   $scope.usersByEmail = {};
   $scope.pendingUsers = [];
+  const checkPermissions = async () => {
+    console.log('check permissions');
+    if(!firstTime) return;
+    firstTime = false;
+    const mainUsers = $scope.sites.find(site => site.id==='main').users.items;
+    //console.log('main users', mainUsers);
+    for(let mainUser of mainUsers) {
+      if(mainUser.email==="superadmin@admin.com") continue;
+      for(let site of $scope.sites) {
+        if(site.id==='main') continue;
+        //console.log('matches', site.users.items.filter(siteUser => siteUser.email===mainUser.email).length);
+        for(let siteUser of site.users.items) {
+          if(siteUser.email===mainUser.email) {
+            const expectedRole = mainUser.local.sites[site.id].role;
+            if(!siteUser.roles[expectedRole] || siteUser.local.sites.main.role!==expectedRole) {
+              siteUser.roles = {};
+              siteUser.roles[expectedRole] = {};
+              siteUser.local.sites.main.role = expectedRole;
+              site.users.save(siteUser);
+              console.log('su4', site.id, mainUser.email, expectedRole, siteUser.roles[expectedRole], siteUser.local.sites.main);
+              //await new Promise(res => setTimeout(res, 10000));
+            }
+          }
+        }
+      }
+      console.log('mu', mainUser);
+    }
+  }
   const getPendingUsers = () => {
     const pendingUsers = {};
     const allUserEmails = ($scope.myusers.items || []).map(user => user.local.email);
@@ -33,6 +70,14 @@ angular.module('vs-app')
     $scope.pendingUsers = Object.keys(pendingUsers).map(key => pendingUsers[key]).filter(user => !allUserEmails.includes(user.local.email) && !/^cors-/.test(user.displayName)).sort((a,b) => a.displayName > b.displayName ? 1 : -1);
     $scope.pendingUsers.forEach(user => user.siteRoles = $scope.getSites(user));
   }
+  /*$scope.lettingsUsers = $scope.list('lettings:users', null, (lettingsUsers) => {
+    lettingsUsers.items.forEach(user => {
+      if(user._id==="655786db9e9fc6007c153210" && user.roles.superadmin) {
+        console.log(user);
+      }
+    })
+    console.log(lettingsUsers.items);
+  });*/
   $scope.myusers = $scope.list('main:users', null, (users) => {
     getPendingUsers();
     users.items.forEach(user => {
@@ -56,7 +101,8 @@ angular.module('vs-app')
           })
         }
       })
-    })
+    });
+    console.log('users', users.items);
   });
   const makeCode = () => [...[...new Date().getTime().toString(23)].reverse().join('').substr(0,6)].join('').toUpperCase();
   $scope.makeNewUser = async (email, role) => {
@@ -213,6 +259,7 @@ angular.module('vs-app')
     alert.log('User invited');
   };
   $scope.addEditUser = async (user) => {
+    console.log('add edit user', user);
     user = user || {
       email: '',
       local: {
@@ -233,6 +280,28 @@ angular.module('vs-app')
           roles: $scope.roles
         }
       });
+      console.log('result', result);
+      await Promise.all(Object.keys(result.changes).map(async key => {
+        if(/^role_/.test(key)) {
+          const siteName = key.replace(/^role_/, '');
+          const siteRole = result.changes[key];
+          const site = $scope.sites.find(site => site.id === siteName);
+          const siteUsers = site.users.items.filter(siteUser => siteUser.local.email === user.local.email);
+          for(let siteUser of siteUsers) {
+            siteUser.roles = {};
+            siteUser.roles[siteRole] = {};
+            siteUser.local.sites.main = siteUser.local.sites.main || {};
+            siteUser.local.sites.main.role = siteRole;
+            site.users.saveFn = (item) => {
+              console.log('saved', item);
+            }
+            site.users.save(siteUser);
+          }
+          console.log(site, siteUsers, siteUsers.length);
+        }
+      }));
+      return;
+
       if(result.changes.email) user.email = result.changes.email;
       user.local.email = user.email;
       await Promise.all(Object.keys(result.changes).map(async key => {
