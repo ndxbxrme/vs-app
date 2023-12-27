@@ -36,6 +36,12 @@
             </div>
             <div class="row">
               <div class="col-sm-12">
+                <label>Move Out Works</label>
+                <input type="checkbox" ng-model="worksOrder.moveOutWorks" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
                 <h2 class="orange">Address</h2>
                 <p ng-show="issue.item._id">{{issue.item.address}}</p>
                 <input type="text" ng-model="worksOrder.address" ng-hide="issue.item._id" placeholder="Address" />

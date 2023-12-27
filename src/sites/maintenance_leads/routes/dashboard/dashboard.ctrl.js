@@ -53,6 +53,9 @@
               booked: true,
               completed: false,
               invoiced: false
+            },
+            moveOutWorks: {
+              $null: true
             }
           },
           sort: 'date',
@@ -77,6 +80,25 @@
           sortDir: 'DESC'
         });
         scope.invoiceOutstanding.sort = Sorter.create(scope.invoiceOutstanding.args);
+        scope.moveOutWorks = scope.list('maintenance_leads:issues', {
+          page: 1,
+          pageSize: 10,
+          where: {
+            statusName: 'Booked',
+            search: {
+              $like: ''
+            },
+            status: {
+              booked: true,
+              completed: false,
+              invoiced: false
+            },
+            moveOutWorks: true
+          },
+          sort: 'date',
+          sortDir: 'DESC'
+        });
+        scope.moveOutWorks.sort = Sorter.create(scope.moveOutWorks.args);
         return true;
       }
     }

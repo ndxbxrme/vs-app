@@ -3,7 +3,7 @@
   <div class="container-xl">
     <h1>Maintenance <strong class="orange">Dashboard</strong></h1>
     <div class="row boxes">
-      <div class="col-xl-3 col-sm-6">
+      <div class="col">
         <div class="box">
           <div ui-sref="maintenance_leads_issues" class="title">Today's Maintenance Issues <span ng-class="{empty:!maintenanceToday.total}" class="box-number">{{maintenanceToday.total}}</span></div>
           <div ng-repeat="issue in maintenanceToday.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div class="col-xl-3 col-sm-6">
+      <div class="col">
         <div class="box">
           <div ui-sref="maintenance_leads_issues" class="title">Outstanding Maintenance Issues <span ng-class="{empty:!maintenanceOutstanding.total}" class="box-number">{{maintenanceOutstanding.total}}</span></div>
           
@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <div class="col-xl-3 col-sm-6">
+      <div class="col">
         <div class="box">
           <div ui-sref="maintenance_leads_worksorders" class="title">Outstanding Works Orders <span ng-class="{empty:!worksOutstanding.total}" class="box-number">{{worksOutstanding.total}}</span></div>
           <div ng-repeat="issue in worksOutstanding.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <div class="col-xl-3 col-sm-6">
+      <div class="col">
         <div class="box">
           <div ui-sref="maintenance_leads_worksorders" class="title">Invoices Outstanding <span ng-class="{empty:!invoiceOutstanding.total}" class="box-number">{{invoiceOutstanding.total}}</span></div>
           
@@ -104,6 +104,33 @@
           <pagination ng-model="invoiceOutstanding.args.page" total="invoiceOutstanding.total" page-size="invoiceOutstanding.args.pageSize"></pagination>
         </div>
       </div>
+
+
+      <div class="col">
+        <div class="box">
+          <div ui-sref="maintenance_leads_worksorders" class="title">MoveOutWorks <span ng-class="{empty:!moveOutWorks.total}" class="box-number">{{moveOutWorks.total}}</span></div>
+          <div ng-repeat="issue in moveOutWorks.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
+            <div class="details">
+              <div class="address">{{issue.address}}</div>
+              <div class="issue-title">{{issue.title}}</div>
+            </div>
+            <div class="status">
+              <div class="booked"> 
+                <div class="fad fa-file-medical"></div>
+              </div>
+              <div class="completed">
+                <div class="fad fa-file-check"></div>
+              </div>
+              <div class="invoiced">
+                <div class="fad fa-thumbs-up"></div>
+              </div>
+            </div>
+            <div ng-class="{newmessage:issue.newMessages &gt; 0}" class="messages">{{issue.newMessages}}</div>
+          </div>
+          <pagination ng-model="moveOutWorks.args.page" total="moveOutWorks.total" page-size="moveOutWorks.args.pageSize"></pagination>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

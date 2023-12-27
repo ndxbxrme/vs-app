@@ -147,7 +147,7 @@
             </multi-check>
             <label class="large">Specific User</label>
             <select ng-model="action.specificUser">
-              <option ng-repeat="user in myusers = (emailUsers.items | filter:&quot;!cors&quot;)" value="{{user._id}}">{{user.displayName}}</option>
+              <option ng-repeat="user in myusers = (emailUsers.items | filter:&quot;!cors&quot;)" value="{{user.lettingsId}}">{{user.displayName}}</option>
             </select>
             <label class="large">Template</label>
             <select ng-model="action.template">

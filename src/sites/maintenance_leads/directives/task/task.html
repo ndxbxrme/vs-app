@@ -1,4 +1,4 @@
-<span class="task-dir">{{assigned = selectById(users.items,task.assignedTo); '' }}
+<span class="task-dir" ng-class="{moveOut:task.moveOutWorks}">{{assigned = selectById(users.items,task.assignedTo); '' }}
   <div class="contractor"> 
     {{task.contractorName}}
   </div>

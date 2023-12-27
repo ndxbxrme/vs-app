@@ -29,6 +29,8 @@ import './sites/admin/routes/epc/epc.ctrl.js';
 import './sites/admin/routes/epc/epc.routes.js';
 import './sites/admin/routes/misdescriptions/misdescriptions.ctrl.js';
 import './sites/admin/routes/misdescriptions/misdescriptions.routes.js';
+import './sites/admin/routes/kadmin/kadmin.ctrl.js';
+import './sites/admin/routes/kadmin/kadmin.routes.js';
 
 //LETTINGS
 

@@ -1,6 +1,7 @@
-const initForSale = (propertyadmin, property) => {
+const initForSale = (propertyadmin, property, user) => {
   if (!propertyadmin.item.RoleId) {
     propertyadmin.item.RoleId = property.RoleId;
+    propertyadmin.item.user = user;
     if (property.instructionToMarket) {
       propertyadmin.item.instructionToMarket = property.instructionToMarket;
       propertyadmin.item.soldSubjectToContract = property.soldSubjectToContract;

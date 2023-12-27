@@ -125,7 +125,7 @@
         };
         scope.allTasks = scope.list('maintenance_leads:tasks', {
           where: {
-            dateVal: {$gt:new Date('2022-12-20').valueOf()}
+            dateVal: {$gt:new Date('2023-11-20').valueOf()}
           }
         }, function() {
           if(scope.issues.items && scope.allTasks.items) scope.filterTasks();
@@ -140,6 +140,12 @@
         scope.filterTasks = function() {
           var k, len, ref, ref1, ref2, task;
           scope.tasks.items = scope.allTasks.items.filter(function(task) {
+            if (scope.showMoveOut) {
+              const issue = scope.issues.items.find(issue => issue._id === task.issue);
+              if(!issue || !issue.moveOutWorks) {
+                return false;
+              }
+            };
             if (scope.onlyThisIssue) {
               return (scope.onlyThisIssue && scope.issue.item._id === task.issue) && (!scope.selectedContractors || !scope.selectedContractors.length || scope.selectedContractors.includes(task.contractor));
             } else {

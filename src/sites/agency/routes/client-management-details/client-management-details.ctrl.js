@@ -13,7 +13,7 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       if (!fetchedFirst) {
         fetchDetails();
         $scope.propertyadmin = $scope.single('main:propertyadmin', { RoleId: property.RoleId }, (propertyadmin) => {
-          initForSale(propertyadmin, property);
+          initForSale(propertyadmin, property, $scope.auth.getUser());
           return propertyadmin;
         });
       }

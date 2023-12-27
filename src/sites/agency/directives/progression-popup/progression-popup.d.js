@@ -44,6 +44,17 @@
             name: 'All admin users'
           }
         ];
+        scope.emailUsers = scope.list('main:users', null, (emailUsers) => {
+          emailUsers.items = emailUsers.items.filter(user => {
+            if(user.local.email==='superadmin@admin.com') return false;
+            const agencyRole = user.local.sites.agency;
+            if(agencyRole && agencyRole.role!=='no access') {
+              user.agencyId = agencyRole.id;
+              return true;
+            } 
+            return false;
+          });
+        });
         templateDeref = scope.$watch(function() {
           return scope.auth.getUser();
         }, function(n) {
@@ -52,13 +63,6 @@
             scope.smsTemplates = scope.list('agency:smstemplates');
             return templateDeref();
           }
-        });
-        scope.emailUsers = scope.list('main:users', null, (emailUsers) => {
-          emailUsers.items = emailUsers.items.filter(user => {
-            const agencyId = ((user.siteRoles || []).find(role => role.siteId==='agency') || {}).id;
-            user.id = agencyId;
-            return agencyId;
-          });
         });
         scope.birthdays = scope.list('agency:birthdays');
         scope.getData = AgencyProgressionPopup.getData;

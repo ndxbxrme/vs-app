@@ -63,13 +63,27 @@ angular.module('vs-app')
       const badIds = us.map(u => {
         return u.sites.filter(site => site.n[0]._id !== site.roleId)
       }).filter(o => o.length).filter(o => o[0].n[0].local.email !== 'superadmin@admin.com');
-      if(badIds.length) {
+      if (badIds.length) {
         const badUser = $scope.sites[0].users.items.find(u => u.local.email === badIds[0][0].n[0].local.email);
         const badSiteId = badIds[0][0].id;
         const realId = badIds[0][0].n[0]._id;
         badUser.local.sites[badSiteId].id = realId;
         $scope.sites[0].users.save(badUser);
         console.log('updated user id', badUser.email, badSiteId);
+        return;
+      }
+      const duplicates = us.filter(u => u.sites.filter(s => s.n.length > 1).length).map(u => {
+        return {
+          email: u.email,
+          sites: u.sites.filter(s => s.n.length > 1)
+        }
+      }).filter(u => u.email !== 'superadmin@admin.com');
+      if(duplicates.length) {
+        const badSiteId = duplicates[0].sites[0].id;
+        const badSite = $scope.sites.find(site => site.id === badSiteId);
+        const badUser = badSite.users.items.find(u => u.local.email === duplicates[0].email);
+        badSite.users.delete(badUser);
+        console.log('deleted', badUser.local.email, 'from', badSiteId);
         return;
       }
       return;
@@ -327,11 +341,13 @@ angular.module('vs-app')
           }
         });
         console.log('result', result);
+        const mainUser = $scope.sites.find(site => site.id === 'main').users.items.find(siteUser => siteUser.local.email === user.local.email);
         await Promise.all(Object.keys(result.changes).map(async key => {
           if (/^role_/.test(key)) {
             const siteName = key.replace(/^role_/, '');
             const siteRole = result.changes[key];
             const site = $scope.sites.find(site => site.id === siteName);
+            if(!site || !siteRole) return;
             const siteUsers = site.users.items.filter(siteUser => siteUser.local.email === user.local.email);
             for (let siteUser of siteUsers) {
               siteUser.roles = {};
@@ -359,9 +375,13 @@ angular.module('vs-app')
               newUser.roles[siteRole] = {};
               site.users.save(newUser);
             }
-            console.log(site, siteUsers, siteUsers.length);
+            mainUser.local.sites[siteName] = mainUser.local.sites[siteName] || {};
+            mainUser.local.sites[siteName].role = siteRole;
+            const mainSiteRole = mainUser.siteRoles.find(role => role.siteId === siteName);
+            if(mainSiteRole) mainSiteRole.role = siteRole;
           }
-        }));
+        }))
+        $scope.sites.find(site => site.id === 'main').users.save(mainUser);
         return;
 
         if (result.changes.email) user.email = result.changes.email;
@@ -438,7 +458,7 @@ angular.module('vs-app')
     }).filter(site => site.name !== 'sms');
     $scope.cancel = () => ndxModalInstance.dismiss();
     $scope.submit = () => {
-      const changes = $scope.forms.userForm.$$controls.filter(control => control.$dirty).reduce((res, control) => { res[control.$name] = control.$modelValue; return res }, {});
+      const changes = $scope.forms.userForm.$$controls.filter(control => true).reduce((res, control) => { res[control.$name] = control.$modelValue; return res }, {});
       ndxModalInstance.close({ changes, roles: $scope.roles });
     };
   })

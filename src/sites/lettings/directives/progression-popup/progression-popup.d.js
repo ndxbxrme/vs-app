@@ -34,12 +34,16 @@
         ];
         scope.emailUsers = scope.list('main:users', null, (emailUsers) => {
           emailUsers.items = emailUsers.items.filter(user => {
-            const lettingsId = ((user.siteRoles || []).find(role => role.siteId==='lettings') || {}).id;
-            user.id = lettingsId;
-            return lettingsId;
+            if(user.local.email==='superadmin@admin.com') return false;
+            const lettingsRole = user.local.sites.lettings;
+            if(lettingsRole && lettingsRole.role!=='no access') {
+              user.lettingsId = lettingsRole.id;
+              return true;
+            } 
+            return false;
           });
         });
-        scope.users = scope.list('lettings:users');
+        //scope.users = scope.list('lettings:users');
         templateDeref = scope.$watch(function() {
           return scope.auth.getUser();
         }, function(n) {
