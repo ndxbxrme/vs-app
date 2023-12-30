@@ -61,6 +61,7 @@ const propertyAdminFunctions = ($scope, alert) => {
   ]
   $scope.ftOptions = ['No board', ...getNextThursdays(2)];
   $scope.saveITMDetails = function (isLetting) {
+    $scope.propertyadmin.item.instructionToMarket.isLetting = isLetting;
     const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.instructionToMarket.boardOrderedDate) && (item.type === 'FOR_SALE'));
     if (!board) {
       if ($scope.propertyadmin.item.instructionToMarket.boardOrderedDate && ($scope.propertyadmin.item.instructionToMarket.boardOrderedDate !== 'No board')) {

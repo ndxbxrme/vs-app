@@ -144,11 +144,11 @@
           }
           reader.readAsDataURL(pdfBlob);
         });
-      if (!newIssue && $scope.worksOrder.moveOutWorks) {
+      if (!newIssue && $scope.worksOrder.moveOutWorks && $scope.worksOrder.moveOutWorks==="Move Out Issue") {
         $scope.issue.moveOutWorks = true;
         $scope.issue.save();
       }
-      if ($scope.worksOrder.moveOutWorks) {
+      if ($scope.worksOrder.moveOutWorks && $scope.worksOrder.moveOutWorks==="Move Out Issue") {
         if (newIssue) {
           const issueId = Math.floor(Math.random() * 99999999999999999999).toString(36);
           const issue = {

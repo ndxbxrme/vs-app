@@ -18,7 +18,7 @@ angular.module('vs-admin')
         }
       }}, (epcs) => {
         epcs.items.forEach(item => {
-          if(item.instructionToMarket.hasOwnProperty('clientIntro')) {
+          if(item.instructionToMarket.isLetting) {
             item.$property = scope.single({
               route: `${env.PROPERTY_URL}/property`
             }, item.RoleId, (res) => {
@@ -27,7 +27,7 @@ angular.module('vs-admin')
               
               const availableDate = new Date(property.AvailableDate);
               let availableDateVal = availableDate.valueOf() - (availableDate.getTimezoneOffset() * 60 * 1000);
-              property.$case = $scope.single('lettings:properties', property.RoleId + '_' + availableDateVal);
+              property.$case = scope.single('lettings:properties', property.RoleId + '_' + availableDateVal);
             });
           }
           else {

@@ -42,7 +42,7 @@
               <div>{{epc.$property.item.displayAddress}}</div>
             </td>
             <td class="vendor">{{epc.$property.item.vendor.Name}}</td>
-            <td>{{epc.$property.item.instructionToMarket.epcOrderedDate | date:'dd/MM/yyyy'}}</td>
+            <td>{{epc.instructionToMarket.epcOrderedDate | date:'dd/MM/yyyy'}}</td>
             <td class="listed" style="white-space:nowrap"> 
               <input type="button" ng-click="deleteEPC(epc)" value="Delete" />
               <input type="button" ng-click="completedEPC(epc)" value="Completed" />
@@ -55,8 +55,8 @@
             <td colspan="3" class="text-end">
               <div class="listed"> 
                 <span class="instructed">Instructed on: <strong>{{epc.$property.item.DateInstructed | date:'dd/MM/yy'}}</strong></span>
-                <span class="time-ago">({{epc.$property.item.DateInstructed | timeAgo}})</span> |
-                <span class="viewings-count">Viewings: <strong class="orange">{{epc.$property.item.$case ? epc.$property.item.$case.item.Viewings.length : epc.$property.item.viewings.TotalCount}}</strong></span>
+                <span class="time-ago">({{epc.$property.item.DateInstructed | timeAgo}})</span> <!--|
+                <span class="viewings-count">Viewings: <strong class="orange">{{epc.$property.item.$case ? epc.$property.item.$case.item.Viewings.length : epc.$property.item.viewings.TotalCount}}</strong></span>-->
               </div>
             </td>
           </tr>

@@ -36,12 +36,6 @@
             </div>
             <div class="row">
               <div class="col-sm-12">
-                <label>Move Out Works</label>
-                <input type="checkbox" ng-model="worksOrder.moveOutWorks" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
                 <h2 class="orange">Address</h2>
                 <p ng-show="issue.item._id">{{issue.item.address}}</p>
                 <input type="text" ng-model="worksOrder.address" ng-hide="issue.item._id" placeholder="Address" />
@@ -68,6 +62,16 @@
                   <p ng-show="issue.item._id">{{ issue.item.details }}</p>
                   <input type="text" ng-model="worksOrder.issueDetails" ng-hide="issue.item._id" placeholder="Issue Detail" />
                 </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <h2 class="orange">Issue Type</h2>
+                <select name="moveOutWorks" ng-model="worksOrder.moveOutWorks" required="required">
+                  <option selected="selected">Tenancy Issue</option>
+                  <option>Move Out Issue</option>
+                </select>
+                <div class="error" ng-show="submitted &amp;&amp; worksOrderForm.moveOutWorks.$invalid">Please select an issue type</div>
               </div>
             </div>
             <div class="row">
