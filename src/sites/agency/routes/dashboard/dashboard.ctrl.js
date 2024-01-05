@@ -240,7 +240,7 @@
       end: 0
     };
     i = 0;
-    while (i++ < 5) {
+    while (i++ < 6) {
       month = {
         name: monthNames[bmonth.getMonth()],
         start: bmonth.valueOf(),
