@@ -23,6 +23,7 @@ angular.module('vs-admin')
               route: `${env.PROPERTY_URL}/property`
             }, item.RoleId, (res) => {
               const property = res.item;
+              if(!property.Address) return;
               property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
               
               const availableDate = new Date(property.AvailableDate);
@@ -34,6 +35,12 @@ angular.module('vs-admin')
             item.$property = scope.single('agency:clientmanagement', {RoleId:item.RoleId});
           }
         });
+        const itemToDelete = epcs.items.find(item => item.$property.item==='no property found');
+        console.log('to delete', itemToDelete);
+        /*
+        if(itemToDelete) {
+          scope.epcs.delete(itemToDelete);
+        }*/
       })
       scope.properties = scope.list('agency:clientmanagement', {
         where: {
