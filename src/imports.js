@@ -215,6 +215,10 @@ import './sites/agency/routes/template/template.ctrl.js';
 import './sites/agency/routes/template/template.routes.js';
 import './sites/agency/services/progression-popup.s.js';
 import './sites/agency/services/property.s.js';
+import './sites/agency/routes/offer/offer.ctrl.js';
+import './sites/agency/routes/offer/offer.routes.js';
+import './sites/agency/routes/offers-list/offers-list.ctrl.js';
+import './sites/agency/routes/offers-list/offers-list.routes.js';
 
 
 //LEADS
