@@ -20,8 +20,8 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       if(!upload) return '';
       const type = (upload.file.match(/\.([^.]+)$/) || [])[0];
       if(type==='.pdf')
-        return $sce.trustAsHtml(`<a href="${upload.file}" target="_blank" class="offer-upload pdf-upload"><i class="fa-regular fa-file-pdf"></i></a>`)
-      return $sce.trustAsHtml(`<a href="${upload.file}" target="_blank" class="offer-upload"><img src="${upload.file}" style="max-width: 100%" /></a>`);
+        return $sce.trustAsHtml(`<a href="${upload.file}" target="_blank" class="offer-upload pdf-upload"><i class="fa-regular fa-file-pdf"></i> <span>View</span></a>`)
+      return $sce.trustAsHtml(`<a href="${upload.file}" target="_blank" class="offer-upload"><img src="${upload.file}" style="max-width: 100%" /> <span>View</span></a>`);
     };
     $scope.addNote = function() {
       var i, len, mynote, ref;

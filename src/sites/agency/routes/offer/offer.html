@@ -3,12 +3,11 @@
   <div class="container-xl">
     <h1>Offer Received </h1>
     <h4>At a glance</h4>
-    <input type="button" ng-click="actionOffer(offer)" value="OFFER ACTIONED" />
     <div class="property">
       <h5 ng-show="property.loading" class="loading">Contacting Dezrez</h5>
       <div class="property-item row client-row">
         <div class="col-sm-2 property-image" style="background-image: url({{offer.item.image}})"></div>
-        <div class="property-status col-sm-5">
+        <div class="property-status col-sm-4">
           <div class="item">
             <p class="title">Address:</p>
             <p class="address">{{offer.item.address}}</p>
@@ -18,7 +17,7 @@
             <p class="address">{{offer.item.$case.data.Fees[0].Name}}</p>
           </div>
         </div>
-        <div class="property-marketing col-sm-5">
+        <div class="property-marketing col-sm-4">
           <div ng-show="!loading(&quot;offers&quot;)" class="item">
             <p class="title">Offer Amount:</p>
             <p class="numbers">{{offer.item.offerAmount | currency : "£" : 0}}</p>
@@ -28,14 +27,17 @@
             <p class="numbers">&pound;{{offer.item.price}}</p>
           </div>
         </div>
+        <div class="col-sm-2">
+          <input type="button" ng-click="actionOffer(offer)" value="OFFER ACTIONED" />
+        </div>
       </div>
       <div class="">
-        <h2>Offer received from <strong>{{offer.item.applicant}}</strong> <span ng-show="offer.item.applicant2">and <strong>{{offer.item.applicant2}}</strong></span></h2>
+        <h2>Offer received from <strong class="orange">{{offer.item.applicant}}</strong> <span ng-show="offer.item.applicant2">and <strong class="orange">{{offer.item.applicant2}}</strong></span></h2>
         <div class="info">
           <h4>Offer Details</h4>
         </div>
       </div>
-      <div class="row property-item">
+      <div class="row property-item property-details">
         <div class="col-md-6 item">
           <p class="title">Applicant's Address</p>
           <p>{{offer.item.applicantAddress}}</p>
@@ -85,27 +87,29 @@
           </div>
         </div>
       </div>
-      <div class="row property-item">
+      <div class="row property-item comments-box">
         <div class="item">
           <p class="title">Additional Comments</p>
           <pre>{{offer.item.comments}}</pre>
         </div>
       </div>
 
-      <div class="case-notes client-row">
-        <h2 class="orange">Case Notes</h2>
-        <div ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
-          <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo" class="delete">Delete</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo" class="edit">Edit</a></div>
-          <div class="note"> 
-            <div class="details"><span ng-show="note.side">- {{note.side}}</span>
-              <div ng-bind-html="note.text | markdown:true" class="note-body"></div>
+      <div class="row offer-notes">
+        <div class="col-12">
+          <h2 class="orange">Notes about this offer</h2>
+          <div ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
+            <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo" class="delete">Delete</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo" class="edit">Edit</a></div>
+            <div class="note"> 
+              <div class="details"><span ng-show="note.side">- {{note.side}}</span>
+                <div ng-bind-html="note.text | markdown:true" class="note-body"></div>
+              </div>
             </div>
           </div>
-        </div>
-        <pagination total="notesData.length" ng-model="notesPage" page-size="notesLimit" class="pagination-sm pagination"></pagination>
-        <div class="add-note">
-          <code-mirror ng-model="note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
-          <button ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
+          <pagination total="notesData.length" ng-model="notesPage" page-size="notesLimit" class="pagination-sm pagination"></pagination>
+          <div class="add-note">
+            <code-mirror ng-model="note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
+            <button ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
+          </div>
         </div>
       </div>
     </div>
