@@ -8,12 +8,16 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
     if($stateParams.roleid) propertyWhere = {RoleId:+$stateParams.roleid};
     $scope.property = $scope.single('agency:clientmanagement', propertyWhere, function (res) {
       var property;
+      let adminFetched = false;
       property = res.item;
       property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
       if (!fetchedFirst) {
         fetchDetails();
         $scope.propertyadmin = $scope.single('main:propertyadmin', { RoleId: property.RoleId }, (propertyadmin) => {
-          initForSale(propertyadmin, property, $scope.auth.getUser());
+          if(!adminFetched) {
+            initForSale(propertyadmin, property, $scope.auth.getUser());
+          }
+          adminFetched = true;
           return propertyadmin;
         });
       }
