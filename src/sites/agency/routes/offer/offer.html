@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="col-sm-2">
-          <input type="button" ng-click="actionOffer(offer)" value="OFFER ACTIONED" />
+          <input type="button" ng-click="actionOffer(offer)" value="OFFER ACTIONED" ng-hide="offer.item.actioned" />
         </div>
       </div>
       <div class="">
@@ -52,9 +52,15 @@
             <p ng-bind-html="getUpload('51')"></p>
           </div>
         </div>
-        <div class="col-md-6 item">
-          <p class="title">Applicant's Phone Number</p>
-          <p>{{offer.item.telephone}}</p>
+        <div class="col-md-6 item row">
+          <div class="col-md-6 item">
+            <p class="title">Applicant's Phone Number</p>
+            <p>{{offer.item.telephone}}</p>
+          </div>
+          <div class="col-md-6 item">
+            <p class="title">Applicant's Email</p>
+            <p><a href="mailto:{{offer.item.email}}">{{offer.item.email}}</a></p>
+          </div>
         </div>
         <div class="col-md-6 item">
           <p class="title">Proof of Funds</p>

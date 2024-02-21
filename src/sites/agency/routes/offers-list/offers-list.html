@@ -4,10 +4,11 @@
   <div class="container-xl">
     <div class="row align-items-center">
       <div class="col-md-8">
-        <h1>Pending Offers</h1>
+        <h1><span ng-show="isHistoric">Historic</span><span ng-hide="isHistoric">Pending</span> Offers</h1>
       </div>
       <div class="col-md-4 search">
-        <input type="button" ng-click="showHistoric()" value="Show Historic" />
+        <input type="button" ui-sref="agency_offers-list_historic" value="Show Historic" ng-hide="isHistoric" />
+        <input type="button" ui-sref="agency_offers-list" value="Show Pending" ng-show="isHistoric" />
         <input type="text" ng-model="search" placeholder="Search Offers" ng-change="page=1"/>
       </div>
     </div>
