@@ -98,6 +98,10 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       alert.log('Offer actioned');
       $state.go('agency_offers-list');
     }
+    $scope.formatAddress = (address) => {
+      if(!address) return '';
+      return address.replace(/, ,/g, ',');
+    }
   });
 
 }).call(this);
