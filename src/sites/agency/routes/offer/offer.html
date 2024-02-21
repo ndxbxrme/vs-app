@@ -42,24 +42,28 @@
           <p class="title">Applicant's Address</p>
           <p>{{formatAddress(offer.item.applicantAddress)}}</p>
         </div>
-        <div class="col-md-6 item row">
-          <div class="col-md-6 item">
-            <p class="title">Proof of Identity</p>
-            <p ng-bind-html="getUpload('48')"></p>
-          </div>
-          <div class="col-md-6 item">
-            <p class="title">2nd Proof</p>
-            <p ng-bind-html="getUpload('51')"></p>
+        <div class="col-md-6 item">
+          <div class="row">
+            <div class="col-md-6 item">
+              <p class="title">Proof of Identity</p>
+              <p ng-bind-html="getUpload('48')"></p>
+            </div>
+            <div class="col-md-6 item">
+              <p class="title">2nd Proof</p>
+              <p ng-bind-html="getUpload('51')"></p>
+            </div>
           </div>
         </div>
-        <div class="col-md-6 item row">
-          <div class="col-md-6 item">
-            <p class="title">Applicant's Phone Number</p>
-            <p>{{offer.item.telephone}}</p>
-          </div>
-          <div class="col-md-6 item">
-            <p class="title">Applicant's Email</p>
-            <p><a href="mailto:{{offer.item.email}}">{{offer.item.email}}</a></p>
+        <div class="col-md-6 item">
+          <div class="row">
+            <div class="col-md-5 item">
+              <p class="title">Applicant's Phone Number</p>
+              <p>{{offer.item.telephone}}</p>
+            </div>
+            <div class="col-md-7 item">
+              <p class="title">Applicant's Email</p>
+              <p><a href="mailto:{{offer.item.email}}">{{offer.item.email}}</a></p>
+            </div>
           </div>
         </div>
         <div class="col-md-6 item">

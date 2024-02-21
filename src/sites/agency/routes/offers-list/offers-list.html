@@ -7,8 +7,6 @@
         <h1><span ng-show="isHistoric">Historic</span><span ng-hide="isHistoric">Pending</span> Offers</h1>
       </div>
       <div class="col-md-4 search">
-        <input type="button" ui-sref="agency_offers-list_historic" value="Show Historic" ng-hide="isHistoric" />
-        <input type="button" ui-sref="agency_offers-list" value="Show Pending" ng-show="isHistoric" />
         <input type="text" ng-model="search" placeholder="Search Offers" ng-change="page=1"/>
       </div>
     </div>
@@ -17,6 +15,8 @@
       <div class="row">
         <div class="col-md-6">
           <div class="sort" ng-hide="true">Order By: <a href="" ng-click="sort=&quot;-DateInstructed&quot;;page=1" ng-class="{selected:sort===&quot;-DateInstructed&quot;}" class="order-item">First Listed</a><a href="" ng-click="sort=&quot;-viewings.length&quot;;page=1" ng-class="{selected:sort===&quot;-viewings.length&quot;}" class="order-item">Viewings</a><a href="" ng-click="sort=&quot;-Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-Price.PriceValue&quot;}" class="order-item">Asking Price</a></div>
+          <input type="button" ui-sref="agency_offers-list_historic" value="Show Historic" ng-hide="isHistoric" />
+          <input type="button" ui-sref="agency_offers-list" value="Show Pending" ng-show="isHistoric" />
         </div>
         <div class="col-md-6 text-end">
           <div class="showing">Showing {{filterData.length}} of {{totalProps = offers.items.length}} offer{{totalProps!==1?'s':''}}</div>
