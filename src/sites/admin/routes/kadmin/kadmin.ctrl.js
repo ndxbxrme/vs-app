@@ -12,6 +12,7 @@ angular.module('vs-admin')
             //scope.propertyadmin.delete(item);
             return;
           }
+          propertyadmin.items.sort((a, b) => a.RoleId > b.RoleId ? 1 : -1);
         }
       });
       scope.isBad = (admin) => Object.keys(admin).length <= 3;

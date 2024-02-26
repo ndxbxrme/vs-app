@@ -5,7 +5,7 @@ angular.module('vs-app')
     replace: true,
     template: require('./footer.html').default,
     link: (scope) => {
-      scope.version = '1.0.1';
+      scope.version = '1.1.0';
     },
     currentyear: number = new Date().getFullYear()
   }
