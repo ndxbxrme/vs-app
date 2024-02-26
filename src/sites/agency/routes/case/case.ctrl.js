@@ -44,7 +44,7 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       });
       property.$case.parent = property;
       if(!fetchedFirst) {
-        $scope.propertyadmin = $scope.single('main:propertyadmin', { RoleId: property.RoleId }, (propertyadmin) => {
+        $scope.propertyadmin = $scope.single('main:propertyadmin', { RoleId: +property.RoleId }, (propertyadmin) => {
           if(!adminFetched) {
             initForSale(propertyadmin, property, $scope.auth.getUser());
           }

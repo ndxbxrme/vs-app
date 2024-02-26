@@ -75,5 +75,13 @@ require('ndx-server').config({
       }
     });
   });
+  ndx.app.get('/webhook/:roleId', async (req, res) => {
+    const roleId = +req.params.roleId;
+    let property = await ndx.database.selectOne('propertyadmin', {RoleId:roleId});
+    if(!property) {
+      await ndx.database.insert('propertyadmin', {RoleId:roleId,source:'webhook'});
+    }
+    res.end('ok');
+  })
 })
 .start();

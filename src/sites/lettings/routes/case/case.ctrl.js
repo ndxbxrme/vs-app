@@ -39,7 +39,7 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
       breadcrumbs.setInfo(property.displayAddress);
       if(!fetchedFirst) {
-        $scope.propertyadmin = $scope.single('main:propertyadmin', { RoleId: property.RoleId }, (propertyadmin) => {
+        $scope.propertyadmin = $scope.single('main:propertyadmin', { RoleId: +property.RoleId }, (propertyadmin) => {
           if(!adminFetched) {
             initForSale(propertyadmin, property, $scope.auth.getUser());
           }

@@ -1,16 +1,5 @@
 const initForSale = (propertyadmin, property) => {
-  if (!propertyadmin.item.RoleId) {
-    propertyadmin.item.RoleId = property.RoleId;
-    if (property.instructionToMarket) {
-      propertyadmin.item.instructionToMarket = property.instructionToMarket;
-      propertyadmin.item.soldSubjectToContract = property.soldSubjectToContract;
-      propertyadmin.item.priceReduction = property.priceReduction;
-      propertyadmin.item.fallenThrough = property.fallenThrough;
-      propertyadmin.item.exchangedCompleted = property.exchangedCompleted;
-    }
-    propertyadmin.save();
-  }
-  else {
+  if(propertyadmin && propertyadmin.item) {
     if (propertyadmin.item.priceReduction && propertyadmin.item.priceReduction.dateOfReduction)
       propertyadmin.item.priceReduction.dateOfReduction = new Date(propertyadmin.item.priceReduction.dateOfReduction);
     if (propertyadmin.item.fallenThrough && propertyadmin.item.fallenThrough.date)
