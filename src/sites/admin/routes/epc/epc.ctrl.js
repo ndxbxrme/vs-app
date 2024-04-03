@@ -18,25 +18,37 @@ angular.module('vs-admin')
         }
       }}, (epcs) => {
         epcs.items.forEach(item => {
-          if(item.instructionToMarket.isLetting) {
-            item.$property = scope.single({
-              route: `${env.PROPERTY_URL}/property`
-            }, item.RoleId, (res) => {
-              const property = res.item;
-              if(!property.Address) return;
-              property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
-              
-              const availableDate = new Date(property.AvailableDate);
-              let availableDateVal = availableDate.valueOf() - (availableDate.getTimezoneOffset() * 60 * 1000);
-              property.$case = scope.single('lettings:properties', property.RoleId + '_' + availableDateVal);
-            });
-          }
-          else {
-            item.$property = scope.single('agency:clientmanagement', {RoleId:item.RoleId});
+          if(!item.property) {
+            console.log('loading data');
+            item.property = {};
+            if(item.instructionToMarket.isLetting) {
+              const $property = scope.single({
+                route: `${env.PROPERTY_URL}/property`
+              }, item.RoleId, (res) => {
+                const property = res.item;
+                if(!property.Address) return;
+                item.property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
+                item.property.vendorName = ((property.vendor ? property.vendor.Name : null) || '');
+                item.property.dateInstructed = property.DateInstructed;
+                item.property.image = property.Images && property.Images.length ? property.Images[0].Url : '';
+                scope.epcs.save(item);
+              });
+            }
+            else {
+              const $property = scope.single('agency:clientmanagement', {RoleId:item.RoleId}, (res) => {
+                const property = res.item;
+                if(!property.Address) return;
+                item.property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
+                item.property.vendorName = ((property.vendor ? property.vendor.Name : null) || '');
+                item.property.dateInstructed = property.DateInstructed;
+                item.property.image = property.Images && property.Images.length ? property.Images[0].Url : '';
+                scope.epcs.save(item);
+              });
+            }
           }
         });
-        const itemToDelete = epcs.items.find(item => item.$property.item==='no property found');
-        console.log('to delete', itemToDelete);
+        //const itemToDelete = epcs.items.find(item => item.$property.item==='no property found');
+        //console.log('to delete', itemToDelete);
         /*
         if(itemToDelete) {
           scope.epcs.delete(itemToDelete);
