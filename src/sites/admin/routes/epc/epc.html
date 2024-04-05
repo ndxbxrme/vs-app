@@ -3,9 +3,6 @@
 <div class="client-management-list epc-management-list">
   <div class="container-xl">
     <div class="row align-items-center">
-      <a class="button" href="https://docs.google.com/spreadsheets/d/1eoHBgDIEnpw-fN5UzbMiRsi7XstSw3BFOmFrDP07748/edit?usp=sharing" target="_blank">Google Sheets</a>
-    </div>
-    <div class="row align-items-center">
       <div class="col-md-8">
         <h1>EPC Management</h1>
       </div>
@@ -15,11 +12,12 @@
     </div>
 
     <div class="controls">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col-md-6">
           <div class="sort">Order By: <a href="" ng-click="sort=&quot;-DateInstructed&quot;;page=1" ng-class="{selected:sort===&quot;-DateInstructed&quot;}" class="order-item">First Listed</a><a href="" ng-click="sort=&quot;-viewings.length&quot;;page=1" ng-class="{selected:sort===&quot;-viewings.length&quot;}" class="order-item">Viewings</a><a href="" ng-click="sort=&quot;-Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-Price.PriceValue&quot;}" class="order-item">Asking Price</a></div>
         </div>
-        <div class="col-md-6 text-end">
+        <div class="col-md-6 d-flex align-items-center justify-content-end mb-3">
+          <a class="button" href="https://docs.google.com/spreadsheets/d/1eoHBgDIEnpw-fN5UzbMiRsi7XstSw3BFOmFrDP07748/edit?usp=sharing" target="_blank">Google Sheets</a>
           <div class="showing">Showing {{filterData.length}} of {{totalProps = epcs.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
         </div>
       </div>
