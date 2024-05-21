@@ -32,6 +32,13 @@
           SMS
         </a>
       </div>
+      <!-- Probably needs something different for the ngShow -->
+      <div class="col-md-4 col-sm-6">
+        <a ui-sref="letter_templates" class="big-link" ng-show="auth.isAuthorized('sms_dashboard')">
+          <i class="fa-duotone fa-clipboard"></i>
+          Letter Templates
+        </a>
+      </div>
     </div>
   </div>
 </div>
