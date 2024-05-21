@@ -31,8 +31,8 @@ import './sites/admin/routes/misdescriptions/misdescriptions.ctrl.js';
 import './sites/admin/routes/misdescriptions/misdescriptions.routes.js';
 import './sites/admin/routes/kadmin/kadmin.ctrl.js';
 import './sites/admin/routes/kadmin/kadmin.routes.js';
-import './sites/admin/routes/letter-templates/letter-templates.ctrl.js';
-import './sites/admin/routes/letter-templates/letter-templates.routes.js';
+import './sites/admin/routes/sms-templates/sms-templates.ctrl.js';
+import './sites/admin/routes/sms-templates/sms-templates.routes.js';
 
 //LETTINGS
 

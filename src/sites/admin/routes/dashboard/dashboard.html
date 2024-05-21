@@ -29,14 +29,14 @@
       <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('sms_dashboard')">
         <a ui-sref="sms_dashboard" class="big-link">
           <i class="fa-duotone fa-mobile"></i>
-          SMS Templates
+          SMS
         </a>
       </div>
       <!-- Probably needs something different for the ngShow -->
-      <div class="col-md-4 col-sm-6">
-        <a ui-sref="letter_templates" class="big-link" ng-show="auth.isAuthorized('sms_dashboard')">
+      <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('sms_templates')">
+        <a ui-sref="sms_templates" class="big-link">
           <i class="fa-duotone fa-clipboard"></i>
-          Letter Templates
+          SMS Templates
         </a>
       </div>
     </div>
