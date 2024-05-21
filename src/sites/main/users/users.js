@@ -12,14 +12,14 @@ angular.module('vs-app')
     ];
     let firstTime = true;
     $scope.sites.forEach(site => site.users = $scope.list(site.id + ':users', null, (users) => {
-      getPendingUsers();
+      //getPendingUsers();
       const unloaded = $scope.sites.find(site => !site.users || !site.users.items || !site.users.items.length);
       if (unloaded) {
         console.log('unloaded', unloaded.id);
       }
       else {
         console.log('all loaded');
-        checkPermissions();
+        //checkPermissions();
       }
     }))
     $scope.roles = ['no access', 'agency', 'maintenance', 'admin', 'superadmin'];
@@ -60,7 +60,7 @@ angular.module('vs-app')
         console.log('added user to site', newUser.email, missingSites[0].sites[0].id);
         return;
       }
-      const badIds = us.map(u => {
+      /*const badIds = us.map(u => {
         return u.sites.filter(site => site.n[0]._id !== site.roleId)
       }).filter(o => o.length).filter(o => o[0].n[0].local.email !== 'superadmin@admin.com');
       if (badIds.length) {
@@ -86,6 +86,7 @@ angular.module('vs-app')
         console.log('deleted', badUser.local.email, 'from', badSiteId);
         return;
       }
+      */
       return;
       console.log('check permissions');
       if (!firstTime) return;
@@ -144,6 +145,7 @@ angular.module('vs-app')
         user.siteRoles = $scope.getExistingUserSites(user);
       });
       $scope.sites.forEach(site => {
+        return;
         ['agency', 'lettings'].forEach(siteId => {
           if (site.id === siteId) {
             const userEmails = $scope.myusers.items.filter(user => {
@@ -166,6 +168,7 @@ angular.module('vs-app')
     });
     const makeCode = () => [...[...new Date().getTime().toString(23)].reverse().join('').substr(0, 6)].join('').toUpperCase();
     $scope.makeNewUser = async (email, role) => {
+      console.log('make new user', email, role);
       const prevUser = $scope.myusers.items.find(prevUser => prevUser.email === email);
       if (prevUser) {
         //alert user already exists
@@ -350,10 +353,11 @@ angular.module('vs-app')
             if(!site || !siteRole) return;
             const siteUsers = site.users.items.filter(siteUser => siteUser.local.email === user.local.email);
             for (let siteUser of siteUsers) {
+              console.log('site user', siteUser, siteRole);
               siteUser.roles = {};
               siteUser.roles[siteRole] = {};
               siteUser.local.sites.main = siteUser.local.sites.main || {};
-              siteUser.local.sites.main.role = siteRole;
+              siteUser.local.sites.main = siteRole;
               site.users.saveFn = (item) => {
                 console.log('saved', item);
               }
@@ -382,7 +386,6 @@ angular.module('vs-app')
           }
         }))
         $scope.sites.find(site => site.id === 'main').users.save(mainUser);
-        return;
 
         if (result.changes.email) user.email = result.changes.email;
         user.local.email = user.email;
@@ -441,7 +444,9 @@ angular.module('vs-app')
         else {
           alert.log('User updated');
         }
-      } catch (e) { }
+      } catch (e) { 
+        console.log('error', e);
+      }
     };
   })
   .controller('mainNewUserCtrl', function ($scope, data, $http, ndxModalInstance) {

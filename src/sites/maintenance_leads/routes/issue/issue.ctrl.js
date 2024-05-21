@@ -3,6 +3,7 @@
   'use strict';
   angular.module('vs-maintenance-leads').controller('maintenance_leadsIssueCtrl', function($scope, $stateParams, $state, $http, $window, Auth, Upload, alert, breadcrumbs) {
     var myParams;
+    console.log('you saw me');
     $scope.fetched = false;
     $scope.submitted = false;
     $scope.redirect = null;
