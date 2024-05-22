@@ -3,7 +3,7 @@ angular.module('vs-admin').config(function($stateProvider) {
     url: '/admin/sms-templates',
     template: '<sms-templates></sms-templates>',
     data: {
-      title: 'Vitalspace Admin - Letter Templates',
+      title: 'Vitalspace Admin - SMS Templates',
       auth: ['superadmin', 'admin', 'agency']
     }
   });
