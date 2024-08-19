@@ -51,7 +51,7 @@
               <p ng-show="property.Fees[0].FeeValueType.SystemName===&quot;Absolute&quot;">({{ property.Fees[0].DefaultValue | currency : "£" : 0 }})</p>
               <p ng-show="property.Fees[0].FeeValueType.SystemName===&quot;Percentage&quot;">({{ property.$case.item.offer.Value * (property.Fees[0].DefaultValue / 100) | currency : "£" : 0 }})</p>
             </td>
-            <td class="options"><a class="button" ui-sref="agency_case({roleId:property.RoleId})">View Case</a></td>
+            <td class="options"><a class="button {{property.$case.item.pipeline==='HOME'?'pipeline-home':''}}" ui-sref="agency_case({roleId:property.RoleId})">View Case</a></td>
           </tr>
           <tr class="meta">
             <td colspan="2"><div class="title"><strong>{{property.$case.item.milestone.title}}</strong></div></td>

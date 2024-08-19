@@ -3,7 +3,7 @@
   <div class="container-xl">
     <div class="row case-progressions case-row">
       <div class="col">
-        <h1>Case <span class="address">- {{property.item.displayAddress}}<span class="right">{{property.item.$case.item.offer.Value | currency : "£" : 0}}</span></span></h1>
+        <h1>Case <span class="address">- {{property.item.displayAddress}}<span class="right"><img src="public/img/home-logo.png" class="pipeline-logo" ng-show="property.item.$case.item.pipeline==='HOME'"/>{{property.item.$case.item.offer.Value | currency : "£" : 0}}</span></span></h1>
         <h2 ng-show="property.item.$case.item.override.reason===&quot;fallenThrough&quot;">Fallen through</h2>
         <div class="advance-request" ng-repeat="request in property.item.$case.item.advanceRequests | filter:{dismissed:&quot;!true&quot;,applied:&quot;!true&quot;}">
           <div class="left">Requested to be advanced to {{request.advanceTo | date:'mediumDate'}} by <img gravatar-src="request.user.local.email"/>{{request.user.displayName || request.user.local.email}}</div>
@@ -13,12 +13,23 @@
           </div>
         </div>
         <agency-progression ng-repeat="progression in property.item.$case.item.progressions" data="progression"></agency-progression>
-        <button class="has-dropdown" ng-focus="progBtnFocussed=true" ng-blur="hideDropdown(&quot;progBtnFocussed&quot;)" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">Add Progression</button>
-        <ul class="dropdown" ng-show="progBtnFocussed">
-          <li ng-repeat="progression in progressions.items"><a href="" ng-click="addProgression(progression)">{{progression.name}}, {{progression.side}}</a></li>
-        </ul>
-        <button ng-hide="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="advanceProgression()">Advance all milestones</button>
-        <button ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="fallenThrough()">Fallen through</button>
+        <div class="row">
+          <div class="col-sm-10">
+            <button class="has-dropdown" ng-focus="progBtnFocussed=true" ng-blur="hideDropdown(&quot;progBtnFocussed&quot;)" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">Add Progression</button>
+            <ul class="dropdown" ng-show="progBtnFocussed">
+              <li ng-repeat="progression in progressions.items"><a href="" ng-click="addProgression(progression)">{{progression.name}}, {{progression.side}}</a></li>
+            </ul>
+            <button ng-hide="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="advanceProgression()">Advance all milestones</button>
+            <button ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="fallenThrough()">Fallen through</button>
+          </div>
+          <div class="col-sm-2 flex-pipeline">
+            <label>Pipeline&nbsp;</label>
+            <select ng-model="property.item.$case.item.pipeline" ng-change="property.item.$case.save()">
+              <option value="">Vitalspace</option>
+              <option>HOME</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
