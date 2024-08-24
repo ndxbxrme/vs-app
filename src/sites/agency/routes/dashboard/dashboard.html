@@ -57,6 +57,29 @@
             </div>
           </div>
         </div>
+        <!-- #region HOME -->
+        <div class="income">
+          <div class="thead">
+            <div class="tr">
+              <div class="th" colspan="{{incomeItems.length + 1}}"> <i class="fa fa-gbp" aria-hidden="true"></i> Income</div>
+            </div>
+          </div>
+          <div class="tbody">
+            <div class="tr head-two">
+              <div class="td"><img src="public/img/home-logo.png" class="pipeline-logo" /></div>
+              <div class="td" ng-repeat="di in incomeItems = (dashboard.items | filter:{type:&quot;income&quot;})">{{di.name}}</div>
+            </div>
+            <div class="tr total">
+              <div class="td">Total</div>
+              <div class="td clickable" ng-repeat="di in incomeItems" ng-click="showInfo(&quot;income&quot;, di, allmonths, 'HOME')"> 
+                <div class="inner">
+                  <label>{{di.name}}</label><span ng-bind-html="income(di, allmonths, null, 'HOME') | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- #endregion -->
       </div>
     
     </div>

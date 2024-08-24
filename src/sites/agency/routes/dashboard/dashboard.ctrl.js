@@ -21,6 +21,7 @@
       results = [];
       while (i-- > 0) {
         property = properties.items[i];
+        console.log(property.pipeline);
         if (property.override && property.override.deleted) {
           properties.items.splice(i, 1);
           continue;
@@ -38,7 +39,7 @@
       sort: 'i'
     });
     $scope.progressions = $scope.list('agency:progressions');
-    $scope.count = function(di, list) {
+    $scope.count = function(di, list, pipeline) {
       var b, branch, count, j, k, l, len, len1, len2, len3, len4, len5, len6, m, maxIndex, milestone, minIndex, n, o, output, p, progression, property, propertyGood, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7;
       output = [];
       count = 0;
@@ -71,6 +72,9 @@
         ref2 = $scope.properties.items;
         for (m = 0, len3 = ref2.length; m < len3; m++) {
           property = ref2[m];
+          if(pipeline && (pipeline !== property.pipeline)) {
+            continue;
+          }
           if (property && property.milestoneIndex && angular.isDefined(property.milestoneIndex[di.progression])) {
             if(property.override && property.override.deleted) {
               continue;
@@ -115,7 +119,7 @@
         return count;
       }
     };
-    $scope.countNew = (di, list) => {
+    $scope.countNew = (di, list, pipeline) => {
       const output = [];
       let count = 0;
       let minIndex = 0;
@@ -128,18 +132,18 @@
         });
       }
     };
-    $scope.total = function(items) {
+    $scope.total = function(items, pipeline) {
       var item, j, len, total;
       total = 0;
       if (items) {
         for (j = 0, len = items.length; j < len; j++) {
           item = items[j];
-          total += $scope.count(item);
+          total += $scope.count(item, null, pipeline);
         }
       }
       return total;
     };
-    $scope.income = function(di, month, list) {
+    $scope.income = function(di, month, list, pipeline) {
       var branch, count, j, k, l, len, len1, len2, len3, m, milestone, output, progression, property, ref, ref1, ref2, ref3, ref4, value;
       count = 0;
       output = [];
@@ -147,6 +151,9 @@
         ref = $scope.properties.items;
         for (j = 0, len = ref.length; j < len; j++) {
           property = ref[j];
+          if(pipeline && (pipeline !== property.pipeline)) {
+            continue;
+          }
           if ((ref1 = property.override) != null ? ref1.deleted : void 0) {
             continue;
           }
@@ -207,13 +214,13 @@
         return count;
       }
     };
-    $scope.showInfo = function(type, di, month) {
+    $scope.showInfo = function(type, di, month, pipeline) {
       var list;
       list = null;
       if (type === 'count') {
-        list = $scope.count(di, true);
+        list = $scope.count(di, true, pipeline);
       } else {
-        list = $scope.income(di, month, true);
+        list = $scope.income(di, month, true, pipeline);
       }
       if (list.length) {
         return $scope.modal({
