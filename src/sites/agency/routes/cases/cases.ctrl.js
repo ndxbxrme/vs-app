@@ -49,6 +49,25 @@
       }
       return results;
     });
+
+    $scope.filterMode = "0"; // Default mode to show all items
+
+    $scope.filterByPipeline = function(item) {
+        // Mode 1: Show all items
+        if ($scope.filterMode === "0") {
+            return true;
+        }
+    
+        // Mode 2: Show items with no pipeline set
+        if ($scope.filterMode === "1") {
+            return item.$case && item.$case.item && !item.$case.item.pipeline;
+        }
+    
+        // Mode 3: Show items with pipeline set to 'HOME'
+        if ($scope.filterMode === "2") {
+            return item.$case && item.$case.item && item.$case.item.pipeline === 'HOME';
+        }
+    };
     return $scope.hasRequest = function(property) {
       var i, len, ref, request;
       if ($scope.auth.checkRoles(['superadmin', 'admin']) && property.$case.item && property.$case.item.advanceRequests && property.$case.item.advanceRequests.length) {

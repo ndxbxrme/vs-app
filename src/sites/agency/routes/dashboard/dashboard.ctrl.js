@@ -21,7 +21,6 @@
       results = [];
       while (i-- > 0) {
         property = properties.items[i];
-        console.log(property.pipeline);
         if (property.override && property.override.deleted) {
           properties.items.splice(i, 1);
           continue;
@@ -72,7 +71,7 @@
         ref2 = $scope.properties.items;
         for (m = 0, len3 = ref2.length; m < len3; m++) {
           property = ref2[m];
-          if(pipeline && (pipeline !== property.pipeline)) {
+          if((pipeline && (pipeline !== property.pipeline)) || (!pipeline && property.pipeline)) {
             continue;
           }
           if (property && property.milestoneIndex && angular.isDefined(property.milestoneIndex[di.progression])) {
@@ -151,7 +150,7 @@
         ref = $scope.properties.items;
         for (j = 0, len = ref.length; j < len; j++) {
           property = ref[j];
-          if(pipeline && (pipeline !== property.pipeline)) {
+          if((pipeline && (pipeline !== property.pipeline)) || (!pipeline && property.pipeline)) {
             continue;
           }
           if ((ref1 = property.override) != null ? ref1.deleted : void 0) {

@@ -2,8 +2,15 @@
   <div class="container-xl">
 
     <div class="row align-items-center">
-      <div class="col-sm-8">
+      <div class="col-sm-6">
         <h1>Cases</h1>
+      </div>
+      <div class="col-sm-2">
+        <select ng-model="filterMode">
+            <option value="0">Show All</option>
+            <option value="1">No Pipeline</option>
+            <option value="2">HOME</option>
+        </select>
       </div>
       <div class="col-sm-4 search">
         <input type="text" ng-model="search" placeholder="Search Cases" ng-change="page=1"/>
@@ -35,7 +42,7 @@
             <th width="5%">Options</th>
           </tr>
         </thead>
-        <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
+        <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter} | filter:filterByPipeline  | orderBy:sort) | limitTo:limit:limit*(page-1)">
           <tr ng-click="property.open = !property.open">
             <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
               <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
