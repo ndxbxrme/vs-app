@@ -3,16 +3,27 @@
 
   <div class="container-xl">
     <div class="row align-items-center">
-      <div class="col-sm-8">
+      <div class="col-sm-6">
         <h1>Monthly Sales Agreed</h1>
+      </div>
+      <div class="col-sm-2">
+        
+        <select ng-model="filterMode" ng-change="updateProperties()">
+          <option value="0">Show All</option>
+          <option value="1">VITALSPACE</option>
+          <option value="2">HOME</option>
+        </select>
       </div>
       <div class="col-sm-4 search">
         <input type="text" ng-model="search" placeholder="Search..."/>
       </div>
     </div>
-
-    <div class="years">
-      <a href="" ng-click="setDateRange(year)" ng-repeat="year in years" ng-class="{selected:year===currentYear}">{{year}}</a>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="years" style="display: flex">
+          <a href="" ng-click="setDateRange(year)" ng-repeat="year in years" ng-class="{selected:year===currentYear}">{{year}}</a>
+        </div>
+      </div>
     </div>
     
     <div class="months">

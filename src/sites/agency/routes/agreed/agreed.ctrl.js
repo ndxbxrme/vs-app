@@ -3,6 +3,7 @@
   'use strict';
   angular.module('vs-agency').controller('agencyAgreedCtrl', function($scope, $filter, $timeout, $http) {
     var updateMonths, updateProperties, updateTargets, y;
+    $scope.filterMode = "1";
     $scope.now = new Date().valueOf();
     $scope.years = [];
     y = new Date().getFullYear() + 1;
@@ -95,7 +96,7 @@
       if ($scope.properties && $scope.properties.items) {
         if(historic && historic[$scope.currentYear.toString()]) {
           for(let f = 0; f<$scope.months.length; f++) {
-            $scope.months[f].properties = historic[$scope.currentYear.toString()][f];
+            $scope.months[f].properties = historic[$scope.currentYear.toString()][f].filter(prop => $scope.filterMode==="2"?prop.pipeline==='HOME':true);
             $scope.months[f].properties.forEach(p => {$scope.months[f].commission += p.commission});
           }
           return;
@@ -104,6 +105,8 @@
         results = [];
         for (k = 0, len1 = ref1.length; k < len1; k++) {
           property = ref1[k];
+          if($scope.filterMode==="1" && property.pipeline==='HOME') {continue;}
+          if($scope.filterMode==="2" && property.pipeline!=='HOME') {continue;}
           i = $scope.months.length;
           results.push((function() {
             var ref2, results1;
@@ -141,6 +144,7 @@
         return results;
       }
     };
+    $scope.updateProperties = updateProperties;
     $scope.targets = $scope.list('agency:targets', {
       where: {
         type: 'salesAgreed'
