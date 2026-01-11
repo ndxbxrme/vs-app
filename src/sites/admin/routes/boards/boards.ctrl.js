@@ -5,7 +5,6 @@ angular.module('vs-admin')
     template: require('./boards.html').default,
     scope: {},
     link: (scope) => {
-      console.log('hiya');
       scope.newBoard = {};
       scope.currentBoardDate = null;
       scope.currentBoardsCompleted = false;
@@ -67,7 +66,7 @@ angular.module('vs-admin')
             scope.currentBoardDate = firstBoard.date;
           }
           else {
-            scope.currentBoardDate = getPreviousThursday(new Date());
+            scope.currentBoardDate = getPreviousThursday(new Date(new Date().getTime() + 24 * 60 * 60 * 1000));
           }
         }
         scope.selectedDate = new Date(scope.currentBoardDate);
@@ -80,7 +79,7 @@ angular.module('vs-admin')
           }
         });
       }
-      scope.boardsList = scope.list('main:boards', null, (items) => {
+      scope.boardsList = scope.list('main:boards', {where:{isWindow:null}}, (items) => {
         drawBoards(items.items);
       })
       function getNextThursdays() {
@@ -95,7 +94,6 @@ angular.module('vs-admin')
           thursdays.push(nextThursday.toISOString().split('T')[0]);
           daysUntilNextThursday += 7;
         }
-        console.log('thursdays', thursdays);
         return thursdays;
       }
       function getPreviousThursday(inputDate) {
@@ -107,7 +105,6 @@ angular.module('vs-admin')
       
         const previousThursday = new Date(date);
         previousThursday.setDate(date.getDate() - daysUntilPreviousThursday);
-        console.log(inputDate, previousThursday);
         return previousThursday.toISOString().split('T')[0];
       }
       scope.upcomingThursdays = getNextThursdays();
@@ -118,7 +115,6 @@ angular.module('vs-admin')
         }
       }
       scope.selectDate = () => {
-        console.log('select date');
         scope.currentBoardDate = getPreviousThursday(scope.selectedDate);
         drawBoards(scope.boardsList.items);
       }

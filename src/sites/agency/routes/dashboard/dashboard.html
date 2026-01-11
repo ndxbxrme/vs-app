@@ -25,6 +25,32 @@
             </div>
           </div>
         </div>
+        <div class="overview" ng-show="unknownConsultantCount()">
+          <div class="thead">
+            <div class="tr">
+              <div class="th" colspan="2">Unknown consultant</div>
+            </div>
+          </div>
+          <div class="tbody">
+            <div class="tr">
+              <div class="td">Cases</div>
+              <div class="td clickable" ng-click="showUnknownInfo('Consultant')">{{unknownConsultantCount()}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="overview" ng-show="unknownSolicitorCount()">
+          <div class="thead">
+            <div class="tr">
+              <div class="th" colspan="2">Unknown solicitor</div>
+            </div>
+          </div>
+          <div class="tbody">
+            <div class="tr">
+              <div class="td">Cases</div>
+              <div class="td clickable" ng-click="showUnknownInfo('Solicitor')">{{unknownSolicitorCount()}}</div>
+            </div>
+          </div>
+        </div>
       </div>
     
       <div class="col-md-8">
@@ -71,14 +97,64 @@
             </div>
             <div class="tr total">
               <div class="td">Total</div>
-              <div class="td clickable" ng-repeat="di in incomeItems" ng-click="showInfo(&quot;income&quot;, di, allmonths, 'HOME')"> 
+              <div class="td clickable" ng-repeat="di in incomeItems" ng-click="showInfo(&quot;income&quot;, di, alltime, 'HOME')"> 
                 <div class="inner">
-                  <label>{{di.name}}</label><span ng-bind-html="income(di, allmonths, null, 'HOME') | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></span>
+                  <label>{{di.name}}</label><span ng-bind-html="income(di, alltime, null, 'HOME') | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- #endregion -->
+        <!-- #region Staff sold units -->
+        <!-- Consultant Pipeline -->
+        <div class="income pipeline" ng-if="consultants.items.length && dashboard.items.length">
+          <div class="thead">
+            <div class="tr">
+              <div class="th" colspan="{{consultants.items.length + 1}}">Consultant Pipeline</div>
+            </div>
+          </div>
+          <div class="tbody">
+            <div class="tr head-two">
+              <div class="td" ng-repeat="c in consultants.items"><img gravatar-src="c.local.email" gravatar-size="32" class="user-avatar" /> {{c.initials || c.displayName}}</div>
+              <div class="td td-end"><span></span><span>Total</span></div>
+            </div>
+            <div class="tr">
+              <div class="td" ng-repeat="c in consultants.items">
+                {{(consultantPipeline()[c._id] || 0)}}
+              </div>
+              <div class="td">
+                {{sum(consultantPipeline()) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Consultant Exchanged Units -->
+        <div class="income exchanged" ng-if="consultants.items.length && dashboard.items.length">
+          <div class="thead">
+            <div class="tr">
+              <div class="th" colspan="{{consultants.items.length + 2}}">Exchanged Units</div>
+            </div>
+          </div>
+          <div class="tbody">
+            <div class="tr head-two">
+              <div class="td td-end"><span></span><span>Month</span></div>
+              <div class="td" ng-repeat="c in consultants.items"><img gravatar-src="c.local.email" gravatar-size="32" class="user-avatar" /> {{c.initials || c.displayName}}</div>
+              <div class="td td-end"><span></span><span>Total</span></div>
+            </div>
+            <div class="tr" ng-repeat="month in months">
+              <div class="td">{{month.name}}</div>
+              <div class="td" ng-repeat="c in consultants.items">
+                {{consultantExchanges(dashboardExchangeItem, month)[c._id] || 0}}
+              </div>
+              <div class="td">
+                {{sum(consultantExchanges(dashboardExchangeItem, month))}}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- #endregion -->
       </div>
     

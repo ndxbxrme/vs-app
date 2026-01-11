@@ -1,65 +1,102 @@
 <div class="users">
-  <div class="container-xl">
-
-    <div class="table_heading">
-      <h3 class="orange">Users</h3>
-      <input type="button" ng-click="addEditUser()" value="Add new user" />
-    </div>
-    <div class="table-responsive">
-      <table class="table_users">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Sites</th>
-            <th>Reset</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody ng-repeat="user in myusers.items | orderBy:'name'">
-          <tr>
-            <td class="td_icon"><img gravatar-src="user.local.email" /></td>
-            <td class="td_name">{{user.displayName || user.local.email}}</td>
-            <td class="td_email">{{user.local.email}}</td>
-            <td class="td_status">{{user.code ? 'Awaiting password reset' : 'Active'}}</td>
-            <td class="td_sites"><a href="" ng-click="addEditUser(user)"><span ng-repeat="site in user.siteRoles"><i class="fa-light {{site.icon}}"></i>{{site.name}}</span></a></td>
-            <td><a href="" ng-click="resetUser(user)">Reset</a></td>
-            <td class="td_delete"><a href="" ng-click="deleteUser(user)">Delete</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table_heading" ng-hide="!pendingUsers.length">
+  <div class="container-xl" ng-if="(myusers.items | filter: {'displayName': '!'}).length > 0">
+    <div class="table-heading">
       <h3 class="orange">Pending Users</h3>
     </div>
-    <div class="table-responsive" ng-hide="!pendingUsers.length">
-      <table class="table_users">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Sites</th>
-            <th>Invite</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody ng-repeat="user in pendingUsers">
-          <tr>
-            <td class="td_icon"><img gravatar-src="user.local.email" /></td>
-            <td class="td_name">{{user.displayName || user.local.email}}</td>
-            <td class="td_email">{{user.local.email}}</td>
-            <td class="td_sites">
-              
-              <span ng-repeat="site in user.siteRoles"><i class="fa-light {{site.icon}}"></i>{{site.name}}</span>
-            </td>
-            <td><a href="" ng-click="inviteExistingUser(user)">Invite</a></td>
-            <td class="td_delete"><a href="" ng-click="deleteUser(user)">Delete</a></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="table-responsive">
+      <div class="table_users_new">
+        <!-- Header Row -->
+        <div class="users-row heading">
+          <div class="users-cell expandable"></div>
+          <div class="users-cell even-cell" ng-repeat="site in sites">{{site.name}}</div>
+          <div class="users-cell collapsible"></div>
+        </div>
+
+        <!-- User Rows -->
+        <div class="users-row" ng-repeat="user in myusers.items | filter:{'displayName':'!'} | orderBy:'displayName'">
+          <!-- User Information -->
+          <div class="users-cell expandable">
+            <img gravatar-src="user.local.email" gravatar-size="48" class="user-avatar" />
+            <div>
+              <div class="display-name">{{user.displayName}}</div>
+              <div class="user-email">{{user.local.email}}</div>
+              <div class="password-reset-badge" ng-if="user.code">Awaiting reset</div>
+            </div>
+          </div>
+
+          <!-- Role Cells -->
+          <div
+            class="users-cell even-cell"
+            ng-repeat="site in sites track by site.id"
+            ng-click="swapRole(user, site.id)"
+            title="{{site.name}} - {{user.local.sites[site.id].role}}"
+            ng-style="{'background-color': roleData[user.local.sites[site.id].role].color + '50'}"
+          >
+            <i ng-class="getIconClass(user.local.sites[site.id].role, user)"></i>
+          </div>
+
+          <!-- Actions -->
+          <div class="users-cell collapsible actions">
+            <a class="reset-btn" href="" ng-click="resetUser(user)">
+              <i class="fa fa-rotate-right"></i>&nbsp; Reset
+            </a>
+            <a class="delete-btn" href="" ng-click="deleteUser(user)">
+              <i class="fa fa-trash"></i>&nbsp; Delete
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-xl" ng-if="(myusers.items | filter: {'displayName': ''}).length > 0">
+    <div class="table-heading">
+      <h3 class="orange">Users</h3>
+      <button class="btn-add-user" ng-click="addEditUser()">Add New User</button>
+    </div>
+    <div class="table-responsive">
+      <div class="table_users_new">
+        <!-- Header Row -->
+        <div class="users-row heading">
+          <div class="users-cell expandable"></div>
+          <div class="users-cell even-cell" ng-repeat="site in sites">{{site.name}}</div>
+          <div class="users-cell collapsible"></div>
+        </div>
+
+        <!-- User Rows -->
+        <div class="users-row" ng-repeat="user in myusers.items | filter:{'displayName':''} | orderBy:'displayName'">
+          <!-- User Information -->
+          <div class="users-cell expandable">
+            <img gravatar-src="user.local.email" gravatar-size="48" class="user-avatar" />
+            <div>
+              <div class="display-name">{{user.displayName}}</div>
+              <div class="user-email">{{user.local.email}}</div>
+              <!--<div class="save-user-roles"><button ng-click="saveUserRoles(user)">Save roles</button></div>-->
+              <div class="password-reset-badge" ng-if="user.code">Awaiting reset</div>
+            </div>
+          </div>
+
+          <!-- Role Cells -->
+          <div
+            class="users-cell even-cell"
+            ng-repeat="site in sites track by site.id"
+            ng-click="swapRole(user, site.id)"
+            title="{{site.name}} - {{user.local.sites[site.id].role}}"
+            ng-style="{'background-color': roleData[user.local.sites[site.id].role].color + '50'}"
+          >
+            <i ng-class="getIconClass(user.local.sites[site.id].role, user)"></i>
+          </div>
+
+          <!-- Actions -->
+          <div class="users-cell collapsible actions">
+            <a class="reset-btn" href="" ng-click="resetUser(user)">
+              <i class="fa fa-rotate-right"></i>&nbsp; Reset
+            </a>
+            <a class="delete-btn" href="" ng-click="deleteUser(user)">
+              <i class="fa fa-trash"></i>&nbsp; Delete
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

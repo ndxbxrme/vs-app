@@ -25,6 +25,8 @@ import './sites/admin/routes/dashboard/dashboard.ctrl.js';
 import './sites/admin/routes/dashboard/dashboard.routes.js';
 import './sites/admin/routes/boards/boards.ctrl.js';
 import './sites/admin/routes/boards/boards.routes.js';
+import './sites/admin/routes/windows/windows.ctrl.js';
+import './sites/admin/routes/windows/windows.routes.js';
 import './sites/admin/routes/epc/epc.ctrl.js';
 import './sites/admin/routes/epc/epc.routes.js';
 import './sites/admin/routes/misdescriptions/misdescriptions.ctrl.js';
@@ -82,6 +84,12 @@ import './sites/lettings/services/file-utils.js';
 import './sites/lettings/services/message.js';
 import './sites/lettings/services/progression-popup.s.js';
 import './sites/lettings/services/property.s.js';
+import './sites/lettings/routes/offers-list/offers-list.ctrl.js';
+import './sites/lettings/routes/offers-list/offers-list.routes.js';
+import './sites/lettings/routes/offer/offer.ctrl.js';
+import './sites/lettings/routes/offer/offer.routes.js';
+import './sites/lettings/routes/coming-soon/coming-soon.ctrl.js';
+import './sites/lettings/routes/coming-soon/coming-soon.routes.js';
 
 
 //MAINTENANCE

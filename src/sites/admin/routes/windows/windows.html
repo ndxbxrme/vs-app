@@ -1,0 +1,105 @@
+<div ng-show="auth.getUser()" class="dashboard-route route admin-windows maintenance-leads-dashboard">
+  <div class="container-xl">
+    <h1>Windows <strong class="orange">Dashboard</strong></h1>
+    <div class="row">
+      <!--<div class="col-sm-12 col-md-6">
+        <h3>Window Date: <strong class="orange"><input type="date" class="window-date" ng-change="selectDate()" ng-model="selectedDate" /></strong></h3>
+      </div>-->
+      <div class="col-sm-12 col-md-6">
+        <input type="text" ng-model="search" ng-change="searchWindows()" ng-keyup="searchWindows()" placeholder="Search..." />
+      </div>
+    </div>
+    <div class="row">
+      <table class="windows-search-results" ng-show="searchResults && searchResults.length">
+        <tr>
+          <th>Address</th>
+          <!--<th>Date</th>-->
+          <th>Window type</th>
+          <th>Completed</th>
+        </tr>
+        <tr ng-repeat="window in searchResults" ng-click="selectSearchResult(window.date)">
+          <td>{{window.address}}</td>
+          <!--<td>{{window.date | date:'dd/MM/yyyy'}}</td>-->
+          <td>{{windowName(window.type)}}</td>
+          <td>{{window.completed | date:'dd/MM/yyyy'}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="row boxes">
+      <div class="col-xl-3 col-sm-6" ng-repeat="window in windows">
+        <div class="box">
+          <div class="title">{{window.name}} <span ng-class="{empty:!window.items.length}" class="box-number">{{window.items.length}}</span></div>
+          <div ng-repeat="item in window.items" ng-class="issue.status" class="issue">
+            <div class="details">
+              <a class="address" ui-sref="agency_client-management-details-roleid({roleid:item.RoleId})" ng-show="item.RoleId && (window.link==='clientmanagement')">{{item.address}}</a>
+              <a class="address" ui-sref="agency_case({roleId:item.RoleId})" ng-show="item.RoleId && (window.link==='conveyancing')">{{item.address}}</a>
+              <a class="address" ui-sref="lettings_case({roleId:item.RoleId})" ng-show="item.RoleId && (window.link==='lettings')">{{item.address}}</a>
+              <div class="address" ng-show="!item.RoleId || !window.link">{{item.address}}</div>
+            </div>
+            <div class="status1">
+              <div class="completed" ng-show="item.completed">
+                <div class="fad fa-thumbs-up"></div>
+              </div>
+              <div class="delete" ng-show="!item.completed" ng-click="deleteItem(item)">
+                <div class="fad fa-trash"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row form">
+      <div class="form-holder col-12 add-window-form">
+        <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save()">
+          <div class="row d-flex align-items-center">
+            <div class="col-md-8">
+              <h2><img src="./public/img/board-icon.png" width="50"/> Adding a window</h2>
+            </div>
+            <div class="col-md-4 text-end window-controls">
+              <label><strong>Actions</strong></label>
+              <div>
+                <button type="button" ng-click="printWindows()"><i class="fa-light fa-print"></i>Print Windows</button>
+                <button type="button" ng-click="completeWindows()">{{currentWindowsCompleted?'Reset':'Complete Windows'}}</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-4">
+              <label>Property Address</label>
+              <div class="form-controls">
+                <input type="text" ng-model="newWindow.address" />
+              </div>
+            </div>
+            <!--<div class="col-sm-12 col-md-3">
+              <label>Window Date</label>
+              <div class="form-controls">
+                <div class="input-holder">
+                  <select ng-model="newWindow.date">
+                    <option ng-repeat="thursday in upcomingThursdays" ng-value="thursday">{{thursday | date:'dd/MM/yyyy'}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>-->
+            <div class="col-sm-12 col-md-3">
+              <label>Window Type</label>
+              <div class="form-controls">
+                <div class="input-holder">
+                  <select ng-model="newWindow.type">
+                    <option ng-repeat="window in windows" ng-value="window.type">{{window.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-2">
+              <label>&nbsp;</label>
+              <div class="flex-right">
+                <input type="submit" value="ADD BOARD" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -85,121 +85,57 @@
         date: p.date
       })));
     }));
-    function rebuildMonthsFiltered() {
-      const filtered = $filter('filter')($scope.months, $scope.search);
-      $scope.monthsFiltered = $filter('orderBy')(filtered, 'date');
-    }
-    updateProperties = function () {
-      // Reset months quickly
-      const months = $scope.months || [];
-      for (let m = 0; m < months.length; m++) {
-        months[m].properties = [];
-        months[m].commission = 0;
+    updateProperties = function() {
+      var completeBeforeDelisted, i, j, k, len, len1, milestone, month, progression, property, ref, ref1;
+      ref = $scope.months;
+      for (j = 0, len = ref.length; j < len; j++) {
+        month = ref[j];
+        month.properties = [];
+        month.commission = 0;
       }
-
-      // Nothing to do?
-      if (!($scope.properties && $scope.properties.items)) return;
-
-      const yearKey = String($scope.currentYear);
-      const filterMode = $scope.filterMode;
-      const items = $scope.properties.items;
-      const endStart = new Date($scope.endDate.startDate);
-
-      // Fast path: historic
-      if (typeof historic !== "undefined" && historic && historic[yearKey]) {
-        for (let f = 0; f < months.length; f++) {
-          // Filter once; sum once
-          const list = historic[yearKey][f] || [];
-          const filtered = (filterMode === "2")
-            ? list.filter(p => p.pipeline === "HOME")
-            : list;
-          months[f].properties = filtered;
-          let c = 0;
-          for (let p = 0; p < filtered.length; p++) c += +filtered[p].commission || 0;
-          months[f].commission = c;
+      if ($scope.properties && $scope.properties.items) {
+        if(historic && historic[$scope.currentYear.toString()]) {
+          for(let f = 0; f<$scope.months.length; f++) {
+            $scope.months[f].properties = historic[$scope.currentYear.toString()][f].filter(prop => $scope.filterMode==="2"?prop.pipeline==='HOME':true);
+            $scope.months[f].properties.forEach(p => {$scope.months[f].commission += p.commission});
+          }
+          return;
         }
-        return;
-      }
-
-      // Precompute month start dates (assumed ascending) for binary search
-      const monthStarts = months.map(m => m.date);
-
-      function monthIndexFor(date) {
-        // find the last month whose start < date
-        let lo = 0, hi = monthStarts.length - 1, ans = -1;
-        while (lo <= hi) {
-          const mid = (lo + hi) >> 1;
-          if (monthStarts[mid] < date) { ans = mid; lo = mid + 1; }
-          else { hi = mid - 1; }
-        }
-        return ans;
-      }
-
-      for (let p = 0; p < items.length; p++) {
-        const property = items[p];
-
-        // filterMode short-circuits
-        if (filterMode === "1" && property.pipeline === "HOME") continue;
-        if (filterMode === "2" && property.pipeline !== "HOME") continue;
-
-        const start = new Date(property.startDate);
-        // quick reject (keeps logic equivalent to your checks)
-        if (!(endStart > start && start > monthStarts[0])) continue;
-
-        const idx = monthIndexFor(start);
-        if (idx < 0) continue; // falls before first month
-
-        // compute completeBeforeDelisted safely
-        let completeBeforeDelisted = false;
-        if (property.progressions && property.progressions.length) {
-          const progression = property.progressions[0];
-          const milestones = progression.milestones || [];
-          if (milestones.length) {
-            const last = milestones[milestones.length - 1];
-            // preserve your original truthiness logic
-            completeBeforeDelisted =
-              (!last[0].completed && property.delisted) || !property.delisted;
+        ref1 = $scope.properties.items;
+        for (k = 0, len1 = ref1.length; k < len1; k++) {
+          property = ref1[k];
+          if($scope.filterMode==="1" && property.pipeline==='HOME') {continue;}
+          if($scope.filterMode==="2" && property.pipeline!=='HOME') {continue;}
+          i = $scope.months.length;
+          var ref2;
+          while (i-- > 0) {
+            month = $scope.months[i];
+            if (($scope.endDate.startDate > (ref2 = new Date(property.startDate)) && ref2 > month.date)) {
+              completeBeforeDelisted = false;
+              if (property.progressions && property.progressions.length) {
+                progression = property.progressions[0];
+                milestone = progression.milestones[progression.milestones.length - 1];
+                completeBeforeDelisted = (!milestone[0].completed && property.delisted) || !property.delisted;
+              }
+              property.override = property.override || {};
+              if (!property.override.deleted) {
+                month.commission += +property.override.commission || +property.role.Commission;
+                month.properties.push({
+                  _id: property._id,
+                  address: property.override.address || `${property.offer.Property.Address.Number} ${property.offer.Property.Address.Street}, ${property.offer.Property.Address.Locality}`,
+                  commission: property.override.commission || property.role.Commission,
+                  date: property.override.date || property.startDate,
+                  roleId: property.roleId,
+                  delisted: property.delisted,
+                  completeBeforeDelisted: completeBeforeDelisted
+                });
+              }
+              break;
+            }
           }
         }
-
-        const ov = property.override || {};
-        if (ov.deleted) continue;
-
-        const commission = (+ov.commission) || (+property.role.Commission) || 0;
-
-        const month = months[idx];
-        month.commission += commission;
-
-        // build once, avoid repeated deep access with locals
-        const offerAddr = property.offer && property.offer.Property && property.offer.Property.Address;
-        const defaultAddress = offerAddr
-          ? `${offerAddr.Number} ${offerAddr.Street}, ${offerAddr.Locality}`
-          : ""; // fallback defensively
-
-        month.properties.push({
-          _id: property._id,
-          address: ov.address || defaultAddress,
-          commission: ov.commission || property.role.Commission,
-          date: ov.date || property.startDate,
-          roleId: property.roleId,
-          delisted: property.delisted,
-          completeBeforeDelisted
-        });
       }
-      $timeout(() => {
-        rebuildMonthsFiltered();
-        $scope.$applyAsync();
-      })
     };
-    $scope.getYearTotal = () => {
-      if(!$scope.months) return 0;
-      let total = $scope.months.reduce((res, val) => {return res + val.commission}, 0);
-      return total;
-    };
-    $scope.$watchGroup(['months', 'search'], function () {
-      if (!$scope.months) { $scope.monthsFiltered = []; return; }
-      rebuildMonthsFiltered();
-    });
     $scope.updateProperties = updateProperties;
     $scope.targets = $scope.list('agency:targets', {
       where: {

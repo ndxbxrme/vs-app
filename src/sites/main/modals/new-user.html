@@ -1,16 +1,9 @@
 <div class="new-user-modal">
   <form name="forms.userForm" ng-submit="submit()">
     <h2 ng-hide="user.local.email">New user</h2>
-    <h2 ng-show="user.local.email">Edit user</h2>
     <div class="form-item">
       <label>Email</label>
       <input type="text" name="email" ng-model="user.email" ng-disabled="user.local.email" />
-    </div>
-    <div class="form-item" ng-repeat="site in roles">
-      <label>{{site.displayName}}</label>
-      <select name="role_{{site.name}}" ng-model="site.role">
-        <option ng-repeat="role in allRoles" ng-value="role">{{role}}</option>
-      </select>
     </div>
     <div class="controls">
       <input type="submit" value="Submit" />

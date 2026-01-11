@@ -37,7 +37,6 @@
           }
         }
       }
-      return console.log('missing message:', key);
     };
     return {
       m: m

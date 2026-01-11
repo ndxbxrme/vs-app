@@ -37,8 +37,8 @@
             <pages ng-click="menuOpen = false">
               <a ui-sref="lettings_available", ng-class="{selected:state('lettings_available')}" ng-show="auth.isAuthorized('lettings_available')">Available</a>
               <a ui-sref="lettings_cases", ng-class="{selected:state(['lettings_cases', 'lettings_case'])}" ng-show="auth.isAuthorized('lettings_cases')">Cases</a>
-              <a ui-sref="lettings_agreed", ng-class="{selected:state('lettings_agreed')}" ng-show="auth.isAuthorized('lettings_agreed')">Agreed</a>
-              <a ui-sref="lettings_accept", ng-class="{selected:state('lettings_accept')}" ng-show="auth.isAuthorized('lettings_accept')">Accept</a>
+              <a ui-sref="lettings_offers-list", ng-class="{selected:state(['lettings_offers-list','lettings_offer'])}" ng-show="auth.isAuthorized('lettings_offers-list')">Pending Offers</a>
+              <a ui-sref="lettings_agreed", ng-class="{selected:state('lettings_agreed')}" ng-show="auth.isAuthorized('lettings_agreed')">Agreed Lets</a>
               <a ui-sref="lettings_marketing", ng-class="{selected:state('lettings_marketing')}" ng-show="auth.isAuthorized('lettings_marketing')">Marketing</a>
               <a ui-sref="lettings_setup", ng-class="{selected:state('lettings_setup')}" ng-show="auth.isAuthorized('lettings_setup')">Setup</a>
             </pages>
@@ -83,6 +83,7 @@
               <a ui-sref="sms_dashboard", ng-class="{selected:state(['sms_dashboard'])}" ng-show="auth.isAuthorized('sms_dashboard')">SMS</a>
               <!-- Probably needs something different for the ngShow -->
               <a ui-sref="sms_templates", ng-class="{selected:state(['sms_templates'])}" ng-show="auth.isAuthorized('sms_dashboard')">SMS Templates</a>
+              <a ui-sref="admin_windows", ng-class="{selected:state('admin_windows')}" ng-show="auth.isAuthorized('admin_windows')">Windows</a>
             </pages>
           </site>
 

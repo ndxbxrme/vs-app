@@ -51,7 +51,7 @@
               <div class="tenant" ng-repeat="tenant in property.$case.item.Tenants">{{tenant.Person.ContactName}}</div>
             </td>
             <td class="movein">{{property.$case.item.proposedMoving | date:'MMM d, yyyy'}}</td>
-            <td class="options"><a class="button" ui-sref="lettings_case({roleId:property.RoleId})">View Case</a></td>
+            <td class="options"><a class="button" ui-sref="lettings_case({roleId:property.RoleId})">View Case<span ng-if="property.$case.item.delisted && auth.getUser().local.email==='superadmin@admin.com'"> Delisted</span></a></td>
           </tr>
           <tr class="meta">
             <td colspan="2"><div class="title"><strong>{{property.$case.item.milestone.title}}</strong></div></td>

@@ -3,11 +3,28 @@
   'use strict';
   angular.module('vs-agency').controller('agencyDashboardCtrl', function($scope, $filter, env, $http) {
     var bmonth, i, month, monthNames, now;
+    $scope.consultantTotals = {};
+    $scope.unknownConsultant = {};
+    $scope.unknownSolicitor = {};
+    $scope.unknownConsultantCount = () => Object.keys($scope.unknownConsultant).length;
+    $scope.unknownSolicitorCount = () => Object.keys($scope.unknownSolicitor).length;
     $scope.propsOpts = {
       where: {
         delisted: null
       }
     };
+    // consultant
+    $scope.consultants = $scope.list('main:users', null, (users) => {
+      users.items = users.items.filter(user => {
+        const siteRole = user.siteRoles && user.siteRoles.find(role => role.siteId==='agency' && user.displayName!=='lettings');
+        if(user.email==='richard@vitalspace.co.uk') return true;
+        if(siteRole) {
+          return siteRole.role==='agency' || siteRole.role==='admin';
+        }
+        return false;
+      }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
+    });
+    //properties
     let historic = null;
     $http.get('/public/data/conveyancing-historic.json').then(res => {
       historic = res.data;
@@ -30,70 +47,79 @@
           progression = property.progressions[0];
           milestone = progression.milestones[progression.milestones.length - 1];
           completeBeforeDelisted = !milestone[0].completed && property.delisted || !property.delisted;
+          const stale = new Date(property.role.CreatedDate) < (new Date() - (365 * 24 * 60 * 60 * 1000));
+          if(!milestone[0].completed && !stale) {
+            if(!property.consultant) $scope.unknownConsultant[property._id] = property;
+            if(!property.purchasersSolicitor || !Object.keys(property.purchasersSolicitor).length) $scope.unknownSolicitor[property._id] = property;
+            if(!property.vendorsSolicitor || !Object.keys(property.vendorsSolicitor).length) $scope.unknownSolicitor[property._id] = property;
+          }
         }
         property.completeBeforeDelisted = completeBeforeDelisted;
       }
     });
     $scope.dashboard = $scope.list('agency:dashboard', {
       sort: 'i'
+    }, (dashboard) => {
+      $scope.dashboardExchangeItem = dashboard.items.find(function(item) {
+        return item.name === 'Exchanges';
+      });
     });
     $scope.progressions = $scope.list('agency:progressions');
+
+    // #region refactor
     $scope.count = function(di, list, pipeline) {
-      var b, branch, count, j, k, l, len, len1, len2, len3, len4, len5, len6, m, maxIndex, milestone, minIndex, n, o, output, p, progression, property, propertyGood, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7;
-      output = [];
-      count = 0;
-      minIndex = 0;
-      maxIndex = 100;
-      if(historic && historic[di._id]) {
+      var output = [];
+      var count = 0;
+      var minIndex = 0;
+      var maxIndex = 100;
+      var i, j, k, l, m, n, o, p;
+      var progression, property, branch, milestone;
+
+      if (historic && historic[di._id]) {
         return list ? historic[di._id].list : historic[di._id].count;
       }
-      if ($scope.properties && $scope.properties.items && $scope.progressions && $scope.progressions.items) {
-        ref = $scope.progressions.items;
-        for (j = 0, len = ref.length; j < len; j++) {
-          progression = ref[j];
-          if (progression._id === di.progression) {
-            ref1 = progression.milestones;
-            for (b = k = 0, len1 = ref1.length; k < len1; b = ++k) {
-              branch = ref1[b];
-              for (l = 0, len2 = branch.length; l < len2; l++) {
-                milestone = branch[l];
-                if (milestone._id === di.minms) {
-                  minIndex = b;
-                }
-                if (milestone._id === di.maxms) {
-                  maxIndex = b;
-                  break;
-                }
-              }
+
+      if (!($scope.properties && $scope.properties.items && $scope.progressions && $scope.progressions.items)) {
+        return list ? [] : 0;
+      }
+
+      for (i = 0; i < $scope.progressions.items.length; i++) {
+        progression = $scope.progressions.items[i];
+        if (progression._id === di.progression && progression.milestones) {
+          for (j = 0; j < progression.milestones.length; j++) {
+            branch = progression.milestones[j];
+            if (!branch) continue;
+            for (k = 0; k < branch.length; k++) {
+              milestone = branch[k];
+              if (milestone._id === di.minms) minIndex = j;
+              if (milestone._id === di.maxms) maxIndex = j;
             }
           }
         }
-        ref2 = $scope.properties.items;
-        for (m = 0, len3 = ref2.length; m < len3; m++) {
-          property = ref2[m];
-          if((pipeline && (pipeline !== property.pipeline)) || (!pipeline && property.pipeline)) {
-            continue;
-          }
-          if (property && property.milestoneIndex && angular.isDefined(property.milestoneIndex[di.progression])) {
-            if(property.override && property.override.deleted) {
-              continue;
-            }
+      }
 
-            if ((minIndex <= (ref4 = property.milestoneIndex[di.progression]) && ref4 <= maxIndex)) {
-              propertyGood = true;
-              if (di.min && di.max) {
-                propertyGood = false;
-                ref5 = property.progressions;
-                for (n = 0, len4 = ref5.length; n < len4; n++) {
-                  progression = ref5[n];
-                  if (progression._id === di.progression) {
-                    ref6 = progression.milestones;
-                    for (o = 0, len5 = ref6.length; o < len5; o++) {
-                      branch = ref6[o];
-                      for (p = 0, len6 = branch.length; p < len6; p++) {
-                        milestone = branch[p];
+      for (l = 0; l < $scope.properties.items.length; l++) {
+        property = $scope.properties.items[l];
+        if (!property || (pipeline && pipeline !== property.pipeline) || (!pipeline && property.pipeline)) continue;
+        if (property.override && property.override.deleted) continue;
+
+        if (property.milestoneIndex && typeof property.milestoneIndex[di.progression] !== 'undefined') {
+          var index = property.milestoneIndex[di.progression];
+          if (minIndex <= index && index <= maxIndex) {
+            var propertyGood = true;
+
+            if (di.min && di.max) {
+              propertyGood = false;
+              if (property.progressions) {
+                for (m = 0; m < property.progressions.length; m++) {
+                  progression = property.progressions[m];
+                  if (progression._id === di.progression && progression.milestones) {
+                    for (n = 0; n < progression.milestones.length; n++) {
+                      branch = progression.milestones[n];
+                      for (o = 0; o < branch.length; o++) {
+                        milestone = branch[o];
                         if (milestone._id === di.minms || milestone._id === di.maxms) {
-                          if ((di.min <= (ref7 = milestone.estCompletedTime) && ref7 <= di.max)) {
+                          if (milestone.estCompletedTime >= di.min && milestone.estCompletedTime <= di.max) {
                             propertyGood = true;
                           }
                         }
@@ -102,35 +128,23 @@
                   }
                 }
               }
-              if (propertyGood) {
-                if (list) {
-                  output.push(property);
-                }
-                count++;
+            }
+
+            if (propertyGood) {
+              if (list) {
+                output.push(property);
               }
+              count++;
             }
           }
         }
       }
-      if (list) {
-        return output;
-      } else {
-        return count;
-      }
+
+      return list ? output : count;
     };
-    $scope.countNew = (di, list, pipeline) => {
-      const output = [];
-      let count = 0;
-      let minIndex = 0;
-      let maxIndex = 100;
-      if($scope.properties.items && $scope.progressions.items) {
-        const progression = $scope.progressions.items.find(progression => progression._id===di.progression);
-        progression.milestones.forEach((branch, b) => {
-          if(branch.find(milestone => milestone._id===di.minms)) minIndex = b;
-          if(branch.find(milestone => milestone._id===di.maxms)) maxIndex = b;
-        });
-      }
-    };
+
+    // #endregion
+
     $scope.total = function(items, pipeline) {
       var item, j, len, total;
       total = 0;
@@ -143,68 +157,77 @@
       return total;
     };
     $scope.income = function(di, month, list, pipeline) {
-      var branch, count, j, k, l, len, len1, len2, len3, m, milestone, output, progression, property, ref, ref1, ref2, ref3, ref4, value;
-      count = 0;
-      output = [];
-      if ($scope.properties && $scope.properties.items) {
-        ref = $scope.properties.items;
-        for (j = 0, len = ref.length; j < len; j++) {
-          property = ref[j];
-          if((pipeline && (pipeline !== property.pipeline)) || (!pipeline && property.pipeline)) {
-            continue;
-          }
-          if ((ref1 = property.override) != null ? ref1.deleted : void 0) {
-            continue;
-          }
-          if (property && property.progressions && property.completeBeforeDelisted) {
-            ref2 = property.progressions;
-            for (k = 0, len1 = ref2.length; k < len1; k++) {
-              progression = ref2[k];
-              if (progression._id === di.progression) {
-                ref3 = progression.milestones;
-                for (l = 0, len2 = ref3.length; l < len2; l++) {
-                  branch = ref3[l];
-                  for (m = 0, len3 = branch.length; m < len3; m++) {
-                    milestone = branch[m];
-                    if (milestone._id === di.minms) {
-                      if ((month.start <= (ref4 = milestone.estCompletedTime) && ref4 <= month.end)) {
-                        value = 0;
-                        if (di.status === 'Due') {
-                          if (!milestone.completed) {
-                            value += property.role.Commission;
-                          }
-                        }
-                        if (di.status === 'Completed') {
-                          if (milestone.completed) {
-                            value += property.role.Commission;
-                          }
-                        }
-                        if (di.status === 'Started') {
-                          if (milestone.started && !milestone.completed) {
-                            value += property.role.Commission;
-                          }
-                        }
-                        if (di.sumtype === 'Income') {
-                          count += value;
-                        } else {
-                          if (value) {
-                            count++;
-                          }
-                        }
-                        if (value && list) {
-                          output.push(property);
-                        }
-                        break;
-                      }
-                    }
-                  }
+      if (di.sumtype === 'Count') {
+        $scope.consultantTotals = {};
+      }
+
+      var count = 0;
+      var output = [];
+      var i, j, k, l, m;
+      var property, progression, branch, milestone;
+      var value;
+
+      if (!($scope.properties && $scope.properties.items)) {
+        return list ? [] : (di.sumtype === 'Income' ? $filter('currency')(0, '£', 2) : 0);
+      }
+
+      for (i = 0; i < $scope.properties.items.length; i++) {
+        property = $scope.properties.items[i];
+
+        if (!property) continue;
+        if ((pipeline && pipeline !== property.pipeline) || (!pipeline && property.pipeline)) continue;
+        if (property.override && property.override.deleted) continue;
+        if (!property.progressions || !property.completeBeforeDelisted) continue;
+
+        for (j = 0; j < property.progressions.length; j++) {
+          progression = property.progressions[j];
+
+          if (progression._id !== di.progression || !progression.milestones) continue;
+
+          for (k = 0; k < progression.milestones.length; k++) {
+            branch = progression.milestones[k];
+            if (!branch) continue;
+
+            for (l = 0; l < branch.length; l++) {
+              milestone = branch[l];
+              if (milestone._id !== di.minms) continue;
+
+              if (milestone.estCompletedTime >= month.start && milestone.estCompletedTime <= month.end) {
+                value = 0;
+
+                if (di.status === 'Due' && !milestone.completed) {
+                  value += property.role && property.role.Commission || 0;
                 }
-                break;
+
+                if (di.status === 'Completed' && milestone.completed) {
+                  value += property.role && property.role.Commission || 0;
+                }
+
+                if (di.status === 'Started' && milestone.started && !milestone.completed) {
+                  value += property.role && property.role.Commission || 0;
+                }
+
+                // Increment count
+                if (di.sumtype === 'Income') {
+                  count += value;
+                } else if (value) {
+                  count++;
+                }
+
+                // Push to output if listing
+                if (value && list) {
+                  output.push(property);
+                }
+
+                break; // only match one milestone per property
               }
             }
           }
+
+          break; // only match one progression per property
         }
       }
+
       if (list) {
         return output;
       } else if (di.sumtype === 'Income') {
@@ -213,6 +236,62 @@
         return count;
       }
     };
+    $scope.sum = function(values) {
+      return Object.values(values).reduce((r, v) => r + v, 0);
+    }
+    const diff = [29539304, 29473680, 28993902, 29489529, 28506655, 29530602];
+    $scope.consultantPipeline = function() {
+      var result = {};
+      if (!($scope.consultants && $scope.consultants.items && $scope.properties && $scope.properties.items)) {
+        return result;
+      }
+
+      for (var i = 0; i < $scope.consultants.items.length; i++) {
+        var consultant = $scope.consultants.items[i];
+        result[consultant._id] = 0;
+      }
+      const props = [];
+      for (var j = 0; j < $scope.properties.items.length; j++) {
+        var property = $scope.properties.items[j];
+        if(diff.includes(+property.roleId)) props.push(property);
+        if (!property || property.override && property.override.deleted) continue;
+        if (!property.role) continue;
+        if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
+        if (Object.values(property.milestoneIndex)[0]===10) continue;
+        var cid = property.consultant;
+        if (result.hasOwnProperty(cid)) {
+          //if(!props.includes(property.roleId)) props.push(+property.roleId);
+          result[cid]++;
+        }
+      }
+      //console.log('props',props);
+      return result;
+    };
+    $scope.consultantExchanges =  function(di, month) {
+      var result = {};
+      if (!($scope.consultants && $scope.consultants.items)) return result;
+
+      // Init result map
+      for (var i = 0; i < $scope.consultants.items.length; i++) {
+        result[$scope.consultants.items[i]._id] = 0;
+      }
+
+      var properties = $scope.income(di, month, true); // list=true
+
+      for (var j = 0; j < properties.length; j++) {
+        var property = properties[j];
+        if (!property || property.override && property.override.deleted) continue;
+        if (!property.role) continue;
+        //if (property.role.RoleStatus !== 'OfferAccepted' || property.role.RoleType !== 'Selling') continue;
+        var cid = property.consultant;
+        if (result.hasOwnProperty(cid)) {
+          result[cid]++;
+        }
+      }
+
+      return result;
+    };
+
     $scope.showInfo = function(type, di, month, pipeline) {
       var list;
       list = null;
@@ -237,6 +316,24 @@
         });
       }
     };
+    $scope.showUnknownInfo = (type) => {
+      let list = Object.values($scope['unknown' + type]);
+      if(list && list.length) {
+        $scope.modal({
+          template: require('../../modals/dashboard-income/dashboard-income.html').default,
+          controller: 'agencyDashboardIncomeCtrl',
+          data: {
+            di: '',
+            month: '',
+            list: list
+          }
+        }).then(function() {
+          return true;
+        }, function() {
+          return false;
+        });
+      }
+    }
     monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     $scope.months = [];
     now = new Date();
@@ -244,6 +341,10 @@
     $scope.allmonths = {
       start: bmonth.valueOf(),
       end: 0
+    };
+    $scope.alltime = {
+      start: 0,
+      end: now.valueOf() + (5 * 365 * 24 * 60 * 60 * 1000)
     };
     i = 0;
     while (i++ < 6) {

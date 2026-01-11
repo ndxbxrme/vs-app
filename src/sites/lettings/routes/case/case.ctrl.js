@@ -3,6 +3,7 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
   'use strict';
   angular.module('vs-lettings-inner').controller('lettingsCaseCtrl', function($scope, $stateParams, $state, $timeout, $window, $http, Auth, LettingsProgressionPopup, lettingsProperty, Upload, env, alert, breadcrumbs) {
     let fetchedFirst = false;
+    $scope.side = 'LETTING';
     propertyAdminFunctions($scope, alert);
     $scope.propsOpts = {
       where: {
@@ -135,6 +136,18 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
     $scope.date = {
       date: 'today'
     };
+    $scope.relist = () => {
+      $scope.property.item.$case.item.delisted = false;
+      $scope.property.item.$case.save();
+    }
+    $scope.calculateFirstRent = () => {
+      try {
+        $scope.property.item.$case.item.firstRentalPayment = (Math.round((Math.max(0, +$scope.property.item.$case.item.agreedRent - +$scope.property.item.$case.item.hDeposit) + Number.EPSILON) * 100) / 100).toFixed(2);
+      }
+      catch (e) {
+
+      }
+    }
     $scope.submitRT = function() {
       if ($scope.rentalTerms.$valid) {
         $scope.rentalTerms.$setPristine();

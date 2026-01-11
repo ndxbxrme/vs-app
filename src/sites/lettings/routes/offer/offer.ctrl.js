@@ -1,17 +1,7 @@
-const {propertyAdminFunctions, initForSale} = require('../../../../services/property-admin-functions.js');
 (function () {
   'use strict';
-  angular.module('vs-agency').controller('agencyOfferCtrl', function ($scope, $sce, $stateParams, $state, $timeout, $interval, $http, $window, Auth, AgencyProgressionPopup, agencyProperty, Upload, env, alert) {
-    $scope.offer = $scope.single('leads:offers', $stateParams.id, async (offer) => {
-      offer.date = new Date(offer.date);
-      offer.item.search = `${offer.address}:${offer.applicant}:${offer.applicant2 || ''}`;
-      const data = await $http({
-        method: 'GET',
-        url: 'https://server.vitalspace.co.uk/dezrez/role/' + offer.item.roleId
-      });
-      $timeout(() => {
-        offer.item.$case = data;
-      })
+  angular.module('vs-lettings').controller('lettingsOfferCtrl', function ($scope, $sce, $stateParams, $state, $timeout, $interval, $http, $window, Auth, alert) {
+    $scope.offer = $scope.single('leads:offersLettings', $stateParams.id, async (offer) => {
     });
     $scope.getUpload = (key) => {
       if(!$scope.offer.item || !$scope.offer.item.uploads) return '';
@@ -95,11 +85,85 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       offer.item.actioned = new Date();
       offer.save();
       alert.log('Offer actioned');
-      $state.go('agency_offers-list');
+      $state.go('lettings_offers-list');
     }
     $scope.formatAddress = (address) => {
       if(!address) return '';
-      return address.replace(/, ,/g, ',');
+      return `${address.street}, ${address.address2}, ${address.town}, ${address.postcode}`;
+    }
+    $scope.getIcon = function(item) {
+      return item ? 'fa-check' : 'fa-times';
+    }
+    $scope.downloadPdf = () => {
+      var element = document.querySelector('.offer-details');
+      const tempRoot = document.createElement('div');
+      tempRoot.style.width = '1060px';
+      tempRoot.style.transform = 'scale(0.7) translateX(-23%) translateY(-23%)';
+      tempRoot.innerHTML = element.outerHTML;
+      tempRoot.style.height = "1000px";
+      tempRoot.querySelectorAll('input,button').forEach(elm => elm.remove());
+      tempRoot.querySelector('.client-row div:nth-child(4)').remove();
+      tempRoot.querySelectorAll(':not(.ng-hide) > svg.fa-check').forEach(elm => {
+        const checkSpan = document.createElement('span');
+        checkSpan.innerHTML = '✔';
+        elm.replaceWith(checkSpan)
+      });
+      tempRoot.querySelectorAll(':not(.ng-hide) > svg.fa-times').forEach(elm => {
+        const timesSpan = document.createElement('span');
+        timesSpan.innerHTML = '✖';
+        elm.replaceWith(timesSpan)
+      });
+      html2pdf().set({
+        margin: 10,
+        filename: 'offer.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: {
+          scale: 2,         
+          useCORS: true
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(tempRoot).save('offer.pdf');      
+    }
+    $scope.formatToUKCurrency = (input) => {
+      try {
+        // Convert input to string and sanitize it
+        let cleaned = String(input)
+          .replace(/[^\d.-]/g, '')     // Remove anything that's not a digit, dot, or minus
+          .replace(/(?!^)-/g, '')      // Remove all but the first minus sign
+          .replace(/(\..*)\./g, '$1'); // Remove multiple dots
+    
+        // Parse to float
+        const number = parseFloat(cleaned);
+    
+        // Handle invalid number
+        if (isNaN(number)) {
+          throw new Error('Invalid input: Not a number');
+        }
+    
+        // Round to nearest whole number (since it's a salary)
+        const rounded = Math.round(number);
+    
+        // Format as UK currency with no decimal places
+        return new Intl.NumberFormat('en-GB', {
+          style: 'currency',
+          currency: 'GBP',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(rounded);
+    
+      } catch (e) {
+        console.warn(e.message);
+        return '£0'; // Fallback
+      }
+    }
+    $scope.getProofOfIdentity = (input) => {
+      try {
+        const proofs = JSON.parse(input);
+        return proofs[0];
+      }
+      catch (e) {
+        return '';
+      }
     }
   });
 

@@ -4,14 +4,12 @@
   angular.module('vs-maintenance-leads').controller('maintenance_leadsCreateWorksOrderCtrl', function ($scope, $stateParams, $http, alert) {
     $scope.worksOrder = {};
     $scope.issue = $scope.single('maintenance_leads:issues', $stateParams, function (issue) {
-      console.log('issue', issue);
     });
     $scope.contractors = $scope.list('maintenance_leads:contractors', null, (contractors) => {
       contractors.items.sort((a, b) => a.name > b.name ? 1 : -1);
     });
     $scope.landlords = $scope.list('maintenance_leads:landlords');
     $scope.submit = () => {
-      console.log('worksOrder', $http.sites);
       $scope.submitted = true;
       if (!$scope.worksOrderForm.$valid) {
         return;
@@ -92,7 +90,6 @@
         html2canvas: { scale: 1 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       };
-      console.log('pdf start');
       html2pdf()
         .from(htmlContent)
         .set(pdfOptions)

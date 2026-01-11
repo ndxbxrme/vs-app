@@ -285,6 +285,13 @@
               <input type="text" disabled="true" value="{{propertyadmin.item.exchangedCompleted.boardUpdated | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.exchangedCompleted.boardUpdated" />
             </div>
             <div class="col-md-3">
+              <label>Completed In Window</label>
+              <select ng-model="propertyadmin.item.exchangedCompleted.soldInWindow">
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+            <div class="col-md-3">
               <label>Date of Completion</label>
               <input type="date" ng-model="propertyadmin.item.exchangedCompleted.dateCompletion" />
             </div>

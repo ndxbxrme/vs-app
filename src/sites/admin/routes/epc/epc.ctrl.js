@@ -19,7 +19,6 @@ angular.module('vs-admin')
       }}, (epcs) => {
         epcs.items.forEach(item => {
           if(!item.property) {
-            console.log('loading data');
             item.property = {};
             if(item.instructionToMarket.isLetting) {
               const $property = scope.single({
@@ -48,7 +47,6 @@ angular.module('vs-admin')
           }
         });
         //const itemToDelete = epcs.items.find(item => item.$property.item==='no property found');
-        //console.log('to delete', itemToDelete);
         /*
         if(itemToDelete) {
           scope.epcs.delete(itemToDelete);

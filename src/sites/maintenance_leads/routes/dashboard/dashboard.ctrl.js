@@ -19,7 +19,19 @@
             search: {
               $like: ''
             },
-            statusName: 'Reported'
+            statusName: 'Reported',
+            $or: [
+              {
+                inspectionWorks: {
+                  $ne: true
+                }
+              },
+              {
+                inspectionWorks: {
+                  $null: true
+                }
+              }
+            ]
           },
           sort: 'date',
           sortDir: 'DESC'
@@ -35,7 +47,19 @@
             search: {
               $like: ''
             },
-            statusName: 'Reported'
+            statusName: 'Reported',
+            $or: [
+              {
+                inspectionWorks: {
+                  $ne: true
+                }
+              },
+              {
+                inspectionWorks: {
+                  $null: true
+                }
+              }
+            ]
           },
           sort: 'date',
           sortDir: 'DESC'
@@ -56,7 +80,19 @@
             },
             moveOutWorks: {
               $null: true
-            }
+            },
+            $or: [
+              {
+                inspectionWorks: {
+                  $ne: true
+                }
+              },
+              {
+                inspectionWorks: {
+                  $null: true
+                }
+              }
+            ]
           },
           sort: 'date',
           sortDir: 'DESC'
@@ -74,7 +110,19 @@
               completed: true,
               booked: true,
               invoiced: false
-            }
+            },
+            $or: [
+              {
+                inspectionWorks: {
+                  $ne: true
+                }
+              },
+              {
+                inspectionWorks: {
+                  $null: true
+                }
+              }
+            ]
           },
           sort: 'date',
           sortDir: 'DESC'
@@ -93,12 +141,37 @@
               completed: false,
               invoiced: false
             },
-            moveOutWorks: true
+            moveOutWorks: true,
+            $or: [
+              {
+                inspectionWorks: {
+                  $ne: true
+                }
+              },
+              {
+                inspectionWorks: {
+                  $null: true
+                }
+              }
+            ]
           },
           sort: 'date',
           sortDir: 'DESC'
         });
         scope.moveOutWorks.sort = Sorter.create(scope.moveOutWorks.args);
+        scope.inspectionWorks = scope.list('maintenance_leads:issues', {
+          page: 1,
+          pageSize: 10,
+          where: {
+            search: {
+              $like: ''
+            },
+            inspectionWorks: true
+          },
+          sort: 'date',
+          sortDir: 'DESC'
+        });
+        scope.inspectionWorks.sort = Sorter.create(scope.inspectionWorks.args);
         return true;
       }
     }

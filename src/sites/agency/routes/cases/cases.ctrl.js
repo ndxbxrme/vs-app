@@ -24,9 +24,8 @@
     $scope.properties = $scope.list({
       route: `${env.PROPERTY_URL}/search`
     }, $scope.propsOpts, function(properties) {
-      var i, len, property, ref, results;
+      var i, len, property, ref;
       ref = properties.items;
-      results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         property = ref[i];
         property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
@@ -45,9 +44,9 @@
             return $scope.nodeleted++;
           }
         });
-        results.push(property.$case.$parent = property);
+        property.$case.$parent = property;
       }
-      return results;
+      return;
     });
 
     $scope.filterMode = "0"; // Default mode to show all items

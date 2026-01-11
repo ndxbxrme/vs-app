@@ -14,7 +14,7 @@
         </div>
         <agency-progression ng-repeat="progression in property.item.$case.item.progressions" data="progression"></agency-progression>
         <div class="row">
-          <div class="col-sm-10">
+          <div class="col-sm-6">
             <button class="has-dropdown" ng-focus="progBtnFocussed=true" ng-blur="hideDropdown(&quot;progBtnFocussed&quot;)" ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])">Add Progression</button>
             <ul class="dropdown" ng-show="progBtnFocussed">
               <li ng-repeat="progression in progressions.items"><a href="" ng-click="addProgression(progression)">{{progression.name}}, {{progression.side}}</a></li>
@@ -22,7 +22,12 @@
             <button ng-hide="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="advanceProgression()">Advance all milestones</button>
             <button ng-show="auth.checkRoles([&quot;superadmin&quot;, &quot;admin&quot;])" ng-click="fallenThrough()">Fallen through</button>
           </div>
-          <div class="col-sm-2 flex-pipeline">
+          <div class="col-sm-6 flex-pipeline">
+            <label>Consultant&nbsp;</label>
+            <select ng-model="property.item.$case.item.consultant" ng-change="property.item.$case.save()">
+              <option value="">Staff Member</option>
+              <option ng-repeat="consultant in consultants.items" ng-value="consultant._id">{{consultant.displayName}}</option>
+            </select>
             <label>Pipeline&nbsp;</label>
             <select ng-model="property.item.$case.item.pipeline" ng-change="property.item.$case.save()">
               <option value="">Vitalspace</option>
@@ -368,6 +373,13 @@
               <option ng-repeat="option in ftOptions" ng-value="option">{{option==='No board'?option:(option | date:'dd/MM/yyyy')}}</option>
             </select>
             <input type="text" disabled="true" value="{{propertyadmin.item.exchangedCompleted.boardUpdated | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.exchangedCompleted.boardUpdated" />
+          </div>
+          <div class="col-md-3">
+            <label>Completed In Window</label>
+            <select ng-model="propertyadmin.item.exchangedCompleted.soldInWindow">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
           </div>
           <div class="col-md-3">
             <label>Date of Completion</label>

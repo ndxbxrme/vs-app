@@ -18,7 +18,7 @@
           <a class="order-item" href="" ng-click="sort=&quot;-$case.item.Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-PriceValue&quot;}">Asking Price</a></div>
       </div>
       <div class="col-sm-4 text-end">
-        <div class="showing">Showing<br>{{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+        <div class="showing">Showing<br><a ui-sref="lettings_coming-soon">Coming Soon</a> &nbsp; &nbsp;{{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
       </div>
     </div>
   </div>

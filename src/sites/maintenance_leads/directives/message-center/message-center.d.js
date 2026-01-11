@@ -6,6 +6,8 @@
       restrict: 'EA',
       template: require("./message-center.html").default,
       link: function (scope, elem, attrs) {
+        scope.methods = ['Email', 'WhatsApp'];
+        scope.method = 'Email';
         scope.messageSort = '-date';
         scope.messageFilter = '';
         scope.setMessageFilter = function (entity) {
@@ -112,6 +114,29 @@
             scope.templateize();
           }
         };
+        scope.whatsappSend = () => {
+          const link = document.createElement('A');
+          link.href = 'whatsapp://send?text=' + encodeURIComponent(scope.outgoingEmail.body);
+          link.innerText = 'whatsapp';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          if(scope.issue) {
+            if(scope.issue.item) {
+              const selectedTemplate = scope.emailTemplates.items.find(item => item._id === scope.template);
+              const newMessage = {
+                date: Date.now(),
+                user: scope.auth.getUser(),
+                item: 'Note',
+                side: '',
+                text: `${selectedTemplate.name} sent to ${scope.outgoingEmail.item.messageTo.split('::')[0]} via whatsapp`
+              }
+              scope.issue.item.notes = scope.issue.item.notes || [];
+              scope.issue.item.notes.push(newMessage);
+              scope.issue.save();
+            }
+          }
+        }
 
         return scope.noAttachments = function () {
           var ref;

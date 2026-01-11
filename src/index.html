@@ -13,6 +13,8 @@
 
   <link rel="stylesheet" href="https://use.typekit.net/dwe5aet.css">
   <script src="https://kit.fontawesome.com/09e1a123ea.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 </head>
 <body ng-app="vs-app" ng-click="bodyTap($event)">
   <menu ng-if="auth.getUser() || state('invited') || state('forgot') || state('forgot-response')"></menu>

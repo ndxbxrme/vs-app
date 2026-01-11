@@ -1,76 +1,136 @@
-.main_users-page .users {
-  padding-bottom: 4em;
-}
-.main_users-page .users .user {
+/* Main Container */
+.main_users-page .table_users_new {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-auto-columns: 1fr;
-  grid-gap: .5em;
-  align-items: baseline;
+  grid-template-columns: auto repeat(6, 1fr) auto; /* Adjust based on site count */
+  width: 100%;
+  gap: 1px; /* Add spacing between cells */
+  overflow: hidden;
+  margin-bottom: 20px;
 }
-.main_users-page .users .heading {
+
+/* User Rows */
+.main_users-page .users-row {
+  display: contents; /* Allow rows to align perfectly in the grid */
+}
+
+/* Cells */
+.main_users-page .users-cell {
+  padding: 8px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.main_users-page .expandable, .lettings_coming-soon-page .expandable {
+  grid-column: span 1;
+  white-space: nowrap;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+}
+
+.main_users-page .even-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.main_users-page .collapsible {
+  grid-column: span 1;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+/* General Styling */
+.main_users-page .user-avatar, .lettings_coming-soon-page .user-avatar {
+  border-radius: 50%;
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+}
+
+.main_users-page .display-name, .lettings_coming-soon-page .display-name {
   font-weight: bold;
-  padding-bottom: .5em;
 }
-.main_users-page .users select {
-  width: 100%;
+
+.main_users-page .user-email, .lettings_coming-soon-page .user-email {
+  color: #666;
+  font-size: 12px;
 }
-.main_users-page .td_sites span {
-  margin-right: 0.5em;
-  background: white;
-  padding: 0.2em;
-  font-size: .8em;
-  margin-bottom: 0.2em;
-  white-space: nowrap;
-  display: inline-block;
+
+/* Role Buttons */
+.main_users-page .even-cell {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
-.main_users-page .td_sites span svg {
-  margin-right: 0.3em;
+
+.main_users-page .even-cell:hover {
+  transform: scale(1.05);
+  background-color: #2196f3; /* Highlight color */
 }
-.main_users-page table {
-  width: 100%;
-}
-.main_users-page tbody:nth-child(even) {
-  background: rgba(255,255,255,0.2);
-}
-.main_users-page td {
-  padding-right: 1em;
-  white-space: nowrap;
-  padding-top: .2em;
-}
-.main_users-page td.td_delete {
-  padding-right: 0;
-}
-.main_users-page td.td_icon {
-  padding-right: .2em;
-}
-.main_users-page td.td_sites {
-  width: 99%;
-  white-space:normal;
-}
-.main_users-page .table_heading {
+
+/* Actions */
+.main_users-page .actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 2em;
-  margin-bottom: 1em;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 80%;
 }
-.main_users-page .table_heading h3 {
-  margin: 0;
-}
-.new-user-modal {
-  padding: 1em;
-}
-.new-user-modal .form-item {
+
+.main_users-page .reset-btn,
+.main_users-page .delete-btn {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 12px;
+  font-size: 0.9em;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
-.new-user-modal label {
-  min-width: 10em;
+
+.main_users-page .reset-btn {
+  background-color: #e6f7e6; /* Light green */
+  color: #3a874e; /* Muted green */
+  border-color: #3a874e;
 }
-.new-user-modal select {
-  line-height: 1em;
+
+.main_users-page .reset-btn:hover {
+  background-color: #d4f0d4; /* Slightly darker hover effect */
 }
-.new-user-modal .controls {
-  display: flex;
-  justify-content: flex-end;
+
+.main_users-page .delete-btn {
+  background-color: #fbeaea; /* Light red */
+  color: #c0392b; /* Muted red */
+  border-color: #c0392b;
+}
+
+.main_users-page .delete-btn:hover {
+  background-color: #f8dcdc; /* Slightly darker hover effect */
+}
+
+/* For buttons with icons */
+.main_users-page .reset-btn i,
+.main_users-page .delete-btn i {
+  margin-right: 6px; /* Space between icon and text */
+  font-size: 1.1em;
+}
+
+/* Heading Styles */
+.main_users-page .heading {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 60%;
+}
+
+.main_users-page .users-row.ng-scope .even-cell {
+  font-size: 150%;
 }

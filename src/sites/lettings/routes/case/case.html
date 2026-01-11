@@ -1,6 +1,9 @@
 
 <div class="case">
   <div class="container-xl">
+    <div ng-if="auth.getUser().local.email==='superadmin@admin.com'">
+      <button ng-click="relist()" ng-show="property.item.$case.item.delisted">Relist</button>
+    </div>
     <h1>Case <span class="address">- {{property.item.displayAddress}}<span class="right">Service Level: <span>{{property.item.ServiceLevel.Name}}</span></span></span></h1>
 
     <h2 ng-show="property.item.$case.item.override.reason===&quot;fallenThrough&quot;">Fallen through</h2>
@@ -131,6 +134,13 @@
             <input type="text" disabled="true" value="{{propertyadmin.item.exchangedCompleted.boardUpdated | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.exchangedCompleted.boardUpdated" />
           </div>
           <div class="col-md-3">
+            <label>Completed In Window</label>
+            <select ng-model="propertyadmin.item.exchangedCompleted.soldInWindow">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-3">
             <label>Removed from Dezrez</label>
             <select ng-model="propertyadmin.item.exchangedCompleted.dezrezCompleted">
               <option>Yes</option>
@@ -155,8 +165,8 @@
       <form name="rentalTerms" ng-submit="submitRT()">
         <div class="row case-row align-items-end">
           <div class="agreed-rent col-md-2 col-sm-4 col-6">
-            <label>Agreed Monthly Rent</label>
-            <input type="text" ng-model="property.item.$case.item.agreedRent"/>
+            <label>Agreed Rent</label>
+            <input type="text" ng-model="property.item.$case.item.agreedRent" ng-change="calculateFirstRent()" ng-blur="calculateFirstRent()" />
           </div>
           <div class="deposit col-md-2 col-sm-4 col-6">
             <label>Security Deposit</label>
@@ -164,7 +174,7 @@
           </div>
           <div class="holding-deposit col-md-2 col-sm-4 col-6">
             <label>Holding Deposit</label>
-            <input type="text" ng-model="property.item.$case.item.hDeposit"/>
+            <input type="text" ng-model="property.item.$case.item.hDeposit" ng-change="calculateFirstRent()" ng-blur="calculateFirstRent()" />
           </div>
           <div class="tenancy-terms col-md-2 col-sm-4 col-6">
             <label>Tenancy Terms</label>
@@ -179,17 +189,15 @@
             <input type="date" ng-model="property.item.$case.item.proposedMoving"/>
           </div>
           <div class="agent-request col-md-2 col-sm-4 col-6">
-            <label>Landlord/Agent Request</label>
-            <select ng-model="property.item.$case.item.agentRequest">
-              <option value="no">No</option>
-              <option value="yes">Yes</option>
-            </select>
+            <label>First Rental Payment</label>
+            <input type="text" ng-model="property.item.$case.item.firstRentalPayment"/>
           </div>
           <div class="employer-ref col-md-2 col-sm-4 col-6">
-            <label>Employer Reference</label>
-            <select ng-model="property.item.$case.item.employerRef">
-              <option value="no">No</option>
-              <option value="yes">Yes</option>
+            <label>Rent Interval</label>
+            <select ng-model="property.item.$case.item.rentInterval">
+              <option value="monthly">monthly</option>
+              <option value="6 months in advance">6 months in advance</option>
+              <option value="12 months in advance">12 months in advance</option>
             </select>
           </div>
           <div class="self-employed col-md-2 col-sm-4 col-6">

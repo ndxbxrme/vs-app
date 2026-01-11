@@ -7,6 +7,17 @@
   <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('outgoingEmail')" ignore="ignore" ng-show="composingMessage">
     <div class="form-section">
       <div ng-class="{warning: submitted &amp;&amp; myForm.messageTo.$invalid}" class="form-item c-select messageTo required  ">
+        <label class="label">Method</label>
+        <div class="input-holder">
+          <select sumoselect="{placeholder:'Method', search:true}" ng-model="method" name="method" ng-disabled="disabled" required="required">
+            <option ng-repeat="method in methods" value="{{method}}">{{method}}</option>
+          </select>
+        </div>
+        <p ng-show="submitted &amp;&amp; myForm.messageTo.$error.required" class="error">{{ mml('outgoingEmail-messageTo-error-required') }}</p>
+      </div>
+    </div>
+    <div class="form-section">
+      <div ng-class="{warning: submitted &amp;&amp; myForm.messageTo.$invalid}" class="form-item c-select messageTo required  ">
         <label class="label">{{ mml('outgoingEmail-messageTo-label') }}</label>
         <div class="input-holder">
           <select sumoselect="{placeholder:mml('outgoingEmail-messageTo-placeholder'), search:true}" ng-model="outgoingEmail.item.messageTo" name="messageTo" ng-disabled="disabled" required="required">
@@ -26,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="form-section">
+    <div class="form-section" ng-hide="method==='WhatsApp'">
       <div class="form-controls">
         <div ng-class="{warning: submitted &amp;&amp; myForm.subject.$invalid}" class="form-item c-input subject   ">
           <label class="label">{{ mml('outgoingEmail-subject-label') }}</label>
@@ -34,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="form-section">
+    <div class="form-section" ng-hide="method==='WhatsApp'">
       <div class="form-item">
         <label class="space-between">Attachments {{noAttachments()}}
           <button type="button" ng-click="outgoingEmail.showAttachments = !outgoingEmail.showAttachments" class="small-black-button">{{ outgoingEmail.showAttachments? mml('outgoingEmail-documentsHide-label') : mml('outgoingEmail-documentsShow-label') }}</button>
@@ -64,7 +75,10 @@
     </div>
     <div class="form-section">
       <div class="form-controls">
-        <button type="button" name="send" ng-click="sendEmail()" class="small-orange-button"> 
+        <button type="button" name="send" ng-click="whatsappSend()" class="small-orange-button" ng-show="method==='WhatsApp'"> 
+          <div class="fal fa-paper-plane"></div>{{ mml('outgoingEmail-send-label') }}
+        </button>
+        <button type="button" name="send" ng-click="sendEmail()" class="small-orange-button" ng-hide="method==='WhatsApp'"> 
           <div class="fal fa-paper-plane"></div>{{ mml('outgoingEmail-send-label') }}
         </button>
         <button type="button" name="cancel" ng-click="(outgoingEmail={}) &amp;&amp; (composingMessage=false)" class="small-black-button"> 

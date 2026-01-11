@@ -4,6 +4,7 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
   'use strict';
   angular.module('vs-agency').controller('agencyCaseCtrl', function($scope, $stateParams, $state, $timeout, $window, $http, Auth, AgencyProgressionPopup, agencyProperty, Upload, env, alert, breadcrumbs) {
     let fetchedFirst = false;
+    $scope.side = 'SELLING';
     propertyAdminFunctions($scope, alert);
     $scope.uploadProgress = 0;
     $scope.propsOpts = {
@@ -411,6 +412,19 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       });
       alert.log('Solicitor Details Incoming');
     };
+
+    // consultant
+    $scope.consultants = $scope.list('main:users', null, (users) => {
+      users.items = users.items.filter(user => {
+        const siteRole = user.siteRoles && user.siteRoles.find(role => role.siteId==='agency' && user.displayName!=='lettings');
+        if(user.email==='richard@vitalspace.co.uk') return true;
+        if(siteRole) {
+          return siteRole.role==='agency' || siteRole.role==='admin';
+        }
+        return false;
+      }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
+    });
+
     return $scope.$on('$destroy', function() {
       return AgencyProgressionPopup.hide();
     });

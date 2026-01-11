@@ -129,6 +129,27 @@
           </div>
           <pagination ng-model="moveOutWorks.args.page" total="moveOutWorks.total" page-size="moveOutWorks.args.pageSize"></pagination>
         </div>
+        <div class="box">
+          <div ui-sref="maintenance_leads_worksorders" class="title">Inspections <span ng-class="{empty:!inspectionWorks.total}" class="box-number">{{inspectionWorks.total}}</span></div>
+          <div ng-repeat="issue in inspectionWorks.items" ui-sref="maintenance_leads_issue({_id:issue._id})" ng-class="issue.status" class="issue">
+            <div class="details">
+              <div class="address">{{issue.address}}</div>
+              <div class="issue-title">{{issue.title}}</div>
+            </div>
+            <div class="status">
+              <div class="booked"> 
+                <div class="fad fa-file-medical"></div>
+              </div>
+              <div class="completed">
+                <div class="fad fa-file-check"></div>
+              </div>
+              <div class="invoiced">
+                <div class="fad fa-thumbs-up"></div>
+              </div>
+            </div>
+          </div>
+          <pagination ng-model="inspectionWorks.args.page" total="inspectionWorks.total" page-size="inspectionWorks.args.pageSize"></pagination>
+        </div>
       </div>
 
     </div>

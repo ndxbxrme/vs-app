@@ -19,7 +19,6 @@ const propertyAdminFunctions = ($scope, alert) => {
     if($scope.property.item.$case) {
       noteParent = $scope.property.item.$case;
     }
-    console.log('add note', noteParent);
     noteParent && noteParent.item.notes && noteParent.item.notes.push({
       date: new Date(),
       item: 'Note',
@@ -30,7 +29,7 @@ const propertyAdminFunctions = ($scope, alert) => {
     noteParent && noteParent.save();
   }
   function getNextThursdays(count) {
-    const today = new Date();
+    const today = new Date(new Date().valueOf() + (24 * 60 * 60 * 1000));
     const currentDayOfWeek = today.getDay();
     let daysUntilNextThursday = (4 - currentDayOfWeek + 7) % 7;
 
@@ -51,7 +50,7 @@ const propertyAdminFunctions = ($scope, alert) => {
   $scope.ftOptions = ['No board', ...getNextThursdays(2)];
   $scope.saveITMDetails = function (isLetting) {
     $scope.propertyadmin.item.instructionToMarket.isLetting = isLetting;
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.instructionToMarket.boardOrderedDate) && (item.type === 'FOR_SALE'));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.instructionToMarket.boardOrderedDate) && (item.type === 'FOR_SALE') && (!item.isWindow));
     if (!board) {
       if ($scope.propertyadmin.item.instructionToMarket.boardOrderedDate && ($scope.propertyadmin.item.instructionToMarket.boardOrderedDate !== 'No board')) {
         $scope.boardsList.save({
@@ -59,7 +58,21 @@ const propertyAdminFunctions = ($scope, alert) => {
           RoleId: $scope.property.item.RoleId,
           PropertyId: $scope.property.item._id,
           date: $scope.propertyadmin.item.instructionToMarket.boardOrderedDate,
-          type: (isLetting ? 'TO_LET' : 'FOR_SALE')
+          type: (isLetting ? 'TO_LET' : 'FOR_SALE'),
+          list: 'itm'
+        });
+      }
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type === 'FOR_SALE') && (item.isWindow) && (item.list === 'itm'));
+    if (!windowItem) {
+      if ($scope.propertyadmin.item.instructionToMarket.windowsCard && ($scope.propertyadmin.item.instructionToMarket.windowsCard === 'Yes')) {
+        $scope.boardsList.save({
+          address: $scope.property.item.displayAddress,
+          RoleId: $scope.property.item.RoleId,
+          PropertyId: $scope.property.item._id,
+          type: (isLetting ? 'TO_LET' : 'FOR_SALE'),
+          isWindow: true,
+          list: 'itm'
         });
       }
     }
@@ -77,9 +90,13 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Instruction to market details saved');
   }
   $scope.clearITMDetails = function (isLetting) {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.instructionToMarket.boardOrderedDate) && (item.type === (isLetting ? 'TO_LET' : 'FOR_SALE')));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.instructionToMarket.boardOrderedDate) && (item.type === (isLetting ? 'TO_LET' : 'FOR_SALE')) && (!item.isWindow));
     if (board) {
       $scope.boardsList.delete(board);
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type === (isLetting ? 'TO_LET' : 'FOR_SALE')) && (item.isWindow) && (item.list === 'itm'));
+    if (windowItem) {
+      $scope.boardsList.delete(windowItem);
     }
     $scope.property.item.instructionToMarket = null;
     $scope.property.save();
@@ -89,7 +106,7 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Instruction to market details cleared');
   }
   $scope.saveSSTCDetails = function () {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.soldSubjectToContract.boardUpdated) && (item.type === $scope.propertyadmin.item.soldSubjectToContract.boardType));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.soldSubjectToContract.boardUpdated) && (item.type === $scope.propertyadmin.item.soldSubjectToContract.boardType) && (!item.isWindow));
     if (!board) {
       if ($scope.propertyadmin.item.soldSubjectToContract.boardUpdated && ($scope.propertyadmin.item.soldSubjectToContract.boardUpdated !== 'No board')) {
         $scope.boardsList.save({
@@ -97,7 +114,21 @@ const propertyAdminFunctions = ($scope, alert) => {
           RoleId: $scope.property.item.RoleId,
           PropertyId: $scope.property.item._id,
           date: $scope.propertyadmin.item.soldSubjectToContract.boardUpdated,
-          type: $scope.propertyadmin.item.soldSubjectToContract.boardType
+          type: $scope.propertyadmin.item.soldSubjectToContract.boardType,
+          list: 'sstc'
+        });
+      }
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.isWindow) && (item.list === 'sstc'));
+    if (!windowItem) {
+      if ($scope.propertyadmin.item.soldSubjectToContract.soldInWindow && ($scope.propertyadmin.item.soldSubjectToContract.soldInWindow === 'Yes')) {
+        $scope.boardsList.save({
+          address: $scope.property.item.displayAddress,
+          RoleId: $scope.property.item.RoleId,
+          PropertyId: $scope.property.item._id,
+          type: 'SOLD',
+          isWindow: true,
+          list: 'sstc'
         });
       }
     }
@@ -106,9 +137,13 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Sold Subject To Contract details saved');
   }
   $scope.clearSSTCDetails = function () {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.soldSubjectToContract.boardUpdated) && (item.type === $scope.propertyadmin.item.soldSubjectToContract.boardType));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.soldSubjectToContract.boardUpdated) && (item.type === $scope.propertyadmin.item.soldSubjectToContract.boardType) && (!item.isWindow));
     if (board) {
       $scope.boardsList.delete(board);
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.isWindow) && (item.list === 'sstc'));
+    if (windowItem) {
+      $scope.boardsList.delete(windowItem);
     }
     $scope.propertyadmin.item.soldSubjectToContract = null;
     $scope.propertyadmin.save();
@@ -116,18 +151,35 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Sold Subject To Contract details cleared');
   }
   $scope.savePRDetails = function () {
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.isWindow) && (item.list === 'pr'));
+    if (!windowItem) {
+      if ($scope.propertyadmin.item.priceReduction.newWindowCard && ($scope.propertyadmin.item.priceReduction.newWindowCard === 'Yes')) {
+        $scope.boardsList.save({
+          address: $scope.property.item.displayAddress,
+          RoleId: $scope.property.item.RoleId,
+          PropertyId: $scope.property.item._id,
+          type: 'PRICE_REDUCTION',
+          isWindow: true,
+          list: 'pr'
+        });
+      }
+    }
     $scope.propertyadmin.save();
     addNote('Price Reduction - ACTIONED');
     alert.log('Price Reduction details saved');
   }
   $scope.clearPRDetails = function () {
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.isWindow) && (item.list === 'PR'));
+    if (windowItem) {
+      $scope.boardsList.delete(windowItem);
+    }
     $scope.propertyadmin.item.priceReduction = null;
     $scope.propertyadmin.save();
     addNote('Price Reduction - CLEARED');
     alert.log('Price Reduction details cleared');
   }
   $scope.saveFTDetails = function () {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.fallenThrough.boardUpdated) && (item.type === 'REMOVE_SLIP'));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.fallenThrough.boardUpdated) && (item.type === 'REMOVE_SLIP') && (!item.isWindow));
     if (!board) {
       if ($scope.propertyadmin.item.fallenThrough.boardUpdated && ($scope.propertyadmin.item.fallenThrough.boardUpdated !== 'No board')) {
         $scope.boardsList.save({
@@ -135,7 +187,21 @@ const propertyAdminFunctions = ($scope, alert) => {
           RoleId: $scope.property.item.RoleId,
           PropertyId: $scope.property.item._id,
           date: $scope.propertyadmin.item.fallenThrough.boardUpdated,
-          type: 'REMOVE_SLIP'
+          type: 'REMOVE_SLIP',
+          list: 'ft'
+        });
+      }
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type === 'REMOVE_SLIP') && (item.isWindow) && (item.list === 'ft'));
+    if (!windowItem) {
+      if ($scope.propertyadmin.item.fallenThrough.backInWindow && ($scope.propertyadmin.item.fallenThrough.backInWindow === 'Yes')) {
+        $scope.boardsList.save({
+          address: $scope.property.item.displayAddress,
+          RoleId: $scope.property.item.RoleId,
+          PropertyId: $scope.property.item._id,
+          type: 'REMOVE_SLIP',
+          isWindow: true,
+          list: 'ft'
         });
       }
     }
@@ -144,9 +210,13 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Fallen Through details saved');
   }
   $scope.clearFTDetails = function () {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.fallenThrough.boardUpdated) && (item.type === 'REMOVE_SLIP'));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.fallenThrough.boardUpdated) && (item.type === 'REMOVE_SLIP') && (!item.isWindow));
     if (board) {
       $scope.boardsList.delete(board);
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type === 'REMOVE_SLIP') && (item.isWindow) && (item.list === 'ft'));
+    if (windowItem) {
+      $scope.boardsList.delete(windowItem);
     }
     $scope.propertyadmin.item.fallenThrough = null;
     $scope.propertyadmin.save();
@@ -154,7 +224,7 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Fallen Through details cleared');
   }
   $scope.saveECDetails = function (isLetting) {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.exchangedCompleted.boardUpdated) && (item.type === 'REMOVE'));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.exchangedCompleted.boardUpdated) && (item.type === 'REMOVE') && (!item.isWindow));
     if (!board) {
       if ($scope.propertyadmin.item.exchangedCompleted && $scope.propertyadmin.item.exchangedCompleted.boardUpdated && ($scope.propertyadmin.item.exchangedCompleted.boardUpdated !== 'No board')) {
         $scope.boardsList.save({
@@ -162,7 +232,21 @@ const propertyAdminFunctions = ($scope, alert) => {
           RoleId: $scope.property.item.RoleId,
           PropertyId: $scope.property.item._id,
           date: $scope.propertyadmin.item.exchangedCompleted.boardUpdated,
-          type: 'REMOVE'
+          type: 'REMOVE',
+          list: 'ec'
+        });
+      }
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type.startsWith('COMPLETED')) && (item.isWindow) && (item.list === 'ec'));
+    if (!windowItem) {
+      if ($scope.propertyadmin.item.exchangedCompleted && $scope.propertyadmin.item.exchangedCompleted.soldInWindow && ($scope.propertyadmin.item.exchangedCompleted.soldInWindow === 'Yes')) {
+        $scope.boardsList.save({
+          address: $scope.property.item.displayAddress,
+          RoleId: $scope.property.item.RoleId,
+          PropertyId: $scope.property.item._id,
+          type: 'COMPLETED_' + $scope.side,
+          isWindow: true,
+          list: 'ec'
         });
       }
     }
@@ -171,9 +255,13 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log(isLetting ? 'Rental Completed details saved' : 'Exchanged and Completed details saved');
   }
   $scope.clearECDetails = function (isLetting) {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.exchangedCompleted.boardUpdated) && (item.type === 'REMOVE'));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.exchangedCompleted.boardUpdated) && (item.type === 'REMOVE') && (!item.isWindow));
     if (board) {
       $scope.boardsList.delete(board);
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type.startsWith('COMPLETED')) && (item.isWindow) && (item.list === 'ec'));
+    if (windowItem) {
+      $scope.boardsList.delete(windowItem);
     }
     $scope.propertyadmin.item.exchangedCompleted = null;
     $scope.propertyadmin.save();
@@ -181,7 +269,7 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log(isLetting ? 'Rental Completed details completed' : 'Exchanged and Completed details completed');
   }
   $scope.saveWDetails = function (isLetting) {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.withdrawn.boardRemoved) && (item.type === 'REMOVE'));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.withdrawn.boardRemoved) && (item.type === 'REMOVE') && (!item.isWindow));
     if (!board) {
       if ($scope.propertyadmin.item.withdrawn && $scope.propertyadmin.item.withdrawn.boardRemoved && ($scope.propertyadmin.item.withdrawn.boardRemoved !== 'No board')) {
         $scope.boardsList.save({
@@ -189,7 +277,21 @@ const propertyAdminFunctions = ($scope, alert) => {
           RoleId: $scope.property.item.RoleId,
           PropertyId: $scope.property.item._id,
           date: $scope.propertyadmin.item.withdrawn.boardRemoved,
-          type: 'REMOVE'
+          type: 'REMOVE',
+          list: 'w'
+        });
+      }
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type === 'REMOVE') && (item.isWindow) && (item.list === 'w'));
+    if (!windowItem) {
+      if ($scope.propertyadmin.item.withdrawn && $scope.propertyadmin.item.withdrawn.windowCardRemoved && ($scope.propertyadmin.item.withdrawn.windowCardRemoved === 'Yes')) {
+        $scope.boardsList.save({
+          address: $scope.property.item.displayAddress,
+          RoleId: $scope.property.item.RoleId,
+          PropertyId: $scope.property.item._id,
+          type: 'REMOVE',
+          isWindow: true,
+          list: 'w'
         });
       }
     }
@@ -198,9 +300,13 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Withdrawn details saved');
   }
   $scope.clearWDetails = function (isLetting) {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.withdrawn.boardRemoved) && (item.type === 'REMOVE'));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.withdrawn.boardRemoved) && (item.type === 'REMOVE') && (!item.isWindow));
     if (board) {
       $scope.boardsList.delete(board);
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type === 'REMOVE') && (!item.isWindow) && (item.list === 'w'));
+    if (windowItem) {
+      $scope.boardsList.delete(windowItem);
     }
     $scope.propertyadmin.item.withdrawn = null;
     $scope.propertyadmin.save();
@@ -208,7 +314,7 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Withdrawn details completed');
   }
   $scope.saveLADetails = function () {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.letAgreed.boardUpdated) && (item.type === $scope.propertyadmin.item.letAgreed.boardType));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.letAgreed.boardUpdated) && (item.type === $scope.propertyadmin.item.letAgreed.boardType) && (!item.isWindow));
     if (!board) {
       if ($scope.propertyadmin.item.letAgreed.boardUpdated && ($scope.propertyadmin.item.letAgreed.boardUpdated !== 'No board')) {
         $scope.boardsList.save({
@@ -216,7 +322,22 @@ const propertyAdminFunctions = ($scope, alert) => {
           RoleId: $scope.property.item.RoleId,
           PropertyId: $scope.property.item._id,
           date: $scope.propertyadmin.item.letAgreed.boardUpdated,
-          type: $scope.propertyadmin.item.letAgreed.boardType
+          type: $scope.propertyadmin.item.letAgreed.boardType,
+          list: 'la'
+        });
+      }
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type === $scope.propertyadmin.item.letAgreed.boardType) && (item.isWindow) && (item.list === 'la'));
+    if (!windowItem) {
+      if ($scope.propertyadmin.item.letAgreed.soldInWindow && ($scope.propertyadmin.item.letAgreed.soldInWindow === 'Yes')) {
+        $scope.boardsList.save({
+          address: $scope.property.item.displayAddress,
+          RoleId: $scope.property.item.RoleId,
+          PropertyId: $scope.property.item._id,
+          date: $scope.propertyadmin.item.letAgreed.boardUpdated,
+          type: 'LET_AGREED',
+          isWindow: true,
+          list: 'la'
         });
       }
     }
@@ -225,9 +346,13 @@ const propertyAdminFunctions = ($scope, alert) => {
     alert.log('Let Agreed details saved');
   }
   $scope.clearLADetails = function () {
-    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.letAgreed.boardUpdated) && (item.type === $scope.propertyadmin.item.letAgreed.boardType));
+    const board = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.date === $scope.propertyadmin.item.letAgreed.boardUpdated) && (item.type === $scope.propertyadmin.item.letAgreed.boardType) && (!item.isWindow));
     if (board) {
       $scope.boardsList.delete(board);
+    }
+    const windowItem = $scope.boardsList.items.find(item => (item.RoleId === $scope.propertyadmin.item.RoleId) && (item.type === $scope.propertyadmin.item.letAgreed.boardType) && (item.isWindow) && (item.list === 'la'));
+    if (windowItem) {
+      $scope.boardsList.delete(windowItem);
     }
     $scope.propertyadmin.item.letAgreed = null;
     $scope.propertyadmin.save();
@@ -274,7 +399,6 @@ const propertyAdminFunctions = ($scope, alert) => {
         const label = elm.querySelector('label');
         if (label && label.textContent.trim()) {
           const input = elm.querySelector('select,input');
-          console.log(input.value);
           if (input && input.value && !input.value.includes('undefined')) {
             return '<label>' + label.textContent + '</label><div>' + (/\d{4}-\d{2}-\d{2}/.test(input.value) ? new Date(input.value).toDateString() : input.value) + '</div>';
           }

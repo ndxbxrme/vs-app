@@ -156,6 +156,9 @@
               <label class="checkbox-label" for="sc-invoiced">Invoice Received
                 <input id="sc-invoiced" type="checkbox" ng-model="issue.item.status.invoiced" ng-change="issue.save()"/>
               </label>
+              <label class="checkbox-label" for="sc-inspection">Inspection
+                <input id="sc-inspection" type="checkbox" ng-model="issue.item.inspectionWorks" ng-change="issue.save()"/>
+              </label>
             </div>
 
             <div class="col-sm-6 row align-items-end">
