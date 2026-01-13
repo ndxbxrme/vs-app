@@ -37,7 +37,7 @@
 
           <div class="month-name">{{::month.month}}</div>
 
-          <div class="target"
+          <div class="target" ng-show="firstLoad"
               ng-click="auth.checkRoles(['admin','superadmin']) && (month.editing = !month.editing)"
               ng-attr-title="{{auth.checkRoles(['admin','superadmin']) ? 'Edit target' : undefined}}">
             <label>Target </label>
@@ -47,7 +47,8 @@
             <div class="default" ng-if="!month.editing">{{month.target.value}}</div>
           </div>
 
-          <div class="actual">{{month.properties.length}}</div>
+          <div class="actual" ng-show="firstLoad">{{month.properties.length}}</div>
+          <div class="actual unloaded" ng-hide="firstLoad"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
 
           <div class="row" ng-show="getYearTotal()">
             <div class="commission col-6"

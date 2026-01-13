@@ -44,6 +44,7 @@
         $scope.startDate.startDate = new Date(year, 0, 1).valueOf();
         $scope.endDate.startDate = new Date(year + 1, 0, 1).valueOf();
         updateMonths();
+        updateTargets();
         return updateProperties();
       });
     };
@@ -188,6 +189,7 @@
       }
       $timeout(() => {
         rebuildMonthsFiltered();
+        $scope.firstLoad = true;
         $scope.$applyAsync();
       })
     };
