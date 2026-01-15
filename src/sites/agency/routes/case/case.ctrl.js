@@ -423,6 +423,7 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
         }
         return false;
       }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
+      console.log(users);
     });
 
     return $scope.$on('$destroy', function() {

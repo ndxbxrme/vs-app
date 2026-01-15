@@ -24,6 +24,12 @@
         return false;
       }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
     });
+    // propertyadmin
+    $scope.propertyadmin = $scope.list('main:propertyadmin', null, (propertyadmin) => {
+      propertyadmin.items = propertyadmin.items.filter(item => (item.instructionToMarket || {}).instructedBy);
+      console.log(propertyadmin);
+    });
+    console.log('fetching pa');
     //properties
     let historic = null;
     $http.get('/public/data/conveyancing-historic.json').then(res => {
@@ -291,7 +297,41 @@
 
       return result;
     };
+    $scope.consultantInstructedBy = function() {
+      var result = {};
+      if (!($scope.consultants && $scope.consultants.items && $scope.properties && $scope.properties.items && $scope.propertyadmin && $scope.propertyadmin.items)) {
+        return result;
+      }
 
+      for (var i = 0; i < $scope.consultants.items.length; i++) {
+        var consultant = $scope.consultants.items[i];
+        result[consultant._id] = 0;
+      }
+      const props = [];
+      for (var i = 0; i < $scope.propertyadmin.items.length; i++) {
+        const propertyadminitem = $scope.propertyadmin.items[i];
+        const property = $scope.properties.items.find(property => property.roleId===propertyadminitem.RoleId.toString());
+        if (!property || property.override && property.override.deleted) continue;
+        if (!property.role) continue;
+        if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
+        if (Object.values(property.milestoneIndex)[0]===10) continue;
+        result[propertyadminitem.instructionToMarket.instructedBy]++;
+      }
+      // for (var j = 0; j < $scope.properties.items.length; j++) {
+      //   var property = $scope.properties.items[j];
+      //   if (!property || property.override && property.override.deleted) continue;
+      //   if (!property.role) continue;
+      //   if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
+      //   if (Object.values(property.milestoneIndex)[0]===10) continue;
+      //   var cid = property.consultant;
+      //   if (result.hasOwnProperty(cid)) {
+      //     //if(!props.includes(property.roleId)) props.push(+property.roleId);
+      //     result[cid]++;
+      //   }
+      // }
+      //console.log('props',props);
+      return result;
+    }
     $scope.showInfo = function(type, di, month, pipeline) {
       var list;
       list = null;

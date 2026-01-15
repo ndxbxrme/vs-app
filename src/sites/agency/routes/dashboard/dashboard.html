@@ -127,6 +127,14 @@
                 {{sum(consultantPipeline()) }}
               </div>
             </div>
+            <div class="tr">
+              <div class="td" ng-repeat="c in consultants.items">
+                {{(consultantInstructedBy()[c._id] || 0)}}
+              </div>
+              <div class="td">
+                {{sum(consultantInstructedBy()) }}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -148,7 +156,7 @@
               <div class="td" ng-repeat="c in consultants.items">
                 {{consultantExchanges(dashboardExchangeItem, month)[c._id] || 0}}
               </div>
-              <div class="td">
+              <div class="td" ng-click="showInstructedByModal(dashboardExchangeItem, month)">
                 {{sum(consultantExchanges(dashboardExchangeItem, month))}}
               </div>
             </div>
