@@ -63,7 +63,7 @@
                 <a class="document-link" ng-href="{{makeDownloadUrl('agency',document)}}" target="_self">
                   <img ng-src="{{makeDownloadUrl('agency',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
                   <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;">
-                    <i class="fa-duotone fa-file-lines"></i>
+                    <i class="fa-light fa-duotone fa-file-lines"></i>
                   </div>
                 </a>
               </div>
@@ -151,18 +151,11 @@
             </select>
             <input type="text" disabled="true" value="{{propertyadmin.item.instructionToMarket.epcOrderedDate | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.instructionToMarket.epcOrderedDate" />
           </div>
-          <!-- <div class="col-md-3">
+          <div class="col-md-3">
             <label>Staff intro</label>
             <select ng-model="propertyadmin.item.instructionToMarket.staffIntro">
               <option>Yes</option>
               <option>No</option>
-            </select>
-          </div> -->
-          <div class="col-md-3">
-            <label>Instructed by</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.instructedBy">
-              <option value="">Not instructed</option>
-              <option ng-repeat="user in consultants.items" ng-value="user._id">{{user.displayName}}</option>
             </select>
           </div>
           <div class="col-md-3">
