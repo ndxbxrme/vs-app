@@ -190,6 +190,7 @@ import './sites/agency/filters/num-mailouts.js';
 import './sites/agency/filters/viewings-contacted.js';
 import './sites/agency/modals/advance-progression/advance-progression.ctrl.js';
 import './sites/agency/modals/dashboard-income/dashboard-income.ctrl.js';
+import './sites/agency/modals/instructed-by/instructed-by.ctrl.js';
 import './sites/agency/modals/yesnocancel.ctrl.js';
 import './sites/agency/routes/agreed/agreed.ctrl.js';
 import './sites/agency/routes/agreed/agreed.routes.js';

@@ -1,0 +1,15 @@
+
+<div class="modal dashboard-income">
+  <div class="modal-header">
+    <h1>Instructed Units<span ng-show="data.month.name">, {{data.month.name}}</span></h1>
+  </div>
+  <pre>{{items}}</pre>
+  <div class="table-responsive">
+    <table class="table">
+      <tbody ng-repeat="item in data.items">
+        <td><img gravatar-src="item.data.local.email" gravatar-size="32" class="user-avatar" /> {{item.data.initials || item.data.displayName}}</td>
+        <td>{{item.total}}</td>
+      </tbody>
+    </table>
+  </div>
+</div>

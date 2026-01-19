@@ -27,9 +27,7 @@
     // propertyadmin
     $scope.propertyadmin = $scope.list('main:propertyadmin', null, (propertyadmin) => {
       propertyadmin.items = propertyadmin.items.filter(item => (item.instructionToMarket || {}).instructedBy);
-      console.log(propertyadmin);
     });
-    console.log('fetching pa');
     //properties
     let historic = null;
     $http.get('/public/data/conveyancing-historic.json').then(res => {
@@ -270,7 +268,6 @@
           result[cid]++;
         }
       }
-      //console.log('props',props);
       return result;
     };
     $scope.consultantExchanges =  function(di, month) {
@@ -315,22 +312,52 @@
         if (!property.role) continue;
         if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
         if (Object.values(property.milestoneIndex)[0]===10) continue;
+        property.instructedBy = propertyadminitem.instructionToMarket.instructedBy;
         result[propertyadminitem.instructionToMarket.instructedBy]++;
       }
-      // for (var j = 0; j < $scope.properties.items.length; j++) {
-      //   var property = $scope.properties.items[j];
-      //   if (!property || property.override && property.override.deleted) continue;
-      //   if (!property.role) continue;
-      //   if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
-      //   if (Object.values(property.milestoneIndex)[0]===10) continue;
-      //   var cid = property.consultant;
-      //   if (result.hasOwnProperty(cid)) {
-      //     //if(!props.includes(property.roleId)) props.push(+property.roleId);
-      //     result[cid]++;
-      //   }
-      // }
-      //console.log('props',props);
       return result;
+    }
+    $scope.showInstructedByModal = function(di, month) {
+      var result = {};
+      if (!($scope.consultants && $scope.consultants.items && $scope.properties && $scope.properties.items && $scope.propertyadmin && $scope.propertyadmin.items)) {
+        return result;
+      }
+
+      for (var i = 0; i < $scope.consultants.items.length; i++) {
+        var consultant = $scope.consultants.items[i];
+        result[consultant._id] = {
+          total: 0,
+          data: consultant
+        }
+      }
+      const properties = $scope.income(di, month, true);
+      for (var j = 0; j < properties.length; j++) {
+        var property = properties[j];
+        if (!property || property.override && property.override.deleted) continue;
+        if (!property.role) continue;
+        if (property.instructedBy) {
+          var cid = property.instructedBy;
+          if (result.hasOwnProperty(cid)) {
+            result[cid].total++;
+          }
+        }
+      }
+      const list = Object.values(result);
+      if (list.length) {
+        return $scope.modal({
+          template: require('../../modals/instructed-by/instructed-by.html').default,
+          controller: 'agencyInstructedByCtrl',
+          data: {
+            di: di,
+            month: month,
+            items: list
+          }
+        }).then(function() {
+          return true;
+        }, function() {
+          return false;
+        });
+      }
     }
     $scope.showInfo = function(type, di, month, pipeline) {
       var list;
