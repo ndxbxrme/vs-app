@@ -103,6 +103,18 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       }
       //$http.post('https://server.vitalspace.co.uk/dezrez/refresh/' + $scope.property.item.RoleId);
     }
+
+    // consultant
+    $scope.consultants = $scope.list('main:users', null, (users) => {
+      users.items = users.items.filter(user => {
+        const siteRole = user.siteRoles && user.siteRoles.find(role => role.siteId==='agency' && user.displayName!=='lettings');
+        if(user.email==='richard@vitalspace.co.uk') return true;
+        if(siteRole) {
+          return siteRole.role==='agency' || siteRole.role==='admin';
+        }
+        return false;
+      }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
+    });
     const iv = $interval(fetchDetails, 10 * 60 * 1000);
     //fetchDetails();
     $scope.$on('$destroy', () => {
