@@ -1,0 +1,146 @@
+
+
+<div class="client-management-list epc-management-list coming-soon">
+  <div class="container-xl">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1>Instructions Coming Soon</h1>
+      </div>
+      <div class="col-md-4 search d-flex justify-content-end">
+        <button ui-sref="agency_new-instruction" class="justify-self-end">New Instruction</button>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="sort">Order By: <a href="" ng-click="sort=&quot;-dateOfPhotos&quot;;page=1" ng-class="{selected:sort===&quot;-dateOfPhotos&quot;}" class="order-item">Date of Photos</a></div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-end mb-3">
+          <div class="showing">Showing {{filterData.length}} of {{totalProps = instructions.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+
+      <div class="container my-4" ng-repeat="item in filterData =(instructions.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="row g-3 align-items-start">
+
+              <!-- Property Info -->
+              <div class="col-lg-4">
+                <h4 class="fw-bold mb-1">{{item.address}}</h4>
+                <div class="small text-muted">{{item.vendorsName}}</div>
+
+                <div class="d-flex align-items-center gap-2 mt-2">
+                  <img gravatar-src="item.user.email" gravatar-size="48" class="user-avatar" />
+                  <div>
+                    <div class="fw-semibold small">{{item.user.displayName}}</div>
+                    <div class="text-muted small">{{item.user.email}}</div>
+                  </div>
+                </div>
+
+                <div class="fw-bold text-success mt-2">
+                  {{item.askingPrice | currency:'£':0}} <span class="text-muted fw-normal">(+{{item.fee | currency:'£':0}})</span>
+                </div>
+              </div>
+
+              <!-- Onboarding Steps -->
+              <div class="col-lg-5">
+                <div class="row row-cols-2 g-2 small">
+
+                  <div class="col d-flex align-items-center gap-2">
+                    <input id="whatsApp{{item._id}}" type="checkbox" ng-model="item.whatsApp">
+                    <label for="whatsApp{{item._id}}">Whatsapp</label>
+                  </div>
+
+                  <div class="col">
+                    <label class="form-label mb-0">Go Live Date</label>
+                    <input type="date" ng-model="item.goLiveDate">
+                  </div>
+
+                  <div class="col d-flex align-items-center gap-2">
+                    <input id="termsSent{{item._id}}" type="checkbox" ng-model="item.termsSent">
+                    <label for="termsSent{{item._id}}">Terms Sent</label>
+                  </div>
+
+                  <div class="col">
+                    <label class="form-label mb-0">Date of Photos</label>
+                    <input type="date" ng-model="item.dateOfPhotos">
+                  </div>
+
+                  <div class="col d-flex align-items-center gap-2">
+                    <input id="termsReceived{{item._id}}" type="checkbox" ng-model="item.termsReceived">
+                    <label for="termsReceived{{item._id}}">Terms Received</label>
+                  </div>
+
+                  <div class="col">
+                    <label class="form-label mb-0">Photographer</label>
+                    <select ng-model="item.photographer">
+                      <option value="">Assign...</option>
+                      <option value="Simon Thomas">Simon Thomas</option>
+                      <option value="Martin Gray">Martin Gray</option>
+                      <option value="Richard Antrobus">Richard Antrobus</option>
+                    </select>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="col-lg-3 text-lg-end align-items-center">
+                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                  <button ng-click="save(item)">Save</button>
+                  <button class="btn-success" ng-click="completeInstruction(item)">Completed</button>
+                </div>
+
+                <div class="small text-muted mt-2">
+                  Instructed: <strong>{{item.insertedOn|date:'mediumDate'}}</strong>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <table ng-show="filterData.length &gt; 0" class="table small-mobile-hide">
+        <thead>
+          <tr>
+            <th width="45%">Property Address</th>
+            <th width="15%">Issued</th>
+            <th>User</th>
+            <th width="10%"></th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="item in filterData =(instructions.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
+          <tr>
+            <td class="address">
+              <div>{{item.address}}</div>
+            </td>
+            
+            <td style="text-align: center">{{(item.createdAt || item.modifiedAt) | date:'dd/MM/yyyy'}}</td>
+            <td>
+              <div class="users-cell expandable">
+                <img gravatar-src="item.user.local.email" gravatar-size="48" class="user-avatar" />
+                <div>
+                  <div class="display-name">{{item.user.displayName}}</div>
+                  <div class="user-email">{{item.user.local.email}}</div>
+                </div>
+              </div>
+            </td>
+            <td class="listed" style="white-space:nowrap"> 
+              <input type="button" ng-click="completedinstructions(item)" value="Completed" />
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+    </div>
+    <pagination total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true" class="pagination-sm pagination"></pagination>
+    <div ng-show="filterData.length===0" class="nothing-to-show">
+      <h3>Nothing to show</h3>
+    </div>
+  </div>
+</div>

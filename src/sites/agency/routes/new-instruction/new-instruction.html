@@ -1,0 +1,58 @@
+<div class="client-management-list epc-management-list coming-soon">
+  <div class="container-xl">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1>New Instruction</h1>
+      </div>
+      <div class="col-md-4 search d-flex justify-content-end">
+      </div>
+    </div>
+    
+    <form name="myForm" ng-submit="save()">
+      <div class="table-responsive">
+
+        <div class="container my-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="row g-3 align-items-start">
+
+                <!-- Property Info -->
+                <div class="col-lg-4">
+                  <div class="col">
+                    <label class="form-label mb-0">Property Address</label>
+                    <input type="text" ng-model="instruction.item.address" id="address" placeholder="Property Address">
+                  </div>
+                  <div class="col">
+                    <label class="form-label mb-0">Vendor's Name</label>
+                    <input type="text" ng-model="instruction.item.vendorsName" id="vendorsName" placeholder="Vendor's Name">
+                  </div>
+                </div>
+
+                <!-- Onboarding Steps -->
+                <div class="col-lg-4">
+                  <div class="col">
+                    <label class="form-label mb-0">Asking Price (£)</label>
+                    <input type="number" ng-model="instruction.item.askingPrice" id="askingPrice" placeholder="Asking Price">
+                  </div>
+                  <div class="col">
+                    <label class="form-label mb-0">Fee (£) excluding VAT</label>
+                    <input type="number" ng-model="instruction.item.fee" id="fee" placeholder="Fee">
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="col-lg-4 text-lg-end align-items-center">
+                  <div class="d-grid gap-2 d-lg-flex justify-content-lg-center">
+                    <button ng-click="save()">Add Instruction</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

@@ -230,6 +230,10 @@ import './sites/agency/routes/offer/offer.ctrl.js';
 import './sites/agency/routes/offer/offer.routes.js';
 import './sites/agency/routes/offers-list/offers-list.ctrl.js';
 import './sites/agency/routes/offers-list/offers-list.routes.js';
+import './sites/agency/routes/coming-soon/coming-soon.ctrl.js';
+import './sites/agency/routes/coming-soon/coming-soon.routes.js';
+import './sites/agency/routes/new-instruction/new-instruction.ctrl.js';
+import './sites/agency/routes/new-instruction/new-instruction.routes.js';
 
 
 //LEADS

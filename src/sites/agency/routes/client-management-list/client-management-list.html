@@ -17,7 +17,7 @@
           <div class="sort">Order By: <a href="" ng-click="sort=&quot;-DateInstructed&quot;;page=1" ng-class="{selected:sort===&quot;-DateInstructed&quot;}" class="order-item">First Listed</a><a href="" ng-click="sort=&quot;-viewings.length&quot;;page=1" ng-class="{selected:sort===&quot;-viewings.length&quot;}" class="order-item">Viewings</a><a href="" ng-click="sort=&quot;-Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-Price.PriceValue&quot;}" class="order-item">Asking Price</a></div>
         </div>
         <div class="col-md-6 text-end">
-          <div class="showing">Showing {{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+          <div class="showing">Showing<br><a ui-sref="agency_coming-soon">Coming Soon</a> &nbsp; &nbsp;{{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
         </div>
       </div>
     </div>
