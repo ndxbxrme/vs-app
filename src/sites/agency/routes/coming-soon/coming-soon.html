@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="fw-bold text-success mt-2">
-                  {{item.askingPrice | currency:'£':0}} <span class="text-muted fw-normal">(+{{item.fee | currency:'£':0}})</span>
+                  {{item.askingPrice | currency:'£':0}} <span class="text-muted fw-normal">(+{{item.fee | currency:'£':feeDP(item.fee)}})</span>
                 </div>
               </div>
 

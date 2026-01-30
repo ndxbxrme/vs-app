@@ -34,6 +34,7 @@ angular.module('vs-agency')
           if(item.insertedOn) item.insertedOn = new Date(item.insertedOn);
           if(item.goLiveDate) item.goLiveDate = new Date(item.goLiveDate);
           if(item.dateOfPhotos) item.dateOfPhotos = new Date(item.dateOfPhotos);
+          if(item.fee && item.fee <= 1 && item.askingPrice) item.fee = (item.fee * item.askingPrice * 0.01);
         })
         assignUsers();
       });
@@ -45,6 +46,9 @@ angular.module('vs-agency')
         scope.instructions.delete(item);
         alert.log('New instruction completed');
       };
+      scope.feeDP = (fee) => {
+        return fee - Math.floor(fee) > 0 ? 2 : 0;
+      }
       scope.item = {
         'uid': 123,
         'address': '7 Montrose Ave, Stretford Manchester M32 9LN',
