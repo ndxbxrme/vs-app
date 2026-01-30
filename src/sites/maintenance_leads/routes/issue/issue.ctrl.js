@@ -141,6 +141,21 @@
         return console.log('err', err);
       });
     };
+    $scope.openEditIssueModal = function() {
+      return $scope.modal({
+        template: require('../../modals/add-issue/add-issue.html').default,
+        controller: 'maintenance_leadsAddIssueModalCtrl',
+        size: 'large',
+        data: {
+          issue: $scope.issue
+        }
+      }, $http.sites["maintenance_leads"].config).then(function(updatedIssue) {
+        $scope.issue.refresh();
+        return alert.log('Issue updated');
+      }, function(err) {
+        return console.log('Modal dismissed', err);
+      });
+    };
     $scope.showLightbox = function(media) {
       return $scope.modal({
         template: require('../../modals/lightbox/lightbox.html').default,

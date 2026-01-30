@@ -61,6 +61,9 @@ angular.module('vs-app')
         site = 'Main';
       }
       site = site.replace(/vitalspace\s*/gi, '');
+      if(site.trim() === 'Conveyancing') {
+        site = 'Sales';
+      }
       return {site,title};
     }
   }

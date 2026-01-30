@@ -3,7 +3,7 @@ angular.module('vs-app')
   $urlRouterProvider.otherwise('/');
   $locationProvider.html5Mode(true);
   return gravatarServiceProvider.defaults = {
-    size: 24,
+    size: 40,
     "default": 'mm',
     rating: 'pg'
   };

@@ -423,8 +423,14 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
         }
         return false;
       }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
-      console.log(users);
     });
+
+    // Helper to get consultant name by ID
+    $scope.getConsultantName = (consultantId) => {
+      if (!$scope.consultants || !$scope.consultants.items) return '';
+      const consultant = $scope.consultants.items.find(c => c._id === consultantId);
+      return consultant ? consultant.displayName : '';
+    };
 
     return $scope.$on('$destroy', function() {
       return AgencyProgressionPopup.hide();

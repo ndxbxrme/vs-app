@@ -31,11 +31,21 @@
       pageSize: 0
     });
     $scope.sort = Sorter.create($scope.history.args);
-    return $scope.restore = function (lead) {
+    $scope.restore = function (lead) {
       return $http.post($http.sites["leads"].url + `/api/leads/${lead._id}`, {
         deleted: null,
         booked: null
       }, $http.sites.leads.config);
+    };
+    
+    // Add Lead Modal function
+    $scope.openAddLeadModal = function(roleType) {
+      const modalTemplate = require('../../modals/add-lead/add-lead.html').default;
+      $scope.modal({
+        template: modalTemplate,
+        controller: 'addLeadModalCtrl',
+        data: { roleType: roleType }
+      });
     };
   });
 

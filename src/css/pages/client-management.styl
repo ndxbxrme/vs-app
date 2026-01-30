@@ -1,70 +1,87 @@
 .client-management-list
+  padding-top 30px
   // Controls
   .controls
     .order-item, .filter-item
-      display inline-block
+      display inline-flex
       position relative
       color vs-orange
-      margin 0px 15px 5px 0px
-      &.icon-green, &.icon-red, &.icon-orange
-        padding-left 2rem
-        &:before
-          content ''
-          position absolute
-          top 0.5rem
-          left 0.5rem
-          width 1rem
-          height 1rem
-          background vs-green
-          border-radius 50%
-      &.icon-red:before
-        background vs-red
-      &.icon-orange:before
-        background vs-amber
+      background white
+      font-weight 600
+      margin 0px 5px 10px 0px
+      padding 5px 15px
+      border 1px solid vs-lightgrey
+      border-radius 30px
       &.selected
+        background #f1f1f1
+  &.history-route
+    .show
+      margin-left 20px
+      .filter-item 
+        padding 5px 15px 5px 0px
+        input[type="radio"]
+          border 1px solid vs-lightgrey
+  .showing 
+    margin-bottom: 10px
+  .property-card
+    background white
+    border-radius 10px
+    border 1px solid vs-lightgrey
+    cursor pointer
+    transition all 0.3s ease
+    margin-bottom 15px
+    &:hover
+      box-shadow 0 4px 12px rgba(0,0,0,0.1)  
+  .property-image
+    padding 20px 30px 20px 35px
+    img
+      width 100%
+      height 200px
+      object-fit cover
+      border-radius 10px
+    &.has-request
+      img
+        border 3px solid vs-orange
+  .property-info 
+    padding-top 20px
+    padding-bottom 20px
+    border-right 1px solid vs-lightgrey
+    display flex
+    flex-direction column
+    justify-content space-between
+    .property-address,
+    .purchase-price,
+    .fees
+      font-size 1.8rem
+      font-weight 600
+      color vs-orange
+      margin-bottom 10px
+      strong
+        color vs-grey
+    .purchase-price,
+    .fees
+      display: block
+    .lead-details,
+    .property-viewing
+      background vs-body
+      padding 20px
+      border-radius 10px
+      p, 
+      .title
+        font-size 1.4rem
         font-weight 600
-      
-  // Table
-  table.table
-    margin-bottom 0px
-    tbody
-      border-top 5px solid vs-lightsilver
-      border-bottom 5px solid vs-lightsilver
-    tr 
-      td
-        vertical-align top
-        p
-          margin-bottom 0px
-        .address
-          color vs-orange
-          font-weight bold
-        .dates
-          font-size 1.1rem
-          .date
-            margin-top 0.5rem
-        .title
-          font-weight 600
-          font-size 1.4rem
-        .milestone
-          transform translateY(1rem)
-        &.offer
-          font-weight bold
-          font-size 1.8rem
-          p
-            font-weight 300
-            font-size 1.4rem
-            margin-top 0
-        &.has-request
-            font-weight 600
-      &.meta
-        td
-          background vs-white
-          border-bottom 1px solid vs-grey
-          padding 10px 15px
-          .purchase-price
-            color vs-orange
-            font-size 1.8rem
-            font-weight 600
+        margin-bottom 0px
+      .title
+        color vs-silver
+  .property-stats-actions
+    padding 20px 30px 20px 30px
+    .property-vendor,
+    .property-stats
+      margin-bottom 10px
+      .stat-item
+        margin-bottom 10px
+    .button 
+      margin-bottom 0px !important
   .milestone
     text-align left
     align-items flex-start
@@ -109,138 +126,27 @@
       &.selected, &:hover
         background vs-orange
         color white
-.mobile
-  .cases
-    .controls
-      .order-item, .filter-item
-        margin-left 1rem
-    .mobile-table
-      .address-row
-        flex 1
 
 .client-management-details, .case
-  .accordian 
-    border 1px solid #ccc
-    border-radius 3px
-    background #fff
-    padding 20px
-    margin-bottom 20px
-    h4
-      user-select none
-      cursor pointer
-      color vs-orange
-  .client-row
-    margin-bottom 30px
-    padding-bottom 30px
-    border-bottom 1px solid #fff
-  .property-item
-    align-items center
-    position relative
-    border 1px solid vs-lightgrey
-    border-radius 3px
-    background white
-    padding 20px
-    overflow hidden
-    .property-status
-      flex 1
-    .property-marketing
-      .item
-        justify-content flex-end
-     p
-      display block
-      margin-bottom 0px
-      &.address,
-      &.numbers
-        color vs-orange
-        font-weight bold
-      &.numbers
-        font-weight bold
-        font-size 1.8rem
-      &.title
-        font-weight 600
-        font-size 1.4rem  
-  .property-image 
-    width 170px
-    height 120px
-    background #eee
-    background-position center
-    background-size cover
-    margin-right 2rem
-  .results, .stats
-    .ic50
-      display inline-block
-      zoom .5
-    .col-sm-6
-      margin-bottom 30px
-      .stat
-        background rgba(255,255,255,0.5)
-        border-radius 3px
-        padding 30px 30px 20px 30px
-        display flex
-        align-items center
-        justify-content center
-        flex-direction column
-      p
-        font-size 2rem
-        line-height 1
-        padding-bottom 0
-        font-weight 600
-        color vs-orange
-        &.small
-          font-size 1.4rem
-          color vs-grey
-      i
-        background url(./public/img/icons/vs_icons.png) no-repeat
-        width 80px
-        height 80px
-        zoom .4
-        margin-bottom: 40px
-        &.vs-iconsale
-          background-position -340px -252px
-        &.vs-iconstaff
-          background-position -256px -336px
-        &.guarantor
-          background url(./public/img/icons/icons3.png) no-repeat
-          background-position -2px -82px
-        &.mail
-          background url(./public/img/icons/vs_mail.png) no-repeat
-          display inline-block
-          background-size contain
-          width: 80px;
-          height: 80px;
-        &.vs-iconphoto
-          background-position -340px -168px
-        &.vs-iconvideo
-          background-position -4px -420px
-        &.offer
-          background url(./public/img/icons/vs-icons2.png) no-repeat
-          background-position -82px -81px
-        &.vs-iconsearch
-          background-position -4px -336px
-        &.vs-icondocument
-          background-position -88px -84px
-        &.reserving
-          background url(./public/img/icons/icons3.png) no-repeat
-          background-position -84px -82px
-        &.vs-iconthumb
-          background-position -340px -336px
-  .rightmove-stats
-    text-align center
-    margin 60px 0 30px 0
-    .info
-      padding 20px 20px 0
-      p span
-        color vs-orange
   .contacts
+    display flex
+    justify-content flex-end
+    .vendor
+      margin-bottom 27px
+      &:nth-of-type(2n)
+        margin-left 20px
+        padding-left 10px
+        border-left 1px solid vs-lightgrey
+  .contact-details
+    display flex
+    justify-content flex-end
+    margin-left 10px
     .card
+      background none
+      border none
       position relative
-      border 1px solid vs-lightgrey
-      border-radius 3px
-      background white
-      padding 20px 20px 10px 20px
-      min-height 170px
-      overflow hidden
-      div
+      .contact-name
+        font-weight 600
         margin-bottom 5px
       .edit-btn
         position absolute
@@ -253,29 +159,196 @@
         white-space nowrap
         overflow hidden
         text-overflow ellipsis
+  .property-summary
+    .property
+      background white
+      margin-bottom 45px
+      padding 30px
+      border-radius: 20px
+      p 
+        font-size 18px
+        line-height 1.5
+        padding 10px 0 10px 0
+      .property-image
+        width 100%
+        height 290px
+        border-radius 20px
+        overflow hidden
+        position relative
+        img 
+          width 100%
+          height 100%
+          object-fit cover
+      .status
+        color white
+        background vs-orange
+        font-weight 600
+        padding 5px 15px
+        border-radius 20px
+        position absolute
+        top 10px
+        right 10px
+      h4
+        color vs-grey
+        font-weight 600
+        margin 10px 0px 0px 0px
+      p 
+        span 
+          font-weight 600
+        &.date-instructed,
+        &.financial-item
+          font-size 16px
+          margin-bottom 5px
+          padding 0px
+          span 
+            color vs-orange
+        &.updated
+          font-size 14px
+          padding-top 5px
+      .buttons 
+        margin-top 10px
+      .progression-bar
+        margin-top 15px
+        margin-bottom 10px
+        .progression-label
+          font-weight 600
+          font-size 14px
+          color vs-grey
+          margin-bottom 8px
+        .progression-track
+          width 100%
+          height 20px
+          background vs-lightgrey
+          border-radius 10px
+          overflow hidden
+          .progression-fill
+            height 100%
+            background vs-orange
+            border-radius 10px 0 0 10px
+            transition width 0.5s ease
+      .property-report
+        .results 
+          display flex
+          flex-wrap wrap
+          margin-bottom 15px
+          .result 
+            display flex
+            align-items baseline
+            width 50%
+            p 
+              margin-bottom 0px
+            i,svg
+              font-size 2rem
+              margin-right 10px
+        .rightmove-stats
+          background-color #e5f1ee
+          margin-top 30px
+          padding 20px
+          border-radius 20px
+          .results
+            margin-bottom 0px
+  .tabbed-section
+    background white
+    border 1px solid vs-lightgrey
+    border-radius 20px
+    margin-bottom 30px
+    overflow hidden
+    .nav-pills
+      list-style none
+      padding 30px
+      margin 0
+      display flex
+      flex-wrap wrap
+      background white
+      border-bottom 1px solid vs-lightgrey
+      li
+        margin-right 10px
+        padding 8px 20px
+        cursor pointer
+        color vs-grey
+        font-weight 600
+        font-size 14px
+        text-indent 0px
+        transition all 0.3s ease
+        user-select none
+        text-align center
+        min-width 150px
+        border 1px solid vs-lightgrey
+        border-radius 30px
+        display flex
+        align-items center
+        justify-content center
+        i 
+          margin-right 8px
+        &:before
+          display none
+        &:hover
+          color vs-orange
+          background vs-body
+        &.active
+          color white
+          background vs-orange
+          border 1px solid vs-orange
+    .tab-content
+      .tab-pane
+        display block
+        animation fadeIn 0.3s ease-in
+        .row 
+          padding 30px 30px 15px
+          &.actions
+            border-top 1px solid vs-lightgrey
+            padding 20px 30px 10px
+            .button.button-alt
+              max-width 100px
+        &[ng-show]
+          display block !important
+        &.ng-hide
+          display none !important
+        
+
   .case-notes
     border 1px solid vs-lightgrey
-    padding 20px
+    padding 30px
     margin 10px 0 30px
-    border-radius 3px
-    background vs-white
+    border-radius 30px
+    background white
     .case-note
-      border 1px solid vs-lightgrey
+      background vs-white
       padding 20px
       margin 10px 0
-      border-radius 3px
-      background white
+      border-radius 20px
+      .header-row
+        display flex
+        justify-content space-between
+        margin-bottom 10px
       .date 
         font-weight 600
-        .edit, .delete
-          display inline
-          float right
+        line-height 1.2
+        display flex
+        align-items center
+        .date 
+          font-weight 400
+          font-size 1.4rem
           color vs-orange
-          margin-left 1rem
+      .actions
+        border 1px solid #ccc
+        border-radius 20px
+        padding 5px 10px
+        display flex
+        justify-content center
+        gap 10px
+      .edit, .delete
+        color vs-grey
+        display inline-flex
+        align-items center
+        justify-content center
+        float right
       p, h1, h2, h3, h4, h5, h6
         margin 0 0 0px 0
       img
-        margin-right 5px
+        margin-right 10px
+        border-radius 50%
+        width 48px
   .add-note
     margin-top 10px
     .CodeMirror
@@ -287,7 +360,7 @@
       pre
         font-size 1.8rem
     button
-      margin-top 15px
+      margin 0px
       background vs-orange
       color white
       border vs-orange

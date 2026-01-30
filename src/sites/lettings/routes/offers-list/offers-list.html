@@ -4,7 +4,7 @@
   <div class="container-xl">
     <div class="row align-items-center">
       <div class="col-md-8">
-        <h1>Lettings -<span ng-show="isHistoric"> Historic</span><span ng-hide="isHistoric"> Pending</span> Offers</h1>
+        <h1><i class="fa-duotone fa-light fa-hand-holding-dollar"></i> Lettings -<span ng-show="isHistoric"> Historic</span><span ng-hide="isHistoric"> Pending</span> Offers</h1>
       </div>
       <div class="col-md-4 search">
         <input type="text" ng-model="search" placeholder="Search Offers" ng-change="page=1"/>
@@ -24,44 +24,33 @@
       </div>
     </div>
 
-    <div class="table-responsive">
-      <table ng-show="filterData.length &gt; 0" class="table small-mobile-hide">
-        <thead>
-          <tr>
-            <th width="5%"></th>
-            <th width="30%">Property Address</th>
-            <th width="30%">Applicant</th>
-            <th width="30%">Offer Received</th>
-            <th width="5%"></th>
-          </tr>
-        </thead>
-        <tbody ng-repeat="offer in filterData =(offers.items | filter:{&quot;search&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
-          <tr ng-click="property.open = !property.open">
-            <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
-              <img src="{{offer.image}}" width="100" class="image" ng-if="offer.image"/>
-              <div class="no-image" ng-if="!offer.image">No Image</div>
-            </td>
-            <td class="address">
-              <div>{{offer.address}}</div>
-            </td>
-            <td class="text-center">
-              <div>
-                <p>{{offer.applicant.title}} {{offer.applicant.first_name}} {{offer.applicant.last_name}}</p>
-              </div>
-              <div ng-show="offer.applicant2 && offer.applicant2.first_name">
-                <p>{{offer.applicant2.title}} {{offer.applicant2.first_name}} {{offer.applicant2.last_name}}</p>
-              </div>
-              </td>
-            <td class="text-center">
-              <p class="title">{{formatDate(offer.date)}}</p>
-            </td>
-            <td class="listed"> 
+    <div class="properties-list" ng-show="filterData.length &gt; 0">
+      <div class="property-card" ng-repeat="offer in filterData =(offers.items | filter:{&quot;search&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
+        <div class="property-main row g-5">
+          <div class="property-image col-md-3" ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
+            <img ng-if="offer.image" ng-src="{{offer.image}}" onerror="this.onerror=null; if(this.dataset.fb1 && !this.dataset.tried1) { this.dataset.tried1='true'; this.src=this.dataset.fb1; } else if(this.dataset.fb2 && !this.dataset.tried2) { this.dataset.tried2='true'; this.src=this.dataset.fb2; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }" data-fb1="{{offer.imageFallback1}}" data-fb2="{{offer.imageFallback2}}" class="image"/>
+            <div class="no-image" ng-if="!offer.image">No Image</div>
+          </div>
+          
+          <div class="property-info col-md-6">
+            <div class="property-meta">
+              <div class="property-address"><strong>Address:</strong> {{offer.address}}</div>
+              <div class="offer-date"><strong>Offer Received:</strong> {{formatDate(offer.date)}}</div>
+            </div>
+
+            <div class="offer-details-section">
+              <p class="applicant-info"><i class="fa-duotone fa-light fa-user"></i> <strong>Applicant:</strong> {{offer.applicant.title}} {{offer.applicant.first_name}} {{offer.applicant.last_name}}</p>
+              <p class="applicant-info" ng-show="offer.applicant2 && offer.applicant2.first_name"><i class="fa-duotone fa-light fa-users"></i> <strong>Co-Applicant:</strong> {{offer.applicant2.title}} {{offer.applicant2.first_name}} {{offer.applicant2.last_name}}</p>
+            </div>
+          </div>
+          
+          <div class="property-stats-actions col-md-3">
+            <div class="property-actions">
               <a class="button" ui-sref="lettings_offer({id:offer._id})">View Offer</a>
-              <!--<a class="button" ng-click="toggleActioned(offer)">{{offer.actioned ? 'Restore' : 'Set actioned'}}</a>-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <pagination total="offers.total" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true" class="pagination-sm pagination"></pagination>
     <div ng-show="filterData.length===0" class="nothing-to-show">

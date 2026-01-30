@@ -1,7 +1,74 @@
 .dashboard,
 .lettings-dashboard-route,
-.leads-dashboard-route
+.leads-dashboard-route,
+.maintenance-leads-dashboard
   padding-bottom 30px
+  .snapshot 
+    display flex
+    gap 20px
+    margin-bottom 30px
+    height 115px
+    .snapshot-item 
+      background white
+      border-radius 20px
+      padding 20px 30px
+      width 30%
+      min-width 250px
+      cursor pointer
+      transition: all .3s ease
+      &:hover
+        box-shadow 0 4px 12px rgba(0,0,0,0.1)
+        transform translateY(-2px)
+      .snapshot-value 
+        color vs-orange
+        font-size 4rem
+        font-weight 600
+        &.currency 
+          text-align right
+      .snapshot-label 
+        font-size 1.4rem
+        color vs-grey
+        font-weight 600
+        margin-bottom 20px
+    .action-item
+      display flex
+      align-items center
+      justify-content flex-start
+      flex-shrink 0
+      width 20%
+  h3
+    margin-bottom: 10px
+    margin-top 30px
+    font-size 2rem
+    font-weight 600
+    color vs-grey
+    i
+      margin-right 10px
+    &.boxed
+      background white
+      padding 22px 25px
+      border-radius 30px
+    .clickable 
+      color vs-orange
+      font-size 3rem
+      cursor pointer
+    .count 
+      color white
+      font-size 2rem
+      font-weight 600
+      width 30px
+      height 30px
+      background vs-orange
+      border-radius 50%
+      display inline-flex
+      justify-content center
+      align-items center
+      margin-left 30px
+  .unknown-row
+    h3 
+      margin-top 0px
+      &.boxed 
+        border-radius 90px
   .currency
     width 8rem
     display inline-block
@@ -9,7 +76,8 @@
   .overview, .income, .selling, .letting, .valuation 
     width 100%
     border-spacing 0
-    border-radius 3px
+    border 1px solid vs-lightgrey
+    border-radius 20px
     margin-bottom 30px
     position relative
     box-sizing border-box
@@ -19,6 +87,12 @@
         .td, td
           font-weight 600
           background vs-tablegrey
+      &.head-two
+        .td, td
+          background white
+      &.total
+        .td, td
+          font-weight 900
       .td, td
         text-align center
   .pipeline, .exchanged
@@ -75,82 +149,259 @@
       line-height 1
       padding 7px
       border-radius 50px
-        
-.maintenance-leads-dashboard
-  .boxes
-    .box
-      border-radius 2px
-      margin-bottom 2rem
+  
+  .progression-list
+    display flex
+    flex-direction column
+    gap 10px
+    .progression-item
       background white
-      .title
-        padding 15px
-        background vs-grey
-        font-weight bold
-        color: white
+      border-radius 20px
+      padding 25px
+      transition all 0.3s ease
+      &:hover
+        box-shadow 0 4px 12px rgba(0, 0, 0, 0.1)
+      .property-header
         display flex
         justify-content space-between
         align-items center
-        border-bottom 1px solid vs-lightsilver
-        .box-number
-          color vs-orange
-          background white
-          font-size 3rem
+        margin-bottom 10px
+        .property-info
+          display flex
+          align-items center
+          gap 15px
+          .property-address
+            font-size 1.8rem
+            font-weight 600
+            color vs-grey
+            text-decoration none
+            &:hover
+              color vs-orange
+          .service-level-badge
+            padding 5px 12px
+            border-radius 30px
+            font-size 1.6rem
+            font-weight 600
+            &.tenant-find,
+            &.managed
+              background vs-body
+              color vs-grey
+        .progress-label
+          font-size 1.6rem
+          font-weight 600
+          color vs-grey
+          border-radius 30px
+          border 1px solid vs-lightgrey
+          padding 5px 12px
+          span
+            font-weight 400
+        .property-dates
+          display flex
+          gap 20px
+          .date-item
+            font-size 1.6rem
+            color vs-grey
+            strong
+              color vs-darkgrey
+      .progress-section
+        .progress-bar-wrapper
+          display flex
+          align-items center
+          gap 15px
+          .progress-bar
+            flex 1
+            height 30px
+            background vs-lightgrey
+            border-radius 15px
+            overflow hidden
+            position relative
+            .progress-fill
+              height 100%
+              background vs-orange
+              border-radius 15px
+              transition width 0.5s ease
+          .progress-text
+            font-size 1.4rem
+            font-weight 600
+            color vs-grey
+            min-width 60px
+            text-align right
+  
+  img.user-avatar
+    border-radius 50%
+    border 1px solid vs-lightgrey
+    background vs-body
+    margin-top 20px 
+  .c-name
+    font-size 1rem
+.lettings-dashboard-route
+  padding-top 30px
+  .controls
+    .order-item
+      display inline-flex
+      position relative
+      color vs-orange
+      background white
+      font-weight 600
+      margin 0px 5px 10px 0px
+      padding 5px 15px
+      border 1px solid vs-lightgrey
+      border-radius 30px
+      &.selected
+        background vs-orange
+        color white
+        border: 1px solid vs-orange
+.maintenance-leads-dashboard
+  padding 40px 0
+  h1
+    margin-bottom 40px
+    font-size 36px
+    font-weight 300
+    strong
+      font-weight 700
+  .button
+    i 
+      margin-left 8px
+  .snapshot-row
+    margin-bottom 40px
+  .snapshot-box
+    background white
+    border-radius 20px
+    padding 20px
+    transition: all .3s ease
+    cursor pointer
+    &:hover
+      box-shadow 0 4px 12px rgba(0,0,0,0.1)
+      transform translateY(-2px)
+    .snapshot-label
+      font-size 14px
+      color vs-grey
+      margin-bottom 10px
+      font-weight 600
+    .snapshot-value
+      font-size 32px
+      font-weight 700
+      color vs-orange
+
+  // Tabs Styling
+  .maintenance-tabs
+    margin-top 30px
+    .nav-tabs
+      border-bottom 2px solid vs-lightgrey
+      margin 0
+      .nav-item
+        margin-bottom 0
+        .nav-link
+          border none
+          border-radius 0px
+          border-bottom 3px solid transparent
+          color vs-grey
+          padding 15px 20px
+          font-weight 500
+          background transparent
+          transition all 0.3s ease
+          position relative
+          .badge
+            background vs-lightgrey
+            color vs-grey
+            padding 5px 8px
+            border-radius 12px
+            font-size 12px
+            margin-left 8px
+            font-weight 600
+          &:hover
+            color vs-orange
+            border-bottom-color vs-orange
+            background transparent
+          &.active
+            color vs-orange
+            border-bottom-color vs-orange
+            background transparent
+            .badge
+              background vs-orange
+              color white
+    .tab-content
+      background white
+      border-radius 20px
+      margin-top 10px
+      padding 30px
+      box-shadow 0 2px 4px rgba(0, 0, 0, 0.1)
+      .issues-list
+        .issue
+          display flex
+          align-items center
+          padding 20px 0px
+          border-bottom 1px solid vs-lightgrey
+          cursor pointer
+          transition all 0.3s ease
+          &:hover
+            .details .address
+              color vs-orange
+          &:last-child
+            border-bottom none
+          .details
+            flex 1
+            .address
+              font-weight 600
+              color vs-grey
+              margin-bottom 5px
+              font-size 18px
+            .issue-title
+              font-size 14px
+          .status
+            display flex
+            gap 10px
+            margin-right 20px
+            > div
+              width 30px
+              height 30px
+              display flex
+              align-items center
+              justify-content center
+              border-radius 50%
+              background vs-lightgrey
+              color white
+              font-size 14px
+          &.booked
+            .status .booked
+              background vs-green
+          &.completed
+            .status .completed
+              background vs-orange
+          &.invoiced
+            .status .invoiced
+              background vs-grey
+          .messages
+            width 40px
+            height 40px
+            display flex
+            align-items center
+            justify-content center
+            border-radius 50%
+            background vs-lightgrey
+            color vs-grey
+            font-weight 600
+            &.newmessage
+              background vs-orange
+              color white
+        pagination
+          margin-top 30px
           display flex
           justify-content center
-          align-items center
-          width 50px
-          height 50px
-          padding 10px
-          border-radius 50%
-      .issue
-        display flex
-        cursor pointer
-        padding 10px
-        position relative
-        border-top 2px solid vs-lightsilver
-        border-bottom 2px solid vs-lightsilver
-        border-radius 2px
-        .address
-          font-weight bold
-          margin-bottom .2rem
-        .issue-title
-          font-size 1.4rem
-        &:hover
-          .address
-            color vs-orange
-        svg 
-          font-size 1.6rem
-          margin-right 10px
-        .details
-          flex 1
-        .status
-          display none
-          div
-            opacity .1
-        &.booked .booked
-          opacity 1
-        &.completed .completed
-          opacity 1
-        &.invoiced .invoiced
-          opacity 1
-        .messages 
-          display none
-          &.newmessage
-            display flex
-            justify-content center
-            align-items center
-            width 20px
-            height 20px
-            border-radius 50%
-            position absolute
-            bottom 10px
-            right 10px
-            background vs-orange
-            font-weight 900
-            color white
-      &:last-child .status,
-      &:nth-child(3) .status
-        display flex
+
+@media (max-width: 768px)
+  .maintenance-leads-dashboard
+    .maintenance-tabs
+      .nav-tabs
+        flex-wrap nowrap
+        overflow-x auto
+        -webkit-overflow-scrolling touch
+
+        .nav-item
+          .nav-link
+            white-space nowrap
+            padding 12px 15px
+
 
 .maintenance-dashboard-route, .diary-route
   display flex

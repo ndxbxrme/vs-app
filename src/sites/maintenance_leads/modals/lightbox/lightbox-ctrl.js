@@ -3,6 +3,12 @@
   angular.module('vs-maintenance-leads').controller('maintenance_leadsLightboxCtrl', function($scope, data, $http, ndxModalInstance) {
     $scope.imgSrc = data[0].URL;
     $scope.imgIndex = data;
+    $scope.isVideo = function(url) {
+      if (!url) return false;
+      const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.m4v'];
+      const lowerUrl = url.toLowerCase();
+      return videoExtensions.some(ext => lowerUrl.includes(ext));
+    };
     return $scope.cancel = function() {
       return ndxModalInstance.dismiss();
     };

@@ -1,24 +1,23 @@
 @import '../global/variables'
 .milestone
-  width 60px
   display flex
   flex-direction column
   align-items center
   text-align center
-  text-transform uppercase
   font-size 1rem
   cursor pointer
   .icon
     height 40px
     width 40px
     background vs-lightgrey
-    border 1px solid vs-grey
+    border none
     border-radius 50%
-    margin-bottom 0.5rem
+    margin-bottom 10px
     position relative
-    transition transform $transition $bounce
-    &:hover
-      transform scale(1.1)
+    font-size 2rem
+    display flex
+    justify-content center
+    align-items center
     &:before
       position absolute
       top 10px
@@ -28,78 +27,122 @@
       content ''
       border-radius 50%
     &:after
-      position absolute
-      top 0px
-      left 0px
-      width 40px
-      height 40px
-      content ''
-      background url('./public/img/icons/cathead.png')
-      background-size cover
-    &.house
+      font: var(--fa-font-duotone);
+      font-weight 300
+      color white
+    &.house, 
+    &.start
       &:after
-        background url('./public/img/icons/enquiries-raised.png')
-        background-size cover
+        font-family: "Font Awesome Kit"
+        content '\e002'
+    &.credit-check-and-sme
+      &:after
+        content '\f316'
     &.epc
       &:after
-        background url('./public/img/icons/epc.png')
-        background-size cover
+        content '\e473'
     &.instruction
       &:after
-        background url('./public/img/icons/solicitor-instruction.png')
-        background-size cover
+        font-family: "Font Awesome Kit"
+        content '\e003'
+    &.inventory-booked
+      &:after
+        content '\f4b8'
+    &.inventory-issued
+      &:after
+        font-family: "Font Awesome Kit"
+        content '\e005'
+    &.board-and-window-updated
+      &:after
+        content '\f4d9'
+    &.asta-issued
+      &:after
+        content '\f570'
+    &.asta-signed
+      &:after
+        content '\f56c'
+    &.security-deposit-received
+      &:after
+        content '\e528'
+    &.rent-received
+      &:after
+        content '\f0d6'
     &.draft
       &:after
-        background url('./public/img/icons/draft-contract.png')
-        background-size cover
+        content '\f573'
+    &.move-in-booked
+      &:after
+        content '\e0d1'
+    &.move-in-complete
+      &:after
+        font-family: "Font Awesome Kit"
+        content '\e006'
     &.fandf
       &:after
-        background url('./public/img/icons/F&F-forms.png')
-        background-size cover
+        content '\e016'
+    &.file-to-accounts
+      &:after
+        content '\f571'
+    &.readings-on-sme
+      &:after
+        content '\e1e9'
+    &.rental-complete
+      &:after
+        content '\f058'    
     &.survey
       &:after
-        background url('./public/img/icons/survey.png')
-        background-size cover
-    &.offer
+       content '\f737'
+    &.offer,
+    &.holding-deposit
       &:after
-        background url('./public/img/icons/mortgage-offer.png')
-        background-size cover
+        content '\f657'
     &.raised
       &:after
-        background url('./public/img/icons/enquiries-raised.png')
-        background-size cover
+        font-family: "Font Awesome Kit"
+        content '\e002'
     &.satisfied
       &:after
-        background url('./public/img/icons/enquiries-satisfied.png')
-        background-size cover
+        content '\e509'
     &.applied
       &:after
-        background url('./public/img/icons/searches-applied.png')
-        background-size cover
+        content '\e521'
     &.complete
       &:after
-        background url('./public/img/icons/searches-complete.png')
-        background-size cover
+        content '\f00e'
     &.report
       &:after
-        background url('./public/img/icons/report-client.png')
-        background-size cover
+        content '\e0bc'
     &.exchange
       &:after
-        background url('./public/img/icons/exchange.png')
-        background-size cover
+        content '\f362'
     &.invoice
       &:after
-        background url('./public/img/icons/vs-invoice.png')
-        background-size cover
+        font-family: "Font Awesome Kit"
+        content '\e004'
     &.completion
       &:after
-        background url('./public/img/icons/completion.png')
-        background-size cover
+        content '\e7b0'
+    &.guarantor-id
+      &:after
+        content '\f2c2'
+    &.proof-of-address-ownership
+      &:after
+        content '\f602'
+    &.employer-reference
+      &:after
+        content '\f4fc'
+    &.guarantor-application-successful
+      &:after
+        content '\e1d9'
   .title
-    min-height 3rem
-    line-height 1rem
-  &.progressing
+    font-size 1.4rem
+    line-height 1.8rem
+    font-weight 600
+    white-space normal
+    word-wrap break-word
+    min-height 55px
+    max-width 100px
+  &.progressin5
     .icon
       background vs-amber
   &.overdue

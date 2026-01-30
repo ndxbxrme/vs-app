@@ -28,7 +28,42 @@
         }
       }
     });
-    return $scope.sort = Sorter.create($scope.issues.args);
+    $scope.sort = Sorter.create($scope.issues.args);
+    
+    $scope.showLightbox = function(media) {
+      return $scope.modal({
+        template: require('../../modals/lightbox/lightbox.html').default,
+        controller: 'maintenance_leadsLightboxCtrl',
+        size: 'large',
+        data: media
+      }).then(function() {});
+    };
+    
+    $scope.openAddIssueModal = function() {
+      return $scope.modal({
+        template: require('../../modals/add-issue/add-issue.html').default,
+        controller: 'maintenance_leadsAddIssueModalCtrl',
+        size: 'large',
+        data: {}
+      }).then(function(newIssue) {
+        if (newIssue) {
+          $scope.issues.refresh();
+        }
+      });
+    };
+    
+    return $scope.openAddWorksOrderModal = function() {
+      return $scope.modal({
+        template: require('../../modals/add-works-order/add-works-order.html').default,
+        controller: 'maintenance_leadsAddWorksOrderModalCtrl',
+        size: 'large',
+        data: {}
+      }).then(function(newWorksOrder) {
+        if (newWorksOrder) {
+          // Optionally refresh or show success message
+        }
+      });
+    };
   });
 
 }).call(this);

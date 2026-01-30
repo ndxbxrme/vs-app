@@ -22,6 +22,22 @@
       offers.items.forEach(async offer => {
         offer.date = new Date(offer.date);
         offer.search = (`${offer.address}:${offer.applicant}:${offer.applicant2 || ''}`).toLowerCase();
+        // Resize image URL to 590x400 and handle WordPress version numbers
+        if(offer.image) {
+          const originalImage = offer.image;
+          offer.image = offer.image.replace(/-\d+x\d+\./, '-590x400.');
+          const versionMatch = offer.image.match(/^(.+\/)(\d{8})-(\d+)(-590x400\.[^/]+)$/);
+          if(versionMatch) {
+            offer.image = `${versionMatch[1]}${versionMatch[2]}${versionMatch[4]}`;
+            offer.imageFallback1 = `${versionMatch[1]}${versionMatch[2]}-1${versionMatch[4]}`;
+            offer.imageFallback2 = `${versionMatch[1]}${versionMatch[2]}-${versionMatch[3]}${versionMatch[4]}`;
+          } else {
+            const noVersionMatch = offer.image.match(/^(.+\/)(.+)(-590x400)(\.[^/]+)$/);
+            if(noVersionMatch) {
+              offer.imageFallback1 = `${noVersionMatch[1]}${noVersionMatch[2]}${noVersionMatch[4]}`;
+            }
+          }
+        }
       })
     }, $http.sites["agency"].config);
     $scope.formatAddress = (address) => {

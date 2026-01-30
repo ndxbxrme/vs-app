@@ -2,169 +2,73 @@
 <div class="lead-route">
   <div class="container-xl">
     <div class="row">
-      <div class="col-sm-8">
-        <div class="form-holder" ng-show="editing">
-          <form name="myForm" novalidate="novalidate" ng-submit="save('lead')" ng-show="editing">
-          <h1 ng-show="lead.item &amp;&amp; !lead.item._id">{{mla('lead-heading-adding')}}</h1>
-          <h1 ng-show="lead.item &amp;&amp; lead.item._id">{{mla('lead-heading-editing', lead.item)}}</h1>
-          
-          <div class="radio-row">
-            <label for="rts">Selling
-              <input id="rts" type="radio" name="roleType" ng-model="lead.item.roleType" value="Selling"/>
-            </label>
-            <label for="rtl">Letting
-              <input id="rtl" type="radio" name="roleType" ng-model="lead.item.roleType" value="Letting"/>
-            </label>
-            <label for="rtv">Valuation
-              <input id="rtv" type="radio" name="roleType" ng-model="lead.item.roleType" value="Valuation"/>
-            </label>
-          </div>
-
-            <div ng-if="!lead.item._id" ng-hide="lead.item.roleType===&quot;Valuation&quot;" class="form-row">
-              <h3 class="orange">{{ mla('lead-property-label') }}</h3>
-              <div ng-class="{warning: submitted &amp;&amp; myForm.selectedProperty.$invalid}" class="form-item c-select selectedProperty required  " ng-if="lead.item.roleType===&quot;Selling&quot;">
-                <label class="label">{{ mla('lead-selectedProperty-label') }}</label>
-                <div class="input-holder">
-                  <select sumoselect="{placeholder:mla('lead-selectedProperty-placeholder'), search:true}" ng-model="$parent.$parent.selectedProperty" name="selectedProperty" ng-disabled="disabled" required="required">
-                    <option ng-repeat="selectedProperty in selling.items" value="{{selectedProperty._id}}" ng-disabled="selectedProperty.disabled" ng-hide="selectedProperty.hidden">{{ selectedProperty.name }}</option>
-                  </select>
-                </div>
-                <p ng-show="submitted &amp;&amp; myForm.selectedProperty.$error.required" class="error">{{ mla('lead-selectedProperty-error-required') }}</p>
-              </div>
-              <div ng-class="{warning: submitted &amp;&amp; myForm.selectedProperty.$invalid}" class="form-item c-select selectedProperty required  " ng-if="lead.item.roleType===&quot;Letting&quot;">
-                <label class="label">{{ mla('lead-selectedProperty-label') }}</label>
-                <div class="input-holder">
-                  <select sumoselect="{placeholder:mla('lead-selectedProperty-placeholder'), search:true}" ng-model="$parent.$parent.selectedProperty" name="selectedProperty" ng-disabled="disabled" required="required">
-                    <option ng-repeat="selectedProperty in letting.items" value="{{selectedProperty._id}}" ng-disabled="selectedProperty.disabled" ng-hide="selectedProperty.hidden">{{ selectedProperty.name }}</option>
-                  </select>
-                </div>
-                <p ng-show="submitted &amp;&amp; myForm.selectedProperty.$error.required" class="error">{{ mla('lead-selectedProperty-error-required') }}</p>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <h3 class="orange">{{ mla('lead-name-label') }}</h3>
-              <div class="user">
-                <div ng-class="{warning: submitted &amp;&amp; myForm.usertitle.$invalid}" class="form-item c-input usertitle required  ">
-                  <label class="label">{{ mla('lead-usertitle-label') }}</label>
-                  <input type="text" name="usertitle" ng-model="lead.item.user.title" placeholder="{{ mla('lead-usertitle-placeholder') }}" title="{{ mla('lead-usertitle-label') }}" ng-disabled="disabled" required="required"/>
-                  <p ng-show="submitted &amp;&amp; myForm.usertitle.$error.required" class="error">{{ mla('lead-usertitle-error-required') }}</p>
-                </div>
-                <div ng-class="{warning: submitted &amp;&amp; myForm.userfirst_name.$invalid}" class="form-item c-input userfirst_name required  ">
-                  <label class="label">{{ mla('lead-userfirst_name-label') }}</label>
-                  <input type="text" name="userfirst_name" ng-model="lead.item.user.first_name" placeholder="{{ mla('lead-userfirst_name-placeholder') }}" title="{{ mla('lead-userfirst_name-label') }}" ng-disabled="disabled" required="required"/>
-                  <p ng-show="submitted &amp;&amp; myForm.userfirst_name.$error.required" class="error">{{ mla('lead-userfirst_name-error-required') }}</p>
-                </div>
-                <div ng-class="{warning: submitted &amp;&amp; myForm.userlast_name.$invalid}" class="form-item c-input userlast_name required  ">
-                  <label class="label">{{ mla('lead-userlast_name-label') }}</label>
-                  <input type="text" name="userlast_name" ng-model="lead.item.user.last_name" placeholder="{{ mla('lead-userlast_name-placeholder') }}" title="{{ mla('lead-userlast_name-label') }}" ng-disabled="disabled" required="required"/>
-                  <p ng-show="submitted &amp;&amp; myForm.userlast_name.$error.required" class="error">{{ mla('lead-userlast_name-error-required') }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-label">{{ mla('lead-phone-label') }}</div>
-              <div ng-class="{warning: submitted &amp;&amp; myForm.userphone_day.$invalid}" class="form-item c-input userphone_day   ">
-                <label class="label">{{ mla('lead-userphone_day-label') }}</label>
-                <input type="text" name="userphone_day" ng-model="lead.item.user.phone_day" placeholder="{{ mla('lead-userphone_day-placeholder') }}" title="{{ mla('lead-userphone_day-label') }}" ng-disabled="disabled"/>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-label"> </div>
-              <div ng-class="{warning: submitted &amp;&amp; myForm.email.$invalid}" class="form-item c-input email-input ">
-                <label class="label">{{ mla('lead-email-label') }}</label>
-                <input type="text" name="email" ng-model="lead.item.email" placeholder="{{ mla('lead-email-placeholder') }}" title="{{ mla('lead-email-label') }}" ng-disabled="disabled"/>
-              </div>
-            </div>
-            <div class="form-row">
-              <h3 class="orange">{{ mla('lead-addressSection-label') }}</h3>
-              <div class="address">
-                <div ng-class="{warning: submitted &amp;&amp; myForm.useraddress.$invalid}" class="form-item c-input useraddress required  ">
-                  <label class="label">{{ mla('lead-useraddress-label') }}</label>
-                  <input type="text" name="useraddress" ng-model="lead.item.user.address" placeholder="{{ mla('lead-useraddress-placeholder') }}" title="{{ mla('lead-useraddress-label') }}" ng-disabled="disabled" required="required"/>
-                  <p ng-show="submitted &amp;&amp; myForm.useraddress.$error.required" class="error">{{ mla('lead-useraddress-error-required') }}</p>
-                </div>
-                <div ng-class="{warning: submitted &amp;&amp; myForm.useraddress2.$invalid}" class="form-item c-input useraddress2   ">
-                  <label class="label">{{ mla('lead-useraddress2-label') }}</label>
-                  <input type="text" name="useraddress2" ng-model="lead.item.user.address2" placeholder="{{ mla('lead-useraddress2-placeholder') }}" title="{{ mla('lead-useraddress2-label') }}" ng-disabled="disabled"/>
-                </div>
-                <div ng-class="{warning: submitted &amp;&amp; myForm.userpostcode.$invalid}" class="form-item c-input userpostcode required  ">
-                  <label class="label">{{ mla('lead-userpostcode-label') }}</label>
-                  <input type="text" name="userpostcode" ng-model="lead.item.user.postcode" placeholder="{{ mla('lead-userpostcode-placeholder') }}" title="{{ mla('lead-userpostcode-label') }}" ng-disabled="disabled" required="required"/>
-                  <p ng-show="submitted &amp;&amp; myForm.userpostcode.$error.required" class="error">{{ mla('lead-userpostcode-error-required') }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-label">{{ mla('lead-source-label') }}</div>
-              <div ng-class="{warning: submitted &amp;&amp; myForm.method.$invalid}" class="form-item c-select method required  ">
-                <label class="label">{{ mla('lead-method-label') }}</label>
-                <div class="input-holder">
-                  <select sumoselect="{placeholder:mla('lead-method-placeholder'), search:true}" ng-model="lead.item.method" name="method" ng-disabled="disabled" required="required">
-                    <option ng-repeat="method in sources.items" value="{{method._id}}" ng-disabled="method.disabled" ng-hide="method.hidden">{{ method.name }}</option>
-                  </select>
-                </div>
-                <p ng-show="submitted &amp;&amp; myForm.method.$error.required" class="error">{{ mla('lead-method-error-required') }}</p>
-              </div>
-            </div>
-            <div class="controls">
-              <input type="submit" value="{{ mla('forms-submit') }}" ng-disabled="disabled || myForm.$pristine" class="btn"/>
-              <button type="button" ng-click="auth.goToLast(&quot;defaultLast&quot;)" class="button-alt button cancel">{{ mla('forms-cancel') }}</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
       <div class="col-12">
-        <div ng-show="!editing" class="lead">
-          <div class="row align-items-end">
-            <div class="col-8">
-              <h1>{{ mla('lead-heading') }} <span>- {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}</span></h1>
-            </div>
-            <div class="col-4 text-end">
-              <p class="date">{{ lead.item.date | date:'mediumDate' }}</p>
-              <h2 class="price orange">{{ lead.item.price | currency:'£'}}</h2>
+        <div class="lead">
+          <div class="header-row">
+            <div class="row align-items-end">
+              <div class="col-sm-6">
+                <h1><i class="fa-duotone fa-light fa-bars-progress"></i> <span class="orange">{{ lead.item.roleType }}</span> {{ mla('lead-heading') }}</h1>
+              </div>
+              <div class="col-sm-6 text-sm-end">
+                <button class="button button-alt add-lead-button" ng-click="openEditLeadModal()">Edit Lead <i class="fa-light fa-pen"></i></button>
+              </div>
+              <div class="col-6">
+                <h2>Address: <span>{{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}</span></h2>
+                <h2 ng-hide="lead.item.roleType === 'Valuation'">Price: <span class="orange">{{ lead.item.price | currency:'£'}}</span></h2>
+                <h2 class="date">Lead Date: <span>{{ lead.item.date | date:'mediumDate' }}</span></h2>
+              </div>
+              <div class="contacts col-6">
+                <div class="vendor">
+                  <div class="contact-details">
+                    <div class="card">
+                      
+                      <div class="contact-name"><span>{{ lead.item.applicant }}</span></div>
+                      <div class="communication">
+                        <div class="contact-telephone" ng-if="lead.item.user.phone_day"><span><i class="fa-duotone fa-light fa-mobile"></i> {{ lead.item.user.phone_day }}</span></div>
+                        <div class="contact-email" ng-if="lead.item.email"><span><a href="mailto:{{lead.item.email}}" class="mail-link"><i class="fa-duotone fa-light fa-at"></i> {{lead.item.email}}</a></span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <hr>
    
-          <div class="row">
-            <div class="sources col-md-4">
-              <h3>Source</h3>
-              <div class="source {{lead.item.source}} {{lead.item.method}}"></div>
-              <h3>{{ mla('lead-contact-details-heading') }}</h3>
-              <p class="name">{{ lead.item.applicant }}</p>
-              <a href="mailto:{{ lead.item.email }}" class="email">{{ lead.item.email }}</a>
-              <p class="phone">{{ lead.item.user.phone_day }}</p>
+          <div class="lead-details-section">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="source {{lead.item.source}} {{lead.item.method}}"></div>
+              </div>
+              <div class="controls col-sm-8 text-sm-end">
+                <button type="button" ng-click="deleteLead()" ng-hide="lead.item.deleted || lead.item.booked" class="button">{{ mla('lead-delete-button') }}</button>
+                <button type="button" ng-click="bookLead()" ng-hide="lead.item.deleted || lead.item.booked" class="button button-grey">{{ mla('lead-booking-button') }}</button>
+                <button type="button" ng-click="restore()" ng-show="lead.item.deleted || lead.item.booked" class="button button-alt">{{ mla('lead-restore-button') }}</button>
+              </div>
+              <div class="col-12 details" ng-if="lead.item.comments">
+                <h3><i class="fa-duotone fa-light fa-message-lines"></i> {{ mla('lead-comments-heading') }}</h3>
+                <p>{{ lead.item.comments }}</p>
+              </div>
             </div>
-            <div class="col-md-7 details">
-              <h3>{{ mla('lead-comments-heading') }}</h3>
-              <p>{{ lead.item.comments }}</p>
-            </div>
-            <div class="col-md-1 text-end">
-              <a class="edit-button" ng-click="editing=true" ng-hide="lead.item.deleted || lead.item.booked"><i class="fa-duotone fa-user-pen"></i>Edit</a>
-            </div>
-            <div class="controls col-4">
-              <button type="button" ng-click="deleteLead()" ng-hide="lead.item.deleted || lead.item.booked" class="button">{{ mla('lead-delete-button') }}</button>
-              <button type="button" ng-click="bookLead()" ng-hide="lead.item.deleted || lead.item.booked" class="button button-grey">{{ mla('lead-booking-button') }}</button>
-              <button type="button" ng-click="restore()" ng-show="lead.item.deleted || lead.item.booked" class="button button-alt">{{ mla('lead-restore-button') }}</button>
-            </div>
-            <div class="controls col-8">
-              <a href="mailto:{{ lead.item.email }}?subject=Property Enquiry - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AThank you for your recent rental enquiry to view {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}%0D%0A%0D%0APrior to us arranging a viewing appointment on your behalf, please could you kindly confirm the following:%0D%0A%0D%0AWho the property would be for?%0D%0AWhether all adults are in full time employment? If so, what do they do?%0D%0AAnnual household income?%0D%0AAny adverse credit or CCJs?%0D%0AAny children or pets?%0D%0ACurrent post code and house number?%0D%0APreferred contact number?%0D%0ADays/times you can view?%0D%0AWhen are you looking to move?%0D%0A%0D%0AMay I also suggest that you consider registering for property alerts via our website. Doing so will allow us to notify you of new listings 24 hours before they appear on Rightmove.%0D%0A%0D%0Ahttps://vitalspace.co.uk/register/%0D%0A%0D%0AThanking you again for your enquiry." ng-show="lead.item.roleType==='Letting'" class="lead-action">Viewing Info</a>
-              <a href="mailto:{{ lead.item.email }}?subject=Property Enquiry - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AThank you for your recent rental enquiry to view {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}%0D%0A%0D%0AWe have experienced significant interest in this property and I am sorry to say that an application to rent has been already been accepted by our landlord.%0D%0A%0D%0AI would however suggest that we register your details on our database to allow us to keep you updated on similar properties that become available.%0D%0A%0D%0AThe information we request is below:%0D%0A%0D%0ANumber of adults -%0D%0AAre the adults in full time employment, if so please provide employment details -%0D%0AAnnual household income -%0D%0AAny adverse credit or CCJs -%0D%0AAny children or pets -%0D%0ACurrent post code and house number –%0D%0ANumber of bedrooms you require -%0D%0ABudget -%0D%0APreferred location -%0D%0AWhen are you looking to move -%0D%0A%0D%0APlease also feel free to visit our website – www.vitalspace.co.uk as properties are listed here 24 hours before they appear on Rightmove.%0D%0A%0D%0AThanking you again for your enquiry." ng-show="lead.item.roleType==='Letting'" class="lead-action">Property Secured</a>
-              <a href="mailto:{{ lead.item.email }}?subject=Property Enquiry - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AThank you for your recent rental enquiry to view {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}%0D%0A%0D%0AWe have experienced significant interest in this property and am sorry to say we are unable to offer a viewing appointment at this time.%0D%0A%0D%0AHowever, please kindly provide the below information and we will notify you in the event an opportunity to view does arise.%0D%0A%0D%0AThe information we request is below:%0D%0A%0D%0ANumber of adults -%0D%0AAre the adults in full time employment, if so please provide employment details -%0D%0AAnnual household income -%0D%0AAny adverse credit or CCJs -%0D%0AAny children or pets -%0D%0ACurrent post code and house number –%0D%0ANumber of bedrooms you require -%0D%0ABudget -%0D%0APreferred location -%0D%0AWhen are you looking to move -%0D%0A%0D%0AMay I also suggest that you consider registering for property alert via our website. Doing so will allow us to notify you of new listings 24 hours prior to them appearing on Rightmove.%0D%0A%0D%0Ahttps://vitalspace.co.uk/register/%0D%0A%0D%0AThanking you again for your enquiry." ng-show="lead.item.roleType==='Letting'" class="lead-action">Fully booked</a>
-              <a href="mailto:{{ lead.item.email }}?subject=Property Valuation - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AI do hope you are well.%0D%0A%0D%0AMany thanks for requesting a property valuation with VitalSpace.%0D%0A%0D%0AWe have tried contacting you in order to arrange a suitable time and date to carry out this appointment but have not had any success.%0D%0A%0D%0AWe would be very keen to value your property and would be grateful if you could kindly contact us to discuss your requirements.%0D%0A%0D%0APlease feel free to contact us on 0161 747 7807 if we can be of further assistance." ng-show="lead.item.roleType==='Valuation'" class="lead-action">Unable to contact</a>
-              <a href="mailto:{{ lead.item.email }}?subject=Viewing Enquiry - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AI hope you are well.%0D%0A%0D%0AThank you for your recent enquiry to view {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}%0D%0A%0D%0AWe have tried contacting you in order to arrange a suitable time and date for you to view the property but have not had any success.%0D%0A%0D%0AIf you do still wish to view the property, please reply to this email and we will be more than happy to assist.%0D%0A%0D%0AMay I also suggest that you consider registering for property alert via our website. Doing so will allow us to notify you of new listings 24 hours prior to them appearing on Rightmove.%0D%0A%0D%0Ahttps://vitalspace.co.uk/register/" ng-show="lead.item.roleType==='Selling'" class="lead-action">Chase lead</a>
+            <div class="controls col-12">
+              <h3><i class="fa-duotone fa-light fa-at"></i> Email Applicant</h3>
+              <a href="mailto:{{ lead.item.email }}?subject=Property Enquiry - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AThank you for your recent rental enquiry to view {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}%0D%0A%0D%0APrior to us arranging a viewing appointment on your behalf, please could you kindly confirm the following:%0D%0A%0D%0AWho the property would be for?%0D%0AWhether all adults are in full time employment? If so, what do they do?%0D%0AAnnual household income?%0D%0AAny adverse credit or CCJs?%0D%0AAny children or pets?%0D%0ACurrent post code and house number?%0D%0APreferred contact number?%0D%0ADays/times you can view?%0D%0AWhen are you looking to move?%0D%0A%0D%0AMay I also suggest that you consider registering for property alerts via our website. Doing so will allow us to notify you of new listings 24 hours before they appear on Rightmove.%0D%0A%0D%0Ahttps://vitalspace.co.uk/register/%0D%0A%0D%0AThanking you again for your enquiry." ng-show="lead.item.roleType==='Letting'" class="lead-action button">Viewing Info</a>
+              <a href="mailto:{{ lead.item.email }}?subject=Property Enquiry - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AThank you for your recent rental enquiry to view {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}%0D%0A%0D%0AWe have experienced significant interest in this property and I am sorry to say that an application to rent has been already been accepted by our landlord.%0D%0A%0D%0AI would however suggest that we register your details on our database to allow us to keep you updated on similar properties that become available.%0D%0A%0D%0AThe information we request is below:%0D%0A%0D%0ANumber of adults -%0D%0AAre the adults in full time employment, if so please provide employment details -%0D%0AAnnual household income -%0D%0AAny adverse credit or CCJs -%0D%0AAny children or pets -%0D%0ACurrent post code and house number –%0D%0ANumber of bedrooms you require -%0D%0ABudget -%0D%0APreferred location -%0D%0AWhen are you looking to move -%0D%0A%0D%0APlease also feel free to visit our website – www.vitalspace.co.uk as properties are listed here 24 hours before they appear on Rightmove.%0D%0A%0D%0AThanking you again for your enquiry." ng-show="lead.item.roleType==='Letting'" class="lead-action button">Property Secured</a>
+              <a href="mailto:{{ lead.item.email }}?subject=Property Enquiry - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AThank you for your recent rental enquiry to view {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}%0D%0A%0D%0AWe have experienced significant interest in this property and am sorry to say we are unable to offer a viewing appointment at this time.%0D%0A%0D%0AHowever, please kindly provide the below information and we will notify you in the event an opportunity to view does arise.%0D%0A%0D%0AThe information we request is below:%0D%0A%0D%0ANumber of adults -%0D%0AAre the adults in full time employment, if so please provide employment details -%0D%0AAnnual household income -%0D%0AAny adverse credit or CCJs -%0D%0AAny children or pets -%0D%0ACurrent post code and house number –%0D%0ANumber of bedrooms you require -%0D%0ABudget -%0D%0APreferred location -%0D%0AWhen are you looking to move -%0D%0A%0D%0AMay I also suggest that you consider registering for property alert via our website. Doing so will allow us to notify you of new listings 24 hours prior to them appearing on Rightmove.%0D%0A%0D%0Ahttps://vitalspace.co.uk/register/%0D%0A%0D%0AThanking you again for your enquiry." ng-show="lead.item.roleType==='Letting'" class="lead-action button">Fully booked</a>
+              <a href="mailto:{{ lead.item.email }}?subject=Property Valuation - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AI do hope you are well.%0D%0A%0D%0AMany thanks for requesting a property valuation with VitalSpace.%0D%0A%0D%0AWe have tried contacting you in order to arrange a suitable time and date to carry out this appointment but have not had any success.%0D%0A%0D%0AWe would be very keen to value your property and would be grateful if you could kindly contact us to discuss your requirements.%0D%0A%0D%0APlease feel free to contact us on 0161 747 7807 if we can be of further assistance." ng-show="lead.item.roleType==='Valuation'" class="lead-action button">Unable to contact</a>
+              <a href="mailto:{{ lead.item.email }}?subject=Viewing Enquiry - {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}&body=Dear {{ lead.item.applicant }}%0D%0A%0D%0AI hope you are well.%0D%0A%0D%0AThank you for your recent enquiry to view {{ lead.item.property.address || lead.item.user.address}}, {{ lead.item.property.postcode || lead.item.user.postcode}}%0D%0A%0D%0AWe have tried contacting you in order to arrange a suitable time and date for you to view the property but have not had any success.%0D%0A%0D%0AIf you do still wish to view the property, please reply to this email and we will be more than happy to assist.%0D%0A%0D%0AMay I also suggest that you consider registering for property alert via our website. Doing so will allow us to notify you of new listings 24 hours prior to them appearing on Rightmove.%0D%0A%0D%0Ahttps://vitalspace.co.uk/register/" ng-show="lead.item.roleType==='Selling'" class="lead-action button">Chase lead</a>
             </div>
           </div>
-
-          <hr class="orange">
 
           <div class="case-notes">
-            <h2 class="orange">{{ mla('lead-notes-heading') }}</h2>
+            <h2><i class="fa-duotone fa-light fa-message-lines"></i> {{ mla('lead-notes-heading') }}</h2>
             <div ng-repeat="note in notesData = ( getNotes() | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
-              <div class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo &amp;&amp; !lead.item.deleted" class="delete">Delete</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo &amp;&amp; !lead.item.deleted" class="edit">Edit</a></div>
+              <div class="header-row">
+                <div class="date"><img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}<br><span class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}}</span></span></div>
+                <div class="actions">
+                  <a class="delete" href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;]) &amp;&amp; !note.advanceTo &amp;&amp; !lead.item.deleted"><i class="fa-duotone fa-light fa-trash"></i></a><a class="edit" href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;]) &amp;&amp; !note.advanceTo &amp;&amp; !lead.item.deleted"><i class="fa-duotone fa-light fa-pen"></i></a>
+                </div>
+              </div>
               <div class="note"> 
                 <div class="details"><span ng-show="note.side">- {{note.side}}</span>
                   <div ng-bind-html="note.text | markdown:true" class="note-body"></div>
@@ -173,12 +77,12 @@
             </div>
             <pagination total="notesData.length" ng-model="notesPage" page-size="notesLimit" class="pagination-sm pagination"></pagination>
             <div ng-hide="lead.item.deleted" class="add-note">
+              <h3>Add New Note</h3>
               <code-mirror ng-model="note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
-              <button ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
+              <button class="button" ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
             </div>
           </div>
         </div>
-        <hr class="white">
       </div>
     </div>
   </div>

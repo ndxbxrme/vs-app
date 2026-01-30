@@ -35,6 +35,16 @@
           var ref1;
           item.$parent.search = `${item.item.displayAddress}||${item.item.TenantName}||${item.item.LandlordName}`;
           item.$parent.milestoneStatus = item.item.milestoneStatus;
+          
+          // Generate icon from title if not present
+          if (item.item.milestone && !item.item.milestone.icon && item.item.milestone.title) {
+            item.item.milestone.icon = item.item.milestone.title.toLowerCase()
+              .replace(/&/g, 'and')
+              .replace(/[^a-z0-9\s-]/g, '')
+              .replace(/\s+/g, '-')
+              .replace(/-+/g, '-');
+          }
+          
           if (item.item.progressions && item.item.progressions.length) {
             item.$parent.estCompletedTime = item.item.progressions[0].milestones[item.item.progressions[0].milestones.length - 1][0].estCompletedTime;
           }

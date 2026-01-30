@@ -46,6 +46,13 @@
   display flex
   flex-direction row
   justify-content flex-end
+.menu-col
+  display flex
+  flex-direction row
+  align-items center
+  .vs-logo
+    max-width 220px
+    margin-right 30px
 .site-menu
   height 80px
   z-index 400
@@ -53,13 +60,11 @@
   top 0px
   left 0px
   background white
-  padding 1em 0
   width 100%
   height auto
   border-bottom 1px solid #e0e0e0
   sites
     display flex
-    justify-content center
     flex-direction row
     flex-wrap wrap
     &.site-settings
@@ -68,6 +73,12 @@
         > a
           padding 0px 20px
           text-align right
+          img 
+            border-radius 50%
+            width 40px
+            height 40px
+            margin-right 10px
+            border 1px solid #e0e0e0
           &:hover
             color #f15b25
             background none
@@ -92,10 +103,11 @@
       color #303030
       font-size: 1.8rem
       font-weight 300
-      padding 10px 20px
+      padding 30px 20px
       text-transform capitalize
       transition all 0.4s ease-in-out
       text-align left
+      font-weight 600
     a:hover, a:focus
       color #f15b25
     &:hover, &:focus
@@ -103,10 +115,15 @@
         display flex
         flex-direction column
         box-shadow 4px 4px 4px 0 rgba(0,0,0,.05)
-        width 200px
+        width 250px
         position absolute
-        top 45px
+        top 80px
         left 0
+        border-radius 20px
+        border 1px solid #e0e0e0
+        padding 10px 0px
+        a 
+          padding 10px 20px
         a:hover, a:focus
           color #f15b25
           background rgba(0,0,0,0.05)

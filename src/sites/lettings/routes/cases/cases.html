@@ -24,47 +24,50 @@
       </div>
     </div>
   
-    <div class="table-responsive">
-      <table class="table small-mobile-hide" ng-show="filterData.length &gt; 0">
-        <thead>
-          <tr>
-            <th width="5%">Status</th>
-            <th width="25%">Property Address</th>
-            <th width="20%">Landlord</th>
-            <th width="20%">Tenant</th>
-            <th width="15%">Move In Date</th>
-            <th width="5%">Options</th>
-          </tr>
-        </thead>
-        <tbody ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)">
-          <tr ng-click="property.open = !property.open">
-            <td ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
+    <div class="properties-list" ng-show="filterData.length &gt; 0">
+      <div class="property-card" ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter}  | orderBy:sort) | limitTo:limit:limit*(page-1)" ng-class="{&quot;has-request&quot;:hasRequest(property)}">
+        <div class="property-main row g-5">
+          
+          <div class="property-image col-md-3">
+            <img ng-src="{{property.Images[0].Url}}" alt="{{property.displayAddress}}">
+            <div class="property-milestone">
               <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
                 <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
               </div>
-            </td>
-            <td>
-              <div class="address">{{property.$case.item.override.address || property.displayAddress}}</div>
-            </td>
-            <td class="vendor">{{property.$case.item.LandlordName}}</td>
-            <td class="purchaser"> 
-              <div class="tenant" ng-repeat="tenant in property.$case.item.Tenants">{{tenant.Person.ContactName}}</div>
-            </td>
-            <td class="movein">{{property.$case.item.proposedMoving | date:'MMM d, yyyy'}}</td>
-            <td class="options"><a class="button" ui-sref="lettings_case({roleId:property.RoleId})">View Case<span ng-if="property.$case.item.delisted && auth.getUser().local.email==='superadmin@admin.com'"> Delisted</span></a></td>
-          </tr>
-          <tr class="meta">
-            <td colspan="2"><div class="title"><strong>{{property.$case.item.milestone.title}}</strong></div></td>
-            <td colspan="4" class="text-end">
-              <div class="dates">
-                <div class="date">Last Updated: <strong>{{property.$case.item.modifiedAt | timeAgo}} </strong>-- {{property.$case.item.modifiedAt | date:'mediumDate'}}, {{property.$case.item.modifiedAt | date:'shortTime'}} |
-                <span ng-show="needsDate">Date added to the Case: {{property.$case.item.estCompletedTime}}</span>
-                <span ng-show="property.$case.item.offer.DateTime">Start Date: <strong>{{property.$case.item.offer.DateTime | date:'mediumDate'}}</strong>
+              <span class="milestone-title">{{property.$case.item.milestone.title}}</span>
+            </div>
+          </div>
+          
+          <div class="property-info col-md-5">
+            <div class="property-meta">
+              <div class="property-address"><strong>Address:</strong> {{property.$case.item.override.address || property.displayAddress}}</div>
+              <div class="property-landlord"><strong>Landlord:</strong> {{property.$case.item.Landlord ? (property.$case.item.Landlord.FirstName + ' ' + property.$case.item.Landlord.LastName) : 'Not assigned'}}</div>
+              <div class="property-tenants"><strong>Tenant{{property.$case.item.Tenants.length > 1 ? 's' : ''}}:</strong> 
+                <span ng-repeat="tenant in property.$case.item.Tenants">{{tenant.Person.ContactName}}<span ng-if="!$last">, </span></span>
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+          
+          <div class="property-stats-actions col-md-4">
+            <div class="property-stats">
+              <div class="stat-item">
+                <span class="movein"><i class="fa-duotone fa-light fa-calendar-arrow-down"></i> <strong>Move In:</strong> {{property.$case.item.proposedMoving | date:'MMM d, yyyy'}}</span>
+              </div>
+              <div class="stat-item">
+                <span class="last-updated"><i class="fa-duotone fa-light fa-clock"></i> <strong>Last Updated:</strong> {{property.$case.item.modifiedAt | timeAgo}}</span><br>
+                <span class="date-detail">{{property.$case.item.modifiedAt | date:'mediumDate'}}, {{property.$case.item.modifiedAt | date:'shortTime'}}</span>
+              </div>
+              <div class="stat-item" ng-show="property.$case.item.offer.DateTime">
+                <span class="start-date"><i class="fa-duotone fa-light fa-calendar-star"></i> <strong>Start Date:</strong> {{property.$case.item.offer.DateTime | date:'mediumDate'}}</span>
+              </div>
+            </div>
+
+            <div class="property-actions">
+              <a class="button" ui-sref="lettings_case({roleId:property.RoleId})">View Case<span ng-if="property.$case.item.delisted && auth.getUser().local.email==='superadmin@admin.com'"> Delisted</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
    
     <pagination class="pagination-sm pagination" total="filterData.length" ng-model="page" page-size="limit" page-change="pageChange" show-first-last="true"></pagination>

@@ -12,22 +12,25 @@ body
         display none
     .th
       padding 20px
-      background vs-grey
+      background white
       text-align center
-      color white
       font-size 2rem
-      font-weight 100
+      font-weight 600
       border-bottom 1px solid vs-lightgrey
     .td
-      padding 15px
+      padding 14px
       text-align center
       font-size: 1.6rem
       border-bottom 1px solid vs-lightgrey
       background white
       min-width 50px
       &.clickable
-        color vs-orange
+        font-weight 600
         cursor pointer
+        &:hover
+          color vs-orange
+    &:last-of-type .td
+      border none
 
   table.table
     width 100%
@@ -58,6 +61,8 @@ body
       padding 15px
       text-align left
       border-bottom 1px solid vs-lightgrey
+      &.currency
+        text-align right
   
   // Leads Tables
   .list-table
