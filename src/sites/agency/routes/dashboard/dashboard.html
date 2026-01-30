@@ -106,6 +106,20 @@
           </div>
         </div>
         <!-- #endregion -->
+
+        <div class="row unknown-row">
+          <div class="col-md-6" ng-show="unknownConsultantCount()">
+            <h3 class="boxed d-flex justify-content-between"><span><i class="fa-duotone fa-light fa-circle-question"></i> Unknown consultant</span> <span class="clickable" ng-click="showUnknownInfo('Consultant')">{{unknownConsultantCount()}}</span></h3>
+          </div>
+
+          <div class="col-md-6" ng-show="unknownSolicitorCount()">
+            <h3 class="boxed d-flex justify-content-between"><span><i class="fa-light fa-circle-question"></i> Unknown solicitor</span> <span class="clickable" ng-click="showUnknownInfo('Solicitor')">{{unknownSolicitorCount()}}</span></h3>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
         <!-- #region Staff sold units -->
         <!-- Consultant Pipeline -->
         <div class="income pipeline" ng-if="consultants.items.length && dashboard.items.length">

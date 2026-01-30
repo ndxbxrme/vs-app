@@ -1,41 +1,133 @@
 <sites>
   <div class="dashboard">
     <div class="container-xl">
-      <h1>VitalSpace App <strong class="orange">Dashboard</strong></h1>
-      <div class="row text-center g-3">
-        <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('agency_dashboard')">
+      <h1>{{getGreeting()}}, <span class="orange">{{getFirstName()}}</span></h1>
+      <div class="intro row">
+        <div class="col-md-8">
+          <h2>VitalSpace App Dashboard</h2>
+        </div>
+        <div class="col-md-4 text-end">
+          <h2>{{getFormattedDate()}}</h2>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="row g-5">
+
+          <div class="col-md-6">
+            <h3><i class="fa-duotone fa-light fa-eye"></i> Overview</h3>
+            <div class="row g-5">
+              <div class="col-6">
+                <div class="snapshot">
+                  <div class="snapshot-item">
+                    <div class="snapshot-label">Outstanding Sales Leads</div>
+                    <div class="snapshot-value">{{salesLeads.total}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="snapshot">
+                  <div class="snapshot-item">
+                    <div class="snapshot-label">Outstanding Valuation Leads</div>
+                    <div class="snapshot-value">{{valuationLeads.total}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>     
+          </div>
+
+          <div class="col-md-6">
+            <h3><i class="fa-duotone fa-light fa-timeline-arrow"></i> My Pipeline</h3>
+            <div class="row g-5">
+              <div class="col-6">
+                <div class="snapshot">
+                  <div class="snapshot-item">
+                    <div class="snapshot-label">Sold By Me</div>
+                    <div class="snapshot-value">{{myPipeline}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="snapshot">
+                  <div class="snapshot-item">
+                    <div class="snapshot-label">Instructed By Me</div>
+                    <div class="snapshot-value"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row g-5">
+
+          <div class="col-md-6">
+            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-envelope-open-dollar"></i> Outstanding offers</span> <span class="count">{{offers.items.length}}</span></h3>
+            <div class="stats-box">
+              <a ng-repeat="offer in offers.items" ui-sref="agency_offer({id:offer._id})" class="stats-item">
+                <div class="offer-applicant">{{offer.applicant}}</div>
+                <div class="offer-address">Address: <span>{{formatAddress(offer.address)}}</span></div>
+                <div class="offer-amount">Offer <span class="value">{{offer.offerAmount | currency : "£" : 0}}</span></div>
+              </a>
+            </div>
+
+            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-comment-smile"></i> Outstanding Solicitors</span> <span class="count">{{unknownSolicitors.length}}</span></h3>
+            <div class="stats-box">
+              <a ng-repeat="property in unknownSolicitors" ui-sref="agency_case({roleId:property.roleId})" class="stats-item">
+                <div class="offer-address outstanding-address">Address: <span>{{formatAddress(property.address)}}</span></div>
+                <div class="solicitor-flags">
+                  <span class="p" ng-show="property.p">P</span>
+                  <span class="v" ng-show="property.v">V</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <h3><i class="fa-duotone fa-light fa-chart-line-up"></i> Target vs Reality</h3>
+            <div class="graph-box">
+              <div id="sales-graph" class="graph-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="button-row">
+        <div class="button-holder" ng-show="auth.isAuthorized('agency_dashboard')">
           <a ui-sref="agency_dashboard" class="big-link">
-            <i class="fa-duotone fa-handshake"></i>
-            Conveyancing
+            <i class="fa-light fa-duotone fa-handshake"></i>
+            Sales
           </a>
         </div>
-        <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('lettings_dashboard')">
+        <div class="button-holder" ng-show="auth.isAuthorized('lettings_dashboard')">
           <a ui-sref="lettings_dashboard" class="big-link">
-            <i class="fa-duotone fa-house-person-return"></i>
+            <i class="fa-light fa-duotone fa-house-person-return"></i>
             Lettings
           </a>
         </div>
-        <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('leads_dashboard')">
+        <div class="button-holder" ng-show="auth.isAuthorized('leads_dashboard')">
           <a ui-sref="leads_dashboard" class="big-link">
-            <i class="fa-duotone fa-bars-progress"></i>
+            <i class="fa-light fa-duotone fa-bars-progress"></i>
             Leads
           </a>
         </div>
-        <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('maintenance_leads_dashboard')">
+        <div class="button-holder" ng-show="auth.isAuthorized('maintenance_leads_dashboard')">
           <a ui-sref="maintenance_leads_dashboard" class="big-link">
-            <i class="fa-duotone fa-list-check"></i>
+            <i class="fa-light fa-duotone fa-list-check"></i>
             Maintenance
           </a>
         </div>
-        <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('maintenance_dashboard')">
+        <div class="button-holder" ng-show="auth.isAuthorized('maintenance_dashboard')">
           <a ui-sref="maintenance_dashboard" class="big-link">
-            <i class="fa-duotone fa-calendar-circle-user"></i>
+            <i class="fa-light fa-duotone fa-calendar-circle-user"></i>
             Diary
           </a>
         </div>
-        <div class="col-md-4 col-sm-6" ng-show="auth.isAuthorized('admin_dashboard')">
+        <div class="button-holder" ng-show="auth.isAuthorized('admin_dashboard')">
           <a ui-sref="admin_dashboard" class="big-link">
-            <i class="fa-duotone fa-screwdriver-wrench"></i>
+            <i class="fa-light fa-duotone fa-screwdriver-wrench"></i>
             Admin
           </a>
         </div>

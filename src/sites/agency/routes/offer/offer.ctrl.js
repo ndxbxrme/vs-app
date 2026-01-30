@@ -2,9 +2,29 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
 (function () {
   'use strict';
   angular.module('vs-agency').controller('agencyOfferCtrl', function ($scope, $sce, $stateParams, $state, $timeout, $interval, $http, $window, Auth, AgencyProgressionPopup, agencyProperty, Upload, env, alert) {
+    $scope.activeTab = 'details';
     $scope.offer = $scope.single('leads:offers', $stateParams.id, async (offer) => {
       offer.date = new Date(offer.date);
+      offer.item.date = new Date(offer.item.date);
       offer.item.search = `${offer.address}:${offer.applicant}:${offer.applicant2 || ''}`;
+      
+      // Resize image URL to 590x400 and handle WordPress version numbers
+      if(offer.item.image) {
+        const originalImage = offer.item.image;
+        offer.item.image = offer.item.image.replace(/-\d+x\d+\./, '-590x400.');
+        const versionMatch = offer.item.image.match(/^(.+\/)(\d{8})-(\d+)(-590x400\.[^/]+)$/);
+        if(versionMatch) {
+          offer.item.image = `${versionMatch[1]}${versionMatch[2]}${versionMatch[4]}`;
+          offer.item.imageFallback1 = `${versionMatch[1]}${versionMatch[2]}-1${versionMatch[4]}`;
+          offer.item.imageFallback2 = `${versionMatch[1]}${versionMatch[2]}-${versionMatch[3]}${versionMatch[4]}`;
+        } else {
+          const noVersionMatch = offer.item.image.match(/^(.+\/)(.+)(-590x400)(\.[^/]+)$/);
+          if(noVersionMatch) {
+            offer.item.imageFallback1 = `${noVersionMatch[1]}${noVersionMatch[2]}${noVersionMatch[4]}`;
+          }
+        }
+      }
+      
       const data = await $http({
         method: 'GET',
         url: 'https://server.vitalspace.co.uk/dezrez/role/' + offer.item.roleId

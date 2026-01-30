@@ -1,19 +1,35 @@
 @import '../global/variables'
-.paging-dir
+.paging-dir,
+.modal
   position relative
   font-size 1.28rem
   min-height 3rem
   .pagination
     justify-content center
+    gap 5px
+    margin-bottom 30px
     .page
       padding-left 1rem!important
       padding-right 1rem!important
-      color vs-silver
+      color vs-gray
+      width 30px
+      height 30px
+      display flex
+      justify-content center
+      align-items center
+      border 1px solid vs-lightgrey
+      border-radius 5px
       &.selected
-        color vs-text!important
+        color white
+        background vs-orange
+        border 1px solid vs-orange
+      &.firstNumber, &.last
+        font-weight 600
+        width auto
     .prev, .next
+      color vs-orange
       background white
-      box-shadow inset 0 0 0 0.1rem #e5e5e5
+      border none
       width 3.6rem
       text-align center
   .list-total
@@ -48,6 +64,7 @@
       box-shadow inset 0 0 0 0.1rem #e5e5e5
       position relative
       background white
+      border-radius 10px
       &:before
         content ''
         position: absolute;

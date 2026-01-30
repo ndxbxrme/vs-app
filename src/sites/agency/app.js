@@ -5,7 +5,7 @@
 
   angular.module('vs-agency', ['ndx', 'ui.router', 'agency-date-swiper', 'multi-check', 'ui.gravatar', 'ngFileUpload']).config(function(gravatarServiceProvider, AuthProvider) {
     gravatarServiceProvider.defaults = {
-      size: 16,
+      size: 40,
       "default": 'mm',
       rating: 'pg'
     };

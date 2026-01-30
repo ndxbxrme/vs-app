@@ -11,6 +11,15 @@
         disabled: '@'
       },
       link: function(scope, elem, attrs) {
+        // If no icon is set, use slugified title as fallback
+        if (!scope.milestone.icon && scope.milestone.title) {
+          scope.milestone.icon = scope.milestone.title.toLowerCase()
+            .replace(/&/g, 'and')
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-'); 
+        }
+        
         scope.getClass = function() {
           return {
             completed: scope.milestone.completed,

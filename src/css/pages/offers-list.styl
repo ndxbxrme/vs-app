@@ -1,0 +1,80 @@
+.offers-list
+  padding-top 30px
+  
+  .controls
+    .order-item, .filter-item
+      display inline-flex
+      position relative
+      color vs-orange
+      background white
+      font-weight 600
+      margin 0px 5px 10px 0px
+      padding 5px 15px
+      border 1px solid vs-lightgrey
+      border-radius 30px
+      &.selected
+        background #f1f1f1
+    .showing
+      margin-bottom 10px
+      
+  .property-card
+    background white
+    border-radius 10px
+    border 1px solid vs-lightgrey
+    transition all 0.3s ease
+    margin-bottom 15px
+    &:hover
+      box-shadow 0 4px 12px rgba(0,0,0,0.1)
+      
+  .property-image
+    padding 20px 30px 20px 35px
+    img
+      width 100%
+      height 200px
+      object-fit cover
+      border-radius 10px
+    .no-image
+      width 100%
+      height 200px
+      background vs-lightgrey
+      border-radius 10px
+      display flex
+      align-items center
+      justify-content center
+      font-size 1.6rem
+      color vs-grey
+      font-weight 600
+      
+  .property-info 
+    padding-top 20px
+    padding-bottom 20px
+    border-right 1px solid vs-lightgrey
+    display flex
+    flex-direction column
+    justify-content space-between
+    .property-address,
+    .offer-date
+      font-size 1.8rem
+      font-weight 600
+      color vs-orange
+      margin-bottom 10px
+      strong
+        color vs-grey
+    .applicant-info
+      background vs-body
+      border-radius 10px
+      .applicant
+        font-size 1.6rem
+        font-weight 600
+        color vs-grey
+        margin-bottom 5px
+        strong
+          color vs-grey
+        
+  .property-stats-actions
+    padding 20px 30px 20px 30px
+    display flex
+    align-items center
+    justify-content center
+    .button 
+      margin-bottom 0px !important

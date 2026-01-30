@@ -39,7 +39,6 @@
       startDate: 0
     };
     $scope.setDateRange = function(year) {
-      $scope.currentYear = year;
       return $timeout(function() {
         $scope.startDate.startDate = new Date(year, 0, 1).valueOf();
         $scope.endDate.startDate = new Date(year + 1, 0, 1).valueOf();
@@ -48,7 +47,13 @@
         return updateProperties();
       });
     };
-    $scope.setDateRange($scope.years[0]);
+    $scope.currentYear = $scope.years[0];
+    $scope.setDateRange($scope.currentYear);
+    $scope.$watch('currentYear', function(newYear, oldYear) {
+      if (newYear && newYear !== oldYear) {
+        $scope.setDateRange(newYear);
+      }
+    });
     updateTargets = function() {
       var j, len, month, ref, results, target;
       if ($scope.targets && $scope.targets.items && $scope.targets.items.length) {
@@ -198,6 +203,23 @@
       let total = $scope.months.reduce((res, val) => {return res + val.commission}, 0);
       return total;
     };
+    
+    $scope.getTotalSold = function() {
+      if (!$scope.months) return 0;
+      return $scope.months.reduce((total, month) => total + (month.properties ? month.properties.length : 0), 0);
+    };
+    
+    $scope.getTotalFees = function() {
+      return $scope.getYearTotal();
+    };
+    
+    $scope.getSalesRequiredToTarget = function() {
+      if (!$scope.months) return 0;
+      const totalTarget = $scope.months.reduce((total, month) => total + (month.target ? parseFloat(month.target.value) || 0 : 0), 0);
+      const totalSold = $scope.getTotalSold();
+      const remaining = totalTarget - totalSold;
+      return remaining > 0 ? remaining : 0;
+    };
     $scope.$watchGroup(['months', 'search'], function () {
       if (!$scope.months) { $scope.monthsFiltered = []; return; }
       rebuildMonthsFiltered();
@@ -218,14 +240,75 @@
       sortDir: 'ASC'
     }, updateProperties);
     $scope.open = function(selectedMonth) {
-      var j, len, month, open, ref;
-      open = selectedMonth.open;
-      ref = $scope.months;
-      for (j = 0, len = ref.length; j < len; j++) {
-        month = ref[j];
-        month.open = false;
+      if (!selectedMonth.open) {
+        // Open modal
+        const modalTemplate = `
+          <div class="modal properties-modal">
+            <div class="modal-header">
+              <h2>{{month.month}} {{year}}</h2>
+              <div class="snapshot">
+                <div class="snapshot-item">
+                  <div class="snapshot-label">Total Properties</div>
+                  <div class="snapshot-value">{{month.properties.length}}</div>
+                </div>
+                <div class="snapshot-item">
+                  <div class="snapshot-label">Commission</div>
+                  <div class="snapshot-value" ng-bind-html="(month.commission | currency:'£' | currencyFormat)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="properties-list">
+              <div class="property-card" ng-repeat="property in month.properties track by property._id" ng-class="{delisted:property.delisted, editing: property.$editing}" data-tooltip="{{::property.date | date:'mediumDate'}}">
+                <div class="editor" ng-if="property.$editing">
+                  <div class="row g-3">
+                    <div class="col-8">
+                      <label>Address</label>
+                      <input type="text" ng-model="property.$override.address"/>
+                    </div>
+                    <div class="col-4">
+                      <label>Commission</label>
+                      <input type="text" ng-model="property.$override.commission"/>
+                    </div>
+                  </div>
+                  <div class="button-group">
+                    <input class="small button save" type="button" ng-click="save(property)" value="Save"/>
+                    <input class="small button cancel" type="button" ng-click="cancelEdit(property)" value="Cancel"/>
+                  </div>
+                </div>
+                <div class="default" ng-if="!property.$editing">
+                  <div class="property-header">
+                    <div class="property-number">{{$index + 1}}</div>
+                    <div class="property-address">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
+                    <div class="property-controls" ng-show="auth.checkRoles(['admin','superadmin'])">
+                      <a href="" ng-click="edit(property)"><i class="fa-light fa-pen-to-square"></i></a>
+                      <a href="" ng-click="deleteProperty(property)"><i class="fa-light fa-trash-can"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="close-reveal-modal" ng-click="cancel()">&times;</a>
+          </div>
+        `;
+        
+        selectedMonth.open = true;
+        $scope.modal({
+          template: modalTemplate,
+          controller: 'agencyAgreedPropertiesCtrl',
+          data: {
+            month: selectedMonth,
+            year: $scope.currentYear,
+            save: $scope.save,
+            edit: $scope.edit,
+            deleteProperty: $scope.delete,
+            cancelEdit: $scope.cancel
+          }
+        }).then(() => {
+          selectedMonth.open = false;
+        }, () => {
+          selectedMonth.open = false;
+        });
       }
-      return selectedMonth.open = !open;
     };
     $scope.edit = function(property) {
       if (!property.$override) {
@@ -257,6 +340,20 @@
     return $scope.saveTarget = function(month) {
       $http.post($http.sites["agency"].url + `/api/targets/${month.target._id || ''}`, month.target, $http.sites.agency.config);
       return month.editing = false;
+    };
+  });
+  
+  // Modal controller for properties list
+  angular.module('vs-agency').controller('agencyAgreedPropertiesCtrl', function($scope, data, ndxModalInstance) {
+    $scope.month = data.month;
+    $scope.year = data.year;
+    $scope.edit = data.edit;
+    $scope.save = data.save;
+    $scope.deleteProperty = data.deleteProperty;
+    $scope.cancelEdit = data.cancelEdit;
+    
+    $scope.cancel = function() {
+      return ndxModalInstance.dismiss();
     };
   });
 

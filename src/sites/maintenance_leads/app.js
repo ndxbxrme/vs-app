@@ -7,7 +7,7 @@
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
     return gravatarServiceProvider.defaults = {
-      size: 16,
+      size: 40,
       "default": 'mm',
       rating: 'pg'
     };

@@ -1,6 +1,17 @@
 
-<div class="modal lightbox large"><img src="{{imgSrc}}" class="big-img"/>
-  <div ng-show="imgIndex.length&gt;1" class="img-index">
-    <div style="background-image: url({{img.URL}})" ng-repeat="img in imgIndex" ng-click="$parent.imgSrc=img.URL" class="index-img"></div>
-  </div><a ng-click="cancel()" class="close-reveal-modal">&times;</a>
+<div class="modal lightbox large">
+  <img ng-if="!isVideo(imgSrc)" src="{{imgSrc}}" class="big-img"/>
+  <video ng-if="isVideo(imgSrc)" class="big-video" controls>
+    <source src="{{imgSrc}}" type="video/mp4">
+    <source src="{{imgSrc}}" type="video/webm">
+    <source src="{{imgSrc}}" type="video/mov">
+    Your browser does not support the video tag.
+  </video>
+  <div ng-show="imgIndex.length>1" class="img-index">
+    <div ng-repeat="img in imgIndex" ng-click="$parent.imgSrc=img.URL" class="index-img" ng-class="{video: isVideo(img.URL)}">
+      <div ng-if="isVideo(img.URL)" class="video-overlay"><i class="fa fa-play"></i></div>
+      <div ng-if="!isVideo(img.URL)" style="background-image: url({{img.URL}})"></div>
+    </div>
+  </div>
+  <a ng-click="cancel()" class="close-reveal-modal">&times;</a>
 </div>

@@ -4,7 +4,7 @@ angular.module('vs-app')
 .controller('mainUsersCtrl', function($scope, $http, $timeout) {
   $scope.sites = [
     {id:'main',name:'Main'},
-    {id:'agency',name:'Conveyancing'},
+    {id:'agency',name:'Sales'},
     {id:'leads',name:'Leads'},
     {id:'lettings',name:'Lettings'},
     {id:'maintenance',name:'Maintenance'},

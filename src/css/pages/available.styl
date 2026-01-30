@@ -1,43 +1,82 @@
 .available
-  margin-bottom 50px
+  padding-top 30px
+  
   .controls
-    .order-item
-      display inline-block
+    .order-item, .filter-item
+      display inline-flex
       position relative
-      color vs-orange
-      margin 0px 15px 5px 0px
+      color vs-grey
+      background white
+      font-weight 600
+      margin 0px 5px 10px 0px
+      padding 5px 15px
+      border 1px solid vs-lightgrey
+      border-radius 30px
+      &:hover
+        color vs-orange
       &.selected
-        font-weight 600
+        background vs-orange
+        color white
+        border: 1px solid vs-orange
     .showing
-        text-align right
-  // Table
-  table.table
-    margin-bottom 0px
-    thead th
-      text-align left
-    tbody
-      border-top 5px solid vs-lightsilver
-      border-bottom 5px solid vs-lightsilver
-    tr 
-      td
-        vertical-align top
-        img
-          border-radius 3px
-        &.address
-          font-size 1.6rem
-          img
-            margin-right 15px
-        p
-          margin-bottom 3px
-          &.title
-            font-weight 600
-            font-size 1.4rem
-      &.meta
-        td
-          background vs-white
-          border-bottom 1px solid vs-grey
-          padding 10px 15px
-          .rental-price
-            color vs-orange
-            font-size 1.8rem
-            font-weight 600
+      margin-bottom 10px
+      
+  .property-card
+    background white
+    border-radius 10px
+    border 1px solid vs-lightgrey
+    transition all 0.3s ease
+    margin-bottom 30px
+    &:hover
+      box-shadow 0 4px 12px rgba(0,0,0,0.1)
+      
+  .property-image
+    padding 20px 30px 20px 35px
+    img
+      width 100%
+      height 200px
+      object-fit cover
+      border-radius 10px
+      
+  .property-info 
+    padding-top 20px
+    padding-bottom 20px
+    border-right 1px solid vs-lightgrey
+    display flex
+    flex-direction column
+    justify-content space-between
+    .property-address,
+    .rental-price,
+    .property-landlord
+      font-size 1.8rem
+      font-weight 600
+      color vs-orange
+      margin-bottom 10px
+      strong
+        color vs-grey
+    .rental-price,
+    .property-landlord
+      display block
+    .property-viewing
+      background vs-body
+      padding 20px
+      border-radius 10px
+      p, 
+      .title
+        font-size 1.4rem
+        font-weight 600
+        margin-bottom 0px
+      .title
+        color vs-silver
+        
+  .property-stats-actions
+    padding 20px 30px 20px 30px
+    display flex
+    flex-direction column
+    justify-content space-between
+    .property-stats
+      margin-bottom 20px
+      .stat-item
+        margin-bottom 10px
+    .button 
+      margin-bottom 0px !important

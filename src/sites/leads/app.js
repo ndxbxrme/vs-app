@@ -11,9 +11,9 @@
       "default": 'mm',
       rating: 'pg'
     };
-  }).run(function($http, env, $rootScope, $state) {
+  }).run(function($http, env, $rootScope, $state, ndxModal) {
     $http.defaults.headers.common.Authorization = `Bearer ${env.PROPERTY_TOKEN}`;
-    return $rootScope.state = function(route) {
+    $rootScope.state = function(route) {
       if ($state && $state.current) {
         if (Object.prototype.toString.call(route) === '[object Array]') {
           return route.indexOf($state.current.name) !== -1;
@@ -22,6 +22,25 @@
         }
       }
       return false;
+    };
+    
+    // Add modal helper to $rootScope
+    $rootScope.modal = function(args) {
+      const size = args.size || 'large';
+      const controller = args.controller || 'YesNoCancelCtrl';
+      const backdrop = args.backdrop || 'static';
+      const modalInstance = ndxModal.open({
+        template: args.template,
+        windowClass: size,
+        controller: controller,
+        backdrop: backdrop,
+        resolve: {
+          data: function() {
+            return args.data;
+          }
+        }
+      });
+      return modalInstance.result;
     };
   });
 

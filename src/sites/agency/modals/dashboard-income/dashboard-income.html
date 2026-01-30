@@ -7,8 +7,8 @@
   <div class="table-responsive">
     <table class="table">
       <tbody ng-repeat="property in list = (data.list | filter:{displayAddress:search}) | orderBy:&quot;offer.Property.Address.Street&quot; | limitTo:limit:limit*(page-1)">
-        <td><a class="address" href="" ng-click="go(property)">{{property.displayAddress}}</a></td>
-        <td ng-show="data.di.sumtype===&quot;Income&quot;">&pound;{{property.role.Commission}}</td>
+        <td><a class="address" href="" ng-click="go(property)"><span>{{property.displayAddress}}</span> <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></td>
+        <td class="currency" ng-show="data.di.sumtype===&quot;Income&quot;">&pound;{{property.role.Commission}}</td>
       </tbody>
     </table>
   </div>

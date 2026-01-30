@@ -13,11 +13,9 @@ body
       overflow hidden
       box-shadow 4px 4px 4px 0 rgba(0,0,0,.05)
       border none
-      border-radius 3px
-      padding 20px
+      border-radius 30px
       h1
-        color vs-orange
-        margin: 5px 0px
+        margin: 10px 0px
       &.in
         opacity 1
         .modal 
@@ -27,10 +25,33 @@ body
           height auto  
           position relative
       .modal-header
-        background vs-grey
+        background vs-body
         flex-direction column
         padding 10px 40px
-        h1
-          color white
       .close-reveal-modal
-        color vs-orange
+        color vs-grey
+        font-size 3.5rem
+        top 20px
+        right 20px
+        &:hover
+          color vs-orange
+    table 
+      a 
+        color vs-grey
+        font-weight 600
+        &:hover
+          color vs-orange
+    .add-lead-modal
+      .modal-header
+        padding 20px 40px
+        h2
+          font-size 2.4rem
+          font-weight 600
+          margin-bottom 0px
+      .modal-body
+        padding 40px 40px 20px
+ .modal .form-row 
+    h3
+      font-weight 600
+      margin-top 15px
+      margin-bottom 5px

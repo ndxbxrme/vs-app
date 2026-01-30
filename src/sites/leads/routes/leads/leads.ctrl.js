@@ -15,7 +15,55 @@
       pageSize: 0
     });
     $scope.sort = Sorter.create($scope.leads.args);
-    return $scope.roleType = $stateParams.roleType;
+    $scope.roleType = $stateParams.roleType;
+    
+    $scope.todayLeads = $scope.list('leads:leads', {
+      preRefresh: function(args) {
+        var end, start;
+        end = new Date();
+        start = new Date();
+        start.setHours(0, 0, 0, 0); // Set to midnight (start of today)
+        return args.where = {
+          date: {
+            $gte: start.valueOf(),
+            $lte: end.valueOf()
+          },
+          roleType: $stateParams.roleType,
+          booked: null,
+          deleted: null
+        };
+      },
+      page: 1,
+      pageSize: 0
+    });
+    
+    $scope.outstandingLeads = $scope.list('leads:leads', {
+      preRefresh: function(args) {
+        var startOfToday;
+        startOfToday = new Date();
+        startOfToday.setHours(0, 0, 0, 0); // Set to midnight (start of today)
+        return args.where = {
+          date: {
+            $lt: startOfToday.valueOf()
+          },
+          roleType: $stateParams.roleType,
+          booked: null,
+          deleted: null
+        };
+      },
+      page: 1,
+      pageSize: 0
+    });
+    
+    // Add Lead Modal function
+    $scope.openAddLeadModal = function(roleType) {
+      const modalTemplate = require('../../modals/add-lead/add-lead.html').default;
+      $scope.modal({
+        template: modalTemplate,
+        controller: 'addLeadModalCtrl',
+        data: { roleType: roleType || $stateParams.roleType }
+      });
+    };
   });
 
 }).call(this);

@@ -24,10 +24,6 @@
         return false;
       }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
     });
-    // propertyadmin
-    $scope.propertyadmin = $scope.list('main:propertyadmin', null, (propertyadmin) => {
-      propertyadmin.items = propertyadmin.items.filter(item => (item.instructionToMarket || {}).instructedBy);
-    });
     //properties
     let historic = null;
     $http.get('/public/data/conveyancing-historic.json').then(res => {
@@ -303,85 +299,7 @@
 
       return result;
     };
-    $scope.consultantInstructedBy = function() {
-      var result = {};
-      if (!($scope.consultants && $scope.consultants.items && $scope.properties && $scope.properties.items && $scope.propertyadmin && $scope.propertyadmin.items)) {
-        return result;
-      }
 
-      for (var i = 0; i < $scope.consultants.items.length; i++) {
-        var consultant = $scope.consultants.items[i];
-        result[consultant._id] = 0;
-      }
-      const props = [];
-      const allProperties = [...$scope.properties.items, ...$scope.clientmanagement.items];
-      for (var i = 0; i < $scope.propertyadmin.items.length; i++) {
-        const propertyadminitem = $scope.propertyadmin.items[i];
-        const property = allProperties.find(property => property.roleId===propertyadminitem.RoleId.toString());
-        if (!property || property.override && property.override.deleted) continue;
-        if(!property.type === 'clientmanagement') {
-          if (!property.role) continue;
-          if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
-          if (Object.values(property.milestoneIndex)[0]===10) continue;
-        }
-        property.instructedBy = propertyadminitem.instructionToMarket.instructedBy;
-        const cid = propertyadminitem.instructionToMarket.instructedBy;
-        if(result.hasOwnProperty(cid)) {
-          result[cid]++;
-        }
-        else {
-          console.log('missed cid', cid);
-        }
-      }
-      return result;
-    }
-    $scope.showInstructedByModal = function(di, month) {
-      var result = {};
-      if (!($scope.consultants && $scope.consultants.items && $scope.properties && $scope.properties.items && $scope.propertyadmin && $scope.propertyadmin.items)) {
-        return result;
-      }
-
-      for (var i = 0; i < $scope.consultants.items.length; i++) {
-        var consultant = $scope.consultants.items[i];
-        result[consultant._id] = {
-          total: 0,
-          data: consultant
-        }
-      }
-      const properties = $scope.income(di, month, true);
-      for (var j = 0; j < properties.length; j++) {
-        var property = properties[j];
-        if (!property || property.override && property.override.deleted) continue;
-        if (!property.role) continue;
-        //get paa
-        const propertyadminitem = $scope.propertyadmin.items.find(propertyadminitem => property.roleId===propertyadminitem.RoleId.toString());
-        if (((propertyadminitem || {}).instructionToMarket || {}).instructedBy) {
-          var cid = propertyadminitem.instructionToMarket.instructedBy;
-          if (result.hasOwnProperty(cid)) {
-            result[cid].total++;
-          }
-        }
-      }
-      const list = Object.values(result).filter(value => value.total);
-      if (list.length) {
-        return $scope.modal({
-          template: require('../../modals/instructed-by/instructed-by.html').default,
-          controller: 'agencyInstructedByCtrl',
-          data: {
-            di: di,
-            month: month,
-            items: list
-          }
-        }).then(function() {
-          return true;
-        }, function() {
-          return false;
-        });
-      }
-      else {
-        alert.log('No instructions to show for ' + month.name);
-      }
-    }
     $scope.showInfo = function(type, di, month, pipeline) {
       var list;
       list = null;

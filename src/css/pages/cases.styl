@@ -1,20 +1,33 @@
 .cases
+  padding-top 30px
   // Controls
   .controls
+    .row 
+      align-items end
+    .sort
+      margin-right 30px
     .order-item, .filter-item
-      display inline-block
+      display inline-flex
+      align-items center
       position relative
-      color vs-orange
-      margin 0px 15px 5px 0px
+      color vs-grey
+      background white
+      font-weight 600
+      margin 0px 5px 10px 0px
+      padding 5px 15px
+      border 1px solid vs-lightgrey
+      border-radius 30px
+      &:hover
+        color vs-orange
       &.icon-green, &.icon-red, &.icon-orange
-        padding-left 2rem
+        padding-left 3rem
         &:before
           content ''
           position absolute
-          top 0.5rem
+          top 0.7rem
           left 0.5rem
-          width 1rem
-          height 1rem
+          width 2rem
+          height 2rem
           background vs-green
           border-radius 50%
       &.icon-red:before
@@ -22,53 +35,133 @@
       &.icon-orange:before
         background vs-amber
       &.selected
-        font-weight 600
+        background vs-orange
+        color white
+        border: 1px solid vs-orange
+  .showing 
+    margin-bottom: 10px
+    
+  .property-card
+    background white
+    border-radius 10px
+    border 1px solid vs-lightgrey
+    transition all 0.3s ease
+    margin-bottom 30px
+    &:hover
+      box-shadow 0 4px 12px rgba(0,0,0,0.1)
+    &.has-request
+      border 2px solid vs-orange
+      animation pulse 2s infinite
       
-  // Table
-  table.table
-    margin-bottom 0px
-    tbody
-      border-top 5px solid vs-lightsilver
-      border-bottom 5px solid vs-lightsilver
-    tr 
-      td
-        vertical-align top
-        p
-          margin-bottom 0px
-        .address
-          color vs-orange
-          font-weight bold
-        .dates
-          font-size 1.1rem
-          .date
-            margin-top 0.5rem
-        .milestone
-          transform translateY(1rem)
-        &.offer
-          font-weight bold
-          font-size 1.8rem
-          p
-            font-weight 300
-            font-size 1.4rem
-            margin-top 0
-        &.has-request
-            font-weight 600
-      &.meta
-        td
-          background vs-white
-          border-bottom 1px solid vs-grey
-          padding 10px 15px
-  .milestone
-    text-align left
-    align-items flex-start
-    margin-top -10px
-    .icon
-      height 30px
-      width 30px
-      border none
-      &:after
+  .property-status
+    padding 20px 0px 20px 20px
+    display flex
+    align-items center
+    justify-content center  
+      
+  .property-image
+    padding 20px 30px 20px 35px
+    position relative
+    img
+      width 100%
+      height 200px
+      object-fit cover
+      border-radius 10px
+    &.has-request
+      img
+        border 3px solid vs-orange
+    .property-milestone
+      position absolute
+      top 30px
+      right 40px
+      text-align left
+      display flex
+      flex-direction row
+      align-items center
+      background white
+      padding 5px 15px 5px 5px
+      border-radius 40px
+      .icon
         height 30px
         width 30px
+        margin-bottom 0px
+        margin-right 10px
+        &:after
+          font-size 1.6rem
+      .milestone-title
+        font-size 1.4rem
+        font-weight 600
+        color vs-grey
+          
+  .property-info 
+    padding 20px 30px 20px 0px
+    border-right 1px solid vs-lightgrey
+    display flex
+    flex-direction column
+    justify-content space-between
+    .property-address,
+    .property-landlord,
+    .property-tenants,
+    .purchase-price,
+    .fees
+      font-size 1.8rem
+      font-weight 600
+      color vs-orange
+      margin-bottom 10px
+      display block
+      strong
+        color vs-grey
+    .property-milestone
+      background vs-body
+      padding 15px 20px
+      border-radius 10px
+      .milestone-title
+        font-size 1.4rem
+        font-weight 600
+        color vs-grey
+    .dates
+      font-size 1.4rem
+      display flex
+      justify-content space-between
+      span
+        display block
+        margin-bottom 5px
+        i
+          margin-right 5px
+            
+  .property-stats-actions
+    padding 20px 30px 20px 30px
+    display flex
+    flex-direction column
+    align-items flex-start
+    justify-content space-between
+    .property-vendor,
+    .property-purchaser,
+    .property-stats
+      margin-bottom 15px
+      .label
+        font-weight 600
+        margin-bottom 5px
+        i
+          margin-right 5px
+      .value
+        font-size 1.6rem
+        color vs-grey
+        font-weight 600
+      .stat-item
+        margin-bottom 10px
+        font-size 1.4rem
+        .date-detail
+          font-size 1.2rem
+          color vs-silver
+    .button 
+      margin-bottom 0px !important
+      &.pipeline-home
+        background #00a651
+        border-color #00a651
+        &:hover
+          background darken(#00a651, 10%)
+          
   .pagination-holder
     display flex
     justify-content center
@@ -82,6 +175,7 @@
           background vs-orange
           border-color vs-orange
           color #fff
+          
   .pagination
     justify-content center
     text-align center
@@ -102,11 +196,9 @@
       &.selected, &:hover
         background vs-orange
         color white
+        
 .mobile
   .cases
     .controls
       .order-item, .filter-item
         margin-left 1rem
-    .mobile-table
-      .address-row
-        flex 1

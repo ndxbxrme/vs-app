@@ -172,6 +172,35 @@
           sortDir: 'DESC'
         });
         scope.inspectionWorks.sort = Sorter.create(scope.inspectionWorks.args);
+        
+        scope.openAddIssueModal = function() {
+          return scope.modal({
+            template: require('../../modals/add-issue/add-issue.html').default,
+            controller: 'maintenance_leadsAddIssueModalCtrl',
+            size: 'large',
+            data: {}
+          }).then(function(newIssue) {
+            if (newIssue) {
+              scope.maintenanceToday.refresh();
+              scope.maintenanceOutstanding.refresh();
+            }
+          });
+        };
+        
+        scope.openAddWorksOrderModal = function() {
+          return scope.modal({
+            template: require('../../modals/add-works-order/add-works-order.html').default,
+            controller: 'maintenance_leadsAddWorksOrderModalCtrl',
+            size: 'large',
+            data: {}
+          }).then(function(newWorksOrder) {
+            if (newWorksOrder) {
+              scope.worksOutstanding.refresh();
+              scope.invoiceOutstanding.refresh();
+            }
+          });
+        };
+        
         return true;
       }
     }

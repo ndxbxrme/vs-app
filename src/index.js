@@ -45,7 +45,7 @@ const sites = {
     "ws": "maintenance-leads"
   },
   "agency": {
-    "displayName": "Conveyancing",
+    "displayName": "Sales",
     "name": "agency",
     "module": "vs-agency",
     "url": httpProtocol + "://" + serverHost + "/agency",

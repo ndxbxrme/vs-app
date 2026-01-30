@@ -79,15 +79,63 @@
       }
       return results;
     });
-    return $scope.open = function(selectedSolicitor) {
-      var i, len, open, ref, solicitor;
-      open = selectedSolicitor.open;
-      ref = $scope.solicitors;
-      for (i = 0, len = ref.length; i < len; i++) {
-        solicitor = ref[i];
-        solicitor.open = false;
+    $scope.open = function(selectedSolicitor) {
+      if (!selectedSolicitor.open) {
+        const modalTemplate = `
+          <div class="modal properties-modal">
+            <div class="modal-header">
+              <h1>{{solicitor.name}}</h1>
+              <div class="snapshot">
+                <div class="snapshot-item">
+                  <div class="snapshot-label">Total Cases</div>
+                  <div class="snapshot-value">{{solicitor.properties.length}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="properties-list">
+              <div class="property-card" ng-repeat="property in solicitor.properties | orderBy:'date'">
+                <div class="default" ng-click="goToCase(property.RoleId)" style="cursor: pointer;" data-tooltip="{{::property.date | date:'mediumDate'}}">
+                  <div class="property-header">
+                    <div class="property-number">{{$index + 1}}</div>
+                    <div class="property-address">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
+                    <div class="property-badges">
+                      <span class="badge-p" ng-show="property.purchaser===solicitor.id">P</span>
+                      <span class="badge-v" ng-show="property.vendor===solicitor.id">V</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="close-reveal-modal" ng-click="cancel()">&times;</a>
+          </div>
+        `;
+        
+        selectedSolicitor.open = true;
+        $scope.modal({
+          template: modalTemplate,
+          controller: 'agencySolicitorsPropertiesCtrl',
+          data: {
+            solicitor: selectedSolicitor
+          }
+        }).then(() => {
+          selectedSolicitor.open = false;
+        }, () => {
+          selectedSolicitor.open = false;
+        });
       }
-      return selectedSolicitor.open = !open;
+    };
+  });
+  
+  // Modal controller for solicitor properties list
+  angular.module('vs-agency').controller('agencySolicitorsPropertiesCtrl', function($scope, $state, data, ndxModalInstance) {
+    $scope.solicitor = data.solicitor;
+    
+    $scope.goToCase = function(roleId) {
+      ndxModalInstance.close();
+      $state.go('agency_case', { roleId: roleId });
+    };
+    $scope.cancel = function() {
+      return ndxModalInstance.dismiss();
     };
   });
 

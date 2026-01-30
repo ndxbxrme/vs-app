@@ -55,6 +55,7 @@
           sort: 'i'
         });
         scope.buyerProgression = null;
+        scope.sort = 'milestone.startTime';
         scope.progressions = scope.list('lettings:progressions', null, function(progressions) {
           var j, len, progression, ref, results;
           ref = progressions.items;
@@ -220,6 +221,22 @@
           } else {
             return count;
           }
+        };
+        scope.getCurrentMilestone = function(property) {
+          var allMilestones, i, len, milestone;
+          if (property && property.progressions && property.progressions[0] && property.progressions[0].milestones) {
+            allMilestones = [];
+            for (i = 0, len = property.progressions[0].milestones.length; i < len; i++) {
+              allMilestones = allMilestones.concat(property.progressions[0].milestones[i]);
+            }
+            for (i = 0, len = allMilestones.length; i < len; i++) {
+              milestone = allMilestones[i];
+              if (!milestone.completed) {
+                return milestone;
+              }
+            }
+          }
+          return null;
         };
         scope.showInfo = function(type, di, month) {
           var list;

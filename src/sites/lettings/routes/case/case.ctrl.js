@@ -37,6 +37,8 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
       var property;
       let adminFetched = false;
       property = res.item;
+      console.log('Property object:', property);
+      console.log('Looking for Fees:', property.Fees);
       property.displayAddress = `${property.Address.Number} ${property.Address.Street}, ${property.Address.Locality}, ${property.Address.Town}, ${property.Address.Postcode}`;
       breadcrumbs.setInfo(property.displayAddress);
       if(!fetchedFirst) {
@@ -55,6 +57,16 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
         var branch, i, len, milestone, progression, ref1, results, timeLeft;
         item.parent.search = `${item.parent.displayAddress}||${item.vendor}||${item.purchaser}`;
         item.item.proposedMoving = new Date(item.item.proposedMoving);
+        
+        // Generate icon from title if not present
+        if (item.item.milestone && !item.item.milestone.icon && item.item.milestone.title) {
+          item.item.milestone.icon = item.item.milestone.title.toLowerCase()
+            .replace(/&/g, 'and')
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+        }
+        
         ref1 = property.$case.item.progressions;
         results = [];
         for (i = 0, len = ref1.length; i < len; i++) {
