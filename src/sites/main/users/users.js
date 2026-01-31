@@ -14,6 +14,7 @@ angular.module('vs-app')
     $scope.sites.forEach(site => site.users = $scope.list(site.id + ':users', null, (users) => {
       //getPendingUsers();
       const unloaded = $scope.sites.find(site => !site.users || !site.users.items || !site.users.items.length);
+      console.log('site', site.id, site.users.items);
     }))
     $scope.roles = ['no access', 'agency', 'maintenance', 'admin', 'superadmin'];
     $scope.roleIcons = ['fa-ban', 'fa-users', 'fa-screwdriver-wrench', 'fa-user-vneck-hair', 'fa-user-crown'];

@@ -14,6 +14,12 @@
     $scope.no = function() {
       return ndxModalInstance.close();
     };
+    return $scope.go = function(property) {
+      ndxModalInstance.close();
+      return $state.go('agency_case', {
+        roleId: property.roleId
+      });
+    };
   });
 
 }).call(this);
