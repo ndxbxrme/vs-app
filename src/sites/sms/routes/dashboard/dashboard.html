@@ -1,16 +1,30 @@
 <div class="sms-dashboard-route">
   <div class="container-xl">
-    <h1>Send to list of numbers</h1>
-    <div class="schedule"><a ui-sref="sms_schedule">Schedule</a></div>
-    <div class="tab-container">
-      <div class="tabs">
-        <div class="tab" ng-click="goToStage('to')" ng-disabled="!requirementsFulfilled('to')" ng-class="{selected:stage==='to'}">To</div>
-        <div class="tab" ng-click="goToStage('details')" ng-disabled="!requirementsFulfilled('details')" ng-class="{selected:stage==='details'}">Details</div>
-        <div class="tab" ng-click="goToStage('message')" ng-disabled="!requirementsFulfilled('message')" ng-class="{selected:stage==='message'}">Message</div>
-        <div class="tab" ng-click="goToStage('confirm')" ng-disabled="!requirementsFulfilled('confirm')" ng-class="{selected:stage==='confirm'}">Confirm</div>
+    <div class="row align-items-center mb-4 header-row">
+      <div class="col-sm-6">
+        <h1><i class="fa-duotone fa-light fa-paper-plane-top"></i> Send to list of numbers</h1>
       </div>
-      <div class="tab-body">
-        <div class="stage stage-to" ng-show="stage==='to'">
+      <div class="col-sm-6 text-end">
+        <div class="schedule"><a class="button button-alt" ui-sref="sms_schedule">Schedule <i class="fa-duotone fa-light fa-calendar-clock"></i></a></div>
+      </div>
+    </div>
+    <div class="tab-container">
+      <ul class="nav nav-tabs tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" ng-class="{active:stage==='to', disabled:!requirementsFulfilled('to')}" ng-click="requirementsFulfilled('to') && goToStage('to')" type="button" role="tab">To</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" ng-class="{active:stage==='details', disabled:!requirementsFulfilled('details')}" ng-click="requirementsFulfilled('details') && goToStage('details')" type="button" role="tab">Details</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" ng-class="{active:stage==='message', disabled:!requirementsFulfilled('message')}" ng-click="requirementsFulfilled('message') && goToStage('message')" type="button" role="tab">Message</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" ng-class="{active:stage==='confirm', disabled:!requirementsFulfilled('confirm')}" ng-click="requirementsFulfilled('confirm') && goToStage('confirm')" type="button" role="tab">Confirm</button>
+        </li>
+      </ul>
+      <div class="tab-body tab-content">
+        <div class="stage stage-to tab-pane fade show active" ng-show="stage==='to'">
           <div class="list-box">
             <h3>List of numbers</h3>
             <select sumoselect="{placeholder:'SELECT', search:true}" ng-model="selectedList" name="selectedList" ng-disabled="disabled" ng-change="selectList()" required="required">
@@ -26,13 +40,13 @@
               <textarea ng-model="numbers"></textarea>
             </div>
             <div class="controls">
-              <input type="button" ng-click="saveList()" value="Save list" />
-              <input type="button" ng-click="deleteList()" value="Delete list" />
-              <input type="button" ng-click="goToStage('details')"  ng-disabled="!requirementsFulfilled('to')" value="Next >>" />
+              <input class="button button-alt" type="button" ng-click="saveList()" value="Save list" />
+              <input class="button" type="button" ng-click="deleteList()" value="Delete list" />
+              <input class="button" type="button" ng-click="goToStage('details')"  ng-disabled="!requirementsFulfilled('to')" value="Next >>" />
             </div>
           </div>
         </div>
-        <div class="stage stage-details" ng-show="stage==='details'">
+        <div class="stage stage-details tab-pane fade" ng-show="stage==='details'">
           <div class="details-box">
             <div class="item">
               <label>When</label>
@@ -56,7 +70,7 @@
             </div>
           </div>
         </div>
-        <div class="stage stage-message" ng-show="stage==='message'">
+        <div class="stage stage-message tab-pane fade" ng-show="stage==='message'">
           <div class="message-box">
             <label>Templates</label>
             <select sumoselect="{placeholder:'Select a saved template message', search:true}" ng-model="selectedTemplate" name="selectedTemplate" ng-disabled="disabled" ng-change="selectTemplate()" required="required">
@@ -72,7 +86,7 @@
             </div>
           </div>
         </div>
-        <div class="stage stage-confirm" ng-show="stage==='confirm'">
+        <div class="stage stage-confirm tab-pane fade" ng-show="stage==='confirm'">
           <div class="confirm-box">
             <div class="confirm-details">
               <div class="item">

@@ -1,3 +1,9 @@
+.message-center-heading
+  display flex
+  justify-content space-between
+  .button
+    i
+      margin-left 8px
 .message-center
   .CodeMirror
     border 1px solid #ccc
@@ -6,9 +12,7 @@
   select, 
   textarea
     background white
-  .message-center-heading
-    display flex
-    justify-content space-between
+  
   .attachments, .messages .message-holder
     img
       width 4em
@@ -18,22 +22,32 @@
     .message-filters
       display flex
       justify-content space-between
-      background vs-silver
       margin-bottom 1em
       padding 0.5em
       border-radius 3px
-      svg
-       margin-right 0.5em
-       color vs-orange
-      a
+      .order-item
+        display inline-flex
+        align-items center
+        position relative
         color vs-grey
-        &.selected
+        background white
+        font-weight 600
+        margin 0px 5px 10px 0px
+        padding 5px 15px
+        border 1px solid vs-lightgrey
+        border-radius 30px
+        &:hover
+          color vs-orange
+        &.sorting
+          background vs-orange
           color white
-          text-decoration underline
+          border: 1px solid vs-orange
     .message
       display flex
-      padding .5em 0
-      margin-right 4em
+      padding 20px
+      margin 0px 40px 10px 0px
+      border 1px solid vs-lightgrey
+      border-radius 30px
       &.in
         margin-left 1em
         margin-right 0
@@ -62,25 +76,24 @@
       .message-holder
         flex 1
       .message-content
-        background white
+        background vs-body
         padding 1em
         margin-top .6em
-        border-radius 0px 30px 30px 30px
-        box-shadow 5px 5px 10px rgba(200,200,200,0.2)
+        border-radius 0px 0px 0px 30px
         max-height 200px
         overflow-y scroll
       .message-details
         display flex
         justify-content space-between
         position relative
-        .small-black-button
-          position absolute
-          bottom -25px
-          right 0px
       .message-date
         opacity 0.5
       .message-body
         white-space pre-wrap
+      .button-alt
+        margin-top 10px
+        i
+          margin-left 8px
   .document-list
     display flex
     flex-wrap wrap
@@ -95,15 +108,3 @@
         margin-top .3em
       &.attached
         background lightblue
-  .small-orange-button,
-  .small-black-button
-    border 1px solid vs-orange
-    background vs-orange
-    color white
-    &:hover
-      background vs-grey
-  .small-black-button
-    background vs-grey
-    border 1px solid vs-grey
-    &:hover
-      background vs-orange

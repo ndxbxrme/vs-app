@@ -11,48 +11,48 @@ angular.module('vs-admin')
       scope.windows = [
         {
           type: 'FOR_SALE',
-          name: 'FOR SALE',
+          name: 'For Sale',
           items: [],
           link: 'clientmanagement'
         },
         {
           type: 'SOLD',
-          name: 'SOLD SLIP',
+          name: 'Sold Slip',
           items: [],
           link: 'conveyancing'
         },
         {
           type: 'PRICE_REDUCTION',
-          name: 'PRICE REDUCTION',
+          name: 'Price Reduction',
           items: [],
           link: 'conveyancing'
         },
         {
           type: 'REMOVE_SLIP',
-          name: 'FALLEN THROUGH',
+          name: 'Fallen Through',
           items: [],
           link: 'conveyancing'
         },
         {
           type: 'TO_LET',
-          name: 'TO LET',
+          name: 'To Let',
           items: [],
           link: 'lettings'
         },
         {
           type: 'LET_AGREED',
-          name: 'LET SLIP',
+          name: 'Let Slip',
           items: [],
           link: 'lettings'
         },
         {
           type: 'COMPLETED_SELLING',
-          name: 'SALES REMOVE',
+          name: 'Sales Remove',
           items: []
         },
         {
           type: 'COMPLETED_LETTING',
-          name: 'LETTINGS REMOVE',
+          name: 'Lettings Remove',
           items: []
         },
       ]

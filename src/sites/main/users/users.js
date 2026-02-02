@@ -7,8 +7,8 @@ angular.module('vs-app')
       { id: 'agency', name: 'Conveyancing' },
       { id: 'leads', name: 'Leads' },
       { id: 'lettings', name: 'Lettings' },
-      { id: 'maintenance', name: 'Maintenance' },
-      { id: 'maintenance_leads', name: 'Maintenance Leads' }
+      { id: 'maintenance', name: 'Diary' },
+      { id: 'maintenance_leads', name: 'Maintenance' }
     ];
     let firstTime = true;
     $scope.sites.forEach(site => site.users = $scope.list(site.id + ':users', null, (users) => {
@@ -17,26 +17,26 @@ angular.module('vs-app')
       console.log('site', site.id, site.users.items);
     }))
     $scope.roles = ['no access', 'agency', 'maintenance', 'admin', 'superadmin'];
-    $scope.roleIcons = ['fa-ban', 'fa-users', 'fa-screwdriver-wrench', 'fa-user-vneck-hair', 'fa-user-crown'];
+    $scope.roleIcons = ['fa-duotone fa-ban', 'fa-duotone fa-users', 'fa-duotone fa-screwdriver-wrench', 'fa-duotone fa-user-vneck-hair', 'fa-duotone fa-user-crown'];
     $scope.roleData = {
       'superadmin': {
-        icon: 'fa-user-shield', // Represents high authority or protection
+        icon: 'fa-duotone fa-user-shield', // Represents high authority or protection
         color: '#FFD700' // Muted gold for prestige and leadership
       },
       'admin': {
-        icon: 'fa-user-gear', // Represents management or configuration
+        icon: 'fa-duotone fa-user-gear', // Represents management or configuration
         color: '#6A5ACD' // Muted purple for authority
       },
       'agency': {
-        icon: 'fa-briefcase', // Represents business or agencies
+        icon: 'fa-duotone fa-briefcase', // Represents business or agencies
         color: '#FF8C42' // Muted orange for activity and energy
       },
       'maintenance': {
-        icon: 'fa-tools', // Clear maintenance representation
+        icon: 'fa-duotone fa-tools', // Clear maintenance representation
         color: '#4682B4' // Muted blue for professionalism
       },
       'no access': {
-        icon: 'fa-circle-minus', // Universal "No" symbol
+        icon: 'fa-duotone fa-circle-minus', // Universal "No" symbol
         color: '#A9A9A9' // Muted gray for inactivity or restricted
       }
     };

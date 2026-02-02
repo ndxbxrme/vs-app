@@ -11,49 +11,49 @@ angular.module('vs-admin')
       scope.boards = [
         {
           type: 'FOR_SALE',
-          name: 'FOR SALE',
+          name: 'For Sale',
           items: [],
           link: 'clientmanagement'
         },
         {
           type: 'SOLD',
-          name: 'SOLD',
+          name: 'Sold',
           items: [],
           link: 'conveyancing'
         },
         {
           type: 'SOLD_1_WEEK',
-          name: 'SOLD IN 1 WEEK',
+          name: 'Sold in 1 Week',
           items: [],
           link: 'conveyancing'
         },
         {
           type: 'REMOVE_SLIP',
-          name: 'REMOVE SLIP',
+          name: 'Remove Slip',
           items: [],
           link: 'lettings'
         },
         {
           type: 'TO_LET',
-          name: 'TO LET',
+          name: 'To Let',
           items: [],
           link: 'lettings'
         },
         {
           type: 'LET_MANAGED',
-          name: 'LET & MANAGED',
+          name: 'Let & Managed',
           items: [],
           link: 'lettings'
         },
         {
           type: 'SORRY_LET',
-          name: 'SORRY I\'M LET',
+          name: 'Sorry I\'m Let',
           items: [],
           link: 'lettings'
         },
         {
           type: 'REMOVE',
-          name: 'REMOVE',
+          name: 'Remove',
           items: []
         },
       ]

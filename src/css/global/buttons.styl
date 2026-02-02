@@ -95,6 +95,7 @@ body
   input[type=submit], 
   input[type=button]
   .button
+    flex-shrink 0
     vs-button()
     &.button-alt
       vs-button-alt()
@@ -102,8 +103,9 @@ body
       vs-button-green()
     &.button-grey
       vs-button-grey()
-    svg
-      margin-right 5px
+    svg,
+    i
+      margin-left 8px
     &.small
       padding 5px 15px
   .button.pipeline-home

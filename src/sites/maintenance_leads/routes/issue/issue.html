@@ -32,17 +32,26 @@
             </div>
           </div>
         </div>
-
-        <div class="issue-details-section">
+        <div class="row nav-row">
+          <div class="col-12 text-end">
+            <nav>
+              <a href="#details"><i class="fa-duotone fa-light fa-info-circle"></i> Details</a>
+              <a href="#documents"><i class="fa-duotone fa-light fa-file-lines"></i> Documents</a>
+              <a href="#messages"><i class="fa-duotone fa-light fa-comment-captions"></i> Messages</a>
+              <a href="#notes"><i class="fa-duotone fa-light fa-note-sticky"></i> Notes</a>
+            </nav>
+          </div>
+        </div>
+        <div class="issue-details-section" id="details">
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-2">
               <div class="source {{issue.item.source}}"></div>
             </div>
-            <div class="controls col-sm-8 text-sm-end">
+            <div class="controls col-sm-10 text-sm-end">
               <a href="https://server.vitalspace.co.uk/maintenance-leads/api/fixflo/pdf/{{issue.item.fixfloId}}" target="_blank" class="button">View PDF <i class="fa-duotone fa-light fa-file-pdf"></i></a>
               <button type="button" ng-click="$parent.showLightbox(issue.item.media)" ng-show="issue.item.media.length" class="button">View Photos <i class="fa-duotone fa-light fa-camera-retro"></i></button>
-              <button type="button" ui-sref="maintenance_leads_createworksorder({_id:issue.item._id})" class="button">Create Works Order <i class="fa-duotone fa-light fa-check"></i></button>
-              <button type="button" ng-show="issue.item.statusName===&quot;Booked&quot;" ng-click="completeIssue(issue)" class="button-green"> <i class="fal fa-check"></i>{{ mml('issue-label-complete') }}</button>
+              <button type="button" ui-sref="maintenance_leads_createworksorder({_id:issue.item._id})" class="button">Create Works Order <i class="fa-duotone fa-light fa-plus"></i></button>
+              <button type="button" ng-show="issue.item.statusName===&quot;Booked&quot;" ng-click="completeIssue(issue)" class="button button-green">{{ mml('issue-label-complete') }} <i class="fa-light fa-duotone fa-check"></i></button>
               <button type="button" ng-click="deleteIssue(issue)" class="button-alt">{{ mml('forms-delete') }} <i class="fa-duotone fa-light fa-trash-alt"></i></button>
             </div>
             <div class="col-12 details" ng-if="issue.item.details">
@@ -81,20 +90,9 @@
                   <input type="text" ng-model="issue.item.quoteVitalSpace" placeholder="VitalSpace Quote"/>
                 </div>
                 <div class="quote-save col-2">
-                  <button type="button" ng-click="issue.save()" class="button">Save</button>
+                  <button type="button" ng-click="issue.save()" class="button">Save <i class="fa-light fa-duotone fa-save"></i></button>
                 </div>
               </div>
-            </div>
-          </div>
-        
-          <div class="row">
-            <div class="col-12">
-              <div class="issue-details">
-                <h2 class="orange">Issue Details</h2>
-                <h3><strong>{{ mml('issue-heading-issue-title') }}</strong></h3>
-              <p>{{ issue.item.title }}</p>
-              <h3><strong>{{ mml('issue-heading-fault-detail') }}</strong></h3>
-              <p>{{ issue.item.details }}</p>
             </div>
           </div>
         </div>
@@ -193,7 +191,7 @@
 
       </form>
 
-      <div class="row">
+      <div class="row g-5" id="documents">
         <div class="col-12">
           <h2><i class="fa-duotone fa-light fa-file-certificate"></i> Documents <span ng-show="issue.item.documents.length">{{issue.item.documents.length}}</span></h2>
           <div class="documents-section">
@@ -242,35 +240,31 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="row notes-and-messages">
-        <div class="col-sm-6">
-          <div class="case-notes">
-            <h2 class="orange">{{ mml('issue-heading-notes') }}</h2>
-            <div ng-repeat="note in notesData = ( issue.item.notes | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
-              <div class="date">{{note.date | date:medium}} | <img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}</span><a href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;])" class="delete">{{ mml('forms-delete') }}</a><a href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])" class="edit">{{ mml('forms-edit') }}</a></div>
-              <div class="note"> 
-                <div class="details"><span ng-show="note.side">- {{note.side}}</span>
-                  <div ng-bind-html="note.text | markdown:true" class="note-body"></div>
-                </div>
-              </div>
-            </div>
-            <pagination total="notesData.length" ng-model="notesPage" page-size="notesLimit" class="pagination-sm pagination"></pagination>
-            <div class="add-note">
-              <code-mirror ng-model="$parent.note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
-              <button type="button" ng-click="addNote()"> 
-                <div class="fal fa-plus"></div>{{note.date?'Update':'Add'}} Note
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
+        <div class="col-12">
           <message-center ng-if="issue.item &amp;&amp; tasks.items"></message-center>
         </div>
       </div>
 
-      <hr class="white">
+      <div class="case-notes" id="notes">
+        <h2 class="orange">{{ mml('issue-heading-notes') }}</h2>
+        <div ng-repeat="note in notesData = ( issue.item.notes | orderBy:&quot;-date&quot; ) | limitTo:notesLimit:notesLimit*(notesPage-1)" class="case-note">
+          <div class="header-row">
+            <div class="date"><img gravatar-src="note.user.local.email"/><span>{{note.user.displayName || note.user.local.email}}<br><span class="date">{{note.date | date:'mediumDate'}}, {{note.date | date:'shortTime'}}</span></span></div>
+            <div class="actions">
+              <a class="delete" href="" ng-click="deleteNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;, &quot;superadmin&quot;])"><i class="fa-light fa-duotone fa-trash"></i></a><a class="edit" href="" ng-click="editNote(note)" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])"><i class="fa-light fa-duotone fa-pen"></i></a>
+            </div>
+          </div>
+          <div class="note"> 
+            <span ng-show="note.side">- {{note.side}}</span>
+            <div class="note-body" ng-bind-html="note.text | markdown:true"></div>
+          </div>
+        </div>
+        <pagination class="pagination-sm pagination" total="notesData.length" ng-model="notesPage" page-size="notesLimit"></pagination>
+        <div class="add-note">
+          <code-mirror ng-model="$parent.note.text" options="{mode:markdown, lineWrapping:true}"></code-mirror>
+          <button ng-click="addNote()">{{note.date?'Update':'Add'}} Note</button>
+        </div>
+      </div>
       
       </div><!-- .issue -->
     </div>

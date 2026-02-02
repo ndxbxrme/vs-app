@@ -3,6 +3,10 @@
 .contractors-route,
 .landlords-route
   padding-top 30px
+  .search
+    .button
+      flex-shrink 0
+      margin-left 10px
   .months, .solicitors, .contractors, .landlords
     --bs-gutter-y: 2rem;
     --bs-gutter-x: 2rem;
@@ -173,65 +177,65 @@
           border-radius 8px
       .default
         position relative
-        .property-header
+      .property-header
+        display flex
+        align-items center
+        gap 15px
+        .property-number
+          background vs-grey
+          color white
+          width 20px
+          height 20px
+          border-radius 50%
           display flex
           align-items center
-          gap 15px
-          .property-number
-            background vs-orange
+          justify-content center
+          font-weight 700
+          font-size 1.1rem
+          flex-shrink 0
+        .property-address
+          flex 1
+          font-size 1.6rem
+          font-weight 600
+          color vs-grey
+        .property-badges
+          display flex
+          gap 8px
+          .badge-p, .badge-v
+            background vs-grey
             color white
-            width 20px
-            height 20px
+            width 28px
+            height 28px
             border-radius 50%
             display flex
             align-items center
             justify-content center
             font-weight 700
-            font-size 1.1rem
-            flex-shrink 0
-          .property-address
-            flex 1
-            font-size 1.6rem
-            font-weight 600
+            font-size 1.4rem
+        .property-controls
+          display flex
+          gap 10px
+          border 1px solid vs-lightgrey
+          border-radius 30px
+          padding 5px 10px
+          a
             color vs-grey
-          .property-badges
-            display flex
-            gap 8px
-            .badge-p, .badge-v
-              background vs-grey
-              color white
-              width 28px
-              height 28px
-              border-radius 50%
-              display flex
-              align-items center
-              justify-content center
-              font-weight 700
-              font-size 1.4rem
-          .property-controls
-            display flex
-            gap 10px
-            border 1px solid vs-lightgrey
-            border-radius 30px
-            padding 5px 10px
-            a
-              color vs-grey
-              font-size 1.4rem
-              transition color 0.2s
-              &:hover
-                color vs-orange
-        .property-date
-          color vs-lightgrey
-          position absolute 
-          left 35px
-          bottom -12px
-          i
-            margin-right 5px
-        .property-commission
-          color vs-orange
-          font-weight 700
-          display inline-block
-          margin-left 10px
+            font-size 1.4rem
+            transition color 0.2s
+            &:hover
+              color vs-orange
+      .property-date
+        color vs-lightgrey
+        position absolute 
+        left 35px
+        bottom -12px
+        i
+          margin-right 5px
+      .property-commission
+        color vs-orange
+        font-weight 700
+        display inline-block
+        margin-left 10px
 .solicitors-route
   padding-bottom 30px
   .cases
