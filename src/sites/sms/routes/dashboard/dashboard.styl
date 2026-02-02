@@ -1,6 +1,15 @@
 .sms-dashboard-route
+  padding-top 30px
   .tabs
     display flex
+    .nav-link
+      &.disabled
+        opacity 0.5
+        cursor not-allowed
+        pointer-events none
+        &:hover
+          background-color transparent
+          border-color transparent
     .tab
       padding .5em
       margin .5em .5em .5em 0

@@ -388,7 +388,9 @@
           margin-top 30px
           display flex
           justify-content center
-
+  &.admin-boards
+    .maintenance-tabs .nav-tabs .nav-item .nav-link
+      padding 15px
 @media (max-width: 768px)
   .maintenance-leads-dashboard
     .maintenance-tabs
@@ -403,7 +405,8 @@
             padding 12px 15px
 
 
-.maintenance-dashboard-route, .diary-route
+.maintenance-dashboard-route, 
+.diary-route
   display flex
   .toolbar
     background vs-grey
@@ -415,6 +418,9 @@
     max-width 300px
     flex-wrap wrap
     padding-bottom .5rem
+    margin 10px
+    border-radius 20px
+    overflow hidden
     .dates
       .date-swiper-holder
         position relative

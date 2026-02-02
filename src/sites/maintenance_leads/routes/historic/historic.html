@@ -3,38 +3,43 @@
   <div class="container-xl">
     <div class="row align-items-center">
       <div class="col-sm-8">
-        <h1>{{ mml('historic-heading') }}</h1>
+        <h1><i class="fa-duotone fa-light fa-clock-rotate-left"></i> {{ mml('historic-heading') }}</h1>
       </div>
       <div class="col-sm-4 search">
         <input type="text" ng-model="mysearch.$like" placeholder="Search Issues" ng-change="page=1"/>
       </div>
+    </div>
 
-      <div class="col-12 text-end">
-        <div class="showing">Showing {{historic.items.length}} of {{historic.total}} issue{{historic.total!==1?'s':''}}</div>
+    <div class="controls">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="sort">Order By:<br>
+            <a class="order-item" href="" ng-click="sort.set('date')" ng-class="sort.class('date')">Date</a>
+            <a class="order-item" href="" ng-click="sort.set('address')" ng-class="sort.class('address')">Address</a>
+            <a class="order-item" href="" ng-click="sort.set('tenant')" ng-class="sort.class('tenant')">Tenant</a>
+            <a class="order-item" href="" ng-click="sort.set('contractorName')" ng-class="sort.class('contractorName')">Contractor</a>
+            <a class="order-item" href="" ng-click="sort.set('status')" ng-class="sort.class('status')">Status</a>
+          </div>
+        </div>
+        <div class="col-sm-6 text-end">
+          <div class="showing">Showing {{historic.items.length}} of {{historic.total}} issue{{historic.total!==1?'s':''}}</div>
+        </div>
       </div>
     </div>
 
-    <div class="table-responsive">
-      <table ng-show="historic.items.length &gt; 0" class="issue-table history-table table">
-        <thead>
-          <tr>
-            <th width="20%" ng-click="sort.set(&quot;date&quot;)" ng-class="sort.class(&quot;date&quot;)">{{ mml('historic-heading-date') }}</th>
-            <th width="30%" ng-click="sort.set(&quot;address&quot;)" ng-class="sort.class(&quot;address&quot;)">{{ mml('historic-heading-address') }}</th>
-            <th width="15%" ng-click="sort.set(&quot;tenant&quot;)" ng-class="sort.class(&quot;tenant&quot;)">{{ mml('historic-heading-tenant') }}</th>
-            <th width="15%" ng-click="sort.set(&quot;contractorName&quot;)" ng-class="sort.class(&quot;contractorName&quot;)">{{ mml('historic-heading-contractor') }}</th>
-            <th width="10%" ng-click="sort.set(&quot;status&quot;)" ng-class="sort.class(&quot;status&quot;)">{{ mml('historic-heading-status') }}</th>
-            <th width="5%">{{ mml('historic-heading-view') }}</th>
-            <th width="5%">{{ mml('historic-heading-restore') }}</th>
-          </tr>
-        </thead>
-        <tbody ng-repeat="issue in historic.items">
-          <tr>
-            <td class="date">{{ issue.date | date:medium }}</td>
-            <td class="address">{{ issue.address }}<i ng-show="issue.media.length" class="fad fa-camera-retro"></i></td>
-            <td class="tenant">{{ issue.tenant }}</td>
-            <td class="contractor">{{ issue.contractorName }}</td>
-            <td ng-class="issue.status" class="status">
-              <div class="status-inner">
+    <div class="properties-list" ng-show="historic.items.length > 0">
+      <div class="property-card" ng-repeat="issue in historic.items">
+        <div class="property-main row g-5">
+          
+          <div class="property-info col-md-9">
+            <div class="property-meta">
+              <div class="property-address">
+                <strong>Address:</strong> 
+                <a ui-sref="maintenance_leads_issue({_id:issue._id})">
+                  {{ issue.address }}
+                </a>
+              </div>
+              <div class="status-badge" ng-class="issue.status">
                 <div class="booked"> 
                   <div class="fad fa-file-medical"></div>
                 </div>
@@ -45,20 +50,30 @@
                   <div class="fad fa-thumbs-up"></div>
                 </div>
               </div>
-            </td>
-            <td class="view-button">
-              <a ui-sref="maintenance_leads_issue({_id:issue._id})" target="_blank" class="button"> 
-                <div class="fal fa-eye"></div>View Issue
-              </a>
-            </td>
-            <td class="restore">
-              <button type="button" ng-click="restoreIssue(issue)" ng-show="issue.deleted || issue.statusName===&quot;Completed&quot;" class="button-grey">
-                <div class="fal fa-undo-alt"></div>Restore Issue
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+
+            <div class="lead-details">
+              <p class="applicant-info"><i class="fa-duotone fa-light fa-user"></i> <strong>Tenant:</strong> {{issue.tenant}}</p>
+              <p class="applicant-info" ng-show="issue.contractorName"><i class="fa-duotone fa-light fa-helmet-safety"></i> <strong>Contractor:</strong> {{issue.contractorName}}</p>
+              <p class="applicant-info"><i class="fa-duotone fa-light fa-clipboard"></i> <strong>Title:</strong> {{issue.title}}</p>
+            </div>
+          </div>
+          
+          <div class="property-stats-actions col-md-3">
+            <div ng-show="issue.media.length" ng-click="showLightbox(issue.media)" class="media-badge"><i class="fad fa-camera-retro"></i></div>
+            <div class="property-vendor">
+              <div class="label"><i class="fa-duotone fa-light fa-calendar-check"></i> Date Reported</div>
+              <div class="value">{{issue.date | date:'dd/MM/yy HH:mm'}}</div>
+            </div>
+
+            <div class="property-actions">
+              <button ui-sref="maintenance_leads_issue({_id:issue._id})" class="button">View <i class="fa-light fa-duotone fa-eye"></i></button>
+              <button type="button" ng-click="restoreIssue(issue)" ng-show="issue.deleted || issue.statusName==='Completed'" class="button-grey">Restore <i class="fa-light fa-duotone fa-undo-alt"></i></button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
     </div>
     
     <div ng-show="!historic.items.length" class="empty-table">{{ mml('historic-empty-table') }}</div>
