@@ -12,7 +12,8 @@
       </div>
 
       <div class="stats">
-        <div class="row g-5">
+        <!-- Sales/Agency Dashboard Stats -->
+        <div class="row g-5" ng-show="auth.isAuthorized('agency_dashboard')">
 
           <div class="col-md-6">
             <h3><i class="fa-duotone fa-light fa-eye"></i> Overview</h3>
@@ -60,15 +61,82 @@
 
         </div>
 
-        <div class="row g-5">
+        <!-- Lettings Dashboard Stats -->
+        <div class="row g-5" ng-show="!auth.isAuthorized('agency_dashboard') && auth.isAuthorized('lettings_dashboard')">
 
           <div class="col-md-6">
-            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-envelope-open-dollar"></i> Outstanding offers</span> <span class="count">{{offers.items.length}}</span></h3>
+            <h3><i class="fa-duotone fa-light fa-eye"></i> Overview</h3>
+            <div class="row g-5">
+              <div class="col-6">
+                <div class="snapshot">
+                  <div class="snapshot-item">
+                    <div class="snapshot-label">Outstanding Letting Leads</div>
+                    <div class="snapshot-value">{{lettingLeads.total}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="snapshot">
+                  <div class="snapshot-item">
+                    <div class="snapshot-label">Outstanding Valuation Leads</div>
+                    <div class="snapshot-value">{{lettingValuationLeads.total}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>     
+          </div>
+
+          <div class="col-md-6">
+            <h3><i class="fa-duotone fa-light fa-timeline-arrow"></i> My Pipeline</h3>
+            <div class="row g-5">
+              <div class="col-6">
+                <div class="snapshot">
+                  <div class="snapshot-item">
+                    <div class="snapshot-label">Current Available Properties</div>
+                    <div class="snapshot-value">{{availableProperties.total}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="snapshot">
+                  <div class="snapshot-item">
+                    <div class="snapshot-label">Current Agreed Lets</div>
+                    <div class="snapshot-value">{{agreedLets.total}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sales/Agency Offers and Solicitors -->
+        <div class="row g-5" ng-show="auth.isAuthorized('agency_dashboard')">
+
+          <div class="col-md-6">
+            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-envelope-open-dollar"></i> Pending offers</span> <span class="count">{{offers.items.length}}</span></h3>
             <div class="stats-box">
-              <a ng-repeat="offer in offers.items" ui-sref="agency_offer({id:offer._id})" class="stats-item">
-                <div class="offer-applicant">{{offer.applicant}}</div>
-                <div class="offer-address">Address: <span>{{formatAddress(offer.address)}}</span></div>
-                <div class="offer-amount">Offer <span class="value">{{offer.offerAmount | currency : "£" : 0}}</span></div>
+              <a ng-repeat="offer in offers.items" ui-sref="agency_offer({id:offer._id})" class="stats-item offer-with-image">
+                <div class="offer-thumbnail" ng-if="offer.image">
+                  <img ng-src="{{offer.image}}" alt="Property" />
+                </div>
+                <div class="offer-thumbnail no-image" ng-if="!offer.image">
+                  <i class="fa-light fa-house"></i>
+                </div>
+                <div class="offer-content">
+                  <div class="offer-applicant-section">
+                    <div class="offer-applicant">{{offer.applicant}}</div>
+                    <div class="offer-financial" ng-if="offer.financialPosition"><span>{{offer.financialPosition}}</span></div>
+                  </div>
+                  <div class="offer-amount">Offer <span class="value">{{offer.offerAmount | currency : "£" : 0}}</span></div>
+                </div>
+              </a>
+            </div>
+
+            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{salesComingSoon.total}}</span></h3>
+            <div class="stats-box">
+              <a ng-repeat="item in salesComingSoon.items | limitTo:10" class="stats-item">
+                <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
+                <div class="offer-address outstanding-address" ng-if="item.picturesBooked">Pictures Booked: <span>{{item.picturesBooked | date:'mediumDate'}}</span></div>
               </a>
             </div>
 
@@ -85,51 +153,155 @@
           </div>
 
           <div class="col-md-6">
-            <h3><i class="fa-duotone fa-light fa-chart-line-up"></i> Target vs Reality</h3>
+            <h3><i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i> Target vs Reality</h3>
             <div class="graph-box">
               <div id="sales-graph" class="graph-container"></div>
             </div>
+
+            <div class="quick-links">
+              <h3><i class="fa-duotone fa-light fa-link"></i> Quick Links</h3>
+              <div class="button-row row g-3">
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="agency_client-management-list" class="big-link">
+                    <i class="fa-light fa-duotone fa-house"></i>
+                    Available
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="agency_dashboard" class="big-link">
+                    <i class="fa-light fa-duotone fa-file-contract"></i>
+                    Conveyancing
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="agency_cases" class="big-link">
+                    <i class="fa-light fa-duotone fa-handshake"></i>
+                    SSTC Cases
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="agency_offers-list" class="big-link">
+                    <i class="fa-light fa-duotone fa-envelope-open-dollar"></i>
+                    Offers
+                  </a>
+                </div>
+                <!-- Not Here yet -->
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="agency_coming-soon" class="big-link">
+                    <i class="fa-light fa-duotone fa-briefcase-arrow-right"></i>
+                    Instructions
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="leads_selling" class="big-link">
+                    <i class="fa-light fa-duotone fa-bars-progress"></i>
+                    Leads
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      
-      <div class="button-row">
-        <div class="button-holder" ng-show="auth.isAuthorized('agency_dashboard')">
-          <a ui-sref="agency_dashboard" class="big-link">
-            <i class="fa-light fa-duotone fa-handshake"></i>
-            Sales
-          </a>
-        </div>
-        <div class="button-holder" ng-show="auth.isAuthorized('lettings_dashboard')">
-          <a ui-sref="lettings_dashboard" class="big-link">
-            <i class="fa-light fa-duotone fa-house-person-return"></i>
-            Lettings
-          </a>
-        </div>
-        <div class="button-holder" ng-show="auth.isAuthorized('leads_dashboard')">
-          <a ui-sref="leads_dashboard" class="big-link">
-            <i class="fa-light fa-duotone fa-bars-progress"></i>
-            Leads
-          </a>
-        </div>
-        <div class="button-holder" ng-show="auth.isAuthorized('maintenance_leads_dashboard')">
-          <a ui-sref="maintenance_leads_dashboard" class="big-link">
-            <i class="fa-light fa-duotone fa-list-check"></i>
-            Maintenance
-          </a>
-        </div>
-        <div class="button-holder" ng-show="auth.isAuthorized('maintenance_dashboard')">
-          <a ui-sref="maintenance_dashboard" class="big-link">
-            <i class="fa-light fa-duotone fa-calendar-circle-user"></i>
-            Diary
-          </a>
-        </div>
-        <div class="button-holder" ng-show="auth.isAuthorized('admin_dashboard')">
-          <a ui-sref="admin_dashboard" class="big-link">
-            <i class="fa-light fa-duotone fa-screwdriver-wrench"></i>
-            Admin
-          </a>
+        <!-- Lettings Offers and Statistics -->
+        <div class="row g-5" ng-show="!auth.isAuthorized('agency_dashboard') && auth.isAuthorized('lettings_dashboard')">
+
+          <div class="col-md-6">
+            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-envelope-open-dollar"></i> Pending offers</span> <span class="count">{{lettingOffers.items.length}}</span></h3>
+            <div class="stats-box">
+              <a ng-repeat="offer in lettingOffers.items" ui-sref="lettings_offer({id:offer._id})" class="stats-item offer-with-image">
+                <div class="offer-thumbnail" ng-if="offer.image">
+                  <img ng-src="{{offer.image}}" alt="Property" />
+                </div>
+                <div class="offer-thumbnail no-image" ng-if="!offer.image">
+                  <i class="fa-light fa-house"></i>
+                </div>
+                <div class="offer-content">
+                  <div class="offer-applicant-section">
+                    <div class="offer-applicant">{{offer.applicant.title}} {{offer.applicant.first_name}} {{offer.applicant.last_name}}</div>
+                    <div class="offer-movein" ng-if="offer.rent_details.tenancy_start">Proposed Move in: <span>{{offer.rent_details.tenancy_start | date:'mediumDate'}}</span></div>
+                  </div>
+                  <div class="offer-amount">Offer <span class="value">{{offer.rent_details.monthly_rent | currency : "£" : 0}}</span></div>
+                </div>
+              </a>
+            </div>
+
+            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{comingSoon.total}}</span></h3>
+            <div class="stats-box">
+              <a ng-repeat="item in comingSoon.items | limitTo:10" class="stats-item">
+                <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
+                <div class="offer-address outstanding-address" ng-if="item.picturesBooked">Pictures Booked: <span>{{item.picturesBooked | date:'mediumDate'}}</span></div>
+              </a>
+            </div>
+
+            <h3 class="stats-header" ng-show="nextMoveInFiltered.length > 0"><span><i class="fa-duotone fa-light fa-truck-moving"></i> Next Move In</span> <span class="count">{{nextMoveInFiltered.length}}</span></h3>
+            <div class="stats-box" ng-show="nextMoveInFiltered.length > 0">
+              <a ng-repeat="property in nextMoveInFiltered | limitTo:10" ui-sref="lettings_case({roleId:property.RoleId})" class="stats-item offer-with-image">
+                <div class="offer-thumbnail" ng-if="property.Images && property.Images.length > 0">
+                  <img ng-src="{{property.Images[0].Url}}" alt="Property" />
+                </div>
+                <div class="offer-thumbnail no-image" ng-if="!property.Images || property.Images.length === 0">
+                  <i class="fa-light fa-house"></i>
+                </div>
+                <div class="offer-content">
+                  <div class="offer-applicant-section">
+                    <div class="offer-applicant">{{property.TenantName}}</div>
+                    <div class="offer-movein" ng-if="property.proposedMoving">Move In: <span>{{property.proposedMoving | date:'mediumDate'}}</span></div>
+                  </div>
+                  <div class="offer-amount">Fee <span class="value">{{property.Fees[0].DefaultValue | currency : "£" : 0}} + VAT</span></div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <h3><i class="fa-duotone fa-light fa-chart-line-up"></i> Target vs Reality</h3>
+            <div class="graph-box">
+              <div id="lettings-graph" class="graph-container"></div>
+            </div>
+
+            <div class="quick-links">
+              <h3><i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i> Quick Links</h3>
+              <div class="button-row row g-3">
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="lettings_available" class="big-link">
+                    <i class="fa-light fa-duotone fa-house"></i>
+                    Available
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="lettings_dashboard" class="big-link">
+                    <i class="fa-light fa-duotone fa-chart-pie"></i>
+                    Dashboard
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="lettings_agreed" class="big-link">
+                    <i class="fa-light fa-duotone fa-handshake"></i>
+                    Let Cases
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="lettings_offers-list" class="big-link">
+                    <i class="fa-light fa-duotone fa-envelope-open-dollar"></i>
+                    Offers
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="leads_letting" class="big-link">
+                    <i class="fa-light fa-duotone fa-bars-progress"></i>
+                    Leads
+                  </a>
+                </div>
+                <div class="button-holder col-lg-4 col-6">
+                  <a ui-sref="lettings_agreed" class="big-link">
+                    <i class="fa-light fa-duotone fa-calendar-days"></i>
+                    Year to Date
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

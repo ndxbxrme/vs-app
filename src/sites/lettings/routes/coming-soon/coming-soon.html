@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="property-meta">
-              <div class="property-address"><strong>Address:</strong> {{item.address}}</div>
+              <div class="property-address"><strong>Address:</strong> {{item.displayAddress || item.address}}</div>
               <div class="stat-item">
                 <span class="issued"><strong>Issued:</strong> {{(item.createdAt || item.modifiedAt) | date:'dd/MM/yyyy'}}</span>
               </div>

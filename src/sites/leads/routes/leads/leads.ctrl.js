@@ -23,7 +23,7 @@
         end = new Date();
         start = new Date();
         start.setHours(0, 0, 0, 0); // Set to midnight (start of today)
-        return args.where = {
+        args.where = {
           date: {
             $gte: start.valueOf(),
             $lte: end.valueOf()
@@ -32,6 +32,7 @@
           booked: null,
           deleted: null
         };
+        return args.where;
       },
       page: 1,
       pageSize: 0
@@ -42,7 +43,7 @@
         var startOfToday;
         startOfToday = new Date();
         startOfToday.setHours(0, 0, 0, 0); // Set to midnight (start of today)
-        return args.where = {
+        args.where = {
           date: {
             $lt: startOfToday.valueOf()
           },
@@ -50,6 +51,7 @@
           booked: null,
           deleted: null
         };
+        return args.where;
       },
       page: 1,
       pageSize: 0
