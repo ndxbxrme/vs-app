@@ -1,34 +1,154 @@
 angular.module('vs-app')
-.controller('mainDashboardCtrl', function($scope, Auth, $filter, $timeout) {
+.controller('mainDashboardCtrl', function($scope, Auth, $filter, $timeout, ndxCheck, env, $http) {
   $scope.thing = 'hiya';
   $scope.unknownSolicitors = [];
+  $scope.env = env;
   
-  // Fetch sales leads total
-  $scope.salesLeads = $scope.list('leads:leads', {
-    where: {
-      roleType: 'Selling',
-      booked: null
-    },
-    page: 1,
-    pageSize: 0
+  if (ndxCheck && ndxCheck.setPristine) {
+    ndxCheck.setPristine($scope);
+  }
+  
+  $scope.$on('$destroy', function() {
+    if (ndxCheck && ndxCheck.setPristine) {
+      ndxCheck.setPristine($scope);
+    }
   });
   
-  // Fetch valuation leads total
-  $scope.valuationLeads = $scope.list('leads:leads', {
-    where: {
-      roleType: 'Valuation',
-      booked: null
-    },
-    page: 1,
-    pageSize: 0
-  });
+  const hasAgencyAccess = Auth.isAuthorized('agency_dashboard');
+  const hasLettingsAccess = Auth.isAuthorized('lettings_dashboard');
   
-  // Get current user's properties (for "Sold By Me")
+  // Fetch sales leads total (for agency users)
+  if (hasAgencyAccess) {
+    $scope.salesComingSoon = $scope.list('agency:marketing', {
+      where: {
+        completed: null
+      },
+      page: 1,
+      pageSize: 10
+    });
+    
+    $scope.salesLeads = $scope.list('leads:leads', {
+      where: {
+        roleType: 'Selling',
+        booked: null
+      },
+      page: 1,
+      pageSize: 0
+    });
+    
+    $scope.valuationLeads = $scope.list('leads:leads', {
+      where: {
+        roleType: 'Valuation',
+        booked: null
+      },
+      page: 1,
+      pageSize: 0
+    });
+    
+    $scope.offers = $scope.list('leads:offers', {
+      where: {
+        actioned: null
+      },
+      sort: 'date',
+      sortDir: 'DESC',
+      page: 1,
+      pageSize: 10
+    });
+  }
+
+  if (!hasAgencyAccess && hasLettingsAccess) {
+    $scope.lettingLeads = $scope.list('leads:leads', {
+      where: {
+        roleType: 'Letting',
+        booked: null
+      },
+      page: 1,
+      pageSize: 0
+    });
+    
+    $scope.lettingValuationLeads = $scope.list('leads:leads', {
+      where: {
+        roleType: 'Valuation',
+        booked: null
+      },
+      page: 1,
+      pageSize: 0
+    });
+    
+    $scope.availableProperties = $scope.list({
+      route: `${$scope.env.PROPERTY_URL}/search`
+    }, {
+      where: {
+        RoleStatus: 'InstructionToLet',
+        RoleType: 'Letting',
+        IncludeStc: true
+      },
+      transform: {
+        items: 'Collection',
+        total: 'TotalCount'
+      }
+    });
+    
+    $scope.agreedLets = $scope.list('lettings:properties', {
+      where: {
+        Status: 'OfferAccepted',
+        delisted: false
+      },
+      page: 1,
+      pageSize: 0
+    });
+    
+    $scope.comingSoon = $scope.list('lettings:marketing', {
+      where: {
+        completed: null
+      },
+      page: 1,
+      pageSize: 10
+    });
+    
+    $scope.lettingOffers = $scope.list('leads:offerslettings', {
+      where: {
+        actioned: null
+      },
+      sort: 'date',
+      sortDir: 'DESC',
+      page: 1,
+      pageSize: 10
+    });
+    
+    $scope.nextMoveInFiltered = [];
+    $scope.nextMoveIn = $scope.list('lettings:properties', {
+      where: {
+        Status: 'OfferAccepted',
+        delisted: false
+      },
+      sort: 'proposedMoving',
+      sortDir: 'ASC',
+      page: 1,
+      pageSize: 50
+    }, function(properties) {
+      const now = new Date();
+      const twentyFourHoursFromNow = new Date(now.getTime() + (24 * 60 * 60 * 1000));
+      
+      $scope.nextMoveInFiltered = [];
+      if (properties && properties.items) {
+        properties.items.forEach(property => {
+          if (property.proposedMoving) {
+            const moveInDate = new Date(property.proposedMoving);
+            if (moveInDate <= twentyFourHoursFromNow) {
+              $scope.nextMoveInFiltered.push(property);
+            }
+          }
+        });
+      }
+    });
+  }
+  
   const currentUser = Auth.getUser();
   $scope.myPipeline = 0;
+  $scope.myLettingsPipeline = 0;
   
   if (currentUser) {
-    // First get the user's ID from the consultants list
     $scope.consultants = $scope.list('main:users', null, (users) => {
       const currentUserEmail = currentUser.local.email;
       const consultant = users.items.find(user => user.local.email === currentUserEmail);
@@ -39,69 +159,91 @@ angular.module('vs-app')
       
       const userId = consultant._id;
       
-      // Now fetch properties and match by consultant ID
-      $scope.properties = $scope.list('agency:properties', {
-        where: { 
-          modifiedAt: { $gt: new Date('2022-12-20').valueOf() }
-        },
-        transformer: 'dashboard/properties'
-      }, function(properties) {
-        let count = 0;
-        $scope.unknownSolicitors = [];
-        if (properties && properties.items) {
-          for (let i = 0; i < properties.items.length; i++) {
-            const property = properties.items[i];
-            if (property.override && property.override.deleted === true) {
-              continue;
-            }
-            if (!property.role) {
-              continue;
-            }
-            if (property.role.RoleStatus.SystemName !== 'OfferAccepted') {
-              continue;
-            }
-            if (Object.values(property.milestoneIndex)[0] === 10) {
-              continue;
-            }
-            // Check if property is stale (more than 1 year old)
-            const stale = new Date(property.role.CreatedDate) < (new Date() - (365 * 24 * 60 * 60 * 1000));
-            if (stale) {
-              continue;
-            }
-            // Check for unknown solicitors
-            const missingPurchaser = !property.purchasersSolicitor || !Object.keys(property.purchasersSolicitor).length;
-            const missingVendor = !property.vendorsSolicitor || !Object.keys(property.vendorsSolicitor).length;
-            if (missingPurchaser || missingVendor) {
-              const solRecord = {
-                _id: property._id,
-                roleId: property.role.SalesRoleId,
-                address: property.displayAddress,
-                p: missingPurchaser,
-                v: missingVendor
-              };
-              $scope.unknownSolicitors.push(solRecord);
-            }
-            // Match by consultant ID
-            if (property.consultant === userId) {
-              count++;
+      // Fetch agency properties for sales users
+      if (hasAgencyAccess) {
+        $scope.properties = $scope.list('agency:properties', {
+          where: { 
+            modifiedAt: { $gt: new Date('2022-12-20').valueOf() }
+          },
+          transformer: 'dashboard/properties'
+        }, function(properties) {
+          let count = 0;
+          $scope.unknownSolicitors = [];
+          if (properties && properties.items) {
+            for (let i = 0; i < properties.items.length; i++) {
+              const property = properties.items[i];
+              if (property.override && property.override.deleted === true) {
+                continue;
+              }
+              if (!property.role) {
+                continue;
+              }
+              if (property.role.RoleStatus.SystemName !== 'OfferAccepted') {
+                continue;
+              }
+              if (Object.values(property.milestoneIndex)[0] === 10) {
+                continue;
+              }
+              // Check if property is stale (more than 1 year old)
+              const stale = new Date(property.role.CreatedDate) < (new Date() - (365 * 24 * 60 * 60 * 1000));
+              if (stale) {
+                continue;
+              }
+              // Check for unknown solicitors
+              const missingPurchaser = !property.purchasersSolicitor || !Object.keys(property.purchasersSolicitor).length;
+              const missingVendor = !property.vendorsSolicitor || !Object.keys(property.vendorsSolicitor).length;
+              if (missingPurchaser || missingVendor) {
+                const solRecord = {
+                  _id: property._id,
+                  roleId: property.role.SalesRoleId,
+                  address: property.displayAddress,
+                  p: missingPurchaser,
+                  v: missingVendor
+                };
+                $scope.unknownSolicitors.push(solRecord);
+              }
+              // Match by consultant ID
+              if (property.consultant === userId) {
+                count++;
+              }
             }
           }
-        }
-        $scope.myPipeline = count;
-      });
+          $scope.myPipeline = count;
+        });
+      }
+      
+      if (!hasAgencyAccess && hasLettingsAccess) {
+        $scope.lettingsProperties = $scope.list('lettings:properties', {
+          where: {
+            Status: 'OfferAccepted',
+            delisted: false
+          }
+        }, function(properties) {
+          let count = 0;
+          if (properties && properties.items) {
+            for (let i = 0; i < properties.items.length; i++) {
+              const property = properties.items[i];
+              if (property.override && property.override.deleted === true) {
+                continue;
+              }
+              // Check if property is stale (more than 1 year old)
+              if (property.role && property.role.CreatedDate) {
+                const stale = new Date(property.role.CreatedDate) < (new Date() - (365 * 24 * 60 * 60 * 1000));
+                if (stale) {
+                  continue;
+                }
+              }
+              // Match by consultant ID
+              if (property.consultant === userId) {
+                count++;
+              }
+            }
+          }
+          $scope.myLettingsPipeline = count;
+        });
+      }
     });
   }
-  
-  // Fetch pending offers
-  $scope.offers = $scope.list('leads:offers', {
-    where: {
-      actioned: null
-    },
-    sort: 'date',
-    sortDir: 'DESC',
-    page: 1,
-    pageSize: 10
-  });
   
   $scope.formatAddress = (address) => {
     if(!address) return '';
@@ -147,6 +289,7 @@ angular.module('vs-app')
 
   // Sales chart data - current year only
   $scope.chartData = [];
+  $scope.lettingsChartData = [];
   
   function initializeChart() {
     const now = new Date();
@@ -166,10 +309,11 @@ angular.module('vs-app')
       });
     }
     
-    $scope.chartData = months;
-    
-    // Fetch targets
-    $scope.targets = $scope.list('agency:targets', {
+    if (hasAgencyAccess) {
+      $scope.chartData = months;
+      
+      // Fetch targets
+      $scope.targets = $scope.list('agency:targets', {
       where: {
         type: 'salesAgreed'
       }
@@ -185,10 +329,9 @@ angular.module('vs-app')
           }
         });
       }
-      renderChart();
+      renderChart('sales-graph', $scope.chartData, 'Reality Sales', 'Target Sales');
     });
     
-    // Fetch actual sales (properties with startDate in the current year)
     const yearStart = new Date(currentYear, 0, 1).valueOf();
     $scope.salesProperties = $scope.list('agency:properties', {
       where: {
@@ -197,7 +340,6 @@ angular.module('vs-app')
         }
       }
     }, function(properties) {
-      // Reset actual counts
       $scope.chartData.forEach(m => m.actual = 0);
       
       if (properties && properties.items) {
@@ -215,30 +357,82 @@ angular.module('vs-app')
           }
         });
       }
-      renderChart();
+      renderChart('sales-graph', $scope.chartData, 'Reality Sales', 'Target Sales');
     });
+    }
+    
+    if (!hasAgencyAccess && hasLettingsAccess) {
+      $scope.lettingsChartData = JSON.parse(JSON.stringify(months));
+      
+      $scope.lettingsTargets = $scope.list('lettings:targets', {
+        where: {
+          type: 'letsAgreed'
+        }
+      }, function(targets) {
+        if (targets && targets.items) {
+          targets.items.forEach(target => {
+            const targetMonth = $scope.lettingsChartData.find(m => 
+              new Date(target.date).getMonth() === new Date(m.startDate).getMonth() &&
+              new Date(target.date).getFullYear() === new Date(m.startDate).getFullYear()
+            );
+            if (targetMonth) {
+              targetMonth.target = target.value || 0;
+            }
+          });
+        }
+        renderChart('lettings-graph', $scope.lettingsChartData, 'Reality Lets', 'Target Lets');
+      });
+      
+      const yearStart = new Date(currentYear, 0, 1).valueOf();
+      const yearEnd = new Date(currentYear + 1, 0, 1).valueOf();
+      
+      $http.post($http.sites["lettings"].url + "/api/agreed/search", {
+        startDate: yearStart,
+        endDate: yearEnd
+      }, $http.sites["lettings"].config).then(function(res) {
+        $scope.lettingsChartData.forEach(m => m.actual = 0);
+        
+        let yearToDateTotal = 0;
+        
+        if (res.data && res.data.length) {
+          res.data.forEach(month => {
+            const monthDate = new Date(month.date);
+            const chartMonth = $scope.lettingsChartData.find(m => {
+              const chartDate = new Date(m.startDate);
+              return chartDate.getFullYear() === monthDate.getFullYear() && 
+                     chartDate.getMonth() === monthDate.getMonth();
+            });
+            
+            if (chartMonth && month.properties) {
+              chartMonth.actual = month.properties.length;
+              yearToDateTotal += month.properties.length;
+            }
+          });
+        }
+        
+        renderChart('lettings-graph', $scope.lettingsChartData, 'Reality Lets', 'Target Lets');
+      });
+    }
   }
   
-  function renderChart() {
-    if (!$scope.chartData.length) return;
+  function renderChart(containerId, chartData, actualLabel, targetLabel) {
+    if (!chartData.length) return;
     
     $timeout(function() {
-      const container = document.getElementById('sales-graph');
+      const container = document.getElementById(containerId);
       if (!container) return;
       
-      // Clear previous content
       container.innerHTML = '';
       
-      // Find max value for scaling
       const maxValue = Math.max(
-        ...($scope.chartData.map(d => Math.max(d.actual, d.target))),
+        ...(chartData.map(d => Math.max(d.actual, d.target))),
         1
       );
       
       // Create chart
       const chartHTML = `
         <div class="chart-bars">
-          ${$scope.chartData.map(month => {
+          ${chartData.map(month => {
             const targetHeight = (month.target / maxValue) * 100;
             const actualHeight = (month.actual / maxValue) * 100;
             return `
@@ -259,13 +453,13 @@ angular.module('vs-app')
         <div class="chart-legend">
           <div class="legend-item">
             <span class="legend-color legend-actual"></span>
-            <span class="legend-label">Reality Sales</span>
-            <span class="legend-value">${$scope.chartData.reduce((sum, m) => sum + m.actual, 0)}</span>
+            <span class="legend-label">${actualLabel}</span>
+            <span class="legend-value">${chartData.reduce((sum, m) => sum + m.actual, 0)}</span>
           </div>
           <div class="legend-item">
             <span class="legend-color legend-target"></span>
-            <span class="legend-label">Target Sales</span>
-            <span class="legend-value">${$scope.chartData.reduce((sum, m) => sum + (+m.target || 0), 0)}</span>
+            <span class="legend-label">${targetLabel}</span>
+            <span class="legend-value">${chartData.reduce((sum, m) => sum + (+m.target || 0), 0)}</span>
           </div>
         </div>
       `;
@@ -283,7 +477,6 @@ angular.module('vs-app')
     });
   }
   
-  // Initialize chart
   initializeChart();
 })
 .config(($stateProvider) => $stateProvider.state('dashboard', {

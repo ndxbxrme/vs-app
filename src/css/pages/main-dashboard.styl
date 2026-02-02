@@ -1,3 +1,6 @@
+.dashboard
+  h1
+    margin-bottom 5px
 .snapshot .snapshot-item
   width 100% !important
 .stats-box 
@@ -17,16 +20,59 @@
     box-shadow 1px 1px 2px rgba(0, 0, 0, 0.1)
     &:last-of-type
       margin-bottom 0
+    &.offer-with-image
+      align-items center
+      .offer-thumbnail
+        flex-shrink 0
+        width 60px
+        height 60px
+        border-radius 8px
+        overflow hidden
+        margin-right 15px
+        background vs-lightgrey
+        display flex
+        align-items center
+        justify-content center
+        &.no-image
+          background vs-lightsilver
+          i
+            font-size 24px
+            color vs-grey
+        img
+          width 100%
+          height 100%
+          object-fit cover
+      .offer-content
+        flex 1
+        display flex
+        justify-content space-between
+        align-items center
+        width calc(100% - 75px)
+        .offer-applicant-section
+          flex 1
+          display flex
+          flex-direction column
+          gap 4px
+          .offer-applicant
+            font-size 14px
+            line-height 1.2
+            font-weight 600
+          .offer-financial, .offer-movein
+            font-size 14px
+            line-height: 1.2
+            font-weight 600
+            span
+              color vs-orange
+              font-weight 600
+        .offer-amount
+          width 120px
+          text-align right
+          font-weight 600
     div
       font-weight 600
-      &.offer-applicant
-        width 160px
       &.offer-address
-        width calc(100% - 280px)
         &.outstanding-address
           width auto
-      &.offer-amount
-        width 120px
       span
         font-weight 400
         &.value
@@ -155,33 +201,29 @@
   to
     opacity 1
     transform scaleY(1)      
-
-.button-row 
-  display flex
-  flex-direction row
-  justify-content center
-  flex-wrap wrap
-  gap 10px
-  margin 40px auto
-a.big-link
-  color vs-grey
-  background vs-white
-  border 1px solid vs-lightsilver
-  font-size 2rem
-  line-height 3rem
-  display block
-  padding 15px 30px
-  border 1px solid vs-lightgrey
-  border-radius 50px
-  transition all 0.4s linear
-  &:hover
-    background vs-brightwhite
-    border 1px solid vs-orange
-    box-shadow none
-  svg
+.quick-links
+  .button-row 
+    display flex
+    flex-wrap wrap
+  a.big-link
+    color vs-grey
+    background vs-white
+    border 1px solid vs-lightsilver
+    font-size 1.8rem
+    line-height 2.4rem
     display block
-    font-size 6rem
-    margin 0 auto 30px
+    padding 15px 25px
+    border 1px solid vs-lightgrey
+    border-radius 50px
+    transition all 0.4s linear
+    &:hover
+      background vs-brightwhite
+      border 1px solid vs-orange
+      box-shadow none
+    svg
+      display block
+      font-size 6rem
+      margin 0 auto 30px
 @media screen and (max-width:1400px)
   a.big-link
     padding 40px 30px
