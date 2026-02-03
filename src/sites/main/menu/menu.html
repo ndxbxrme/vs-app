@@ -20,24 +20,28 @@
               </pages>
             </site> -->
             <site ng-show="auth.isAuthorized('agency_dashboard')">
-              <a ui-sref="agency_dashboard", ng-class="{selected:state('agency_dashboard')}" ng-click="menuOpen = false">Sales</a>
+              <a ui-sref="dashboard({view: 'sales'})", ng-class="{selected:isDashboardView('sales')}" ng-click="menuOpen = false">Sales</a>
               <pages ng-click="menuOpen = false">
-                <a ui-sref="agency_client-management-list", ng-class="{selected:state('agency_client-management-list')}" ng-show="auth.isAuthorized('agency_client-management-list')">Client Management</a>
-                <a ui-sref="agency_cases", ng-class="{selected:state(['agency_cases','agency_case'])}" ng-show="auth.isAuthorized('agency_cases')">Conveyancing</a>
+                <a ui-sref="agency_client-management-list", ng-class="{selected:state('agency_client-management-list')}" ng-show="auth.isAuthorized('agency_client-management-list')">Available</a>
+                <a ui-sref="agency_dashboard", ng-class="{selected:state('agency_dashboard')}" ng-show="auth.isAuthorized('agency_dashboard')">Conveyancing</a>
+                <a ui-sref="agency_cases", ng-class="{selected:state(['agency_cases','agency_case'])}" ng-show="auth.isAuthorized('agency_cases')">SSTC Cases</a>
                 <a ui-sref="agency_offers-list", ng-class="{selected:state(['agency_offers-list','agency_offer'])}" ng-show="auth.isAuthorized('agency_offers-list')">Pending Offers</a>
-                <a ui-sref="agency_agreed", ng-class="{selected:state('agency_agreed')}" ng-show="auth.isAuthorized('agency_agreed')">Agreed Sales</a>
+                <a ui-sref="agency_coming-soon", ng-class="{selected:state('agency_coming-soon')}" ng-show="auth.isAuthorized('agency_coming-soon')">Instructions</a>
+                <a ui-sref="agency_agreed", ng-class="{selected:state('agency_agreed')}" ng-show="auth.isAuthorized('agency_agreed')">Year To Date</a>
                 <a ui-sref="agency_solicitors", ng-class="{selected:state('agency_solicitors')}" ng-show="auth.isAuthorized('agency_solicitors')">Solicitors</a>
                 <a ui-sref="agency_setup", ng-class="{selected:state('agency_setup')}" ng-show="auth.isAuthorized('agency_setup')">Setup</a>
                 <!--<a ui-sref="agency_cleanup", ng-class="{selected:state('agency_cleanup')}" ng-show="auth.isAuthorized('agency_cleanup')">Cleanup</a>-->
               </pages>
             </site>
             <site ng-show="auth.isAuthorized('lettings_dashboard')">
-              <a ui-sref="lettings_dashboard", ng-class="{selected:state('lettings_dashboard')}" ng-click="menuOpen = false">Lettings</a>
+              <a ui-sref="dashboard({view: 'lettings'})", ng-class="{selected:isDashboardView('lettings')}" ng-click="menuOpen = false">Lettings</a>
               <pages ng-click="menuOpen = false">
                 <a ui-sref="lettings_available", ng-class="{selected:state('lettings_available')}" ng-show="auth.isAuthorized('lettings_available')">Available</a>
-                <a ui-sref="lettings_cases", ng-class="{selected:state(['lettings_cases', 'lettings_case'])}" ng-show="auth.isAuthorized('lettings_cases')">Cases</a>
+                <a ui-sref="lettings_dashboard", ng-class="{selected:state('lettings_dashboard')}" ng-show="auth.isAuthorized('lettings_dashboard')">Dashboard</a>
+                <a ui-sref="lettings_cases", ng-class="{selected:state(['lettings_cases', 'lettings_case'])}" ng-show="auth.isAuthorized('lettings_cases')">Let Cases</a>
                 <a ui-sref="lettings_offers-list", ng-class="{selected:state(['lettings_offers-list','lettings_offer'])}" ng-show="auth.isAuthorized('lettings_offers-list')">Pending Offers</a>
-                <a ui-sref="lettings_agreed", ng-class="{selected:state('lettings_agreed')}" ng-show="auth.isAuthorized('lettings_agreed')">Agreed Lets</a>
+                <a ui-sref="lettings_coming-soon", ng-class="{selected:state('lettings_coming-soon')}" ng-show="auth.isAuthorized('lettings_coming-soon')">Instructions</a>
+                <a ui-sref="lettings_agreed", ng-class="{selected:state('lettings_agreed')}" ng-show="auth.isAuthorized('lettings_agreed')">Year To Date</a>
                 <a ui-sref="lettings_marketing", ng-class="{selected:state('lettings_marketing')}" ng-show="auth.isAuthorized('lettings_marketing')">Marketing</a>
                 <a ui-sref="lettings_setup", ng-class="{selected:state('lettings_setup')}" ng-show="auth.isAuthorized('lettings_setup')">Setup</a>
               </pages>

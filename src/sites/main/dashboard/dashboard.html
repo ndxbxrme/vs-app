@@ -1,19 +1,23 @@
 <sites>
   <div class="dashboard">
     <div class="container-xl">
-      <h1>{{getGreeting()}}, <span class="orange">{{getFirstName()}}</span></h1>
       <div class="intro row">
-        <div class="col-md-8">
+        <div class="col-md-4">
+          <h1>{{getGreeting()}}, <span class="orange">{{getFirstName()}}</span></h1>
           <h2>VitalSpace App Dashboard</h2>
         </div>
-        <div class="col-md-4 text-end">
-          <h2>{{getFormattedDate()}}</h2>
+        <div class="col-md-8 text-end" ng-show="hasBothAccess">
+          <h3><span>{{getFormattedDate()}}</span></h3>
+          <div class="button-group" role="group">
+            <button type="button" class="button" ng-class="{'button-alt': activeView === 'sales', 'btn-outline-primary': activeView !== 'sales'}" ng-click="setActiveView('sales')">Sales</button>
+            <button type="button" class="button" ng-class="{'button-alt': activeView === 'lettings', 'btn-outline-primary': activeView !== 'lettings'}" ng-click="setActiveView('lettings')">Lettings</button>
+          </div>
         </div>
       </div>
 
       <div class="stats">
         <!-- Sales/Agency Dashboard Stats -->
-        <div class="row g-5" ng-show="auth.isAuthorized('agency_dashboard')">
+        <div class="row g-5" ng-show="auth.isAuthorized('agency_dashboard') && activeView === 'sales'">
 
           <div class="col-md-6">
             <h3><i class="fa-duotone fa-light fa-eye"></i> Overview</h3>
@@ -62,7 +66,7 @@
         </div>
 
         <!-- Lettings Dashboard Stats -->
-        <div class="row g-5" ng-show="!auth.isAuthorized('agency_dashboard') && auth.isAuthorized('lettings_dashboard')">
+        <div class="row g-5" ng-show="auth.isAuthorized('lettings_dashboard') && activeView === 'lettings'">
 
           <div class="col-md-6">
             <h3><i class="fa-duotone fa-light fa-eye"></i> Overview</h3>
@@ -110,7 +114,7 @@
         </div>
 
         <!-- Sales/Agency Offers and Solicitors -->
-        <div class="row g-5" ng-show="auth.isAuthorized('agency_dashboard')">
+        <div class="row g-5" ng-show="auth.isAuthorized('agency_dashboard') && activeView === 'sales'">
 
           <div class="col-md-6">
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-envelope-open-dollar"></i> Pending offers</span> <span class="count">{{offers.items.length}}</span></h3>
@@ -204,7 +208,7 @@
         </div>
 
         <!-- Lettings Offers and Statistics -->
-        <div class="row g-5" ng-show="!auth.isAuthorized('agency_dashboard') && auth.isAuthorized('lettings_dashboard')">
+        <div class="row g-5" ng-show="auth.isAuthorized('lettings_dashboard') && activeView === 'lettings'">
 
           <div class="col-md-6">
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-envelope-open-dollar"></i> Pending offers</span> <span class="count">{{lettingOffers.items.length}}</span></h3>

@@ -1,5 +1,5 @@
 angular.module('vs-app')
-.controller('mainDashboardCtrl', function($scope, Auth, $filter, $timeout, ndxCheck, env, $http) {
+.controller('mainDashboardCtrl', function($scope, Auth, $filter, $timeout, ndxCheck, env, $http, $stateParams) {
   $scope.thing = 'hiya';
   $scope.unknownSolicitors = [];
   $scope.env = env;
@@ -16,6 +16,28 @@ angular.module('vs-app')
   
   const hasAgencyAccess = Auth.isAuthorized('agency_dashboard');
   const hasLettingsAccess = Auth.isAuthorized('lettings_dashboard');
+  const hasBothAccess = hasAgencyAccess && hasLettingsAccess;
+  
+  $scope.hasAgencyAccess = hasAgencyAccess;
+  $scope.hasLettingsAccess = hasLettingsAccess;
+  $scope.hasBothAccess = hasBothAccess;
+  
+  // Set initial active view based on URL parameter or permissions
+  if ($stateParams.view === 'lettings' && hasLettingsAccess) {
+    $scope.activeView = 'lettings';
+  } else if ($stateParams.view === 'sales' && hasAgencyAccess) {
+    $scope.activeView = 'sales';
+  } else if (hasBothAccess) {
+    $scope.activeView = 'sales'; // Default to sales if user has both
+  } else if (hasAgencyAccess) {
+    $scope.activeView = 'sales';
+  } else if (hasLettingsAccess) {
+    $scope.activeView = 'lettings';
+  }
+  
+  $scope.setActiveView = function(view) {
+    $scope.activeView = view;
+  };
   
   // Fetch sales leads total (for agency users)
   if (hasAgencyAccess) {
@@ -56,7 +78,7 @@ angular.module('vs-app')
     });
   }
 
-  if (!hasAgencyAccess && hasLettingsAccess) {
+  if (hasLettingsAccess) {
     $scope.lettingLeads = $scope.list('leads:leads', {
       where: {
         roleType: 'Letting',
@@ -480,7 +502,13 @@ angular.module('vs-app')
   initializeChart();
 })
 .config(($stateProvider) => $stateProvider.state('dashboard', {
-  url: '/',
+  url: '/?view',
+  params: {
+    view: {
+      value: null,
+      squash: true
+    }
+  },
   template: require('./dashboard.html').default,
   controller: 'mainDashboardCtrl',
   data: {title:'Vitalspace App - Dashboard'}

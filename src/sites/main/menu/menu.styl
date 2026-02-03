@@ -9,21 +9,21 @@
     background vs-grey
     display block
     position absolute
-    height 1px
+    height 2px
     width 100%
     opacity 1
     left 0
     transform rotate(0deg)
     transition .25s ease-in-out
     &:nth-child(1) 
-      top 3px
+      top 10px
     &:nth-child(2),
     &:nth-child(3) 
-      top 15px
+      top 18px
     &:nth-child(4) 
-      top 27px
+      top 26px
 	&.open 
-		span 
+		span
 			&:nth-child(1) 
 				top 18px
 				width 0%
@@ -133,67 +133,66 @@
 .menu-profile
   display flex
   align-items center
-@media screen and (max-width:1400px)
-  .site-menu site a
-    padding 10px 15px
 @media screen and (max-width:1200px)
-  .vs-logo
-    width auto
-    max-width 220px
+  .site-menu site a
+    padding 30px 13px
 @media screen and (max-width:992px)
-  .site-menu sites
-    justify-content space-between
-  .menu-col
-    order 12
-    margin-top 20px
-@media screen and (max-width:576px)
   .site-menu
-    height 76px
+    padding 30px 0px
     site a
       text-align center
   .nav-icon 
-    display block
+    display block    
   .slide-menu
-    background: white
+    background vs-white
     pointer-events auto
     width 400px
     max-width 100%
     height 100vh
-    transition left 0.7s ease 0s
+    transition right 0.7s ease 0s
     position absolute
-    left -800px
-    top 55px
+    right -800px
+    top 106px
     -webkit-backdrop-filter blur(2px)
-    padding 50px 0px 30px 0px
+    padding 0px 0px 30px 0px
     &.menushow 
-      left 0
+      display flex !important
+      right 0
     sites
       flex-direction: column
+      width 100%
       a 
         display block
         font-size 2rem
         text-align center
-        padding 13px 30px
+        padding 16px 30px
         font-weight normal
+        &.selected
+          color vs-orange
+          background vs-body
       site 
+        justify-content flex-start
         &:hover
           pages
             position relative
-            top auto
-            left auto
-            width 100%
+            top 0px
+            left 5%
+            width 90%
             justify-content center
             align-items center
             box-shadow none
       pages 
-        background vs-lightsilver
         display flex
         display none
         flex-direction column
         flex-wrap wrap
         a 
-          font-size 1.4rem
+          font-size 1.8rem
+          margin 0 auto
           padding 10px 15px
           display block
-          width 100%
+          width 90%
           text-align center
+          border-radius 10px
+          &:hover
+            background none

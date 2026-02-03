@@ -1,10 +1,14 @@
 import './dashboard.css';
 angular.module('vs-app')
-.controller('mainDashboardCtrl', function($scope) {
-})
 .config(($stateProvider) => $stateProvider.state('dashboard', {
-  url: '/',
-  template: require('./dashboard.html').default,
+  url: '/?view',
+  params: {
+    view: {
+      value: null,
+      squash: true
+    }
+  },
+  template: require('../../sites/main/dashboard/dashboard.html').default,
   controller: 'mainDashboardCtrl',
   data: {title:'Vitalspace'}
 }));
