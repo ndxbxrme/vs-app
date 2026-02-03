@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('vs-app').directive('login', function($http, $location) {
+  angular.module('vs-app').directive('login', function($http, $location, ndxCheck) {
     return {
       restrict: 'AE',
       template: require('./login.html').default,
@@ -9,6 +9,7 @@
       link: function(scope, elem) {
         document.body.className = document.body.className.replace(/\s*.*?-page/g, '');
         document.body.className += ' login-page';
+        
         scope.login = function() {
           scope.submitted = true;
           if (scope.loginForm.$valid) {
@@ -20,6 +21,10 @@
                 $http.sites.main.token = response.data.token;
                 $http.sites.main.config = {headers:{Authorization:'Bearer ' + response.data.token}};
                 localStorage.setItem('token', response.data.token);
+              }
+              // Mark form as pristine to prevent navigation warnings
+              if (ndxCheck && ndxCheck.setPristine) {
+                ndxCheck.setPristine(scope);
               }
               return scope.auth.getPromise().then(function() {
                 return scope.auth.goToNext();
