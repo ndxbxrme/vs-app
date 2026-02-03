@@ -181,7 +181,6 @@ angular.module('vs-app')
       
       const userId = consultant._id;
       
-      // Fetch agency properties for sales users
       if (hasAgencyAccess) {
         $scope.properties = $scope.list('agency:properties', {
           where: { 
@@ -383,7 +382,7 @@ angular.module('vs-app')
     });
     }
     
-    if (!hasAgencyAccess && hasLettingsAccess) {
+    if (hasLettingsAccess) {
       $scope.lettingsChartData = JSON.parse(JSON.stringify(months));
       
       $scope.lettingsTargets = $scope.list('lettings:targets', {

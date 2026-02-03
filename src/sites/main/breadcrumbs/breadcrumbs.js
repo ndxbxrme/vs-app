@@ -40,7 +40,7 @@ angular.module('vs-app')
       localStorage.setItem('allHistory', JSON.stringify(allHistory));
       updateFavorites();
     },
-    getHistory: () => history,
+    getHistory: () => history.slice(-6),
     getFavorites: () => favorites,
     getRecent: () => {
       const myhistory = allHistory.reduce((res, item) => {
