@@ -15,7 +15,6 @@
       padding 20px 30px
       width 30%
       min-width 250px
-      cursor pointer
       transition: all .3s ease
       &:hover
         box-shadow 0 4px 12px rgba(0,0,0,0.1)
@@ -31,6 +30,12 @@
         color vs-grey
         font-weight 600
         margin-bottom 20px
+        a 
+          cursor pointer
+          color vs-grey
+          text-decoration none
+          &:hover
+            color vs-orange
     .action-item
       display flex
       align-items center
@@ -64,7 +69,7 @@
       display inline-flex
       justify-content center
       align-items center
-      margin-left 30px
+      margin-left 10px
   .unknown-row
     h3 
       margin-top 0px
@@ -554,6 +559,25 @@
     &:before
       height 0
       display none
+@media screen and (max-width: 1400px)
+  .dashboard,
+  .lettings-dashboard-route,
+  .leads-dashboard-route,
+  .maintenance-leads-dashboard
+    .snapshot 
+      height auto
+      min-height 125px
+      .snapshot-item
+        padding 20px
+        min-width 0px
+        .snapshot-label
+          line-height 1.2
+          min-height 40px
+    .overview-row
+      .snapshot
+        margin-bottom 0px
+          
+        
 @media screen and (max-width:819px)
   .dashboard-state
     .holder
