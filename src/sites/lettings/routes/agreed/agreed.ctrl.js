@@ -44,6 +44,7 @@
         $scope.startDate.startDate = new Date(year, 0, 1).valueOf();
         $scope.endDate.startDate = new Date(year + 1, 0, 1).valueOf();
         updateMonths();
+        updateTargets();
         return updateProperties();
       });
     };
@@ -85,6 +86,7 @@
         return $scope.months.forEach(function(month) {
           return month.month = $filter('date')(month.date, 'MMMM');
         });
+        $scope.firstLoad = true;
       });
     };
     $scope.targets = $scope.list('lettings:targets', {

@@ -41,6 +41,7 @@
           }
           item.$parent.deleted = ((ref1 = item.item.override) != null ? ref1.deleted : void 0) || false;
           if (item.$parent.deleted) {
+            console.log('deleted', item);
             return $scope.nodeleted++;
           }
         });

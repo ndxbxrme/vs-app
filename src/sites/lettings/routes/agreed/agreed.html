@@ -19,14 +19,15 @@
         <div class="inner">
 
           <div class="month-name">{{month.month}} </div>
-          <div class="target" ng-click="auth.checkRoles(['admin', 'superadmin']) &amp;&amp; (month.editing = !month.editing)" title="{{auth.checkRoles(['admin', 'superadmin']) ? 'Edit target' : ''}}">
+          <div class="target" ng-show="firstLoad" ng-click="auth.checkRoles(['admin', 'superadmin']) &amp;&amp; (month.editing = !month.editing)" title="{{auth.checkRoles(['admin', 'superadmin']) ? 'Edit target' : ''}}">
             <label>Target </label>
             <div class="editor" ng-show="month.editing">
               <input type="text" ng-model="month.target.value" ng-click="$event.stopPropagation()" ng-blur="saveTarget(month)"/>
             </div>
             <div class="default" ng-hide="month.editing">{{month.target.value}}</div>
           </div>
-          <div class="actual">{{month.properties.length}}</div>
+          <div class="actual" ng-show="firstLoad">{{month.properties.length}}</div>
+          <div class="actual unloaded" ng-hide="firstLoad"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
 
           <hr/>
           <div class="row">
