@@ -13,15 +13,15 @@
 
     <div class="controls">
       <div class="row align-items-end">
-        <div class="col-md-6">
+        <div class="col-lg-6">
           <div class="sort">Order By:<br>
             <a href="" ng-click="sort=&quot;-DateInstructed&quot;;page=1" ng-class="{selected:sort===&quot;-DateInstructed&quot;}" class="order-item">First Listed</a>
             <a href="" ng-click="sort=&quot;-viewings.length&quot;;page=1" ng-class="{selected:sort===&quot;-viewings.length&quot;}" class="order-item">Viewings</a>
             <a href="" ng-click="sort=&quot;-Price.PriceValue&quot;;page=1" ng-class="{selected:sort===&quot;-Price.PriceValue&quot;}" class="order-item">Asking Price</a>
           </div>
         </div>
-        <div class="col-md-6 text-end">
-          <div class="showing">Showing<br><a ui-sref="agency_coming-soon">Coming Soon</a> &nbsp; &nbsp;{{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+        <div class="col-lg-6 text-lg-end">
+          <div class="showing">Showing {{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
         </div>
       </div>
     </div>
@@ -29,11 +29,11 @@
     <div class="properties-list" ng-show="filterData.length &gt; 0">
       <div class="property-card" ng-repeat="property in filterData =(properties.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)" ng-click="property.open = !property.open">
         <div class="property-main row g-5">
-          <div class="property-image col-md-3" ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
+          <div class="property-image col-lg-3 col-md-4" ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
             <img src="{{property.Images[0].Url}}&width=500" class="image"/>
           </div>
           
-          <div class="property-info col-md-6">
+          <div class="property-info col-lg-6 col-md-8">
             <div class="property-meta">
               <div class="property-address"><strong>Address:</strong> {{property.displayAddress}}</div>
               <span class="purchase-price"><strong>Purchase Price:</strong> {{property.Price.PriceValue | currency : "£" : 0}}</span>
@@ -50,7 +50,7 @@
             </div>
           </div>
           
-          <div class="property-stats-actions col-md-3">
+          <div class="property-stats-actions col-lg-3 col-12">
             <div class="property-vendor">
               <div class="label"><i class="fa-duotone fa-light fa-sign-hanging"></i> Vendor</div>
               <div class="value">{{property.vendor.Name}}</div>

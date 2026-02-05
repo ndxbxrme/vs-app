@@ -3,7 +3,14 @@
     <h1>Conveyancing <strong class="orange">Dashboard</strong></h1>
     <div class="row">
     
-      <div class="col-md-4">
+      <div class="col-lg-4">
+        <h3><i class="fa-duotone fa-light fa-eye"></i> Overview of live cases</h3>
+        <div class="snapshot">
+          <div class="snapshot-item" ng-repeat="di in items = (dashboard.items | filter:{type:&quot;overview&quot;}) | limitTo:-1" ng-click="showInfo(&quot;count&quot;, di, month)">
+            <div class="snapshot-label">{{di.name}} <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
+            <div class="snapshot-value">{{count(di)}}</div>
+          </div>
+        </div>
         <div class="overview">
           <div class="thead">
             <div class="tr">
@@ -53,7 +60,14 @@
         </div>
       </div>
     
-      <div class="col-md-8">
+      <div class="col-lg-8 income-column">
+        <h3><i class="fa-duotone fa-light fa-circle-sterling"></i> Income</h3>
+        <div class="snapshot">
+          <div class="snapshot-item" ng-repeat="di in incomeItems = (dashboard.items | filter:{type:&quot;income&quot;}) | limitTo:2" ng-click="showInfo(&quot;income&quot;, di, allmonths)">
+            <div class="snapshot-label">{{di.name}} <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
+            <div class="snapshot-value" ng-bind-html="income(di, allmonths) | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></div>
+          </div>
+        </div>
         <div class="income">
           <div class="thead">
             <div class="tr">

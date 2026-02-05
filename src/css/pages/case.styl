@@ -291,6 +291,7 @@
     justify-content flex-start !important
     .contact-details
       flex-direction column
+      margin-bottom 15px
     .card
       position relative
       border 1px solid vs-lightgrey
@@ -340,3 +341,36 @@
       .card
         border none
         margin-right 8px
+
+@media screen and (max-width:768px)
+ .case 
+    .header-row
+      flex-direction column
+      align-items flex-start
+      justify-content flex-start
+      gap 10px
+      nav 
+        gap 10px
+        a
+          margin-left 0px
+    .property-summary 
+        .property 
+          .property-report 
+            .results 
+              .result
+                width 100%
+                p
+                  span
+                    font-size 1.4rem
+                    line-height 1.5
+                    padding 5px 0px
+                i,svg
+                  font-size 1.6rem
+    .docs-chain
+      .flex-pipeline
+        .staff-selection
+          flex-direction column
+          align-items flex-start
+          gap 10px
+    .case-notes .case-note .header-row
+      flex-direction row

@@ -49,6 +49,12 @@
     margin-bottom 30px
     &:hover
       box-shadow 0 4px 12px rgba(0,0,0,0.1)
+    &.no-milestone 
+      .property-image img
+        filter grayscale(100%)
+        opacity 0.8
+      .property-milestone
+        padding 5px
     &.has-request
       border 2px solid vs-orange
       animation pulse 2s infinite
@@ -85,13 +91,13 @@
         height 30px
         width 30px
         margin-bottom 0px
-        margin-right 10px
         &:after
           font-size 1.6rem
       .milestone-title
         font-size 1.4rem
         font-weight 600
         color vs-grey
+        margin-left 10px
           
   .property-info 
     padding 20px 30px 20px 0px
@@ -196,9 +202,70 @@
       &.selected, &:hover
         background vs-orange
         color white
-        
-.mobile
+
+@media screen and (max-width:992px)
+  .cases
+    .property-image img
+      height 150px
+    .property-info
+      padding 20px 40px 20px 0px
+      border none
+    .property-stats-actions
+      margin 0px 0px 0px 15px
+      padding 20px 20px 0px 20px
+      display flex
+      justify-content space-between
+      align-items flex-start
+      gap 15px
+      border-top 1px solid vs-lightgrey
+      width calc(100% - 30px)
+
+@media screen and (max-width:768px)
+  .cases
+    .property-image img
+      width 150px
+      height auto
+    .property-info
+      margin 0px
+      padding 0px 40px 20px 40px
+      border none
+  .controls
+    .text-end
+      text-align left !important
+
+@media screen and (max-width:576px)
   .cases
     .controls
-      .order-item, .filter-item
-        margin-left 1rem
+      .row
+        .d-flex
+          flex-direction column
+    .property-info
+      .property-address,
+      .property-landlord,
+      .property-tenants,
+      .purchase-price,
+      .fees
+        font-size 1.4rem
+        line-height 1.5
+        margin-bottom 5px
+    .property-stats-actions
+      margin 0px 0px 0px 15px
+      padding 20px 0px 20px 20px
+      display flex
+      flex-direction column
+      justify-content flex-start
+      align-items flex-start
+      gap 10px
+      .vendor-purchaser
+        display flex
+        flex-direction row
+        gap 30px
+      .label,
+      .value,
+      .stat-item
+        font-size 1.4rem
+        line-height 1.5
+      .property-vendor,
+      .property-purchaser,
+      .property-stats .stat-item
+        margin-bottom 5px

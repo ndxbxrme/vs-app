@@ -38,7 +38,7 @@
     </div>
 
     <div class="properties-list" ng-show="filterData.length &gt; 0">
-      <div class="property-card" ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter} | filter:filterByPipeline  | orderBy:sort) | limitTo:limit:limit*(page-1)">
+      <div class="property-card" ng-class="{'no-milestone': !(property.$case.item.milestone && property.$case.item.milestone.title)}" ng-repeat="property in filterData =(properties.items | filter:{&quot;deleted&quot;:false} | filter:{&quot;search&quot;:search} | filter:{&quot;milestoneStatus&quot;:filter} | filter:filterByPipeline  | orderBy:sort) | limitTo:limit:limit*(page-1)">
         <div class="property-main row g-5">
           <div class="property-image col-md-3" ng-class="{&quot;has-request animated pulse infinite&quot;:hasRequest(property)}">
             <img src="{{property.Images[0].Url}}&width=500" class="image"/>
@@ -46,7 +46,7 @@
               <div class="milestone" ng-class="property.$case.item.cssMilestone" title="{{property.$case.item.milestone.title}}">
                 <div class="icon {{ property.$case.item.milestone.icon || &quot;house&quot;}}"></div>
               </div>
-              <span class="milestone-title">{{property.$case.item.milestone.title}}</span>
+              <span ng-if="property.$case.item.milestone.title" class="milestone-title">{{property.$case.item.milestone.title}}</span>
             </div>
           </div>
           

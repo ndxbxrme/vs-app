@@ -1,12 +1,15 @@
 body
   .reveal-modal-bg, 
   .reveal-modal-bg.fade
+    height auto
     &.in
       background rgba(0,0,0,0.3)
       opacity 1
+      height 100vh
   .reveal-modal
     position absolute !important
     z-index 10000000
+    width 95%
     &.large
       max-width 900px
     &.fade
@@ -14,6 +17,8 @@ body
       box-shadow 4px 4px 4px 0 rgba(0,0,0,.05)
       border none
       border-radius 30px
+      top 20px
+      height auto
       h1
         margin: 10px 0px
       &.in

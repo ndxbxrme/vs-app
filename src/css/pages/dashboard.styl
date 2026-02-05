@@ -16,6 +16,7 @@
       width 30%
       min-width 250px
       transition: all .3s ease
+      cursor pointer
       &:hover
         box-shadow 0 4px 12px rgba(0,0,0,0.1)
         transform translateY(-2px)
@@ -28,7 +29,6 @@
       .snapshot-label 
         font-size 1.4rem
         color vs-grey
-        font-weight 600
         margin-bottom 20px
         a 
           cursor pointer
@@ -102,6 +102,10 @@
       .td, td
         text-align center
   .pipeline, .exchanged
+    overflow-x auto
+    -webkit-overflow-scrolling touch
+    .tbody
+      min-width max-content
     .head-two
       .td
         display flex
@@ -240,6 +244,7 @@
     margin-top 20px 
   .c-name
     font-size 1rem
+    line-height 1.2
 .lettings-dashboard-route
   padding-top 30px
   .controls
@@ -576,43 +581,74 @@
     .overview-row
       .snapshot
         margin-bottom 0px
-          
-        
-@media screen and (max-width:819px)
-  .dashboard-state
-    .holder
-      &:before
-        display none
-  .dashboard-route
-    flex-direction column
-    .toolbar
-      min-width 100%
-      max-width 100%
-      flex-direction row
+@media screen and (max-width: 992px)
+  .dashboard,
+  .lettings-dashboard-route,
+  .leads-dashboard-route,
+  .maintenance-leads-dashboard
+    .income-column
+      margin-top -40px
+@media screen and (max-width: 768px)
+  .dashboard,
+  .lettings-dashboard-route,
+  .leads-dashboard-route,
+  .maintenance-leads-dashboard
+    .snapshot 
       flex-wrap wrap
-      padding-bottom 0
-      .dates, .users
-        display none
-      .today, .user-select
-        width 50%
-      .filters, .income, .counts
-        flex auto
-        .desktop
-          display none
-        .mobile
-          display block
-      .filters
+      .snapshot-item 
         width 100%
-        h4 
-          margin-bottom 20px
-        .filter
-          white-space nowrap
-          width 97px
-          display inline-block
-          span
-            left 3px
-            top -18px
-.select2-chosen
-  img
-    vertical-align middle
-    border-radius 50% 
+        min-width 100%
+        .snapshot-value 
+          font-size 3rem
+    
+@media screen and (max-width: 576px)
+  .dashboard,
+  .lettings-dashboard-route,
+  .leads-dashboard-route,
+  .maintenance-leads-dashboard
+    .income:not(.pipeline):not(.exchanged)
+      background none
+      border none
+      .tbody
+        .tr
+          flex-direction column
+          border 1px solid vs-lightgrey
+          margin-bottom 15px
+          border-radius 30px
+          overflow hidden
+          &.head-two
+            display none
+          &.total
+            margin-top 20px
+            background vs-tablegrey
+            border-radius 10px
+            padding 10px
+            .td
+              border-bottom none
+              &:first-child
+                font-size 1.8rem
+                padding-bottom 5px
+          .td
+            display flex
+            justify-content space-between
+            align-items center
+            text-align left
+            padding 12px 15px
+            border-bottom 1px solid vs-lightgrey
+            &:first-child
+              background vs-tablegrey
+              font-weight 700
+              font-size 1.6rem
+              border-bottom 1px solid vs-lightgrey
+            &:last-child
+              border-bottom none
+            .inner
+              display flex
+              justify-content space-between
+              width 100%
+              label
+                display inline-block
+                font-weight 600
+                color vs-grey
+                margin-right 10px
+    
