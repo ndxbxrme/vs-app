@@ -40,7 +40,7 @@
           <div class="target" ng-show="firstLoad"
               ng-click="auth.checkRoles(['admin','superadmin']) && (month.editing = !month.editing)"
               ng-attr-title="{{auth.checkRoles(['admin','superadmin']) ? 'Edit target' : undefined}}">
-            <label>Target </label>
+            <label>Target {{month}}</label>
             <div class="editor" ng-if="month.editing">
               <input type="text" ng-model="month.target.value" ng-click="$event.stopPropagation()" ng-blur="saveTarget(month)"/>
             </div>

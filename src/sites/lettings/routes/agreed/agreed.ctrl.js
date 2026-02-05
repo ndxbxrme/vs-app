@@ -11,7 +11,6 @@
     }
     updateMonths = function() {
       var month, results, testDate;
-      return;
       $scope.months = [];
       testDate = new Date($scope.startDate['startDate']);
       results = [];
@@ -49,32 +48,42 @@
       });
     };
     $scope.setDateRange($scope.years[0]);
-    updateTargets = function() {
-      var i, len, month, ref, results, target;
-      if ($scope.targets && $scope.targets.items && $scope.targets.items.length) {
-        ref = $scope.targets.items;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          target = ref[i];
-          results.push((function() {
-            var j, len1, ref1, results1;
-            ref1 = $scope.months;
-            results1 = [];
-            for (j = 0, len1 = ref1.length; j < len1; j++) {
-              month = ref1[j];
-              if (new Date(target.date).toLocaleString() === month.date.toLocaleString()) {
-                month.target = target;
-                break;
-              } else {
-                results1.push(void 0);
-              }
-            }
-            return results1;
-          })());
-        }
-        return results;
+function getUtcMonthKey(date) {
+  var d = new Date(date);
+  return d.getUTCFullYear() + '-' + d.getUTCMonth();
+}
+
+function updateTargets() {
+  if (
+    !$scope ||
+    !$scope.targets ||
+    !$scope.targets.items ||
+    !$scope.targets.items.length ||
+    !$scope.months ||
+    !$scope.months.length
+  ) {
+    return;
+  }
+
+  var items = $scope.targets.items;
+  var months = $scope.months;
+
+  for (var i = 0; i < items.length; i++) {
+    var target = items[i];
+    var targetKey = getUtcMonthKey(target.date);
+    for (var j = 0; j < months.length; j++) {
+      var month = months[j];
+      if (
+        month.date &&
+        getUtcMonthKey(month.date) === targetKey
+      ) {
+        month.target = target;
+        break;
       }
-    };
+    }
+  }
+}
+
     updateProperties = async function() {
       var res;
       res = (await $http.post($http.sites["lettings"].url + "/api/agreed/search", {
@@ -83,17 +92,20 @@
       }, $http.sites["lettings"].config));
       return $timeout(function() {
         $scope.months = res.data;
-        return $scope.months.forEach(function(month) {
+        $scope.months.forEach(function(month) {
           return month.month = $filter('date')(month.date, 'MMMM');
         });
+        updateTargets();
         $scope.firstLoad = true;
       });
     };
     $scope.targets = $scope.list('lettings:targets', {
       where: {
-        type: 'salesAgreed'
+        type: 'letAgreed'
       }
-    }, updateTargets);
+    }, () => {
+      $timeout(updateTargets);
+    });
     $scope.properties = $scope.list('lettings:properties', {
       sort: 'proposedMoving',
       sortDir: 'ASC',
@@ -139,6 +151,7 @@
       return property.$editing = false;
     };
     return $scope.saveTarget = function(month) {
+      month.target._id = month.target._id || Math.floor(Math.random() * 9999999999999999).toString(26);
       $http.post($http.sites["lettings"].url + `/api/targets/${month.target._id || ''}`, month.target, $http.sites.lettings.config);
       return month.editing = false;
     };

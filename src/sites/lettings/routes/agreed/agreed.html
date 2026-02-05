@@ -15,11 +15,11 @@
     </div>
     
     <div class="months">
-      <div class="month col-lg-4 col-6" ng-repeat="month in months | filter:search | orderBy:&quot;date&quot;" ng-class="{disabled:month.date &gt; now}">
+      <div class="month col-lg-4 col-6" ng-repeat="month in months | filter:search | orderBy:&quot;date&quot; track by month.id || month.date" ng-class="{disabled:month.date &gt; now}">
         <div class="inner">
 
           <div class="month-name">{{month.month}} </div>
-          <div class="target" ng-show="firstLoad" ng-click="auth.checkRoles(['admin', 'superadmin']) &amp;&amp; (month.editing = !month.editing)" title="{{auth.checkRoles(['admin', 'superadmin']) ? 'Edit target' : ''}}">
+          <div class="target" ng-if="firstLoad" ng-click="auth.checkRoles(['admin', 'superadmin']) &amp;&amp; (month.editing = !month.editing)" title="{{auth.checkRoles(['admin', 'superadmin']) ? 'Edit target' : ''}}">
             <label>Target </label>
             <div class="editor" ng-show="month.editing">
               <input type="text" ng-model="month.target.value" ng-click="$event.stopPropagation()" ng-blur="saveTarget(month)"/>
