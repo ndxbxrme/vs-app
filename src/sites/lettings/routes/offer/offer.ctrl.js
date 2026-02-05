@@ -122,13 +122,19 @@
     }
     $scope.downloadPdf = () => {
       var element = document.querySelector('.offer-details');
+      if (!element) {
+        return;
+      }
       const tempRoot = document.createElement('div');
       tempRoot.style.width = '1060px';
       tempRoot.style.transform = 'scale(0.7) translateX(-23%) translateY(-23%)';
       tempRoot.innerHTML = element.outerHTML;
       tempRoot.style.height = "1000px";
       tempRoot.querySelectorAll('input,button').forEach(elm => elm.remove());
-      tempRoot.querySelector('.client-row div:nth-child(4)').remove();
+      const clientRowFourth = tempRoot.querySelector('.client-row div:nth-child(4)');
+      if (clientRowFourth) {
+        clientRowFourth.remove();
+      }
       tempRoot.querySelectorAll(':not(.ng-hide) > svg.fa-check').forEach(elm => {
         const checkSpan = document.createElement('span');
         checkSpan.innerHTML = '✔';

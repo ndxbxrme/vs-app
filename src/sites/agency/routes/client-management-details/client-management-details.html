@@ -4,12 +4,12 @@
 
     <div class="header-row">
       <div class="row justify-content-between align-items-end">
-        <div class="col-lg-5">
+        <div class="col-md-5">
           <h1><i class="fa-duotone fa-light fa-people-roof"></i> Client Management</h1>
           <h2><i class="fa-duotone fa-light fa-circle-info"></i> At a Glance</h2>
         </div>
 
-        <div class="contacts col-lg-7">
+        <div class="contacts col-md-7">
           <div ng-repeat="vendor in property.item.vendor.Members" class="vendor">
             <div class="contact-details">
               <div class="card">
@@ -29,7 +29,7 @@
     <div class="col-xs-12 property-summary">
       <div class="property">
         <div class="row">
-          <div class="col-md-5">
+          <div class="col-lg-5">
             <h5 class="loading" ng-show="property.loading">Contacting Dezrez</h5>
             <a ui-sref="agency_property({id:property.item._id})" ng-hide="property.error || property.loading || !property.item.Address">
               <div class="property-image">
@@ -58,9 +58,9 @@
             <div class="buttons"></div> -->
           </div>
           
-          <div class="col-md-1"></div>
+          <div class="col-lg-1"></div>
           
-          <div class="col-md-6">
+          <div class="col-lg-6">
             <div class="property-report">
               <div class="results">
                 <div class="result">

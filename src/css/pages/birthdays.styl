@@ -45,3 +45,58 @@
         font-size 1.4rem
         .orange
           color vs-orange
+
+@media screen and (max-width:992px)
+  .birthdays
+    .property-image img
+      height 150px
+    .property-info
+      padding 20px 40px 20px 0px
+      border none
+    .property-stats-actions
+      margin 0px 0px 0px 15px
+      padding 20px 20px 0px 20px
+      display flex
+      justify-content space-between
+      align-items flex-start
+      gap 15px
+      border-top 1px solid vs-lightgrey
+      width calc(100% - 30px)
+
+@media screen and (max-width:768px)
+  .birthdays
+    .property-image img
+      width 150px
+      height auto
+    .property-info
+      margin 0px
+      padding 0px 40px 20px 40px
+      border none
+  .controls
+    .text-end
+      text-align left !important
+
+@media screen and (max-width:576px)
+  .birthdays
+    .property-info
+      .property-address,
+      .client-name,
+      .client-email
+        font-size 1.4rem
+        line-height 1.5
+        margin-bottom 5px
+    .property-stats-actions
+      margin 0px 0px 0px 15px
+      padding 20px 0px 20px 20px
+      display flex
+      flex-direction column
+      justify-content flex-start
+      align-items flex-start
+      gap 10px
+      .label,
+      .value,
+      .stat-item
+        font-size 1.4rem
+        line-height 1.5
+      .birthday-info .stat-item
+        margin-bottom 5px

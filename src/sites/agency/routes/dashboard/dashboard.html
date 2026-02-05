@@ -3,7 +3,7 @@
     <h1>Sales <strong class="orange">Dashboard</strong></h1>
     <div class="row g-5">
     
-      <div class="col-md-4">
+      <div class="col-lg-4">
         <h3><i class="fa-duotone fa-light fa-eye"></i> Overview of live cases</h3>
         <div class="snapshot">
           <div class="snapshot-item" ng-repeat="di in items = (dashboard.items | filter:{type:&quot;overview&quot;}) | limitTo:-1" ng-click="showInfo(&quot;count&quot;, di, month)">
@@ -29,7 +29,7 @@
         </div>
       </div>
     
-      <div class="col-md-8">
+      <div class="col-lg-8 income-column">
         <h3><i class="fa-duotone fa-light fa-circle-sterling"></i> Income</h3>
         <div class="snapshot">
           <div class="snapshot-item" ng-repeat="di in incomeItems = (dashboard.items | filter:{type:&quot;income&quot;}) | limitTo:2" ng-click="showInfo(&quot;income&quot;, di, allmonths)">
