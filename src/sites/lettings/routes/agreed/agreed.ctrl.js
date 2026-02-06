@@ -95,6 +95,24 @@
         $scope.firstLoad = true;
       });
     };
+    $scope.getYearTotal = () => {
+      if(!$scope.months) return 0;
+      return $scope.months.reduce((res, val) => res + (+val.commission || 0), 0);
+    };
+    $scope.getTotalSold = function() {
+      if (!$scope.months) return 0;
+      return $scope.months.reduce((total, month) => total + (month.properties ? month.properties.length : 0), 0);
+    };
+    $scope.getTotalFees = function() {
+      return $scope.getYearTotal();
+    };
+    $scope.getSalesRequiredToTarget = function() {
+      if (!$scope.months) return 0;
+      const totalTarget = $scope.months.reduce((total, month) => total + (month.target ? parseFloat(month.target.value) || 0 : 0), 0);
+      const totalSold = $scope.getTotalSold();
+      const remaining = totalTarget - totalSold;
+      return remaining > 0 ? remaining : 0;
+    };
     $scope.targets = $scope.list('lettings:targets', {
       where: {
         type: 'letAgreed'

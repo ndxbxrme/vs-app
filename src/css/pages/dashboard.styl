@@ -600,6 +600,45 @@
         min-width 100%
         .snapshot-value 
           font-size 3rem
+    .progression-list
+      .progression-item
+        .property-header
+          flex-direction column
+          align-items flex-start
+          gap 10px
+          .property-info
+            flex-wrap wrap
+            align-items flex-start
+            gap 10px
+            .property-address
+              width 100%
+          .property-dates
+            width 100%
+            flex-direction row
+            gap 15px
+        .progress-section
+          .progress-bar-wrapper
+            flex-direction column
+            align-items flex-start
+            gap 8px
+            width 100%
+            .progress-bar
+              display block
+              width 100%
+              height 30px
+              min-height 30px
+              background vs-lightgrey
+              border-radius 15px
+              overflow hidden
+              position relative
+              .progress-fill
+                display block
+                height 100%
+                background vs-orange
+                position absolute
+            .progress-text
+              text-align left
+              min-width 0
     
 @media screen and (max-width: 576px)
   .dashboard,

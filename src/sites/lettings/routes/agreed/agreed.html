@@ -15,6 +15,29 @@
         <input type="text" ng-model="search" placeholder="Search..."/>
       </div>
     </div>
+
+    <div class="snapshot mb-5" ng-show="getYearTotal()">
+      <div class="row g-5">
+        <div class="col-md-4">
+          <div class="snapshot-item">
+            <div class="snapshot-label">Lettings in {{currentYear}}</div>
+            <div class="snapshot-value">{{getTotalSold()}}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="snapshot-item">
+            <div class="snapshot-label">Fees in {{currentYear}}</div>
+            <div class="snapshot-value" ng-bind-html="(getTotalFees() | currency:'£' | currencyFormat)"></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="snapshot-item">
+            <div class="snapshot-label">Lettings Required to hit Target</div>
+            <div class="snapshot-value">{{getSalesRequiredToTarget()}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <div class="months row g-5">
       <div class="month col-lg-4 col-sm-6"

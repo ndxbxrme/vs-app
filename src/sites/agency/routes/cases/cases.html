@@ -3,7 +3,7 @@
 
     <div class="row align-items-center">
       <div class="col-md-6">
-        <h1><i class="fa-duotone fa-light fa-arrow-progress"></i> Cases</h1>
+        <h1><i class="fa-duotone fa-light fa-arrow-progress"></i> SSTC Cases</h1>
       </div>
       <div class="col-md-2">
         <select ng-model="filterMode">
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="col-md-3 text-end">
-          <div class="showing">Showing {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
+          <div class="showing">Showing {{filterData.length}} of {{totalProps = properties.items.length - nodeleted}} case{{totalProps!==1?'s':''}}</div>
         </div>
       </div>
     </div>
