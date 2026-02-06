@@ -3,10 +3,10 @@
 
   <div ng-hide="$parent.editor">
     <div class="heading row">
-      <div class="col-10">
+      <div class="col--md-10">
         <h5>Case - {{progression.side}}'s side - {{progression.name}} - {{property.item.displayAddress}}</h5>
       </div>
-      <div class="col-2 text-end">
+      <div class="col-md-2 text-md-end">
         <div class="controls" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])">
           <a href="" ng-click="moveUp()"><i class="fa-duotone fa-light fa-up"></i></a>
           <a href="" ng-click="moveDown()"><i class="fa-duotone fa-light fa-down"></i></a>
@@ -18,10 +18,10 @@
 
   <div ng-show="$parent.editor">
     <div class="heading row" ng-hide="editing()">
-      <div class="col-10">
+      <div class="col-md-10">
         <h5>{{progression.name}}, {{progression.side}}</h5>
       </div>
-      <div class="col-2 text-end">
+      <div class="col-md-2 text-md-end">
         <span class="controls" ng-show="auth.checkRoles([&quot;admin&quot;,&quot;superadmin&quot;])">
           <a href="" ng-click="moveUp()"><i class="fa-duotone fa-light fa-up"></i></a>
           <a href="" ng-click="moveDown()"><i class="fa-duotone fa-light fa-down"></i></a>

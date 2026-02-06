@@ -3,7 +3,7 @@
   <div class="container-xl">
     <h1><i class="fa-duotone fa-light fa-list"></i> Marketing Form</h1>
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-lg-8 col-md-10">
         <div class="form-holder">
           <form name="marketingEmail" novalidate="novalidate" ng-submit="submit()" ng-hide="emailSent">
           
@@ -90,14 +90,14 @@
           </div>
 
       <div class="row">
-        <div class="col-sm-4 button-group">
+        <div class="col-sm-4">
           <h3>To Let Board</h3>
-          <div class="btn-group">
-            <label class="btn" ng-class="{active: marketing.board === 'Yes'}">
+          <div class="button-group">
+            <label class="button" ng-class="{active: marketing.board === 'Yes'}">
               <input type="radio" name="board" ng-model="marketing.board" value="Yes" required="required"/>
               Yes
             </label>
-            <label class="btn" ng-class="{active: marketing.board === 'No'}">
+            <label class="button" ng-class="{active: marketing.board === 'No'}">
               <input type="radio" name="board" ng-model="marketing.board" value="No" required="required"/>
               No
             </label>
@@ -105,14 +105,14 @@
           <div class="error" ng-show="submitted &amp;&amp; marketingEmail.board.$invalid">Please select an Let Board status</div>
         </div>
 
-        <div class="col-sm-4 button-group">
+        <div class="col-sm-4">
           <h3>Window Card</h3>
-          <div class="btn-group">
-            <label class="btn" ng-class="{active: marketing.windowcard === 'Yes'}">
+          <div class="button-group">
+            <label class="button" ng-class="{active: marketing.windowcard === 'Yes'}">
               <input type="radio" name="window" ng-model="marketing.windowcard" value="Yes" required="required"/>
               Yes
             </label>
-            <label class="btn" ng-class="{active: marketing.windowcard === 'No'}">
+            <label class="button" ng-class="{active: marketing.windowcard === 'No'}">
               <input type="radio" name="window" ng-model="marketing.windowcard" value="No" required="required"/>
               No
             </label>
@@ -120,14 +120,14 @@
           <div class="error" ng-show="submitted &amp;&amp; marketingEmail.windowcard.$invalid">Please select an Window card status</div>
         </div>
 
-        <div class="col-sm-4 button-group">
+        <div class="col-sm-4">
           <h3>Valid EPC Certificate</h3>
-          <div class="btn-group">
-            <label class="btn" ng-class="{active: marketing.epc === 'Yes'}">
+          <div class="button-group">
+            <label class="button" ng-class="{active: marketing.epc === 'Yes'}">
               <input type="radio" name="epc" ng-model="marketing.epc" value="Yes" required="required"/>
               Yes
             </label>
-            <label class="btn" ng-class="{active: marketing.epc === 'No'}">
+            <label class="button" ng-class="{active: marketing.epc === 'No'}">
               <input type="radio" name="epc" ng-model="marketing.epc" value="No" required="required"/>
               No
             </label>
@@ -135,14 +135,14 @@
           <div class="error" ng-show="submitted &amp;&amp; marketingEmail.epc.$invalid">Please select an EPC status</div>
         </div>
 
-        <div class="col-sm-4 button-group">
+        <div class="col-sm-4">
           <h3>Valid Gas Certificate</h3>
-          <div class="btn-group">
-            <label class="btn" ng-class="{active: marketing.gas === 'Yes'}">
+          <div class="button-group">
+            <label class="button" ng-class="{active: marketing.gas === 'Yes'}">
               <input type="radio" name="gas" ng-model="marketing.gas" value="Yes" required="required"/>
               Yes
             </label>
-            <label class="btn" ng-class="{active: marketing.gas === 'No'}">
+            <label class="button" ng-class="{active: marketing.gas === 'No'}">
               <input type="radio" name="gas" ng-model="marketing.gas" value="No" required="required"/>
               No
             </label>
@@ -150,14 +150,14 @@
           <div class="error" ng-show="submitted &amp;&amp; marketingEmail.gas.$invalid">Please select an Gas Cert status</div>
         </div>
         
-        <div class="col-sm-4 button-group">
+        <div class="col-sm-4">
           <h3>EICR</h3>
-          <div class="btn-group">
-            <label class="btn" ng-class="{active: marketing.eicr === 'Yes'}">
+          <div class="button-group">
+            <label class="button" ng-class="{active: marketing.eicr === 'Yes'}">
               <input type="radio" name="eicr" ng-model="marketing.eicr" value="Yes" required="required"/>
               Yes
             </label>
-            <label class="btn" ng-class="{active: marketing.eicr === 'No'}">
+            <label class="button" ng-class="{active: marketing.eicr === 'No'}">
               <input type="radio" name="eicr" ng-model="marketing.eicr" value="No" required="required"/>
               No
             </label>
@@ -165,14 +165,14 @@
           <div class="error" ng-show="submitted &amp;&amp; marketingEmail.eicr.$invalid">Please select an EICR status</div>
         </div>
 
-        <div class="col-sm-4 button-group">
+        <div class="col-sm-4">
           <h3>Property added on SME</h3>
-          <div class="btn-group">
-            <label class="btn" ng-class="{active: marketing.cfp === 'Yes'}">
+          <div class="button-group">
+            <label class="button" ng-class="{active: marketing.cfp === 'Yes'}">
               <input type="radio" name="cfp" ng-model="marketing.cfp" value="Yes" required="required"/>
               Yes
             </label>
-            <label class="btn" ng-class="{active: marketing.cfp === 'No'}">
+            <label class="button" ng-class="{active: marketing.cfp === 'No'}">
               <input type="radio" name="cfp" ng-model="marketing.cfp" value="No" required="required"/>
               No
             </label>
@@ -180,14 +180,14 @@
           <div class="error" ng-show="submitted &amp;&amp; marketingEmail.cfp.$invalid">Please select an SME status</div>
         </div>
 
-        <div class="col-sm-4 button-group">
+        <div class="col-sm-4">
           <h3>Ultimate Management</h3>
-          <div class="btn-group">
-            <label class="btn" ng-class="{active: marketing.um === 'Yes'}">
+          <div class="button-group">
+            <label class="button" ng-class="{active: marketing.um === 'Yes'}">
               <input type="radio" name="um" ng-model="marketing.um" value="Yes" required="required"/>
               Yes
             </label>
-            <label class="btn" ng-class="{active: marketing.um === 'No'}">
+            <label class="button" ng-class="{active: marketing.um === 'No'}">
               <input type="radio" name="um" ng-model="marketing.um" value="No" required="required"/>
               No
             </label>

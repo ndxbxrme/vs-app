@@ -119,6 +119,7 @@
           <div class="col-xl-6">
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-envelope-open-dollar"></i> Pending offers</span> <span class="count">{{offers.items.length}}</span></h3>
             <div class="stats-box">
+              <div class="stats-item" ng-if="!offers.items.length">There are no pending offers</div>
               <a ng-repeat="offer in offers.items" ui-sref="agency_offer({id:offer._id})" class="stats-item offer-with-image">
                 <div class="offer-thumbnail" ng-if="offer.image">
                   <img ng-src="{{offer.image}}" alt="Property" />
@@ -138,6 +139,7 @@
 
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{salesComingSoon.total || 0}}</span></h3>
             <div class="stats-box">
+              <div class="stats-item" ng-if="!salesComingSoon.items.length">There are no pending instructions</div>
               <a ng-repeat="item in salesComingSoon.items | limitTo:10" class="stats-item">
                 <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
                 <div class="offer-address outstanding-address" ng-if="item.picturesBooked">Pictures Booked: <span>{{item.picturesBooked | date:'mediumDate'}}</span></div>
@@ -146,6 +148,7 @@
 
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-comment-smile"></i> Outstanding Solicitors</span> <span class="count">{{unknownSolicitors.length}}</span></h3>
             <div class="stats-box">
+              <div class="stats-item" ng-if="!unknownSolicitors.length">There are no outstanding solicitors</div>
               <a ng-repeat="property in unknownSolicitors" ui-sref="agency_case({roleId:property.roleId})" class="stats-item">
                 <div class="offer-address outstanding-address">Address: <span>{{formatAddress(property.address)}}</span></div>
                 <div class="solicitor-flags">
@@ -213,6 +216,7 @@
           <div class="col-xl-6">
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-envelope-open-dollar"></i> Pending offers</span> <span class="count">{{lettingOffers.items.length}}</span></h3>
             <div class="stats-box">
+              <div class="stats-item" ng-if="!lettingOffers.items.length">There are no pending offers</div>
               <a ng-repeat="offer in lettingOffers.items" ui-sref="lettings_offer({id:offer._id})" class="stats-item offer-with-image">
                 <div class="offer-thumbnail" ng-if="offer.image">
                   <img ng-src="{{offer.image}}" alt="Property" />
@@ -232,6 +236,7 @@
 
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{comingSoon.total}}</span></h3>
             <div class="stats-box">
+              <div class="stats-item" ng-if="!comingSoon.items.length">There are no pending instructions</div>
               <a ng-repeat="item in comingSoon.items | limitTo:10" class="stats-item">
                 <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
                 <div class="offer-address outstanding-address" ng-if="item.picturesBooked">Pictures Booked: <span>{{item.picturesBooked | date:'mediumDate'}}</span></div>
@@ -255,6 +260,9 @@
                   <div class="offer-amount">Fee <span class="value">{{property.Fees[0].DefaultValue | currency : "£" : 0}} + VAT</span></div>
                 </div>
               </a>
+            </div>
+            <div class="stats-box" ng-show="nextMoveInFiltered.length === 0">
+              <div class="stats-item">There are no upcoming move ins</div>
             </div>
           </div>
 

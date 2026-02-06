@@ -13,7 +13,6 @@
     gap 20px
     margin-bottom 30px
     margin-top 20px
-    height 115px
     .snapshot-item
       background white
       border-radius 20px
@@ -38,13 +37,11 @@
       &.compact
         margin-bottom 15px
         .property-main
-          padding 15px
           min-height auto
         .property-image
           padding 10px 15px
         .property-info
-          padding-top 5px
-          padding-bottom 5px
+          padding 30px
           padding-right 30px
           position relative
           .lead-status
@@ -88,7 +85,7 @@
               i
                 font-size 1.3rem
         .property-stats-actions
-          padding 5px 10px
+          padding 30px 15px
           .property-actions.button-row
             display flex
             flex-direction row
@@ -198,3 +195,69 @@
     color vs-silver
     h3
       font-weight 600
+@media screen and (max-width:1400px)
+  .history-route.client-management-list
+    .properties-list
+      .property-card.compact
+        .property-stats-actions
+          .property-actions.button-row
+            flex-direction column
+            align-items flex-start
+@media screen and (max-width:992px)
+  .history-route.client-management-list
+    .properties-list
+      .property-card.compact
+        .property-stats-actions
+          .property-actions.button-row
+            flex-direction row
+@media screen and (max-width:768px)
+  .history-route.client-management-list
+    .row.align-items-center
+      .text-end
+        flex-direction column
+        align-items flex-start !important
+        gap 10px
+        text-align left
+        input[type="text"]
+          width 100%
+        .add-lead-button
+          margin-left 0
+    .controls
+      .d-flex
+        flex-direction column
+        align-items flex-start
+        gap 0px
+        .show 
+          margin-left 0px
+    .properties-list
+      .property-card.compact
+        .property-main
+          flex-direction column
+        .property-image
+          padding 20px
+        .property-info
+          padding 30px
+          .lead-status
+            position absolute
+            top -45px
+            right 30px
+        .property-stats-actions
+          width calc(100% - 8px)
+          margin-left 4px
+          padding 15px 30px
+
+@media screen and (max-width:576px)
+  .history-route.client-management-list
+    .properties-list
+      .property-card.compact
+        .property-info
+          .property-meta
+            .property-address,
+            .price
+              font-size 1.4rem
+              margin-bottom 5px
+          .lead-details
+            padding 8px 10px
+            .applicant-info,
+            .date-info
+              font-size 1.2rem
