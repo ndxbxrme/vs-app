@@ -40,16 +40,12 @@
     </div>
     
     <div class="months row g-5">
-      <div class="month col-lg-4 col-sm-6"
-          ng-repeat="month in months | filter:search | orderBy:'date'"
-          ng-class="{disabled:month.date > now}">
+      <div class="month col-lg-4 col-sm-6" ng-repeat="month in months | filter:search | orderBy:&quot;date&quot; track by month.id || month.date" ng-class="{disabled:month.date &gt; now}">
         <div class="inner">
 
           <div class="month-name">{{::month.month}}</div>
 
-          <div class="target"
-              ng-click="auth.checkRoles(['admin','superadmin']) && (month.editing = !month.editing)"
-              ng-attr-title="{{auth.checkRoles(['admin','superadmin']) ? 'Edit target' : undefined}}">
+          <div class="target" ng-if="firstLoad" ng-click="auth.checkRoles(['admin', 'superadmin']) &amp;&amp; (month.editing = !month.editing)" title="{{auth.checkRoles(['admin', 'superadmin']) ? 'Edit target' : ''}}">
             <label>Target </label>
             <div class="editor" ng-if="month.editing">
               <input type="text" ng-model="month.target.value" ng-click="$event.stopPropagation()" ng-blur="saveTarget(month)"/>
@@ -57,7 +53,8 @@
             <div class="default" ng-if="!month.editing">{{month.target.value}}</div>
           </div>
 
-          <div class="actual">{{month.properties.length}}</div>
+          <div class="actual" ng-show="firstLoad">{{month.properties.length}}</div>
+          <div class="actual unloaded" ng-hide="firstLoad"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
 
           <div class="row align-items-center">
             <div class="commission col-6"

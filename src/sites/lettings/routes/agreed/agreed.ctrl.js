@@ -48,37 +48,41 @@
       });
     };
     $scope.setDateRange($scope.years[0]);
-    $scope.$watch('currentYear', function(newYear, oldYear) {
-      if (newYear && newYear !== oldYear) {
-        $scope.setDateRange(newYear);
-      }
-    });
-    updateTargets = function() {
-      var i, len, month, ref, results, target;
-      if ($scope.targets && $scope.targets.items && $scope.targets.items.length) {
-        ref = $scope.targets.items;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          target = ref[i];
-          results.push((function() {
-            var j, len1, ref1, results1;
-            ref1 = $scope.months;
-            results1 = [];
-            for (j = 0, len1 = ref1.length; j < len1; j++) {
-              month = ref1[j];
-              if (new Date(target.date).toLocaleString() === month.date.toLocaleString()) {
-                month.target = target;
-                break;
-              } else {
-                results1.push(void 0);
-              }
-            }
-            return results1;
-          })());
-        }
-        return results;
+function getUtcMonthKey(date) {
+  var d = new Date(date);
+  return d.getUTCFullYear() + '-' + d.getUTCMonth();
+}
+
+function updateTargets() {
+  if (
+    !$scope ||
+    !$scope.targets ||
+    !$scope.targets.items ||
+    !$scope.targets.items.length ||
+    !$scope.months ||
+    !$scope.months.length
+  ) {
+    return;
+  }
+
+  var items = $scope.targets.items;
+  var months = $scope.months;
+
+  for (var i = 0; i < items.length; i++) {
+    var target = items[i];
+    var targetKey = getUtcMonthKey(target.date);
+    for (var j = 0; j < months.length; j++) {
+      var month = months[j];
+      if (
+        month.date &&
+        getUtcMonthKey(month.date) === targetKey
+      ) {
+        month.target = target;
+        break;
       }
     }
+  }
+}
 
     updateProperties = async function() {
       var res;
@@ -95,24 +99,6 @@
         $scope.firstLoad = true;
       });
     };
-    $scope.getYearTotal = () => {
-      if(!$scope.months) return 0;
-      return $scope.months.reduce((res, val) => res + (+val.commission || 0), 0);
-    };
-    $scope.getTotalSold = function() {
-      if (!$scope.months) return 0;
-      return $scope.months.reduce((total, month) => total + (month.properties ? month.properties.length : 0), 0);
-    };
-    $scope.getTotalFees = function() {
-      return $scope.getYearTotal();
-    };
-    $scope.getSalesRequiredToTarget = function() {
-      if (!$scope.months) return 0;
-      const totalTarget = $scope.months.reduce((total, month) => total + (month.target ? parseFloat(month.target.value) || 0 : 0), 0);
-      const totalSold = $scope.getTotalSold();
-      const remaining = totalTarget - totalSold;
-      return remaining > 0 ? remaining : 0;
-    };
     $scope.targets = $scope.list('lettings:targets', {
       where: {
         type: 'letAgreed'
@@ -128,75 +114,14 @@
       return updateProperties();
     });
     $scope.open = function(selectedMonth) {
-      if (!selectedMonth.open) {
-        // Open modal
-        const modalTemplate = `
-          <div class="modal properties-modal">
-            <div class="modal-header">
-              <h2>{{month.month}} {{year}}</h2>
-              <div class="snapshot">
-                <div class="snapshot-item">
-                  <div class="snapshot-label">Total Properties</div>
-                  <div class="snapshot-value">{{month.properties.length}}</div>
-                </div>
-                <div class="snapshot-item">
-                  <div class="snapshot-label">Commission</div>
-                  <div class="snapshot-value" ng-bind-html="(month.commission | currency:'£' | currencyFormat)"></div>
-                </div>
-              </div>
-            </div>
-            <div class="properties-list">
-              <div class="property-card" ng-repeat="property in month.properties track by property._id" ng-class="{delisted:property.delisted, editing: property.$editing}" data-tooltip="{{::property.date | date:'mediumDate'}}">
-                <div class="editor" ng-if="property.$editing">
-                  <div class="row g-3">
-                    <div class="col-8">
-                      <label>Address</label>
-                      <input type="text" ng-model="property.$override.address"/>
-                    </div>
-                    <div class="col-4">
-                      <label>Commission</label>
-                      <input type="text" ng-model="property.$override.commission"/>
-                    </div>
-                  </div>
-                  <div class="button-group">
-                    <input class="small button save" type="button" ng-click="save(property)" value="Save"/>
-                    <input class="small button cancel" type="button" ng-click="cancelEdit(property)" value="Cancel"/>
-                  </div>
-                </div>
-                <div class="default" ng-if="!property.$editing">
-                  <div class="property-header">
-                    <div class="property-number">{{$index + 1}}</div>
-                    <div class="property-address">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
-                    <div class="property-controls" ng-show="auth.checkRoles(['admin','superadmin'])">
-                      <a href="" ng-click="edit(property)"><i class="fa-light fa-pen-to-square"></i></a>
-                      <a href="" ng-click="deleteProperty(property)"><i class="fa-light fa-trash-can"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <a class="close-reveal-modal" ng-click="cancel()">&times;</a>
-          </div>
-        `;
-        
-        selectedMonth.open = true;
-        $scope.modal({
-          template: modalTemplate,
-          controller: 'lettingsAgreedPropertiesCtrl',
-          data: {
-            month: selectedMonth,
-            year: $scope.currentYear,
-            save: $scope.save,
-            edit: $scope.edit,
-            deleteProperty: $scope.delete,
-            cancelEdit: $scope.cancel
-          }
-        }).then(() => {
-          selectedMonth.open = false;
-        }, () => {
-          selectedMonth.open = false;
-        });
+      var i, len, month, open, ref;
+      open = selectedMonth.open;
+      ref = $scope.months;
+      for (i = 0, len = ref.length; i < len; i++) {
+        month = ref[i];
+        month.open = false;
       }
+      return selectedMonth.open = !open;
     };
     $scope.edit = function(property) {
       if (!property.$override) {
@@ -229,20 +154,6 @@
       month.target._id = month.target._id || Math.floor(Math.random() * 9999999999999999).toString(26);
       $http.post($http.sites["lettings"].url + `/api/targets/${month.target._id || ''}`, month.target, $http.sites.lettings.config);
       return month.editing = false;
-    };
-  });
-  
-  // Modal controller for properties list
-  angular.module('vs-lettings-inner').controller('lettingsAgreedPropertiesCtrl', function($scope, data, ndxModalInstance) {
-    $scope.month = data.month;
-    $scope.year = data.year;
-    $scope.edit = data.edit;
-    $scope.save = data.save;
-    $scope.deleteProperty = data.deleteProperty;
-    $scope.cancelEdit = data.cancelEdit;
-    
-    $scope.cancel = function() {
-      return ndxModalInstance.dismiss();
     };
   });
 

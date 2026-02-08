@@ -41,12 +41,20 @@ angular.module('vs-app')
   
   // Fetch sales leads total (for agency users)
   if (hasAgencyAccess) {
-    $scope.salesComingSoon = $scope.list('agency:marketing', {
+    $scope.salesComingSoon = $scope.list('leads:instructions', {
       where: {
         completed: null
       },
       page: 1,
       pageSize: 10
+    }, function(instructions) {
+      if (instructions && instructions.items) {
+        instructions.items.forEach(item => {
+          if(item.insertedOn) item.insertedOn = new Date(item.insertedOn);
+          if(item.goLiveDate) item.goLiveDate = new Date(item.goLiveDate);
+          if(item.dateOfPhotos) item.dateOfPhotos = new Date(item.dateOfPhotos);
+        });
+      }
     });
     
     $scope.salesLeads = $scope.list('leads:leads', {
@@ -168,6 +176,7 @@ angular.module('vs-app')
   
   const currentUser = Auth.getUser();
   $scope.myPipeline = 0;
+  $scope.myInstructedBy = 0;
   $scope.myLettingsPipeline = 0;
   
   if (currentUser) {
@@ -182,6 +191,10 @@ angular.module('vs-app')
       const userId = consultant._id;
       
       if (hasAgencyAccess) {
+        $scope.propertyadmin = $scope.list('main:propertyadmin', null, function(propertyadminList) {
+          // This will be used to calculate instructed by count
+        });
+        
         $scope.properties = $scope.list('agency:properties', {
           where: { 
             modifiedAt: { $gt: new Date('2022-12-20').valueOf() }
@@ -189,6 +202,7 @@ angular.module('vs-app')
           transformer: 'dashboard/properties'
         }, function(properties) {
           let count = 0;
+          let instructedByCount = 0;
           $scope.unknownSolicitors = [];
           if (properties && properties.items) {
             for (let i = 0; i < properties.items.length; i++) {
@@ -227,9 +241,18 @@ angular.module('vs-app')
               if (property.consultant === userId) {
                 count++;
               }
+              
+              // Check instructed by from propertyadmin
+              if ($scope.propertyadmin && $scope.propertyadmin.items) {
+                const propertyadminitem = $scope.propertyadmin.items.find(pa => pa.RoleId && pa.RoleId.toString() === property.roleId);
+                if (propertyadminitem && propertyadminitem.instructionToMarket && propertyadminitem.instructionToMarket.instructedBy === userId) {
+                  instructedByCount++;
+                }
+              }
             }
           }
           $scope.myPipeline = count;
+          $scope.myInstructedBy = instructedByCount;
         });
       }
       
@@ -387,7 +410,7 @@ angular.module('vs-app')
       
       $scope.lettingsTargets = $scope.list('lettings:targets', {
         where: {
-          type: 'letsAgreed'
+          type: 'letAgreed'
         }
       }, function(targets) {
         if (targets && targets.items) {

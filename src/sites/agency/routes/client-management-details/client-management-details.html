@@ -230,6 +230,13 @@
               <option>No</option>
             </select>
           </div>
+          <div class="col-md-3">
+            <label>Instructed by</label>
+            <select ng-model="propertyadmin.item.instructionToMarket.instructedBy">
+              <option value="">Not instructed</option>
+              <option ng-repeat="user in consultants.items" ng-value="user._id">{{user.displayName}}</option>
+            </select>
+          </div>
         </div>
         
         <div class="row actions">

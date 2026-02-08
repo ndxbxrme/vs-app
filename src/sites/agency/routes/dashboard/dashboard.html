@@ -32,32 +32,6 @@
             </div>
           </div>
         </div>
-        <div class="overview" ng-show="unknownConsultantCount()">
-          <div class="thead">
-            <div class="tr">
-              <div class="th" colspan="2">Unknown consultant</div>
-            </div>
-          </div>
-          <div class="tbody">
-            <div class="tr">
-              <div class="td">Cases</div>
-              <div class="td clickable" ng-click="showUnknownInfo('Consultant')">{{unknownConsultantCount()}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="overview" ng-show="unknownSolicitorCount()">
-          <div class="thead">
-            <div class="tr">
-              <div class="th" colspan="2">Unknown solicitor</div>
-            </div>
-          </div>
-          <div class="tbody">
-            <div class="tr">
-              <div class="td">Cases</div>
-              <div class="td clickable" ng-click="showUnknownInfo('Solicitor')">{{unknownSolicitorCount()}}</div>
-            </div>
-          </div>
-        </div>
       </div>
     
       <div class="col-lg-8 income-column">
@@ -98,22 +72,20 @@
           </div>
         </div>
         <!-- #region HOME -->
-        <div class="income">
-          <div class="thead">
-            <div class="tr">
-              <div class="th" colspan="{{incomeItems.length + 1}}"> <i class="fa fa-gbp" aria-hidden="true"></i> Income</div>
-            </div>
-          </div>
-          <div class="tbody">
-            <div class="tr head-two">
-              <div class="td"><img src="public/img/home-logo.png" class="pipeline-logo" /></div>
-              <div class="td" ng-repeat="di in incomeItems = (dashboard.items | filter:{type:&quot;income&quot;})">{{di.name}}</div>
-            </div>
-            <div class="tr total">
-              <div class="td">Total</div>
-              <div class="td clickable" ng-repeat="di in incomeItems" ng-click="showInfo(&quot;income&quot;, di, alltime, 'HOME')"> 
-                <div class="inner">
-                  <label>{{di.name}}</label><span ng-bind-html="income(di, alltime, null, 'HOME') | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></span>
+        <div ng-if="incomeItems.length && income(incomeItems[0], alltime, null, 'HOME') > 0">
+          <h3><i class="fa-duotone fa-light fa-circle-sterling"></i> Income</h3>
+          <div class="income">
+            <div class="tbody">
+              <div class="tr head-two">
+                <div class="td"><img src="public/img/home-logo.png" class="pipeline-logo" /></div>
+                <div class="td" ng-repeat="di in incomeItems = (dashboard.items | filter:{type:&quot;income&quot;})">{{di.name}}</div>
+              </div>
+              <div class="tr total">
+                <div class="td">Total</div>
+                <div class="td clickable" ng-repeat="di in incomeItems" ng-click="showInfo(&quot;income&quot;, di, alltime, 'HOME')"> 
+                  <div class="inner">
+                    <label>{{di.name}}</label><span ng-bind-html="income(di, alltime, null, 'HOME') | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></span>
+                  </div>
                 </div>
               </div>
             </div>

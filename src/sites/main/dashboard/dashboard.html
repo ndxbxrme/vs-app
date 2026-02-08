@@ -56,7 +56,7 @@
                 <div class="snapshot">
                   <div class="snapshot-item">
                     <div class="snapshot-label">Instructed By Me</div>
-                    <div class="snapshot-value"></div>
+                    <div class="snapshot-value">{{myInstructedBy}}</div>
                   </div>
                 </div>
               </div>
@@ -140,9 +140,9 @@
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{salesComingSoon.total || 0}}</span></h3>
             <div class="stats-box">
               <div class="stats-item" ng-if="!salesComingSoon.items.length">There are no pending instructions</div>
-              <a ng-repeat="item in salesComingSoon.items | limitTo:10" class="stats-item">
+              <a ng-repeat="item in salesComingSoon.items | limitTo:10" ui-sref="agency_coming-soon" class="stats-item">
                 <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
-                <div class="offer-address outstanding-address" ng-if="item.picturesBooked">Pictures Booked: <span>{{item.picturesBooked | date:'mediumDate'}}</span></div>
+                <div class="offer-address outstanding-address" ng-if="item.dateOfPhotos">Date of Photos: <span>{{item.dateOfPhotos | date:'mediumDate'}}</span></div>
               </a>
             </div>
 

@@ -78,10 +78,10 @@
                   </p>
                 </div>
                <!-- This needs adding -->
-                <div class="result">
+                <div class="result" ng-show="propertyadmin.item.instructionToMarket.instructedBy">
                   <i class="fa-light fa-circle-user"></i>
                   <p>
-                    <span></span>
+                    <span>{{getConsultantName(propertyadmin.item.instructionToMarket.instructedBy)}}</span>
                     Valuer
                   </p>
                 </div>
@@ -121,38 +121,6 @@
     <div class="row g-5 docs-chain case-row" id="documents">
       <!-- Docs -->
       <div class="col-sm-6">
-<<<<<<< 09e042734415367adda83884e3c9cce21411e812
-        <h2>Documents<sup ng-show="property.item.$case.item.documents.length">{{property.item.$case.item.documents.length}}</sup></h2>
-        <button class="view-documents" ng-click="showDocuments = !showDocuments">{{showDocuments?'Hide':'View'}} Documents</button>
-        <div class="documents" ng-show="showDocuments">
-          <div class="drop-box" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
-            <div ng-hide="documentUploading">
-              <h3>Drop files here to upload</h3>
-              <button class="file-upload" type="file" ngf-select="uploadFiles($file, $invalidFiles)">Or click here to choose</button>
-            </div>
-            <div ng-show="documentUploading" class="uploading">
-              <h3>Uploading</h3>
-              <div class="progressBar">
-                <div class="bar" style="width: {{uploadProgress}}%"></div>
-              </div>
-            </div>
-          </div>
-          <div class="document-list" ng-show="property.item.$case.item.documents.length">
-            
-            <div class="document row" ng-repeat="document in property.item.$case.item.documents">
-              <div class="col-2">
-                <a class="document-link" ng-href="{{makeDownloadUrl('agency',document)}}" target="_self">
-                  <img ng-src="{{makeDownloadUrl('agency',document)}}" ng-if="document.basetype===&quot;image&quot;"/>
-                  <div class="document-icon {{document.basetype}}" ng-hide="document.basetype===&quot;image&quot;">
-                    <i class="fa-duotone fa-file-lines"></i>
-                  </div>
-                </a>
-              </div>
-              <div class="col-10">
-                <div class="filename"> 
-                  <label>Name: </label><span ng-show="!document.editing">&nbsp;{{document.name || document.originalFilename}}</span>
-                  <input type="text" ng-model="document.name" ng-show="document.editing" placeholder="Name"/>
-=======
         <h2><i class="fa-duotone fa-light fa-file-certificate"></i> Documents <span ng-show="property.item.$case.item.documents.length">{{property.item.$case.item.documents.length}}</span></h2>
         <div class="documents-section">
           <div class="documents">
@@ -166,7 +134,6 @@
                       <i class="fa-light fa-duotone fa-file-lines"></i>
                     </div>
                   </a>
->>>>>>> First `big `push
                 </div>
                 <div class="document-details">
                   <div class="filename">
@@ -201,9 +168,9 @@
             </div>
           </div>
 
-          <div class="contact-refresh">
+          <div class="contact-refresh" ng-hide="property.item.$case.item.vendorsSolicitor.name && property.item.$case.item.purchasersSolicitor.name">
             <h2><i class="fa-duotone fa-light fa-address-book"></i> Case Contacts</h2>
-            <button ng-click="refreshDetails()" class="button" ng-hide="property.item.$case.item.vendorsSolicitor.name && property.item.$case.item.purchasersSolicitor.name">Refresh Details</button>
+            <button ng-click="refreshDetails()" class="button">Refresh Details</button>
           </div>
 
           <div class="flex-pipeline">
@@ -251,69 +218,6 @@
     </div>
 
 
-<<<<<<< 09e042734415367adda83884e3c9cce21411e812
-
-    <div class="accordian" ng-show="propertyadmin.item.RoleId">
-      <div ng-click="showITM = !showITM; showSSTC = showPR = showFT = showEC = showW = false"><h4>Instruction To Market</h4></div>
-      <div class="instruction-to-market" ng-show="showITM">
-        <div class="row">
-          <div class="col-md-3">
-            <label>Update client details</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.updateClientDetails">
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label>Board ordered date</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.boardOrderedDate" ng-if="!propertyadmin.item.instructionToMarket.boardOrderedDate">
-              <option>No board</option>
-              <option ng-repeat="date in boardDates" ng-value="date">{{date | date:'dd/MM/yyyy'}}</option>
-            </select>
-            <input type="text" disabled="true" value="{{propertyadmin.item.instructionToMarket.boardOrderedDate | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.instructionToMarket.boardOrderedDate" />
-          </div>
-          <div class="col-md-3">
-            <label>Windows card</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.windowsCard">
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label>Epc ordered date</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.epcOrderedDate" ng-if="!propertyadmin.item.instructionToMarket.epcOrderedDate">
-              <option ng-repeat="option in epcOptions" ng-value="option">{{option==='No'?option:(option | date:'dd/MM/yyyy')}}</option>
-            </select>
-            <input type="text" disabled="true" value="{{propertyadmin.item.instructionToMarket.epcOrderedDate | date:'dd/MM/yyyy'}}" ng-if="propertyadmin.item.instructionToMarket.epcOrderedDate" />
-          </div>
-          <!-- <div class="col-md-3">
-            <label>Staff intro</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.staffIntro">
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-          </div> -->
-          <div class="col-md-3">
-            <label>Instructed by</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.instructedBy">
-              <option value="">Not instructed</option>
-              <option ng-repeat="user in consultants.items" ng-value="user._id">{{user.displayName}}</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label>Misdescriptions Received</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.misdescriptionsReceived">
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label>Snake</label>
-            <select ng-model="propertyadmin.item.instructionToMarket.snake">
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-=======
     <h2><i class="fa-duotone fa-light fa-gear"></i> Property Admin</h2>
     <div class="tabbed-section" ng-show="propertyadmin.item.RoleId" ng-init="showITM = true" id="admin">
       <ul class="nav-pills">
@@ -378,7 +282,13 @@
                 <option>No</option>
               </select>
             </div>
->>>>>>> First `big `push
+            <div class="col-md-3">
+              <label>Instructed by</label>
+              <select ng-model="propertyadmin.item.instructionToMarket.instructedBy">
+                <option value="">Not instructed</option>
+                <option ng-repeat="user in consultants.items" ng-value="user._id">{{user.displayName}}</option>
+              </select>
+            </div>
           </div>
           
           <div class="row actions">

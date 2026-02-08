@@ -34,6 +34,10 @@ angular.module('vs-agency')
           if(item.insertedOn) item.insertedOn = new Date(item.insertedOn);
           if(item.goLiveDate) item.goLiveDate = new Date(item.goLiveDate);
           if(item.dateOfPhotos) item.dateOfPhotos = new Date(item.dateOfPhotos);
+          // Convert fee to number if it's a string
+          if(item.fee) item.fee = parseFloat(item.fee);
+          if(item.askingPrice) item.askingPrice = parseFloat(item.askingPrice);
+          // Convert percentage to actual amount
           if(item.fee && item.fee <= 1 && item.askingPrice) item.fee = (item.fee * item.askingPrice * 0.01);
         })
         assignUsers();
@@ -48,6 +52,26 @@ angular.module('vs-agency')
       };
       scope.feeDP = (fee) => {
         return fee - Math.floor(fee) > 0 ? 2 : 0;
+      }
+      scope.getTotalFees = () => {
+        if(!scope.instructions || !scope.instructions.items) return 0;
+        return scope.instructions.items.reduce((total, item) => {
+          return total + (item.fee || 0);
+        }, 0);
+      }
+      scope.getTotalInstructions = () => {
+        if(!scope.instructions || !scope.instructions.items) return 0;
+        return scope.instructions.items.length;
+      }
+      scope.getNextPhotosDate = () => {
+        if(!scope.instructions || !scope.instructions.items) return null;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const futureDates = scope.instructions.items
+          .filter(item => item.dateOfPhotos && new Date(item.dateOfPhotos) > today)
+          .map(item => new Date(item.dateOfPhotos))
+          .sort((a, b) => a - b);
+        return futureDates.length > 0 ? futureDates[0] : null;
       }
       scope.item = {
         'uid': 123,
