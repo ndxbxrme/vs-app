@@ -211,17 +211,11 @@
     align-items: flex-start;
     gap: 15px;
   }
-  
   .user-actions {
     width: 100%;
     justify-content: stretch;
   }
-  
-  .user-actions a {
-    flex: 1;
-  }
-  
-  .role-cells {
-    justify-content: center;
+  .role-cell {
+    min-width: 48%;
   }
 }

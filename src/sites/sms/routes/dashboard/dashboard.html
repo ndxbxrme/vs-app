@@ -24,7 +24,7 @@
         </li>
       </ul>
       <div class="tab-body tab-content">
-        <div class="stage stage-to tab-pane fade show active" ng-show="stage==='to'">
+        <div class="stage stage-to tab-pane fade" ng-class="{show: stage==='to', active: stage==='to'}" ng-show="stage==='to'">
           <div class="list-box">
             <h3>List of numbers</h3>
             <select sumoselect="{placeholder:'SELECT', search:true}" ng-model="selectedList" name="selectedList" ng-disabled="disabled" ng-change="selectList()" required="required">
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        <div class="stage stage-details tab-pane fade" ng-show="stage==='details'">
+        <div class="stage stage-details tab-pane fade" ng-class="{show: stage==='details', active: stage==='details'}" ng-show="stage==='details'">
           <div class="details-box">
             <div class="item">
               <label>When</label>
@@ -70,7 +70,7 @@
             </div>
           </div>
         </div>
-        <div class="stage stage-message tab-pane fade" ng-show="stage==='message'">
+        <div class="stage stage-message tab-pane fade" ng-class="{show: stage==='message', active: stage==='message'}" ng-show="stage==='message'">
           <div class="message-box">
             <label>Templates</label>
             <select sumoselect="{placeholder:'Select a saved template message', search:true}" ng-model="selectedTemplate" name="selectedTemplate" ng-disabled="disabled" ng-change="selectTemplate()" required="required">
@@ -86,7 +86,7 @@
             </div>
           </div>
         </div>
-        <div class="stage stage-confirm tab-pane fade" ng-show="stage==='confirm'">
+        <div class="stage stage-confirm tab-pane fade" ng-class="{show: stage==='confirm', active: stage==='confirm'}" ng-show="stage==='confirm'">
           <div class="confirm-box">
             <div class="confirm-details">
               <div class="item">

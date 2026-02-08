@@ -4,13 +4,21 @@
   flex-wrap wrap
 .board-date
   width auto!important
-.admin-boards
+.admin-boards,
+.admin-windows
   .header-row
     input[type="text"]
       margin-bottom 0px
+  .search-row 
+    flex-direction column
+    align-items flex-start !important
+  .button-row
+    flex-shrink 0
     .button
       flex-shrink 0
       margin 10px 5px
+      &.button-alt
+        border none
   .search-results
     .card
       border-radius 30px
