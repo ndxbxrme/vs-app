@@ -3,15 +3,11 @@
 .historic-route
   padding-top 30px
   padding-bottom 60px
-  h1
-    font-size 3rem
-    font-weight 600
-    margin-bottom 20px
-    i
-      margin-right 10px
   input[type="text"]
     margin-right 5px
 
+  .button-row
+    flex-shrink 0
   .add-lead-button,
   .button-grey,
   .button-alt
@@ -221,21 +217,10 @@
     font-size 1.6rem
     font-weight 600
 
-  // Keep old table styles for backwards compatibility
-  table.table
-    margin-bottom 0px
-    tbody
-      border-top 5px solid vs-lightsilver
-      border-bottom 5px solid vs-lightsilver
-      tr td
-        vertical-align middle
-        &.address
-          position relative
-          border none
-          padding-right: 100px
-          svg, i
-            position absolute
-            top 25px
-            right 10px
-        &.tenant
-          position relative
+@media (max-width: 768px)
+  .issues-route,
+  .works-route,
+  .historic-route
+    .search-row
+      flex-direction column
+      align-items flex-start !important

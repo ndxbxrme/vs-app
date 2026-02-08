@@ -64,6 +64,9 @@ angular.module('vs-app')
       if(site.trim() === 'Conveyancing') {
         site = 'Sales';
       }
+      if(/^\/?agency(\/dashboard)?\/?$/i.test(historyItem.url)) {
+        title = 'Conveyancing';
+      }
       return {site,title};
     }
   }

@@ -17,16 +17,27 @@
         <div class="row">
           <div class="col-md-5">
             <a ui-sref="agency_property({id:property.item._id})">
-              <div class="property-image">
+              <div class="property-image" ng-class="{'no-milestone': !(property.item.$case.item.milestone && property.item.$case.item.milestone.title)}">
                 <img ng-src="{{property.item.Images[0].Url}}" alt="{{property.item.displayAddress}}">
                 <div class="property-milestone">
                   <div class="milestone" ng-class="property.item.$case.item.cssMilestone" title="{{property.item.$case.item.milestone.title}}">
                     <div class="icon {{ property.item.$case.item.milestone.icon || 'house'}}"></div>
                   </div>
-                  <span class="milestone-title">{{property.item.$case.item.milestone.title}}</span>
+                  <span ng-if="property.item.$case.item.milestone.title" class="milestone-title">{{property.item.$case.item.milestone.title}}</span>
                 </div>
               </div>
             </a>
+            <div class="property-report">
+              <div class="results">
+                <div class="result">
+                  <i class="fa-duotone fa-light fa-sitemap"></i>
+                  <p>
+                    <span>{{property.item.$case.item.pipeline || 'Vitalspace'}}</span>
+                    Pipeline
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           
           <div class="col-md-1"></div>
@@ -45,32 +56,18 @@
             </p>
             <div class="property-report">
               <div class="results">
-                <div class="result">
+                <div class="result vendor-result">
                   <i class="fa-duotone fa-light fa-user-tie"></i>
                   <p>
                     <span>{{property.item.$case.item.vendor}}</span>
                     Vendor
                   </p>
                 </div>
-                <div class="result">
+                <div class="result purchaser-result">
                   <i class="fa-duotone fa-light fa-user-check"></i>
                   <p>
                     <span>{{property.item.$case.item.purchaser}}</span>
                     Purchaser
-                  </p>
-                </div>
-                <div class="result">
-                  <i class="fa-duotone fa-light fa-file-certificate"></i>
-                  <p>
-                    <span>{{property.item.$case.item.documents.length}}</span>
-                    Document(s) Saved
-                  </p>
-                </div>
-                <div class="result">
-                  <i class="fa-duotone fa-light fa-sitemap"></i>
-                  <p>
-                    <span>{{property.item.$case.item.pipeline || 'Vitalspace'}}</span>
-                    Pipeline
                   </p>
                 </div>
                 <div class="result" ng-show="property.item.$case.item.consultant">
@@ -169,6 +166,11 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="contact-refresh">
+            <h2><i class="fa-duotone fa-light fa-address-book"></i> Case Contacts</h2>
+            <button ng-click="refreshDetails()" class="button" ng-hide="property.item.$case.item.vendorsSolicitor.name && property.item.$case.item.purchasersSolicitor.name">Refresh Details</button>
           </div>
 
           <div class="flex-pipeline">
@@ -593,9 +595,6 @@
     <div class="contacts" id="contacts">
       <div class="row">
         <h2><i class="fa-duotone fa-light fa-address-card"></i> Contacts</h2>
-      </div>
-      <div class="row case-row" ng-hide="property.item.$case.item.vendorsSolicitor.name && property.item.$case.item.purchasersSolicitor.name">
-        <button ng-click="refreshDetails()">Refresh Details</button>
       </div>
       <div class="row case-row">
         <div class="col-lg-3 col-md-6">

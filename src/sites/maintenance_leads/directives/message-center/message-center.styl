@@ -108,3 +108,24 @@
         margin-top .3em
       &.attached
         background lightblue
+
+@media (max-width: 768px)
+  .message-center
+    .messages
+      .message-filters
+        flex-direction column
+        align-items flex-start
+      .message
+        flex-direction column
+        align-items flex-start
+        margin 0 0 1em 0
+        &.in
+          margin-left 0
+          margin-right 0
+        .message-holder
+          width 100%
+        .message-subject
+          flex-direction column
+          align-items flex-start
+        .message-entity
+          margin-bottom 1em

@@ -2,26 +2,28 @@
 <div class="issues-route route"> 
   <div class="container-xl">
     <div class="row align-items-center">
-      <div class="col-md-6">
+      <div class="col-xl-6">
         <h1><i class="fa-duotone fa-light fa-tools"></i> {{ mml('issues-heading') }}</h1>
       </div>
-      <div class="col-md-6 text-end d-flex align-items-center">
+      <div class="col-xl-6 text-xl-end d-flex align-items-center search-row">
         <input type="text" ng-model="mysearch.$like" placeholder="Search Issues" ng-change="page=1"/>
-        <button ng-click="openAddIssueModal()" class="button button-alt orange-button">{{ mml('issues-button-new') }} <i class="fas fa-plus"></i></button>
-        <button type="button" ng-click="openAddWorksOrderModal()" class="button button-grey">New works order <i class="fas fa-plus"></i></button>
+        <div class="button-row">
+          <button ng-click="openAddIssueModal()" class="button button-alt orange-button">{{ mml('issues-button-new') }} <i class="fas fa-plus"></i></button>
+          <button type="button" ng-click="openAddWorksOrderModal()" class="button button-grey">New works order <i class="fas fa-plus"></i></button>
+        </div>
       </div>
     </div>
 
     <div class="controls">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-lg-6">
           <div class="sort">Order By:<br>
             <a class="order-item" href="" ng-click="sort.set('source')" ng-class="sort.class('source')">Source</a>
             <a class="order-item" href="" ng-click="sort.set('date')" ng-class="sort.class('date')">Date</a>
             <a class="order-item" href="" ng-click="sort.set('address')" ng-class="sort.class('address')">Address</a>
           </div>
         </div>
-        <div class="col-sm-6 text-end">
+        <div class="col-lg-6 text-end">
           <div class="showing">Showing {{issues.items.length}} of {{issues.total}} issue{{issues.total!==1?'s':''}}</div>
         </div>
       </div>
