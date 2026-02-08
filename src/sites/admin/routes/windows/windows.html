@@ -1,13 +1,15 @@
 <div ng-show="auth.getUser()" class="dashboard-route route admin-windows maintenance-leads-dashboard">
   <div class="container-xl">
     <div class="row align-items-center mb-4 header-row">
-      <div class="col-md-5">
+      <div class="col-xl-6">
         <h1><i class="fa-duotone fa-light fa-picture-in-picture"></i> Windows Management</h1>
       </div>
-      <div class="col-md-7 d-flex justify-content-between align-items-center">
+      <div class="col-xl-6 text-xl-end d-flex align-items-center search-row">
         <input type="text" class="form-control" ng-model="search" ng-change="searchWindows()" ng-keyup="searchWindows()" placeholder="Search windows..." />
-        <button type="button" class="button" ng-click="printWindows()">Print Windows <i class="fa-light fa-duotone fa-print"></i></button>
-        <!-- <button type="button" class="button button-alt" ng-click="completeWindows()">{{currentWindowsCompleted ? 'Reset Windows' : 'Complete All'}} <i class="fa-light fa-duotone fa-check"></i></button> -->
+        <div class="button-row">
+          <button type="button" class="button" ng-click="printWindows()">Print Windows <i class="fa-light fa-duotone fa-print"></i></button>
+          <!-- <button type="button" class="button button-alt" ng-click="completeWindows()">{{currentWindowsCompleted ? 'Reset Windows' : 'Complete All'}} <i class="fa-light fa-duotone fa-check"></i></button> -->
+        </div>
       </div>
     </div>
 
@@ -36,7 +38,7 @@
     
     <!-- Snapshot Boxes -->
     <div class="row g-3 snapshot-row">
-      <div class="col-md-6 col-lg-3" ng-repeat="window in windows">
+      <div class="col-md-6 col-lg-3 col-6" ng-repeat="window in windows">
         <div class="snapshot-box">
           <div class="snapshot-label">{{window.name}}</div>
           <div class="snapshot-value">{{window.items.length}}</div>
