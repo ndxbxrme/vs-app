@@ -48,6 +48,13 @@
       });
     };
     $scope.setDateRange($scope.years[0]);
+    
+    // Watch for year changes from dropdown
+    $scope.$watch('currentYear', function(newYear, oldYear) {
+      if (newYear && newYear !== oldYear) {
+        $scope.setDateRange(newYear);
+      }
+    });
 function getUtcMonthKey(date) {
   var d = new Date(date);
   return d.getUTCFullYear() + '-' + d.getUTCMonth();

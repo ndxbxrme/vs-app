@@ -25,9 +25,7 @@
       }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
     });
     // propertyadmin
-    $scope.propertyadmin = $scope.list('main:propertyadmin', null, (propertyadmin) => {
-      propertyadmin.items = propertyadmin.items.filter(item => (item.instructionToMarket || {}).instructedBy);
-    });
+    $scope.propertyadmin = $scope.list('main:propertyadmin');
     //properties
     let historic = null;
     $http.get('/public/data/conveyancing-historic.json').then(res => {
@@ -307,13 +305,17 @@
       const props = [];
       for (var i = 0; i < $scope.propertyadmin.items.length; i++) {
         const propertyadminitem = $scope.propertyadmin.items[i];
+        // Check if instructionToMarket and instructedBy exist
+        if (!propertyadminitem.instructionToMarket || !propertyadminitem.instructionToMarket.instructedBy) continue;
         const property = $scope.properties.items.find(property => property.roleId===propertyadminitem.RoleId.toString());
         if (!property || property.override && property.override.deleted) continue;
         if (!property.role) continue;
         if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
         if (Object.values(property.milestoneIndex)[0]===10) continue;
         property.instructedBy = propertyadminitem.instructionToMarket.instructedBy;
-        result[propertyadminitem.instructionToMarket.instructedBy]++;
+        if (result.hasOwnProperty(propertyadminitem.instructionToMarket.instructedBy)) {
+          result[propertyadminitem.instructionToMarket.instructedBy]++;
+        }
       }
       return result;
     }

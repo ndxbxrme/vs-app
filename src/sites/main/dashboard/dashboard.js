@@ -3,6 +3,8 @@ angular.module('vs-app')
   $scope.thing = 'hiya';
   $scope.unknownSolicitors = [];
   $scope.env = env;
+  $scope.salesGraphLoading = true;
+  $scope.lettingsGraphLoading = true;
   
   if (ndxCheck && ndxCheck.setPristine) {
     ndxCheck.setPristine($scope);
@@ -49,11 +51,21 @@ angular.module('vs-app')
       pageSize: 10
     }, function(instructions) {
       if (instructions && instructions.items) {
+        const now = new Date();
+        const seventyTwoHoursFromNow = new Date(now.getTime() + (72 * 60 * 60 * 1000));
+        
         instructions.items.forEach(item => {
           if(item.insertedOn) item.insertedOn = new Date(item.insertedOn);
           if(item.goLiveDate) item.goLiveDate = new Date(item.goLiveDate);
           if(item.dateOfPhotos) item.dateOfPhotos = new Date(item.dateOfPhotos);
         });
+        
+        // Filter to only show items with photos due in past or next 72 hours
+        $scope.salesComingSoonFiltered = instructions.items.filter(item => {
+          if (!item.dateOfPhotos) return false;
+          return item.dateOfPhotos <= seventyTwoHoursFromNow;
+        }).sort((a, b) => a.dateOfPhotos - b.dateOfPhotos);
+        $scope.salesComingSoonFilteredCount = $scope.salesComingSoonFiltered.length;
       }
     });
     
@@ -191,8 +203,20 @@ angular.module('vs-app')
       const userId = consultant._id;
       
       if (hasAgencyAccess) {
+        function calculateInstructedBy() {
+          let instructedByCount = 0;
+          if ($scope.propertyadmin && $scope.propertyadmin.items) {
+            $scope.propertyadmin.items.forEach(propertyadminitem => {
+              if (propertyadminitem.instructionToMarket && propertyadminitem.instructionToMarket.instructedBy === userId) {
+                instructedByCount++;
+              }
+            });
+          }
+          $scope.myInstructedBy = instructedByCount;
+        }
+        
         $scope.propertyadmin = $scope.list('main:propertyadmin', null, function(propertyadminList) {
-          // This will be used to calculate instructed by count
+          calculateInstructedBy();
         });
         
         $scope.properties = $scope.list('agency:properties', {
@@ -202,7 +226,6 @@ angular.module('vs-app')
           transformer: 'dashboard/properties'
         }, function(properties) {
           let count = 0;
-          let instructedByCount = 0;
           $scope.unknownSolicitors = [];
           if (properties && properties.items) {
             for (let i = 0; i < properties.items.length; i++) {
@@ -241,18 +264,9 @@ angular.module('vs-app')
               if (property.consultant === userId) {
                 count++;
               }
-              
-              // Check instructed by from propertyadmin
-              if ($scope.propertyadmin && $scope.propertyadmin.items) {
-                const propertyadminitem = $scope.propertyadmin.items.find(pa => pa.RoleId && pa.RoleId.toString() === property.roleId);
-                if (propertyadminitem && propertyadminitem.instructionToMarket && propertyadminitem.instructionToMarket.instructedBy === userId) {
-                  instructedByCount++;
-                }
-              }
             }
           }
           $scope.myPipeline = count;
-          $scope.myInstructedBy = instructedByCount;
         });
       }
       
@@ -355,66 +369,102 @@ angular.module('vs-app')
     
     if (hasAgencyAccess) {
       $scope.chartData = months;
+      let salesTargetsLoaded = false;
+      let salesPropertiesLoaded = false;
+      let salesChartRendered = false;
       
-      // Fetch targets
-      $scope.targets = $scope.list('agency:targets', {
-      where: {
-        type: 'salesAgreed'
-      }
-    }, function(targets) {
-      if (targets && targets.items) {
-        targets.items.forEach(target => {
-          const targetMonth = $scope.chartData.find(m => 
-            new Date(target.date).getMonth() === new Date(m.startDate).getMonth() &&
-            new Date(target.date).getFullYear() === new Date(m.startDate).getFullYear()
-          );
-          if (targetMonth) {
-            targetMonth.target = target.value || 0;
-          }
-        });
-      }
-      renderChart('sales-graph', $scope.chartData, 'Reality Sales', 'Target Sales');
-    });
-    
-    const yearStart = new Date(currentYear, 0, 1).valueOf();
-    $scope.salesProperties = $scope.list('agency:properties', {
-      where: {
-        startDate: {
-          $gt: yearStart
+      function renderSalesChartIfReady() {
+        if (salesTargetsLoaded && salesPropertiesLoaded && !salesChartRendered) {
+          salesChartRendered = true;
+          $scope.salesGraphLoading = false;
+          renderChart('sales-graph', $scope.chartData, 'Reality Sales', 'Target Sales');
         }
       }
-    }, function(properties) {
-      $scope.chartData.forEach(m => m.actual = 0);
       
-      if (properties && properties.items) {
-        properties.items.forEach(property => {
-          if (property.override && property.override.deleted) return;
-          if (!property.startDate) return;
-          
-          const propertyDate = new Date(property.startDate);
-          const month = $scope.chartData.find(m => 
-            propertyDate >= new Date(m.startDate) && propertyDate <= new Date(m.endDate)
-          );
-          
-          if (month) {
-            month.actual++;
+      // Fetch targets - process once
+      const salesTargetsList = $scope.list('agency:targets', {
+        where: {
+          type: 'salesAgreed'
+        }
+      });
+      
+      // Watch for initial load only
+      const unwatchTargets = $scope.$watch(() => salesTargetsList.items, function(items) {
+        if (items && items.length >= 0) {
+          items.forEach(target => {
+            const targetMonth = $scope.chartData.find(m => 
+              new Date(target.date).getMonth() === new Date(m.startDate).getMonth() &&
+              new Date(target.date).getFullYear() === new Date(m.startDate).getFullYear()
+            );
+            if (targetMonth) {
+              targetMonth.target = target.value || 0;
+            }
+          });
+          salesTargetsLoaded = true;
+          renderSalesChartIfReady();
+          unwatchTargets(); // Stop watching after first load
+        }
+      });
+      
+      const yearStart = new Date(currentYear, 0, 1).valueOf();
+      const salesPropertiesList = $scope.list('agency:properties', {
+        where: {
+          startDate: {
+            $gt: yearStart
           }
-        });
-      }
-      renderChart('sales-graph', $scope.chartData, 'Reality Sales', 'Target Sales');
-    });
+        }
+      });
+      
+      // Watch for initial load only
+      const unwatchProperties = $scope.$watch(() => salesPropertiesList.items, function(items) {
+        if (items && items.length >= 0) {
+          $scope.chartData.forEach(m => m.actual = 0);
+          
+          items.forEach(property => {
+            if (property.override && property.override.deleted) return;
+            if (!property.startDate) return;
+            
+            const propertyDate = new Date(property.startDate);
+            const month = $scope.chartData.find(m => 
+              propertyDate >= new Date(m.startDate) && propertyDate <= new Date(m.endDate)
+            );
+            
+            if (month) {
+              month.actual++;
+            }
+          });
+          
+          salesPropertiesLoaded = true;
+          renderSalesChartIfReady();
+          unwatchProperties(); // Stop watching after first load
+        }
+      });
     }
     
     if (hasLettingsAccess) {
       $scope.lettingsChartData = JSON.parse(JSON.stringify(months));
+      let lettingsTargetsLoaded = false;
+      let lettingsAgreedLoaded = false;
+      let lettingsChartRendered = false;
       
-      $scope.lettingsTargets = $scope.list('lettings:targets', {
+      function renderLettingsChartIfReady() {
+        if (lettingsTargetsLoaded && lettingsAgreedLoaded && !lettingsChartRendered) {
+          lettingsChartRendered = true;
+          $scope.lettingsGraphLoading = false;
+          renderChart('lettings-graph', $scope.lettingsChartData, 'Reality Lets', 'Target Lets');
+        }
+      }
+      
+      const lettingsTargetsList = $scope.list('lettings:targets', {
         where: {
           type: 'letAgreed'
         }
-      }, function(targets) {
-        if (targets && targets.items) {
-          targets.items.forEach(target => {
+      });
+      
+      // Watch for initial load only
+      const unwatchLettingsTargets = $scope.$watch(() => lettingsTargetsList.items, function(items) {
+        if (items && items.length >= 0) {
+          items.forEach(target => {
             const targetMonth = $scope.lettingsChartData.find(m => 
               new Date(target.date).getMonth() === new Date(m.startDate).getMonth() &&
               new Date(target.date).getFullYear() === new Date(m.startDate).getFullYear()
@@ -423,8 +473,10 @@ angular.module('vs-app')
               targetMonth.target = target.value || 0;
             }
           });
+          lettingsTargetsLoaded = true;
+          renderLettingsChartIfReady();
+          unwatchLettingsTargets(); // Stop watching after first load
         }
-        renderChart('lettings-graph', $scope.lettingsChartData, 'Reality Lets', 'Target Lets');
       });
       
       const yearStart = new Date(currentYear, 0, 1).valueOf();
@@ -454,7 +506,10 @@ angular.module('vs-app')
           });
         }
         
-        renderChart('lettings-graph', $scope.lettingsChartData, 'Reality Lets', 'Target Lets');
+        lettingsAgreedLoaded = true;
+        $scope.$applyAsync(function() {
+          renderLettingsChartIfReady();
+        });
       });
     }
   }

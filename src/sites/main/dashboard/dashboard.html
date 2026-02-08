@@ -137,12 +137,12 @@
               </a>
             </div>
 
-            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{salesComingSoon.total || 0}}</span></h3>
-            <div class="stats-box">
-              <div class="stats-item" ng-if="!salesComingSoon.items.length">There are no pending instructions</div>
-              <a ng-repeat="item in salesComingSoon.items | limitTo:10" ui-sref="agency_coming-soon" class="stats-item">
+            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{salesComingSoonFilteredCount || 0}}</span></h3>
+            <div class="stats-box cs-stats">
+              <div class="stats-item" ng-if="!salesComingSoonFiltered.length">There are no pending instructions</div>
+              <a ng-repeat="item in salesComingSoonFiltered | limitTo:10" ui-sref="agency_coming-soon" class="stats-item">
                 <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
-                <div class="offer-address outstanding-address" ng-if="item.dateOfPhotos">Date of Photos: <span>{{item.dateOfPhotos | date:'mediumDate'}}</span></div>
+                <div class="offer-address photos-date" ng-if="item.dateOfPhotos">Date of Photos: <span>{{item.dateOfPhotos | date:'mediumDate'}}</span></div>
               </a>
             </div>
 
@@ -162,7 +162,8 @@
           <div class="col-xl-6">
             <h3 class="stats-header"><i class="fa-duotone fa-light fa-chart-line-up"></i> Target vs Reality</h3>
             <div class="graph-box">
-              <div id="sales-graph" class="graph-container"></div>
+              <div id="sales-graph" class="graph-container" ng-hide="salesGraphLoading"></div>
+              <div class="graph-loading" ng-show="salesGraphLoading"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
             </div>
 
             <div class="quick-links">
@@ -269,7 +270,8 @@
           <div class="col-xl-6">
             <h3 class="stats-header"><i class="fa-duotone fa-light fa-chart-line-up"></i> Target vs Reality</h3>
             <div class="graph-box">
-              <div id="lettings-graph" class="graph-container"></div>
+              <div id="lettings-graph" class="graph-container" ng-hide="lettingsGraphLoading"></div>
+              <div class="graph-loading" ng-show="lettingsGraphLoading"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
             </div>
 
             <div class="quick-links">
