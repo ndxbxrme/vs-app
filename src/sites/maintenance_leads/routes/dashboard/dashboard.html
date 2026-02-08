@@ -5,45 +5,45 @@
       <div class="col-md-8">
         <h1><i class="fa-duotone fa-light fa-screwdriver-wrench"></i> Maintenance <strong class="orange">Dashboard</strong></h1>
       </div>
-      <div class="col-md-4 text-end">
+      <div class="col-md-4 text-md-end">
         <button ng-click="openAddIssueModal()" class="button button-alt orange-button">New Issue <i class="fas fa-plus"></i></button>
         <button type="button" ng-click="openAddWorksOrderModal()" class="button button-grey">New Works Order <i class="fas fa-plus"></i></button>
       </div>
     </div>
     
     <!-- Snapshot Boxes -->
-    <div class="row snapshot-row">
-      <div class="col-md-4 col-lg-2">
+    <div class="row g-md-5 g-2 snapshot-row">
+      <div class="col-6 col-md-4 col-lg-2">
         <div class="snapshot-box" ui-sref="maintenance_leads_issues">
           <div class="snapshot-label">Today's Issues <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
           <div class="snapshot-value">{{ maintenanceToday.total }}</div>
         </div>
       </div>
-      <div class="col-md-4 col-lg-2">
+      <div class="col-6 col-md-4 col-lg-2">
         <div class="snapshot-box" ui-sref="maintenance_leads_issues">
           <div class="snapshot-label">Outstanding Issues <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
           <div class="snapshot-value">{{ maintenanceOutstanding.total }}</div>
         </div>
       </div>
-      <div class="col-md-4 col-lg-2">
+      <div class="col-6 col-md-4 col-lg-2">
         <div class="snapshot-box" ui-sref="maintenance_leads_worksorders">
           <div class="snapshot-label">Outstanding Works <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
           <div class="snapshot-value">{{ worksOutstanding.total }}</div>
         </div>
       </div>
-      <div class="col-md-4 col-lg-2">
+      <div class="col-6 col-md-4 col-lg-2">
         <div class="snapshot-box" ui-sref="maintenance_leads_worksorders">
           <div class="snapshot-label">Invoices Outstanding <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
           <div class="snapshot-value">{{ invoiceOutstanding.total }}</div>
         </div>
       </div>
-      <div class="col-md-4 col-lg-2">
+      <div class="col-6 col-md-4 col-lg-2">
         <div class="snapshot-box" ui-sref="maintenance_leads_worksorders">
           <div class="snapshot-label">Inspections <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
           <div class="snapshot-value">{{ inspectionWorks.total }}</div>
         </div>
       </div>
-      <div class="col-md-4 col-lg-2">
+      <div class="col-6 col-md-4 col-lg-2">
         <div class="snapshot-box" ui-sref="maintenance_leads_worksorders">
           <div class="snapshot-label">MoveOut Works <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
           <div class="snapshot-value">{{ moveOutWorks.total }}</div>

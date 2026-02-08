@@ -12,12 +12,12 @@
             <div class="col-sm-6 text-sm-end">
               <button class="button button-alt edit-issue-button" ng-click="openEditIssueModal()" ng-class="{disabled:issue.item.statusName===&quot;Completed&quot;}">Edit Issue <i class="fa-light fa-pen"></i></button>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
               <h2>Address: <span>{{ issue.item.address1 }}, {{ issue.item.postcode }}</span></h2>
               <h2>Issue: <span class="orange">{{ issue.item.title }}</span></h2>
               <h2 class="date">Date Reported: <span>{{ issue.item.date | date:'mediumDate' }}</span></h2>
             </div>
-            <div class="contacts col-6">
+            <div class="contacts col-md-6">
               <div class="tenant">
                 <div class="contact-details">
                   <div class="card">
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="row nav-row">
-          <div class="col-12 text-end">
+          <div class="col-12 text-md-end">
             <nav>
               <a href="#details"><i class="fa-duotone fa-light fa-info-circle"></i> Details</a>
               <a href="#documents"><i class="fa-duotone fa-light fa-file-lines"></i> Documents</a>
@@ -44,10 +44,10 @@
         </div>
         <div class="issue-details-section" id="details">
           <div class="row">
-            <div class="col-sm-2">
+            <div class="col-md-2">
               <div class="source {{issue.item.source}}"></div>
             </div>
-            <div class="controls col-sm-10 text-sm-end">
+            <div class="controls col-md-10 text-md-end">
               <a href="https://server.vitalspace.co.uk/maintenance-leads/api/fixflo/pdf/{{issue.item.fixfloId}}" target="_blank" class="button">View PDF <i class="fa-duotone fa-light fa-file-pdf"></i></a>
               <button type="button" ng-click="$parent.showLightbox(issue.item.media)" ng-show="issue.item.media.length" class="button">View Photos <i class="fa-duotone fa-light fa-camera-retro"></i></button>
               <button type="button" ui-sref="maintenance_leads_createworksorder({_id:issue.item._id})" class="button">Create Works Order <i class="fa-duotone fa-light fa-plus"></i></button>
@@ -64,8 +64,8 @@
         <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save('issue')" class="form-controls issue-form">
           <!-- Checkboxes and Quotes -->
           <div class="form-holder issue-header">
-            <div class="row align-items-center">
-              <div class="col-sm-6">
+            <div class="row g-5 align-items-center">
+              <div class="col-lg-6">
                 <label class="checkbox-label" for="sc-booked">Booked
                   <input id="sc-booked" type="checkbox" ng-model="issue.item.status.booked" ng-change="issue.save()"/>
                 </label>
@@ -80,17 +80,19 @@
                 </label>
               </div>
 
-              <div class="col-sm-6 row align-items-end">
-                <div class="quote col-5">
-                  <label>Contractor Quote</label>
-                  <input type="text" ng-model="issue.item.quoteContractor" placeholder="Contractor Quote"/>
-                </div>
-                <div class="quote col-5">
-                  <label>VitalSpace Quote</label>
-                  <input type="text" ng-model="issue.item.quoteVitalSpace" placeholder="VitalSpace Quote"/>
-                </div>
-                <div class="quote-save col-2">
-                  <button type="button" ng-click="issue.save()" class="button">Save <i class="fa-light fa-duotone fa-save"></i></button>
+              <div class="col-lg-6">
+                <div class="row g-2 align-items-end">
+                  <div class="quote col-xl-5 col-lg-6">
+                    <label>Contractor Quote</label>
+                    <input type="text" ng-model="issue.item.quoteContractor" placeholder="Contractor Quote"/>
+                  </div>
+                  <div class="quote col-xl-5 col-lg-6">
+                    <label>VitalSpace Quote</label>
+                    <input type="text" ng-model="issue.item.quoteVitalSpace" placeholder="VitalSpace Quote"/>
+                  </div>
+                  <div class="quote-save col-xl-2">
+                    <button type="button" ng-click="issue.save()" class="button">Save <i class="fa-light fa-duotone fa-save"></i></button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -98,7 +100,7 @@
         </div>
 
         <div class="issue-actions">
-          <div class="row align-items-end">
+          <div class="row g-2 align-items-end">
             <div class="col-xl-3 col-sm-6">
               <h3><strong>{{ mml('issue-heading-landlord') }}</strong></h3>
               <label>Assign Landlord</label>
@@ -151,7 +153,7 @@
         </div>
         
         <div class="contractor-actions">
-          <div class="row align-items-end">
+          <div class="row g-2 align-items-end">
             <div ng-show="issue.item.statusName!==&quot;Completed&quot;" class="col-xl-3 col-sm-6">
               <h3><strong>{{ mml('issue-heading-contractor-assigned') }}</strong></h3>
               <div ng-class="{warning: submitted &amp;&amp; myForm.booked.$invalid}" class="form-item c-select booked">
@@ -173,7 +175,7 @@
               <label>Task Time</label>
               <input type="text" value="{{tasks.items[0].date | date:&quot;HH:mm&quot;}}" disabled="disabled" ng-hide="issue.item.statusName===&quot;Reported&quot;" class="task-time"/>
             </div>
-            <div class="col-xl-3 col-sm-6 text-end">
+            <div class="col-xl-3 col-sm-6 text-sm-end">
               <button type="button" ui-sref="maintenance_leads_diary({_id:issue.item._id})" class="button">{{ mml('issue-diary-label') }} <i class="fa-duotone fa-light fa-calendar"></i></button>
             </div>
           </div>

@@ -55,7 +55,7 @@ chain-box()
   background vs-white
   width 100%
   text-align center
-  margin 30px 0 10px
+  margin 0px 0 10px
   padding 20px
   &.dragover
     h3
@@ -85,9 +85,16 @@ chain-box()
     padding 20px 30px
     transition: all .3s ease
     cursor pointer
+    position relative
     &:hover
       box-shadow 0 4px 12px rgba(0,0,0,0.1)
       transform translateY(-2px)
+    i
+      position absolute
+      top 10px
+      right 10px
+      font-size 1.4rem
+      color vs-grey
     .snapshot-value
       color vs-orange
       font-size 4rem
