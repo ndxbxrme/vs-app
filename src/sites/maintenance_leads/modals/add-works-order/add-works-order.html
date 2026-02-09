@@ -5,19 +5,19 @@
   </div>
 
   <div class="modal-body">
-    <form name="worksOrderForm" novalidate="novalidate">
+    <form name="forms.worksOrderForm" novalidate="novalidate">
       <div class="row">
         <div class="col-sm-4">
           <label>Date</label>
           <input type="date" name="date" ng-model="worksOrder.date" required="required" />
-          <div class="error" ng-show="submitted && worksOrderForm.date.$invalid">Please enter the date</div>
+          <div class="error" ng-show="submitted && forms.worksOrderForm.date.$invalid">Please enter the date</div>
         </div>
         <div class="col-sm-4">
           <label>Contractor</label>
           <select sumoselect="{placeholder:'Contractor', search:true}" ng-model="worksOrder.contractor" name="contractor" required="required">
             <option ng-repeat="contractor in contractors.items" value="{{contractor._id}}" ng-hide="contractor.hidden">{{ contractor.name }}</option>
           </select>
-          <div class="error" ng-show="submitted && worksOrderForm.contractor.$invalid">Please select a contractor</div>
+          <div class="error" ng-show="submitted && forms.worksOrderForm.contractor.$invalid">Please select a contractor</div>
         </div>
         <div class="col-sm-4">
           <label>Priority</label>
@@ -26,7 +26,7 @@
             <option value="Medium">Medium</option>
             <option value="High">High</option>
           </select>
-          <div class="error" ng-show="submitted && worksOrderForm.priority.$invalid">Please select a priority</div>
+          <div class="error" ng-show="submitted && forms.worksOrderForm.priority.$invalid">Please select a priority</div>
         </div>
       </div>
       <div class="row">
@@ -71,7 +71,7 @@
             <option value="Tenancy Issue">Tenancy Issue</option>
             <option value="Move Out Issue">Move Out Issue</option>
           </select>
-          <div class="error" ng-show="submitted && worksOrderForm.moveOutWorks.$invalid">Please select an issue type</div>
+          <div class="error" ng-show="submitted && forms.worksOrderForm.moveOutWorks.$invalid">Please select an issue type</div>
         </div>
       </div>
     </form>
@@ -79,6 +79,6 @@
 
   <div class="modal-footer">
     <button class="button button-alt" ng-click="cancel()">Cancel</button>
-    <button class="button" ng-click="submit()" ng-disabled="worksOrderForm.$invalid">{{ data.worksOrder ? 'Update Works Order' : 'Create Works Order' }}</button>
+    <button class="button" ng-click="submit()">{{ data.worksOrder ? 'Update Works Order' : 'Create Works Order' }}</button>
   </div>
 </div>

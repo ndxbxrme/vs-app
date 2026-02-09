@@ -48,7 +48,8 @@
               <div class="source {{issue.item.source}}"></div>
             </div>
             <div class="controls col-md-10 text-md-end">
-              <a href="https://server.vitalspace.co.uk/maintenance-leads/api/fixflo/pdf/{{issue.item.fixfloId}}" target="_blank" class="button">View PDF <i class="fa-duotone fa-light fa-file-pdf"></i></a>
+              <a href="https://server.vitalspace.co.uk/maintenance-leads/api/fixflo/pdf/{{issue.item.fixfloId}}" target="_blank" class="button" ng-show="issue.item.source === 'fixflo' && issue.item.fixfloId">View PDF <i class="fa-duotone fa-light fa-file-pdf"></i></a>
+              <a ng-href="{{getWorksOrderPdfUrl()}}" target="_blank" class="button" ng-show="getWorksOrderPdfUrl()">View PDF <i class="fa-duotone fa-light fa-file-pdf"></i></a>
               <button type="button" ng-click="$parent.showLightbox(issue.item.media)" ng-show="issue.item.media.length" class="button">View Photos <i class="fa-duotone fa-light fa-camera-retro"></i></button>
               <button type="button" ui-sref="maintenance_leads_createworksorder({_id:issue.item._id})" class="button">Create Works Order <i class="fa-duotone fa-light fa-plus"></i></button>
               <button type="button" ng-show="issue.item.statusName===&quot;Booked&quot;" ng-click="completeIssue(issue)" class="button button-green">{{ mml('issue-label-complete') }} <i class="fa-light fa-duotone fa-check"></i></button>

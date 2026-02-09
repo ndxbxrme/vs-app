@@ -72,6 +72,24 @@
       sort: 'date',
       sortDir: 'DESC'
     });
+    
+    // Extract works order PDF URL from notes
+    $scope.getWorksOrderPdfUrl = function() {
+      if (!$scope.issue || !$scope.issue.item || !$scope.issue.item.notes) {
+        return null;
+      }
+      for (var i = 0; i < $scope.issue.item.notes.length; i++) {
+        var note = $scope.issue.item.notes[i];
+        if (note.text && note.text.includes('Works order created')) {
+          var match = note.text.match(/https:\/\/vitalspace-worksorders\.s3\.eu-west-1\.amazonaws\.com\/[^\s>)]+/);
+          if (match) {
+            return match[0];
+          }
+        }
+      }
+      return null;
+    };
+    
     $scope.addNote = function() {
       var i, len, mynote, ref, ref1, ref2;
       if ($scope.note) {
