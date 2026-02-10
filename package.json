@@ -14,9 +14,8 @@
     "build": "rm -rf app && mkdir app && rm -rf public && cp -r ./src/public ./app/public && webpack --config webpack.prod.js && replace-charset.bat",
     "deploy:linux": "npm run build:linux && aws s3 rm s3://app.vitalspace.co.uk --recursive --profile vsdevops && aws s3 sync app s3://app.vitalspace.co.uk --profile vsdevops",
     "build:linux": "rm -rf app && mkdir -p app && rm -rf public && cp -r ./src/public ./app/public && webpack --config webpack.prod.js && sed -i -E 's/main\\.([0-9a-f]+)\\.js\"/main.\\1.js\" charset=\"utf-8\"/' app/index.html",
-    "deploy:macos": "npm run build:linux && aws s3 rm s3://app.vitalspace.co.uk --recursive --profile vsdevops && aws s3 sync app s3://app.vitalspace.co.uk --profile vsdevops",
-    "build:macos": "rm -rf app && mkdir -p app && rm -rf public && cp -r ./src/public ./app/public && webpack --config webpack.prod.js && sed -i -E 's/main\\.([0-9a-f]+)\\.js\"/main.\\1.js\" charset=\"utf-8\"/' app/index.html",
-
+    "deploy:macos": "npm run build:macos && aws s3 rm s3://app.vitalspace.co.uk --recursive --profile vsdevops && aws s3 sync app s3://app.vitalspace.co.uk --profile vsdevops",
+    "build:macos": "rm -rf app && mkdir -p app && rm -rf public && cp -r ./src/public ./app/public && NODE_OPTIONS=--openssl-legacy-provider webpack --config webpack.prod.js && sed -i '' -E 's/main\\.([0-9a-f]+)\\.js\"/main.\\1.js\" charset=\"utf-8\"/' app/index.html",
     "serve": "npm-run-all --parallel serve:backend serve:static",
     "start:all": "rm -rf app && mkdir app && cp -r ./src/public ./app/public && npm-run-all --parallel serve:webpack serve:nodemon"
   },

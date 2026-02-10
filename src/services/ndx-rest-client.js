@@ -353,9 +353,18 @@ module.exports = (mymodule) => {
             return $http.post((endpoint.route || ($http.sites[siteName].url + "/api/" + endpoint)) + ("/" + (obj[autoId] || '')), obj, config).then((function(_this) {
               return function(response) {
                 stopLoading();
-                endpoints[fullendpoint].needsRefresh = true;
+                if (!endpoints[fullendpoint]) {
+                  endpoints[fullendpoint] = {
+                    needsRefresh: true,
+                    lastRefresh: 0,
+                    nextRefresh: 0,
+                    ids: []
+                  };
+                } else {
+                  endpoints[fullendpoint].needsRefresh = true;
+                }
                 ndxCheck && ndxCheck.setPristine();
-                callRefreshFns(fullendpoint);
+                callRefreshFns();
                 return response && response.data && (typeof cb === "function" ? cb(response.data) : void 0);
               };
             })(this), function(err) {
@@ -370,9 +379,18 @@ module.exports = (mymodule) => {
             return $http["delete"]((endpoint.route || ($http.sites[siteName].url + "/api/" + endpoint)) + ("/" + (obj[autoId] || '')), config).then((function(_this) {
               return function(response) {
                 stopLoading();
-                endpoints[fullendpoint].needsRefresh = true;
+                if (!endpoints[fullendpoint]) {
+                  endpoints[fullendpoint] = {
+                    needsRefresh: true,
+                    lastRefresh: 0,
+                    nextRefresh: 0,
+                    ids: []
+                  };
+                } else {
+                  endpoints[fullendpoint].needsRefresh = true;
+                }
                 ndxCheck && ndxCheck.setPristine();
-                callRefreshFns(fullendpoint);
+                callRefreshFns();
                 return response && response.data && (typeof cb === "function" ? cb(response.data) : void 0);
               };
             })(this), function(err) {

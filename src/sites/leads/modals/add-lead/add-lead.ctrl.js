@@ -1,7 +1,11 @@
-angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $state, data, ndxModalInstance, env) {
+angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $state, $http, data, ndxModalInstance) {
   $scope.selectedProperty = data.selectedProperty || null;
   $scope.disabled = false;
   $scope.submitted = false;
+  $scope.forms = {};
+  
+  // Get property API URL from $http.sites
+  const propertyUrl = $http.sites && $http.sites.main ? $http.sites.main.url.replace('/app', '/property/api') : 'https://server.vitalspace.co.uk/property/api';
   
   // Initialize lead - either new or editing existing
   if (data.lead) {
@@ -29,7 +33,7 @@ angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $stat
   
   // Get selling properties
   $scope.selling = $scope.list({
-    route: `${env.PROPERTY_URL}/search`
+    route: `${propertyUrl}/search`
   }, {
     where: {
       RoleType: 'Selling',
@@ -48,7 +52,7 @@ angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $stat
   
   // Get letting properties
   $scope.letting = $scope.list({
-    route: `${env.PROPERTY_URL}/search`
+    route: `${propertyUrl}/search`
   }, {
     where: {
       RoleType: 'Letting',
@@ -67,28 +71,37 @@ angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $stat
   
   $scope.save = function() {
     $scope.submitted = true;
-    if ($scope.myForm.$valid) {
-      // Handle property selection
-      if ($scope.selectedProperty && $scope.lead.item.roleType !== 'Valuation') {
-        const propertyList = $scope.lead.item.roleType === 'Selling' ? $scope.selling.items : $scope.letting.items;
-        const selectedProp = propertyList.find(p => p._id === $scope.selectedProperty);
-        if (selectedProp) {
-          $scope.lead.item.property = {
-            address: selectedProp.AddressNumber + ' ' + selectedProp.Address1,
-            postcode: selectedProp.Postcode
-          };
-          $scope.lead.item.price = selectedProp.Price;
-        }
-      }
-      
-      $scope.lead.item.date = new Date();
-      $scope.lead.item.applicant = `${$scope.lead.item.user.title} ${$scope.lead.item.user.first_name} ${$scope.lead.item.user.last_name}`;
-      
-      $scope.lead.save('lead').then(() => {
-        ndxModalInstance.close();
-        $state.reload();
-      });
+    
+    console.log('Save function called');
+    console.log('Form:', $scope.forms.myForm);
+    console.log('Form valid:', $scope.forms.myForm ? $scope.forms.myForm.$valid : 'form not found');
+    
+    if (!$scope.forms.myForm || !$scope.forms.myForm.$valid) {
+      console.log('Form validation failed');
+      return;
     }
+    
+    console.log('Form is valid, proceeding with save');
+    
+    // Handle property selection
+    if ($scope.selectedProperty && $scope.lead.item.roleType !== 'Valuation') {
+      const propertyList = $scope.lead.item.roleType === 'Selling' ? $scope.selling.items : $scope.letting.items;
+      const selectedProp = propertyList.find(p => p._id === $scope.selectedProperty);
+      if (selectedProp) {
+        $scope.lead.item.property = {
+          address: selectedProp.AddressNumber + ' ' + selectedProp.Address1,
+          postcode: selectedProp.Postcode
+        };
+        $scope.lead.item.price = selectedProp.Price;
+      }
+    }
+    
+    $scope.lead.item.date = new Date();
+    $scope.lead.item.applicant = `${$scope.lead.item.user.title} ${$scope.lead.item.user.first_name} ${$scope.lead.item.user.last_name}`;
+    
+    $scope.lead.save().then(() => {
+      ndxModalInstance.close($scope.lead.item);
+    });
   };
   
   $scope.cancel = function() {
