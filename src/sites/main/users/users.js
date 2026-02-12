@@ -13,8 +13,8 @@ angular.module('vs-app')
     let firstTime = true;
     $scope.sites.forEach(site => site.users = $scope.list(site.id + ':users', null, (users) => {
       //getPendingUsers();
-      const unloaded = $scope.sites.find(site => !site.users || !site.users.items || !site.users.items.length);
-      console.log('site', site.id, site.users.items);
+      //const unloaded = $scope.sites.find(site => !site.users || !site.users.items || !site.users.items.length);
+      //console.log('site', site.id, site.users.items);
     }))
     $scope.roles = ['no access', 'agency', 'maintenance', 'admin', 'superadmin'];
     $scope.roleIcons = ['fa-duotone fa-ban', 'fa-duotone fa-users', 'fa-duotone fa-screwdriver-wrench', 'fa-duotone fa-user-vneck-hair', 'fa-duotone fa-user-crown'];
