@@ -50,9 +50,9 @@
       <div class="row align-items-end">
         <div class="col-lg-6">
           <div class="sort">Order By:<br>
-            <a href="" ng-click="sort=&quot;-dateOfPhotos&quot;;page=1" ng-class="{selected:sort===&quot;-dateOfPhotos&quot;}" class="order-item">Date of Photos</a>
-            <a href="" ng-click="sort=&quot;-goLiveDate&quot;;page=1" ng-class="{selected:sort===&quot;-goLiveDate&quot;}" class="order-item">Go Live Date</a>
-            <a href="" ng-click="sort=&quot;-insertedOn&quot;;page=1" ng-class="{selected:sort===&quot;-insertedOn&quot;}" class="order-item">Date Instructed</a>
+            <a href="" ng-click="sort='dateOfPhotos';page=1" ng-class="{selected:sort==='dateOfPhotos'}" class="order-item">Date of Photos</a>
+            <a href="" ng-click="sort='goLiveDate';page=1" ng-class="{selected:sort==='goLiveDate'}" class="order-item">Go Live Date</a>
+            <a href="" ng-click="sort='insertedOn';page=1" ng-class="{selected:sort==='insertedOn'}" class="order-item">Date Instructed</a>
           </div>
         </div>
         <div class="col-lg-6 text-lg-end">
@@ -62,7 +62,7 @@
     </div>
 
     <div class="properties-list" ng-show="filterData.length &gt; 0">
-      <div class="property-card" ng-repeat="item in filterData =(instructions.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
+      <div class="property-card" ng-repeat="item in filterData =(instructions.items | filter:{SearchField:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
         <div class="property-main row g-5">
           
           <div class="property-info col-lg-6">
@@ -136,6 +136,7 @@
                     <option value="">Assign...</option>
                     <option value="Simon Thomas">Simon Thomas</option>
                     <option value="Martin Gray">Martin Gray</option>
+                    <option value="Sona Media">Sona Media</option>
                     <option value="Richard Antrobus">Richard Antrobus</option>
                   </select>
                 </div>

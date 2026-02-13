@@ -53,6 +53,7 @@ import './sites/lettings/filters/currency-format.js';
 import './sites/lettings/filters/flatten.js';
 import './sites/lettings/filters/timeago.js';
 import './sites/lettings/modals/advance-progression/advance-progression.ctrl.js';
+import './sites/lettings/modals/agreed-properties/agreed-properties.ctrl.js';
 import './sites/lettings/modals/request-email/request-email.ctrl.js';
 import './sites/lettings/routes/accept/accept.ctrl.js';
 import './sites/lettings/routes/accept/accept.routes.js';

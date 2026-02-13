@@ -120,18 +120,18 @@
               <div class="td td-end"><span></span><span>Total</span></div>
             </div>
             <div class="tr">
-              <div class="td" ng-repeat="c in consultants.items">
+              <div class="td clickable" ng-repeat="c in consultants.items" ng-click="showConsultantPipelineModal(c._id, c.initials || c.displayName)">
                 {{(consultantPipeline()[c._id] || 0)}}
               </div>
-              <div class="td">
+              <div class="td clickable" ng-click="showConsultantPipelineModal()">
                 {{sum(consultantPipeline()) }}
               </div>
             </div>
             <div class="tr orange">
-              <div class="td" ng-repeat="c in consultants.items">
+              <div class="td clickable" ng-repeat="c in consultants.items" ng-click="showInstructedByPipelineModal(c._id, c.initials || c.displayName)">
                 {{(consultantInstructedBy()[c._id] || 0)}}
               </div>
-              <div class="td">
+              <div class="td clickable" ng-click="showInstructedByPipelineModal()">
                 {{sum(consultantInstructedBy()) }}
               </div>
             </div>
@@ -153,7 +153,7 @@
             </div>
             <div class="tr" ng-repeat="month in months">
               <div class="td">{{month.name}}</div>
-              <div class="td" ng-repeat="c in consultants.items">
+              <div class="td clickable" ng-repeat="c in consultants.items" ng-click="showConsultantExchangesModal(dashboardExchangeItem, month, c._id, c.initials || c.displayName)">
                 {{consultantExchanges(dashboardExchangeItem, month)[c._id] || 0}}
               </div>
               <div class="td clickable" ng-click="showInstructedByModal(dashboardExchangeItem, month)">

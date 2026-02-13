@@ -7,6 +7,8 @@ angular.module('vs-agency')
     link: (scope) => {
       scope.page = 1;
       scope.limit = 15;
+      scope.sort = 'dateOfPhotos'; // Default sort by Date of Photos, earliest first
+      scope.nodeleted = 0;
       scope.pageChange = function() {
         return $('html, body').animate({
           scrollTop: 0
@@ -24,6 +26,13 @@ angular.module('vs-agency')
               };
             }
           }
+          // Update SearchField after user assignment
+          instruction.SearchField = [
+            instruction.address,
+            instruction.vendorsName,
+            instruction.user && instruction.user.displayName,
+            instruction.photographer
+          ].filter(Boolean).join(' ');
         })
       }
       scope.users = scope.list('main:users', null, (users) => {
@@ -39,6 +48,13 @@ angular.module('vs-agency')
           if(item.askingPrice) item.askingPrice = parseFloat(item.askingPrice);
           // Convert percentage to actual amount
           if(item.fee && item.fee <= 1 && item.askingPrice) item.fee = (item.fee * item.askingPrice * 0.01);
+          // Create SearchField for filtering
+          item.SearchField = [
+            item.address,
+            item.vendorsName,
+            item.user && item.user.displayName,
+            item.photographer
+          ].filter(Boolean).join(' ');
         })
         assignUsers();
       });

@@ -303,6 +303,85 @@
 
       return result;
     };
+    $scope.showConsultantExchangesModal = function(di, month, consultantId, consultantName) {
+      if (!($scope.properties && $scope.properties.items)) {
+        return;
+      }
+
+      var properties = $scope.income(di, month, true);
+      const list = [];
+
+      for (var j = 0; j < properties.length; j++) {
+        var property = properties[j];
+        if (!property || property.override && property.override.deleted) continue;
+        if (!property.role) continue;
+        
+        // Filter by consultant if provided
+        if (consultantId && property.consultant !== consultantId) continue;
+        
+        list.push(property);
+      }
+      
+      if (list.length) {
+        return $scope.modal({
+          template: require('../../modals/dashboard-income/dashboard-income.html').default,
+          controller: 'agencyDashboardIncomeCtrl',
+          data: {
+            di: {
+              name: consultantName ? consultantName + ' Exchanges - ' + month.name : di.name,
+              sumtype: 'Income'
+            },
+            month: month,
+            list: list
+          }
+        }).then(function() {
+          return true;
+        }, function() {
+          return false;
+        });
+      } else {
+        alert.log('No exchanges to show');
+      }
+    };
+    $scope.showConsultantPipelineModal = function(consultantId, consultantName) {
+      if (!($scope.properties && $scope.properties.items)) {
+        return;
+      }
+
+      const list = [];
+      for (var j = 0; j < $scope.properties.items.length; j++) {
+        var property = $scope.properties.items[j];
+        if (!property || property.override && property.override.deleted) continue;
+        if (!property.role) continue;
+        if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
+        if (Object.values(property.milestoneIndex)[0]===10) continue;
+        
+        // Filter by consultant if provided, otherwise show all
+        if (consultantId && property.consultant !== consultantId) continue;
+        
+        list.push(property);
+      }
+      
+      if (list.length) {
+        return $scope.modal({
+          template: require('../../modals/dashboard-income/dashboard-income.html').default,
+          controller: 'agencyDashboardIncomeCtrl',
+          data: {
+            di: {
+              name: consultantName ? consultantName + ' Pipeline' : 'All Pipeline Properties'
+            },
+            month: '',
+            list: list
+          }
+        }).then(function() {
+          return true;
+        }, function() {
+          return false;
+        });
+      } else {
+        alert.log('No pipeline properties to show');
+      }
+    };
     $scope.consultantInstructedBy = function() {
       var result = {};
       if (!($scope.consultants && $scope.consultants.items && $scope.properties && $scope.properties.items && $scope.propertyadmin && $scope.propertyadmin.items)) {
@@ -318,7 +397,7 @@
       for (var i = 0; i < $scope.propertyadmin.items.length; i++) {
         const propertyadminitem = $scope.propertyadmin.items[i];
         // Check if instructionToMarket and instructedBy exist
-        if (!propertyadminitem.instructionToMarket || !propertyadminitem.instructionToMarket.instructedBy) continue;
+        if (!propertyadminitem.RoleId || !propertyadminitem.instructionToMarket || !propertyadminitem.instructionToMarket.instructedBy) continue;
         const property = allProperties.find(property => property.roleId===propertyadminitem.RoleId.toString());
         if (!property || property.override && property.override.deleted) continue;
         if(!property.type === 'clientmanagement') {
@@ -339,42 +418,69 @@
       }
       return result;
     }
-    $scope.showInstructedByModal = function(di, month) {
-      var result = {};
-      if (!($scope.consultants && $scope.consultants.items && $scope.properties && $scope.properties.items && $scope.propertyadmin && $scope.propertyadmin.items)) {
-        return result;
+    $scope.showInstructedByPipelineModal = function(consultantId, consultantName) {
+      if (!($scope.properties && $scope.properties.items && $scope.propertyadmin && $scope.propertyadmin.items)) {
+        return;
       }
 
-      for (var i = 0; i < $scope.consultants.items.length; i++) {
-        var consultant = $scope.consultants.items[i];
-        result[consultant._id] = {
-          total: 0,
-          data: consultant
-        }
-      }
-      const properties = $scope.income(di, month, true);
-      for (var j = 0; j < properties.length; j++) {
-        var property = properties[j];
+      const allProperties = [...$scope.properties.items, ...$scope.clientmanagement.items];
+      const list = [];
+      
+      for (var i = 0; i < $scope.propertyadmin.items.length; i++) {
+        const propertyadminitem = $scope.propertyadmin.items[i];
+        if (!propertyadminitem.RoleId || !propertyadminitem.instructionToMarket || !propertyadminitem.instructionToMarket.instructedBy) continue;
+        
+        // Filter by consultant if provided, otherwise show all
+        if (consultantId && propertyadminitem.instructionToMarket.instructedBy !== consultantId) continue;
+        
+        const property = allProperties.find(property => property.roleId===propertyadminitem.RoleId.toString());
         if (!property || property.override && property.override.deleted) continue;
-        if (!property.role) continue;
-        //get paa
-        const propertyadminitem = $scope.propertyadmin.items.find(propertyadminitem => property.roleId===propertyadminitem.RoleId.toString());
-        if (((propertyadminitem || {}).instructionToMarket || {}).instructedBy) {
-          var cid = propertyadminitem.instructionToMarket.instructedBy;
-          if (result.hasOwnProperty(cid)) {
-            result[cid].total++;
-          }
+        if(!property.type === 'clientmanagement') {
+          if (!property.role) continue;
+          if (property.role.RoleStatus.SystemName !== 'OfferAccepted') continue;
+          if (Object.values(property.milestoneIndex)[0]===10) continue;
         }
+        list.push(property);
       }
-      const list = Object.values(result).filter(value => value.total);
+      
       if (list.length) {
+        return $scope.modal({
+          template: require('../../modals/dashboard-income/dashboard-income.html').default,
+          controller: 'agencyDashboardIncomeCtrl',
+          data: {
+            di: {
+              name: consultantName ? 'Instructed by ' + consultantName : 'All Instructed Properties'
+            },
+            month: '',
+            list: list
+          }
+        }).then(function() {
+          return true;
+        }, function() {
+          return false;
+        });
+      } else {
+        alert.log('No instructed properties to show');
+      }
+    }
+    $scope.showInstructedByModal = function(di, month) {
+      if (!($scope.properties && $scope.properties.items)) {
+        return;
+      }
+
+      const list = $scope.income(di, month, true);
+      
+      if (list.length) {
+        // Always set sumtype to 'Income' for commission display
+        const diData = Object.assign({}, di, {sumtype: 'Income'});
+        
         return $scope.modal({
           template: require('../../modals/instructed-by/instructed-by.html').default,
           controller: 'agencyInstructedByCtrl',
           data: {
-            di: di,
+            di: diData,
             month: month,
-            items: list
+            list: list
           }
         }).then(function() {
           return true;
@@ -417,7 +523,9 @@
           template: require('../../modals/dashboard-income/dashboard-income.html').default,
           controller: 'agencyDashboardIncomeCtrl',
           data: {
-            di: '',
+            di: {
+              name: 'Unknown ' + type
+            },
             month: '',
             list: list
           }

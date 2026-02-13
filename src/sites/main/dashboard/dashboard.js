@@ -190,6 +190,8 @@ angular.module('vs-app')
   $scope.myPipeline = 0;
   $scope.myInstructedBy = 0;
   $scope.myLettingsPipeline = 0;
+  $scope.myPipelineProperties = [];
+  $scope.myInstructedByProperties = [];
   
   if (currentUser) {
     $scope.consultants = $scope.list('main:users', null, (users) => {
@@ -205,14 +207,20 @@ angular.module('vs-app')
       if (hasAgencyAccess) {
         function calculateInstructedBy() {
           let instructedByCount = 0;
-          if ($scope.propertyadmin && $scope.propertyadmin.items) {
+          const instructedByProperties = [];
+          if ($scope.propertyadmin && $scope.propertyadmin.items && $scope.properties && $scope.properties.items) {
             $scope.propertyadmin.items.forEach(propertyadminitem => {
-              if (propertyadminitem.instructionToMarket && propertyadminitem.instructionToMarket.instructedBy === userId) {
-                instructedByCount++;
+              if (propertyadminitem.RoleId && propertyadminitem.instructionToMarket && propertyadminitem.instructionToMarket.instructedBy === userId) {
+                const property = $scope.properties.items.find(p => p.roleId === propertyadminitem.RoleId.toString());
+                if (property && !(property.override && property.override.deleted) && property.role && property.role.RoleStatus.SystemName === 'OfferAccepted' && Object.values(property.milestoneIndex)[0] !== 10) {
+                  instructedByCount++;
+                  instructedByProperties.push(property);
+                }
               }
             });
           }
           $scope.myInstructedBy = instructedByCount;
+          $scope.myInstructedByProperties = instructedByProperties;
         }
         
         $scope.propertyadmin = $scope.list('main:propertyadmin', null, function(propertyadminList) {
@@ -227,6 +235,7 @@ angular.module('vs-app')
         }, function(properties) {
           let count = 0;
           $scope.unknownSolicitors = [];
+          $scope.myPipelineProperties = [];
           if (properties && properties.items) {
             for (let i = 0; i < properties.items.length; i++) {
               const property = properties.items[i];
@@ -263,10 +272,12 @@ angular.module('vs-app')
               // Match by consultant ID
               if (property.consultant === userId) {
                 count++;
+                $scope.myPipelineProperties.push(property);
               }
             }
           }
           $scope.myPipeline = count;
+          calculateInstructedBy();
         });
       }
       
@@ -307,6 +318,38 @@ angular.module('vs-app')
     if(!address) return '';
     return address.replace(/, ,/g, ',');
   }
+  
+  $scope.showMyPipelineModal = function() {
+    if ($scope.myPipelineProperties && $scope.myPipelineProperties.length) {
+      return $scope.modal({
+        template: require('../../agency/modals/dashboard-income/dashboard-income.html').default,
+        controller: 'agencyDashboardIncomeCtrl',
+        data: {
+          di: {
+            name: 'My Pipeline Properties'
+          },
+          month: '',
+          list: $scope.myPipelineProperties
+        }
+      });
+    }
+  };
+  
+  $scope.showMyInstructedByModal = function() {
+    if ($scope.myInstructedByProperties && $scope.myInstructedByProperties.length) {
+      return $scope.modal({
+        template: require('../../agency/modals/dashboard-income/dashboard-income.html').default,
+        controller: 'agencyDashboardIncomeCtrl',
+        data: {
+          di: {
+            name: 'Properties Instructed By Me'
+          },
+          month: '',
+          list: $scope.myInstructedByProperties
+        }
+      });
+    }
+  };
   
   $scope.getGreeting = function() {
     const hour = new Date().getHours();

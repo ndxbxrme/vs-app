@@ -46,16 +46,16 @@
             <div class="row g-5">
               <div class="col-6">
                 <div class="snapshot">
-                  <div class="snapshot-item">
-                    <div class="snapshot-label">Sold By Me</div>
+                  <div class="snapshot-item clickable" ng-click="showMyPipelineModal()">
+                    <div class="snapshot-label">Sold By Me <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
                     <div class="snapshot-value">{{myPipeline}}</div>
                   </div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="snapshot">
-                  <div class="snapshot-item">
-                    <div class="snapshot-label">Instructed By Me</div>
+                  <div class="snapshot-item clickable" ng-click="showMyInstructedByModal()">
+                    <div class="snapshot-label">Instructed By Me <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
                     <div class="snapshot-value">{{myInstructedBy}}</div>
                   </div>
                 </div>
@@ -244,8 +244,9 @@
               </a>
             </div>
 
-            <h3 class="stats-header" ng-show="nextMoveInFiltered.length > 0"><span><i class="fa-duotone fa-light fa-truck-moving"></i> Next Move In</span> <span class="count">{{nextMoveInFiltered.length}}</span></h3>
-            <div class="stats-box" ng-show="nextMoveInFiltered.length > 0">
+            <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-truck-moving"></i> Next Move In</span> <span class="count">{{nextMoveInFiltered.length}}</span></h3>
+            <div class="stats-box">
+              <div class="stats-item" ng-if="!nextMoveInFiltered.length">There are no upcoming move in's in the next 2 days</div>
               <a ng-repeat="property in nextMoveInFiltered | limitTo:10" ui-sref="lettings_case({roleId:property.RoleId})" class="stats-item offer-with-image">
                 <div class="offer-thumbnail" ng-if="property.Images && property.Images.length > 0">
                   <img ng-src="{{property.Images[0].Url}}" alt="Property" />

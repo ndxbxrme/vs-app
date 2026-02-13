@@ -121,14 +121,75 @@ function updateTargets() {
       return updateProperties();
     });
     $scope.open = function(selectedMonth) {
-      var i, len, month, open, ref;
-      open = selectedMonth.open;
-      ref = $scope.months;
-      for (i = 0, len = ref.length; i < len; i++) {
-        month = ref[i];
-        month.open = false;
+      if (!selectedMonth.open) {
+        // Open modal
+        const modalTemplate = `
+          <div class="modal properties-modal">
+            <div class="modal-header">
+              <h2>{{month.month}} {{year}}</h2>
+              <div class="snapshot">
+                <div class="snapshot-item">
+                  <div class="snapshot-label">Total Properties</div>
+                  <div class="snapshot-value">{{month.properties.length}}</div>
+                </div>
+                <div class="snapshot-item">
+                  <div class="snapshot-label">Commission</div>
+                  <div class="snapshot-value" ng-bind-html="(month.commission | currency:'£' | currencyFormat)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="properties-list">
+              <div class="property-card" ng-repeat="property in month.properties track by property._id" ng-class="{delisted:property.delisted, editing: property.$editing}" data-tooltip="{{::property.date | date:'mediumDate'}}">
+                <div class="editor" ng-if="property.$editing">
+                  <div class="row g-3">
+                    <div class="col-8">
+                      <label>Address</label>
+                      <input type="text" ng-model="property.$override.address"/>
+                    </div>
+                    <div class="col-4">
+                      <label>Commission</label>
+                      <input type="text" ng-model="property.$override.commission"/>
+                    </div>
+                  </div>
+                  <div class="button-group">
+                    <input class="small button save" type="button" ng-click="save(property)" value="Save"/>
+                    <input class="small button cancel" type="button" ng-click="cancelEdit(property)" value="Cancel"/>
+                  </div>
+                </div>
+                <div class="default" ng-if="!property.$editing">
+                  <div class="property-header">
+                    <div class="property-number">{{$index + 1}}</div>
+                    <div class="property-address">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
+                    <div class="property-controls" ng-show="auth.checkRoles(['admin','superadmin'])">
+                      <a href="" ng-click="edit(property)"><i class="fa-light fa-pen-to-square"></i></a>
+                      <a href="" ng-click="deleteProperty(property)"><i class="fa-light fa-trash-can"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="close-reveal-modal" ng-click="cancel()">&times;</a>
+          </div>
+        `;
+        
+        selectedMonth.open = true;
+        $scope.modal({
+          template: modalTemplate,
+          controller: 'lettingsAgreedPropertiesCtrl',
+          data: {
+            month: selectedMonth,
+            year: $scope.currentYear,
+            save: $scope.save,
+            edit: $scope.edit,
+            deleteProperty: $scope.delete,
+            cancelEdit: $scope.cancel
+          }
+        }).then(() => {
+          selectedMonth.open = false;
+        }, () => {
+          selectedMonth.open = false;
+        });
       }
-      return selectedMonth.open = !open;
     };
     $scope.edit = function(property) {
       if (!property.$override) {
