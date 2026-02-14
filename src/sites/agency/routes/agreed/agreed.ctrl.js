@@ -5,6 +5,7 @@
     var updateMonths, updateProperties, updateTargets, y;
     $scope.filterMode = "1";
     $scope.now = new Date().valueOf();
+    $scope.firstLoad = false;
     $scope.years = [];
     y = new Date().getFullYear() + 1;
     while (y-- > 2017) {
@@ -82,14 +83,17 @@
     };
     let historic = {};
     ['2017', '2018', '2019', '2020', '2021', '2022'].map(year => $http.get('/public/data/conveyancing-agreed-' + year + '.json').then(res => {
-
-      historic[year] = res.data.map(m => m.map(p => ({
-        roleId: p.roleId,
-        address: p.address,
-        commission: p.commission,
-        delisted: p.delisted,
-        date: p.date
-      })));
+      if (res.data && Array.isArray(res.data)) {
+        historic[year] = res.data.map(m => m.map(p => ({
+          roleId: p.roleId,
+          address: p.address,
+          commission: p.commission,
+          delisted: p.delisted,
+          date: p.date
+        })));
+      }
+    }).catch(err => {
+      console.log('Failed to load historic data for year:', year);
     }));
     function rebuildMonthsFiltered() {
       const filtered = $filter('filter')($scope.months, $scope.search);
@@ -102,8 +106,9 @@
         months[m].properties = [];
         months[m].commission = 0;
       }
+      
+      rebuildMonthsFiltered();
 
-      // Nothing to do?
       if (!($scope.properties && $scope.properties.items)) return;
 
       const yearKey = String($scope.currentYear);
@@ -124,6 +129,11 @@
           for (let p = 0; p < filtered.length; p++) c += +filtered[p].commission || 0;
           months[f].commission = c;
         }
+        $timeout(() => {
+          rebuildMonthsFiltered();
+          $scope.firstLoad = true;
+          $scope.$applyAsync();
+        });
         return;
       }
 
@@ -171,7 +181,7 @@
         const ov = property.override || {};
         if (ov.deleted) continue;
 
-        const commission = (+ov.commission) || (+property.role.Commission) || 0;
+        const commission = (+ov.commission) || (property.role && +property.role.Commission) || 0;
 
         const month = months[idx];
         month.commission += commission;
@@ -185,7 +195,7 @@
         month.properties.push({
           _id: property._id,
           address: ov.address || defaultAddress,
-          commission: ov.commission || property.role.Commission,
+          commission: ov.commission || (property.role && property.role.Commission) || 0,
           date: ov.date || property.startDate,
           roleId: property.roleId,
           delisted: property.delisted,

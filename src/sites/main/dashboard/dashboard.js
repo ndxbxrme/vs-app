@@ -208,22 +208,44 @@ angular.module('vs-app')
         function calculateInstructedBy() {
           let instructedByCount = 0;
           const instructedByProperties = [];
-          if ($scope.propertyadmin && $scope.propertyadmin.items && $scope.properties && $scope.properties.items) {
-            $scope.propertyadmin.items.forEach(propertyadminitem => {
-              if (propertyadminitem.RoleId && propertyadminitem.instructionToMarket && propertyadminitem.instructionToMarket.instructedBy === userId) {
-                const property = $scope.properties.items.find(p => p.roleId === propertyadminitem.RoleId.toString());
-                if (property && !(property.override && property.override.deleted) && property.role && property.role.RoleStatus.SystemName === 'OfferAccepted' && Object.values(property.milestoneIndex)[0] !== 10) {
-                  instructedByCount++;
-                  instructedByProperties.push(property);
-                }
-              }
-            });
+          if (!($scope.propertyadmin && $scope.propertyadmin.items && 
+                $scope.properties && $scope.properties.items && 
+                $scope.clientmanagement && $scope.clientmanagement.items)) {
+            $scope.myInstructedBy = instructedByCount;
+            $scope.myInstructedByProperties = instructedByProperties;
+            return;
           }
+      
+          const allProperties = [...$scope.properties.items, ...$scope.clientmanagement.items];
+          
+          for (let i = 0; i < $scope.propertyadmin.items.length; i++) {
+            const propertyadminitem = $scope.propertyadmin.items[i];
+            if (!propertyadminitem.RoleId || !propertyadminitem.instructionToMarket || !propertyadminitem.instructionToMarket.instructedBy) continue;
+            if (propertyadminitem.instructionToMarket.instructedBy !== userId) continue;
+            const property = allProperties.find(p => p.roleId === propertyadminitem.RoleId.toString());
+            if (!property || property.override && property.override.deleted) continue;
+      
+            instructedByCount++;
+            instructedByProperties.push(property);
+          }
+          
           $scope.myInstructedBy = instructedByCount;
           $scope.myInstructedByProperties = instructedByProperties;
         }
         
         $scope.propertyadmin = $scope.list('main:propertyadmin', null, function(propertyadminList) {
+          calculateInstructedBy();
+        });
+        
+        $scope.clientmanagement = $scope.list('agency:clientmanagement', {
+          where: {
+            active: true
+          }
+        }, function(properties) {
+          properties.items.forEach(property => {
+            property.roleId = property.RoleId.toString();
+            property.type = 'clientmanagement';
+          });
           calculateInstructedBy();
         });
         
@@ -237,9 +259,11 @@ angular.module('vs-app')
           $scope.unknownSolicitors = [];
           $scope.myPipelineProperties = [];
           if (properties && properties.items) {
-            for (let i = 0; i < properties.items.length; i++) {
+            let i = properties.items.length;
+            while (i-- > 0) {
               const property = properties.items[i];
-              if (property.override && property.override.deleted === true) {
+              if (property.override && property.override.deleted) {
+                properties.items.splice(i, 1);
                 continue;
               }
               if (!property.role) {
