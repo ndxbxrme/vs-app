@@ -140,9 +140,17 @@
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{salesComingSoonFilteredCount || 0}}</span></h3>
             <div class="stats-box cs-stats">
               <div class="stats-item" ng-if="!salesComingSoonFiltered.length">There are no pending instructions</div>
-              <a ng-repeat="item in salesComingSoonFiltered | limitTo:10" ui-sref="agency_coming-soon" class="stats-item">
-                <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
-                <div class="offer-address photos-date" ng-if="item.dateOfPhotos">Date of Photos: <span>{{item.dateOfPhotos | date:'mediumDate'}}</span></div>
+              <a ng-repeat="item in salesComingSoonFiltered | limitTo:10" ui-sref="agency_coming-soon" class="stats-item offer-with-image">
+                <div class="offer-thumbnail" ng-if="item.user && item.user.email">
+                  <img gravatar-src="item.user.email" gravatar-size="72" class="user-avatar" />
+                </div>
+                <div class="offer-thumbnail no-image" ng-if="!item.user || !item.user.email">
+                  <i class="fa-light fa-user"></i>
+                </div>
+                <div class="offer-content">
+                  <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
+                  <div class="offer-address photos-date" ng-if="item.dateOfPhotos">Date of Photos: <span>{{item.dateOfPhotos | date:'mediumDate'}}</span></div>
+                </div>
               </a>
             </div>
 
@@ -236,11 +244,19 @@
             </div>
 
             <h3 class="stats-header"><span><i class="fa-duotone fa-light fa-briefcase-arrow-right"></i> Instructions Coming Soon</span> <span class="count">{{comingSoon.total}}</span></h3>
-            <div class="stats-box">
+            <div class="stats-box cs-stats">
               <div class="stats-item" ng-if="!comingSoon.items.length">There are no pending instructions</div>
-              <a ng-repeat="item in comingSoon.items | limitTo:10" class="stats-item">
-                <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
-                <div class="offer-address outstanding-address" ng-if="item.picturesBooked">Pictures Booked: <span>{{item.picturesBooked | date:'mediumDate'}}</span></div>
+              <a ng-repeat="item in comingSoon.items | limitTo:10" class="stats-item offer-with-image">
+                <div class="offer-thumbnail" ng-if="item.user && item.user.email">
+                  <img gravatar-src="item.user.email" gravatar-size="72" class="user-avatar" />
+                </div>
+                <div class="offer-thumbnail no-image" ng-if="!item.user || !item.user.email">
+                  <i class="fa-light fa-user"></i>
+                </div>
+                <div class="offer-content">
+                  <div class="offer-address outstanding-address">Address: <span>{{item.address}}</span></div>
+                  <div class="offer-address outstanding-address" ng-if="item.picturesBooked">Pictures Booked: <span>{{item.picturesBooked | date:'mediumDate'}}</span></div>
+                </div>
               </a>
             </div>
 
