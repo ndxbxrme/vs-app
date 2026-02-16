@@ -13,6 +13,10 @@ angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $stat
   if (data.lead) {
     // Editing existing lead
     $scope.lead = data.lead;
+    // Set the selected property if editing
+    if (data.lead.item && data.lead.item.roleId) {
+      $scope.selection.selectedProperty = data.lead.item.roleId;
+    }
   } else {
     // Creating new lead
     $scope.lead = $scope.single('leads:leads', {}, function(lead) {
@@ -78,7 +82,8 @@ angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $stat
       return;
     }
     
-    if ($scope.lead.item.roleType !== 'Valuation' && !$scope.selection.selectedProperty) {
+    // Only enforce property selection for new leads (not when editing)
+    if ($scope.lead.item.roleType !== 'Valuation' && !$scope.selection.selectedProperty && !$scope.lead.item._id) {
       alert('Please select a property from the list');
       return;
     }
@@ -86,6 +91,7 @@ angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $stat
     if ($scope.selection.selectedProperty && $scope.lead.item.roleType !== 'Valuation') {
       const propertyList = $scope.lead.item.roleType === 'Selling' ? $scope.selling.items : $scope.letting.items;
       const selectedProp = propertyList.find(p => p._id == $scope.selection.selectedProperty);
+      
       if (selectedProp) {
         $scope.lead.item.property = {
           address: selectedProp.displayAddress || (selectedProp.AddressNumber + ' ' + selectedProp.Address1),
