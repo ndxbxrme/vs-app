@@ -1,5 +1,7 @@
 angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $state, $http, data, ndxModalInstance) {
-  $scope.selectedProperty = data.selectedProperty || null;
+  $scope.selection = {
+    selectedProperty: data.selectedProperty || null
+  };
   $scope.disabled = false;
   $scope.submitted = false;
   $scope.forms = {};
@@ -76,18 +78,18 @@ angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $stat
       return;
     }
     
-    if ($scope.lead.item.roleType !== 'Valuation' && !$scope.selectedProperty) {
+    if ($scope.lead.item.roleType !== 'Valuation' && !$scope.selection.selectedProperty) {
       alert('Please select a property from the list');
       return;
     }
     
-    if ($scope.selectedProperty && $scope.lead.item.roleType !== 'Valuation') {
+    if ($scope.selection.selectedProperty && $scope.lead.item.roleType !== 'Valuation') {
       const propertyList = $scope.lead.item.roleType === 'Selling' ? $scope.selling.items : $scope.letting.items;
-      const selectedProp = propertyList.find(p => p._id === $scope.selectedProperty);
+      const selectedProp = propertyList.find(p => p._id == $scope.selection.selectedProperty);
       if (selectedProp) {
         $scope.lead.item.property = {
           address: selectedProp.displayAddress || (selectedProp.AddressNumber + ' ' + selectedProp.Address1),
-          postcode: selectedProp.Postcode
+          postcode: selectedProp.Postcode || (selectedProp.Address && selectedProp.Address.Postcode)
         };
         $scope.lead.item.price = selectedProp.Price && selectedProp.Price.PriceValue ? selectedProp.Price.PriceValue : selectedProp.Price;
         $scope.lead.item.propertyId = selectedProp.PropertyId;
