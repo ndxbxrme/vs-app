@@ -72,28 +72,34 @@ angular.module('vs-leads').controller('addLeadModalCtrl', function($scope, $stat
   $scope.save = function() {
     $scope.submitted = true;
     
-    console.log('Save function called');
-    console.log('Form:', $scope.forms.myForm);
-    console.log('Form valid:', $scope.forms.myForm ? $scope.forms.myForm.$valid : 'form not found');
-    
     if (!$scope.forms.myForm || !$scope.forms.myForm.$valid) {
-      console.log('Form validation failed');
       return;
     }
     
-    console.log('Form is valid, proceeding with save');
+    if ($scope.lead.item.roleType !== 'Valuation' && !$scope.selectedProperty) {
+      alert('Please select a property from the list');
+      return;
+    }
     
-    // Handle property selection
     if ($scope.selectedProperty && $scope.lead.item.roleType !== 'Valuation') {
       const propertyList = $scope.lead.item.roleType === 'Selling' ? $scope.selling.items : $scope.letting.items;
       const selectedProp = propertyList.find(p => p._id === $scope.selectedProperty);
       if (selectedProp) {
         $scope.lead.item.property = {
-          address: selectedProp.AddressNumber + ' ' + selectedProp.Address1,
+          address: selectedProp.displayAddress || (selectedProp.AddressNumber + ' ' + selectedProp.Address1),
           postcode: selectedProp.Postcode
         };
-        $scope.lead.item.price = selectedProp.Price;
+        $scope.lead.item.price = selectedProp.Price && selectedProp.Price.PriceValue ? selectedProp.Price.PriceValue : selectedProp.Price;
+        $scope.lead.item.propertyId = selectedProp.PropertyId;
+        $scope.lead.item.roleId = selectedProp.RoleId;
       }
+    }
+    
+    if ($scope.lead.item.roleType === 'Valuation') {
+      $scope.lead.item.property = {
+        address: $scope.lead.item.user.address || '',
+        postcode: $scope.lead.item.user.postcode || ''
+      };
     }
     
     $scope.lead.item.date = new Date();

@@ -78,12 +78,12 @@
         </div>
       </div>
 
-      <div class="form-row">
-        <h3 class="orange">{{ mla('lead-addressSection-label') }}</h3>
+      <div class="form-row" ng-if="lead.item.roleType===&quot;Valuation&quot;">
+        <h3 class="orange">Property Address (for Valuation)</h3>
         <div class="address">
           <div ng-class="{warning: submitted &amp;&amp; forms.myForm.useraddress.$invalid}" class="form-item c-input useraddress required  ">
             <label class="label">{{ mla('lead-useraddress-label') }}</label>
-            <input type="text" name="useraddress" ng-model="lead.item.user.address" placeholder="{{ mla('lead-useraddress-placeholder') }}" title="{{ mla('lead-useraddress-label') }}" ng-disabled="disabled" required="required"/>
+            <input type="text" name="useraddress" ng-model="lead.item.user.address" placeholder="{{ mla('lead-useraddress-placeholder') }}" title="{{ mla('lead-useraddress-label') }}" ng-disabled="disabled" ng-required="lead.item.roleType===&quot;Valuation&quot;"/>
             <p ng-show="submitted &amp;&amp; forms.myForm.useraddress.$error.required" class="error">{{ mla('lead-useraddress-error-required') }}</p>
           </div>
           <div ng-class="{warning: submitted &amp;&amp; forms.myForm.useraddress2.$invalid}" class="form-item c-input useraddress2   ">
@@ -92,7 +92,7 @@
           </div>
           <div ng-class="{warning: submitted &amp;&amp; forms.myForm.userpostcode.$invalid}" class="form-item c-input userpostcode required  ">
             <label class="label">{{ mla('lead-userpostcode-label') }}</label>
-            <input type="text" name="userpostcode" ng-model="lead.item.user.postcode" placeholder="{{ mla('lead-userpostcode-placeholder') }}" title="{{ mla('lead-userpostcode-label') }}" ng-disabled="disabled" required="required"/>
+            <input type="text" name="userpostcode" ng-model="lead.item.user.postcode" placeholder="{{ mla('lead-userpostcode-placeholder') }}" title="{{ mla('lead-userpostcode-label') }}" ng-disabled="disabled" ng-required="lead.item.roleType===&quot;Valuation&quot;"/>
             <p ng-show="submitted &amp;&amp; forms.myForm.userpostcode.$error.required" class="error">{{ mla('lead-userpostcode-error-required') }}</p>
           </div>
         </div>
