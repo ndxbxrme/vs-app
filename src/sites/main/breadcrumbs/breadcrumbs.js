@@ -67,6 +67,12 @@ angular.module('vs-app')
       if(/^\/?agency(\/dashboard)?\/?$/i.test(historyItem.url)) {
         title = 'Conveyancing';
       }
+      if(/^\/?agency\/client-management/i.test(historyItem.url)) {
+        title = 'Available';
+      }
+      if(/^\/?agency\/coming-soon/i.test(historyItem.url)) {
+        site = 'Sales';
+      }
       return {site,title};
     }
   }
