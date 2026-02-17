@@ -55,7 +55,7 @@
               <div class="property-address">
                 <strong>Address:</strong> 
                 <a ui-sref="leads_leadDeleted({_id: lead._id})">
-                  {{ lead.property.address || lead.user.address}}, {{ lead.property.postcode || lead.user.postcode}}
+                  {{ lead.property.address || lead.user.address}}<span ng-if="lead.property.postcode || lead.user.postcode">, {{ lead.property.postcode || lead.user.postcode}}</span>
                 </a>
               </div>
               <span class="price" ng-show="lead.price"><strong>Price:</strong> {{ lead.price | currency:'£'}}</span>

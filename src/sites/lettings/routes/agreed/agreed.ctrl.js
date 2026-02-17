@@ -102,6 +102,7 @@ function updateTargets() {
         $scope.months.forEach(function(month) {
           return month.month = $filter('date')(month.date, 'MMMM');
         });
+
         updateTargets();
         $scope.firstLoad = true;
       });
@@ -158,8 +159,12 @@ function updateTargets() {
                 </div>
                 <div class="default" ng-if="!property.$editing">
                   <div class="property-header">
-                    <div class="property-number">{{$index + 1}}</div>
-                    <div class="property-address">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
+                    <a class="property-link" href="" ng-if="getRoleId(property)" ng-click="goToCase(property)">
+                      <div class="property-number">{{$index + 1}}</div>
+                      <div class="property-address">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
+                    </a>
+                    <div class="property-number" ng-if="!getRoleId(property)">{{$index + 1}}</div>
+                    <div class="property-address" ng-if="!getRoleId(property)">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
                     <div class="property-controls" ng-show="auth.checkRoles(['admin','superadmin'])">
                       <a href="" ng-click="edit(property)"><i class="fa-light fa-pen-to-square"></i></a>
                       <a href="" ng-click="deleteProperty(property)"><i class="fa-light fa-trash-can"></i></a>

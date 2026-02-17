@@ -287,8 +287,12 @@
                 </div>
                 <div class="default" ng-if="!property.$editing">
                   <div class="property-header">
-                    <div class="property-number">{{$index + 1}}</div>
-                    <div class="property-address">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
+                    <a class="property-link" ui-sref="agency_case({roleId: property.roleId})" ng-if="property.roleId" ng-click="cancel()">
+                      <div class="property-number">{{$index + 1}}</div>
+                      <div class="property-address">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
+                    </a>
+                    <div class="property-number" ng-if="!property.roleId">{{$index + 1}}</div>
+                    <div class="property-address" ng-if="!property.roleId">{{::property.address}} <span class="property-commission" ng-bind-html="::(property.commission | currency:'£' | currencyFormat)"></span></div>
                     <div class="property-controls" ng-show="auth.checkRoles(['admin','superadmin'])">
                       <a href="" ng-click="edit(property)"><i class="fa-light fa-pen-to-square"></i></a>
                       <a href="" ng-click="deleteProperty(property)"><i class="fa-light fa-trash-can"></i></a>

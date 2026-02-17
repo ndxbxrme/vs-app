@@ -172,10 +172,7 @@
             $scope.lead.item.price = property.Price.PriceValue;
             $scope.lead.item.date = new Date();
             $scope.lead.item.property = {
-              address: `${property.Address.Number || property.Address.BuildingName} ${property.Address.Street}`,
-              address2: `${property.Address.Locality}`,
-              town: property.Address.Town,
-              county: property.Address.County,
+              address: property.displayAddress || `${property.Address.Number || property.Address.BuildingName} ${property.Address.Street}, ${property.Address.Locality}`,
               postcode: property.Address.Postcode
             };
             break;
