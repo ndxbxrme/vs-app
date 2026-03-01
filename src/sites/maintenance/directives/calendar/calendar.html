@@ -1,6 +1,6 @@
 
 <div class="maintenance-calendar-dir">
-  <div class="controls"><a href="" ng-click="prev()">&lt;&lt; Prev</a><a href="" ng-click="goToToday()">Today</a><a href="" ng-click="next()">Next &gt;&gt;</a></div>
+  <div class="controls"><a href="" ng-click="prev()"><i class="fa-light fa-chevron-left"></i> Prev</a><a href="" ng-click="goToToday()" class="today">Today</a><a href="" ng-click="next()">Next <i class="fa-light fa-chevron-right"></i></a></div>
   <div class="carousel" ng-if="weeks.length">
     <div class="week" ng-repeat="week in weeks">
       <div class="day" ng-repeat="day in week.days" ng-class="{selected:isSelected(day.day)}">

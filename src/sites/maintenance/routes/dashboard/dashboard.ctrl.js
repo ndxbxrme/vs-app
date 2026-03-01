@@ -20,6 +20,13 @@
     $scope.hidePopup = function() {
       return MaintenanceTaskPopup.hide();
     };
+    $scope.filters = {
+      confirmed: false,
+      quote: false,
+      completed: false
+    };
+    $scope.setFilters = function() { /* triggers digest to re-run byStatus filter */ };
+    $scope.dateSwiperConfig = { prefix: 'toolbar', modifier: 1.5, show: false };
     return $scope.today = new Date();
   });
 

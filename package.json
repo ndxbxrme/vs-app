@@ -29,6 +29,7 @@
     "bcrypt-nodejs": "0.0.3",
     "codemirror": "^5.61.1",
     "crypto-js": "^3.1.9-1",
+    "heic2any": "^0.0.4",
     "html-loader": "^2.1.2",
     "jade": "^1.11.0",
     "ndx-auth": "^0.1.13",

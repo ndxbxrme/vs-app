@@ -1,5 +1,5 @@
 
-<div class="modal lightbox large">
+<div class="modal lightbox">
   <div ng-if="converting" class="lightbox-converting">
     <i class="fa-light fa-spinner fa-spin"></i>
     <span>Converting image&hellip;</span>
@@ -11,7 +11,7 @@
     <source ng-src="{{imgSrc}}" type="video/mov">
     Your browser does not support the video tag.
   </video>
-  <div ng-show="imgIndex.length>1" class="img-index">
+  <div ng-show="imgIndex.length > 1" class="img-index">
     <div ng-repeat="img in imgIndex" ng-click="selectImage(img.URL)" class="index-img" ng-class="{video: isVideo(img.URL)}">
       <div ng-if="isVideo(img.URL)" class="video-overlay"><i class="fa fa-play"></i></div>
       <div ng-if="!isVideo(img.URL)" style="background-image: url({{img.URL}})"></div>
