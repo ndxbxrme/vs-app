@@ -90,10 +90,15 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
     };
     $scope.events = { Collection: [] };
     $scope.rightmove = {};
+    $scope.onthemarket = {};
     const fetchDetails = async () => {
       const rmres = await $http.get('https://server.vitalspace.co.uk/dezrez/stats/rightmove/' + $scope.property.item.RoleId);
       if (rmres && rmres.data) {
         $scope.rightmove = rmres.data;
+      }
+      const otmres = await $http.get('https://server.vitalspace.co.uk/dezrez/stats/onthemarket/' + $scope.property.item.RoleId);
+      if (otmres && otmres.data) {
+        $scope.onthemarket = otmres.data;
       }
       const res = await $http.get('https://server.vitalspace.co.uk/dezrez/role/' + $scope.property.item.RoleId + '/events');
       if (res && res.data) {

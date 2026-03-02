@@ -28,8 +28,8 @@
     <!-- Property Summary Section -->
     <div class="col-xs-12 property-summary">
       <div class="property">
-        <div class="row">
-          <div class="col-lg-5">
+        <div class="row g-5">
+          <div class="col-lg-6">
             <h5 class="loading" ng-show="property.loading">Contacting Dezrez</h5>
             <a ui-sref="agency_property({id:property.item._id})" ng-hide="property.error || property.loading || !property.item.Address">
               <div class="property-image">
@@ -38,16 +38,6 @@
               </div>
               
             </a>
-            <h4>{{property.item.displayAddress}}</h4>
-            <p class="date-instructed">Date Instructed 
-              <span>{{property.item.DateInstructed | date:'mediumDate'}}</span>
-            </p>
-            <p class="financial-item">Fee
-              <span class="value">{{property.item | getFees | currency : "£" : 0}} + VAT</span>
-            </p>
-            <p class="financial-item">Asking Price
-              <span class="value">{{property.item.Price.PriceValue | currency : "£" : 0}}</span>
-            </p>
             
             <!-- <div class="progression-bar" ng-show="property.item.progressions && property.item.progressions.length">
               <div class="progression-label">Sale Progress: {{getProgressionPercent(property.item)}}%</div>
@@ -58,10 +48,18 @@
             <div class="buttons"></div> -->
           </div>
           
-          <div class="col-lg-1"></div>
-          
           <div class="col-lg-6">
             <div class="property-report">
+              <h4>{{property.item.displayAddress}}</h4>
+              <p class="date-instructed">Date Instructed 
+                <span>{{property.item.DateInstructed | date:'mediumDate'}}</span>
+              </p>
+              <p class="financial-item">Fee
+                <span class="value">{{property.item | getFees | currency : "£" : 0}} + VAT</span>
+              </p>
+              <p class="financial-item">Asking Price
+                <span class="value">{{property.item.Price.PriceValue | currency : "£" : 0}}</span>
+              </p>
               <div class="results">
                 <div class="result">
                   <i class="fa-duotone fa-light fa-hourglass-clock"></i>
@@ -120,43 +118,87 @@
                   </p>
                 </div>
               </div>
-              
-              <div class="rightmove-stats" ng-show="rightmove">
-                <div class="info">
-                  <img src="../../public/img/rm-logo.svg" width="200">
-                  <p class="updated">Online Stats - Updated 
-                    <span>{{rightmove.RightmoveStatsLastExportedDate | date:'mediumDate'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-5 online-stats property-report">
+          <div class="col-md-6">
+            <div class="rightmove-stats" ng-show="rightmove">
+              <div class="info">
+                <img src="../../public/img/rm-logo.svg" width="200">
+                <p class="updated">Online Stats - Updated 
+                  <span>{{rightmove.RightmoveStatsLastExportedDate | date:'mediumDate'}}</span>
+                </p>
+              </div>
+              <div class="results">
+                <div class="result">
+                  <i class="fa-light fa-magnifying-glass-chart"></i>
+                  <p>
+                    <span>{{rightmove.TotalSummaryViews || '...'}}</span>
+                    Summary Views
                   </p>
                 </div>
-                <div class="results">
-                  <div class="result">
-                    <i class="fa-light fa-magnifying-glass-chart"></i>
-                    <p>
-                      <span>{{rightmove.TotalSummaryViews || '...'}}</span>
-                      Summary Views
-                    </p>
-                  </div>
-                  <div class="result">
-                    <i class="fa-light fa-file"></i>
-                    <p>
-                      <span>{{rightmove.TotalDetailedViews || '...'}}</span>
-                      Detail Views
-                    </p>
-                  </div>
-                  <div class="result">
-                    <i class="fa-light fa-hourglass-clock"></i>
-                    <p>
-                      Premium Listing: 
-                      <span>{{rightmove.IsCurrentlyAPremiumListing ? 'Yes' : 'No'}}</span>
-                    </p>
-                  </div>
-                  <div class="result">
-                    <i class="fa-light fa-thumbtack"></i>
-                    <p>
-                      Feature Property:  
-                      <span>{{rightmove.IsCurrentlyAFeaturedProperty ? 'Yes' : 'No'}}</span>
-                    </p>
-                  </div>
+                <div class="result">
+                  <i class="fa-light fa-file"></i>
+                  <p>
+                    <span>{{rightmove.TotalDetailedViews || '...'}}</span>
+                    Detail Views
+                  </p>
+                </div>
+                <div class="result">
+                  <i class="fa-light fa-hourglass-clock"></i>
+                  <p>
+                    Premium Listing: 
+                    <span>{{rightmove.IsCurrentlyAPremiumListing ? 'Yes' : 'No'}}</span>
+                  </p>
+                </div>
+                <div class="result">
+                  <i class="fa-light fa-thumbtack"></i>
+                  <p>
+                    Feature Property:  
+                    <span>{{rightmove.IsCurrentlyAFeaturedProperty ? 'Yes' : 'No'}}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6" ng-show="onthemarket">
+            <div class="rightmove-stats otm-stats" ng-show="onthemarket">
+              <div class="info">
+                <img src="../../public/img/otm-logo.png" width="200">
+                <p class="updated">Online Stats - Updated 
+                  <span>{{onthemarket.OnTheMarketStatsLastExportedDate | date:'mediumDate'}}</span>
+                </p>
+              </div>
+              <div class="results">
+                <div class="result">
+                  <i class="fa-light fa-magnifying-glass-chart"></i>
+                  <p>
+                    <span>{{onthemarket.TotalSummaryViews || '...'}}</span>
+                    Summary Views
+                  </p>
+                </div>
+                <div class="result">
+                  <i class="fa-light fa-file"></i>
+                  <p>
+                    <span>{{onthemarket.TotalDetailedViews || '...'}}</span>
+                    Detail Views
+                  </p>
+                </div>
+                <div class="result">
+                  <i class="fa-light fa-hourglass-clock"></i>
+                  <p>
+                    Premium Listing: 
+                    <span>{{onthemarket.IsCurrentlyAPremiumListing ? 'Yes' : 'No'}}</span>
+                  </p>
+                </div>
+                <div class="result">
+                  <i class="fa-light fa-thumbtack"></i>
+                  <p>
+                    Feature Property:  
+                    <span>{{onthemarket.IsCurrentlyAFeaturedProperty ? 'Yes' : 'No'}}</span>
+                  </p>
                 </div>
               </div>
             </div>
