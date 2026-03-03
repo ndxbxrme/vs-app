@@ -28,6 +28,7 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
     $scope.date = {
       date: 'today'
     };
+    $scope.todaysDate = new Date();
     $scope.addNote = function () {
       var i, len, mynote, property, ref;
       if ($scope.note) {

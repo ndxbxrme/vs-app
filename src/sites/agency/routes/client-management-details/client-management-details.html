@@ -128,7 +128,7 @@
               <div class="info">
                 <img src="../../public/img/rm-logo.svg" width="200">
                 <p class="updated">Online Stats - Updated 
-                  <span>{{rightmove.RightmoveStatsLastExportedDate | date:'mediumDate'}}</span>
+                  <span>{{todaysDate | date:'mediumDate'}}</span>
                 </p>
               </div>
               <div class="results">
@@ -166,9 +166,9 @@
           <div class="col-md-6" ng-show="onthemarket">
             <div class="rightmove-stats otm-stats" ng-show="onthemarket">
               <div class="info">
-                <img src="../../public/img/otm-logo.png" width="200">
+                <img src="../../public/img/otm-logo.svg" width="200">
                 <p class="updated">Online Stats - Updated 
-                  <span>{{onthemarket.OnTheMarketStatsLastExportedDate | date:'mediumDate'}}</span>
+                  <span>{{todaysDate | date:'mediumDate'}}</span>
                 </p>
               </div>
               <div class="results">
