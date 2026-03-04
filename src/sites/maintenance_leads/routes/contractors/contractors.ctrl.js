@@ -42,7 +42,7 @@
             <h2>{{contractor.item._id ? 'Edit' : 'New'}} Contractor</h2>
           </div>
           <div class="modal-body">
-            <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save()">
+            <form name="myForm" novalidate="novalidate" autocomplete="off" ng-submit="save(myForm)">
               <div class="form-section">
                 <div ng-class="{warning: submitted && myForm.name.$invalid}" class="form-item c-input">
                   <label class="label">Name</label>
@@ -57,12 +57,12 @@
                   <input type="email" name="email" ng-model="contractor.item.email" placeholder="Email Address" title="Email"/>
                 </div>
               </div>
-            </div>
-            <div class="controls modal-footer">
-              <button type="submit" class="button button-alt" ng-disabled="myForm.$pristine">Save</button>
-              <button type="button" ng-click="cancel()" class="button cancel">Cancel</button>
-            </div>
-          </form>
+              <div class="controls modal-footer">
+                <button type="submit" class="button button-alt">Save</button>
+                <button type="button" ng-click="cancel()" class="button cancel">Cancel</button>
+              </div>
+            </form>
+          </div>
           <a class="close-reveal-modal" ng-click="cancel()">&times;</a>
         </div>
       `;
@@ -71,8 +71,7 @@
         template: modalTemplate,
         controller: 'maintenance_leadsContractorModalCtrl',
         data: {
-          contractor: contractor,
-          contractors: $scope.contractors
+          contractor: contractor
         }
       });
     };
@@ -156,13 +155,12 @@
       });
     }
     
-    $scope.save = function() {
+    $scope.save = function(form) {
       $scope.submitted = true;
-      if ($scope.myForm.$valid) {
+      if (form.$valid) {
         $scope.contractor.save().then(function() {
           alert.log('Contractor saved');
-          data.contractors.fetch();
-          ndxModalInstance.close();
+          ndxModalInstance.close(true);
         }, function(err) {
           alert.error('Error saving contractor');
         });
