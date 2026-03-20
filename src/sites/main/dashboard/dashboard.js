@@ -48,7 +48,7 @@ angular.module('vs-app')
         completed: null
       },
       page: 1,
-      pageSize: 10
+      pageSize: 50
     }, function(instructions) {
       if (instructions && instructions.items) {
         const now = new Date();
@@ -145,7 +145,7 @@ angular.module('vs-app')
         completed: null
       },
       page: 1,
-      pageSize: 10
+      pageSize: 50
     });
     
     $scope.lettingOffers = $scope.list('leads:offerslettings', {
