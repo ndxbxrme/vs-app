@@ -19,9 +19,9 @@
                 </a>
               </pages>
             </site> -->
-            <site ng-show="auth.isAuthorized('agency_dashboard')">
-              <a ui-sref="dashboard({view: 'sales'})", ng-class="{selected:isDashboardView('sales')}" ng-click="menuOpen = false">Sales</a>
-              <pages ng-click="menuOpen = false">
+            <site ng-show="auth.isAuthorized('agency_dashboard')" ng-class="{'submenu-open':openSubmenu === 'sales'}">
+              <a ui-sref="dashboard({view: 'sales'})" ng-class="{selected:isDashboardView('sales')}" ng-click="toggleSubmenu('sales', $event)">Sales</a>
+              <pages ng-click="closeMenu()">
                 <a ui-sref="agency_client-management-list", ng-class="{selected:state('agency_client-management-list')}" ng-show="auth.isAuthorized('agency_client-management-list')">Available</a>
                 <a ui-sref="agency_dashboard", ng-class="{selected:state('agency_dashboard')}" ng-show="auth.isAuthorized('agency_dashboard')">Conveyancing</a>
                 <a ui-sref="agency_cases", ng-class="{selected:state(['agency_cases','agency_case'])}" ng-show="auth.isAuthorized('agency_cases')">SSTC Cases</a>
@@ -33,9 +33,9 @@
                 <!--<a ui-sref="agency_cleanup", ng-class="{selected:state('agency_cleanup')}" ng-show="auth.isAuthorized('agency_cleanup')">Cleanup</a>-->
               </pages>
             </site>
-            <site ng-show="auth.isAuthorized('lettings_dashboard')">
-              <a ui-sref="dashboard({view: 'lettings'})", ng-class="{selected:isDashboardView('lettings')}" ng-click="menuOpen = false">Lettings</a>
-              <pages ng-click="menuOpen = false">
+            <site ng-show="auth.isAuthorized('lettings_dashboard')" ng-class="{'submenu-open':openSubmenu === 'lettings'}">
+              <a ui-sref="dashboard({view: 'lettings'})" ng-class="{selected:isDashboardView('lettings')}" ng-click="toggleSubmenu('lettings', $event)">Lettings</a>
+              <pages ng-click="closeMenu()">
                 <a ui-sref="lettings_available", ng-class="{selected:state('lettings_available')}" ng-show="auth.isAuthorized('lettings_available')">Available</a>
                 <a ui-sref="lettings_dashboard", ng-class="{selected:state('lettings_dashboard')}" ng-show="auth.isAuthorized('lettings_dashboard')">Dashboard</a>
                 <a ui-sref="lettings_cases", ng-class="{selected:state(['lettings_cases', 'lettings_case'])}" ng-show="auth.isAuthorized('lettings_cases')">Let Cases</a>
@@ -46,9 +46,9 @@
                 <a ui-sref="lettings_setup", ng-class="{selected:state('lettings_setup')}" ng-show="auth.isAuthorized('lettings_setup')">Setup</a>
               </pages>
             </site>
-            <site ng-show="auth.isAuthorized('leads_dashboard')">
-              <a ui-sref="leads_dashboard", ng-class="{selected:state('leads_dashboard')}" ng-click="menuOpen = false">Leads</a>
-              <pages ng-click="menuOpen = false">
+            <site ng-show="auth.isAuthorized('leads_dashboard')" ng-class="{'submenu-open':openSubmenu === 'leads'}">
+              <a ui-sref="leads_dashboard" ng-class="{selected:state('leads_dashboard')}" ng-click="toggleSubmenu('leads', $event)">Leads</a>
+              <pages ng-click="closeMenu()">
                 <a ui-sref="leads_selling", ng-class="{selected:state('leads_selling')}" ng-show="auth.isAuthorized('leads_selling')">Selling</a>
                 <a ui-sref="leads_letting", ng-class="{selected:state('leads_letting')}" ng-show="auth.isAuthorized('leads_letting')">Letting</a>
                 <a ui-sref="leads_valuation", ng-class="{selected:state('leads_valuation')}" ng-show="auth.isAuthorized('leads_valuation')">Valuation</a>
@@ -56,9 +56,9 @@
                 <a ui-sref="leads_setup", ng-class="{selected:state(['leads_setup'])}" ng-show="auth.isAuthorized('leads_setup')">Setup</a>
               </pages>
             </site>
-            <site ng-show="auth.isAuthorized('maintenance_leads_dashboard')">
-              <a ui-sref="maintenance_leads_dashboard", ng-class="{selected:state('maintenance_leads_dashboard')}" ng-click="menuOpen = false">Maintenance</a>
-              <pages ng-click="menuOpen = false">
+            <site ng-show="auth.isAuthorized('maintenance_leads_dashboard')" ng-class="{'submenu-open':openSubmenu === 'maintenance'}">
+              <a ui-sref="maintenance_leads_dashboard" ng-class="{selected:state('maintenance_leads_dashboard')}" ng-click="toggleSubmenu('maintenance', $event)">Maintenance</a>
+              <pages ng-click="closeMenu()">
                 <a ui-sref="maintenance_leads_issues", ng-class="{selected:state('maintenance_leads_issues')}" ng-show="auth.isAuthorized('maintenance_leads_issues')">Issues</a>
                 <a ui-sref="maintenance_leads_worksorders", ng-class="{selected:state(['maintenance_leads_worksorders', 'maintenance_leads_works-orders'])}" ng-show="auth.isAuthorized('maintenance_leads_worksorders')">Works Orders</a>
                 <a ui-sref="maintenance_leads_contractors", ng-class="{selected:state(['maintenance_leads_contractors', 'maintenance_leads_contractor'])}" ng-show="auth.isAuthorized('maintenance_leads_contractors')">Contractors</a>
@@ -69,15 +69,15 @@
                 <a ui-sref="maintenance_leads_setup", ng-class="{selected:state(['maintenance_leads_setup'])}" ng-show="auth.isAuthorized('maintenance_leads_setup')">Setup</a>
               </pages>
             </site>
-            <site ng-show="auth.isAuthorized('maintenance_dashboard')">
-              <a ui-sref="maintenance_dashboard", ng-class="{selected:state('maintenance_dashboard')}" ng-click="menuOpen = false">Diary</a>
-              <pages ng-click="menuOpen = false">
+            <site ng-show="auth.isAuthorized('maintenance_dashboard')" ng-class="{'submenu-open':openSubmenu === 'diary'}">
+              <a ui-sref="maintenance_dashboard" ng-class="{selected:state('maintenance_dashboard')}" ng-click="toggleSubmenu('diary', $event)">Diary</a>
+              <pages ng-click="closeMenu()">
                 <a ui-sref="maintenance_setup", ng-class="{selected:state('maintenance_setup')}" ng-show="auth.isAuthorized('maintenance_setup')">Setup</a>
               </pages>
             </site>
-            <site ng-show="auth.isAuthorized('admin_dashboard')">
-              <a ui-sref="admin_dashboard", ng-class="{selected:state('admin_dashboard')}" ng-click="menuOpen = false">Admin</a>
-              <pages ng-click="menuOpen = false">
+            <site ng-show="auth.isAuthorized('admin_dashboard')" ng-class="{'submenu-open':openSubmenu === 'admin'}">
+              <a ui-sref="admin_dashboard" ng-class="{selected:state('admin_dashboard')}" ng-click="toggleSubmenu('admin', $event)">Admin</a>
+              <pages ng-click="closeMenu()">
                 <a ui-sref="admin_boards", ng-class="{selected:state('admin_boards')}" ng-show="auth.isAuthorized('admin_boards')">Boards Management</a>
                 <a ui-sref="admin_epc", ng-class="{selected:state(['admin_epc'])}" ng-show="auth.isAuthorized('admin_epc')">EPC Management</a>
                 <a ui-sref="admin_misdescriptions", ng-class="{selected:state(['admin_misdescriptions'])}" ng-show="auth.isAuthorized('admin_misdescriptions')">Misdescriptions</a>
@@ -105,7 +105,8 @@
             </pages>
           </site>
         </sites>
-        <div class="nav-icon" ng-click="menuOpen = !menuOpen" ng-class="{open:menuOpen}">
+        <div class="menu-backdrop" ng-class="{show:menuOpen}" ng-click="closeMenu()"></div>
+        <div class="nav-icon" ng-click="toggleMenu($event)" ng-class="{open:menuOpen}">
           <span></span>
           <span></span>
           <span></span>
