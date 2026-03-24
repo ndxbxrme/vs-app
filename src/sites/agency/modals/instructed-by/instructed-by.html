@@ -8,6 +8,7 @@
     <table class="table">
       <tbody ng-repeat="property in list = (data.list | filter:{displayAddress:search}) | orderBy:'offer.Property.Address.Street' | limitTo:limit:limit*(page-1)">
         <td><a class="address" href="" ng-click="go(property)"><span>{{property.displayAddress}}</span> <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></td>
+        <td><img gravatar-src="property.consultantEmail" ng-if="property.consultantEmail" gravatar-size="32" class="user-avatar" /></td>
         <td class="currency" ng-show="data.di.sumtype==='Income' && property.role && property.role.Commission != null"><strong class="orange">&pound;{{property.role.Commission}}</strong></td>
       </tbody>
     </table>

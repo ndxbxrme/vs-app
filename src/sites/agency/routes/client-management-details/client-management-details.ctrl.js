@@ -5,6 +5,7 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
     propertyAdminFunctions($scope, alert);
     let fetchedFirst = false;
     let propertyWhere = $stateParams.id;
+    $scope.mailouts = {data:0};
     if($stateParams.roleid) propertyWhere = {RoleId:+$stateParams.roleid};
     $scope.property = $scope.single('agency:clientmanagement', propertyWhere, function (res) {
       var property;
@@ -20,6 +21,15 @@ const {propertyAdminFunctions, initForSale} = require('../../../../services/prop
           adminFetched = true;
           return propertyadmin;
         });
+        $http.get("https://server.vitalspace.co.uk/dezrez/role/" + property.RoleId + "/mailouts")
+        .then((res) => {
+          try {
+            $scope.mailouts.data = res.data;
+          }
+          catch(e) {
+            console.log('mailouts error', e);
+          }
+        })
       }
       fetchedFirst = true;
       return;

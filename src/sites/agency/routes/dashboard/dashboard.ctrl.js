@@ -321,7 +321,6 @@
         
         list.push(property);
       }
-      
       if (list.length) {
         return $scope.modal({
           template: require('../../modals/dashboard-income/dashboard-income.html').default,
@@ -361,7 +360,6 @@
         
         list.push(property);
       }
-      
       if (list.length) {
         return $scope.modal({
           template: require('../../modals/dashboard-income/dashboard-income.html').default,
@@ -469,8 +467,15 @@
       }
 
       const list = $scope.income(di, month, true);
-      
       if (list.length) {
+        if($scope.consultants && $scope.consultants.items) {
+          list.forEach(property => {
+            const consultant = $scope.consultants.items.find(item => item._id===property.consultant);
+            if(consultant) {
+              property.consultantEmail = consultant.email;
+            }
+          })
+        }
         // Always set sumtype to 'Income' for commission display
         const diData = Object.assign({}, di, {sumtype: 'Income'});
         
