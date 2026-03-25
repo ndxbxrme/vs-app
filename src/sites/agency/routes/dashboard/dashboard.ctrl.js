@@ -24,6 +24,7 @@
         return false;
       }).sort((a, b) => a.displayName > b.displayName ? 1 : -1);
     });
+    $scope.agencyUsers = $scope.list('main:users');
     // propertyadmin
     $scope.propertyadmin = $scope.list('main:propertyadmin');
     //properties
@@ -468,14 +469,15 @@
 
       const list = $scope.income(di, month, true);
       if (list.length) {
-        if($scope.consultants && $scope.consultants.items) {
+        if($scope.agencyUsers && $scope.agencyUsers.items) {
           list.forEach(property => {
-            const consultant = $scope.consultants.items.find(item => item._id===property.consultant);
-            if(consultant) {
-              property.consultantEmail = consultant.email;
+            const agencyUser = $scope.agencyUsers.items.find(item => item._id===property.instructedBy);
+            if(agencyUser) {
+              property.instructedByEmail = agencyUser.email;
             }
           })
         }
+        console.log(list);
         // Always set sumtype to 'Income' for commission display
         const diData = Object.assign({}, di, {sumtype: 'Income'});
         
