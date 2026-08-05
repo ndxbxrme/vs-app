@@ -25,7 +25,7 @@
     <div class="properties-list" ng-show="filterData.length &gt; 0">
       <div class="property-card" ng-repeat="item in filterData =(marketing.items | filter:{&quot;SearchField&quot;:search} | orderBy:sort) | limitTo:limit:limit*(page-1)">
         <div class="property-main row g-5">
-          <div class="property-info col-md-9">
+          <div class="property-info col-md-8">
             <div class="stat-item user-info">
               <img gravatar-src="item.user.local.email" gravatar-size="60" class="user-avatar" />
               <div class="user-details">
@@ -40,7 +40,8 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 text-end">
+          <div class="col-md-4 text-end">
+            <a target="_blank" class="button">View PDF <i class="fa-duotone fa-light fa-file-pdf"></i></a>
             <input class="button" type="button" ng-click="completedMarketing(item)" value="Completed" />
           </div>
         </div>
