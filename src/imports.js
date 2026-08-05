@@ -75,6 +75,8 @@ import './sites/lettings/routes/dashboard/dashboard.routes.js';
 //import './sites/lettings/routes/invited/invited.routes.js';
 import './sites/lettings/routes/marketing/marketing.ctrl.js';
 import './sites/lettings/routes/marketing/marketing.routes.js';
+import './sites/lettings/routes/marketing-item/marketing-item.ctrl.js';
+import './sites/lettings/routes/marketing-item/marketing-item.routes.js';
 //import './sites/lettings/routes/profile/profile.ctrl.js';
 //import './sites/lettings/routes/profile/profile.routes.js';
 import './sites/lettings/routes/setup/setup.ctrl.js';

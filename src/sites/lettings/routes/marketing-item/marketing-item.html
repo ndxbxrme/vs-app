@@ -1,0 +1,102 @@
+<div class="offer-details client-management-details">
+    <div class="container-xl">
+        <h1
+            style="font-family: helvetica, arial, sans-serif; margin-top: 30px; margin-left: 10px; color: #4b565f; text-align: center;">
+            Lettings Marketing Update</h1>
+        <h2
+            style="font-family: helvetica, arial, sans-serif; margin-top: 10px; margin-left: 10px; color: #f15b25; text-align: center;">
+            {{ marketing.item.address}}</h2>
+        <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%"
+            style="font-family: helvetica, arial, sans-serif; max-width: 800px; margin: 0 auto;">
+            <tbody>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px 10px 5px 10px;">
+                        <h3>New Rental Amount</h3>
+                        <p style="padding: 0px;">£ {{marketing.item.rent}} pcm</p>
+                    </td>
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Historic Rental Amount</h3>
+                        <p style="padding: 0px;">£ {{marketing.item.historicRent}} pcm</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Property On SME</h3>
+                        <p style="padding: 0px;">{{marketing.item.cfp}}</p>
+                    </td>
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>To Let Board</h3>
+                        <p style="padding: 0px;">{{marketing.item.board}}</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Available Date</h3>
+                        <p style="padding: 0px;">{{formatDate(marketing.item.availableDate)}}</p>
+                    </td>
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Tenancy End Date</h3>
+                        <p style="padding: 0px;">{{formatDate(marketing.item.tendDate)}}</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Requested Tenancy Length</h3>
+                        <p style="padding: 0px;">{{marketing.item.terms}} months</p>
+                    </td>
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Property Status</h3>
+                        <p style="padding: 0px;">{{marketing.item.pStatus}}</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px;" colspan="2">
+                        <h3>Access Details</h3>
+                        <p style="padding: 0px;">{{marketing.item.access}}</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px;" colspan="2">
+                        <h3>Repairs/Cleaning Required (if known)</h3>
+                        <p style="padding: 0px;">{{marketing.item.repairs}}</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Landlord Fees</h3>
+                        <p style="padding: 0px;">Letting Type: {{marketing.item.lfees}}</p>
+                    </td>
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Amounts</h3>
+                        <p style="width:50%; float:left;padding: 0px;" ng-show="marketing.item.lfees==='Tenant Find'">£ {{marketing.item.tfamount}} + VAT</p>
+                        <p style="width:50%; float:left;padding: 0px;" ng-show="marketing.item.lfees!=='Tenant Find'">£ {{marketing.item.mamount}} + VAT</p>
+                        <p style="width:50%; float:left;padding: 0px;" ng-show="marketing.item.lfees!=='Tenant Find'">% {{marketing.item.ma}} + VAT</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Window Card</h3>
+                        <p style="padding: 0px;">{{marketing.item.windowcard}}</p>
+                    </td>
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Valid EICR Certificate</h3>
+                        <p style="padding: 0px;">{{marketing.item.eicr}}</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Valid EPC Certificate</h3>
+                        <p style="padding: 0px;">{{marketing.item.epc}}</p>
+                    </td>
+                    <td style="border-bottom: 1px solid; padding: 10px;">
+                        <h3>Valid Gas Certificate</h3>
+                        <p style="padding: 0px;">{{marketing.item.gas}}</p>
+                    </td>
+                </tr>
+                <tr style="padding: 0px;">
+                    <td style="padding: 10px 10px 50px 10px;"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
