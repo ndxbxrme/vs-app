@@ -9,11 +9,11 @@
       data: {
         title: 'Vitalspace Conveyancing - Marketing Forms',
         hideMenu: true,
-		auth: ['agency:agency', 'agency:admin', 'agency:superadmin']
+		auth: ['agency', 'admin', 'superadmin']
       },
       resolve: {
         user: function(Auth) {
-          return Auth.getPromise(['agency:agency', 'agency:admin', 'agency:superadmin']);
+          return Auth.getPromise(['agency', 'admin', 'superadmin']);
         }
       }
     });
