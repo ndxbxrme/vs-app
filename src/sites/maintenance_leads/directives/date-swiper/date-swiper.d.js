@@ -233,6 +233,9 @@
               }
             };
             // STUFF ON SCOPE
+            scope.formatSelectedDate = function(format) {
+              return $moment(scope.date).format(format);
+            };
             // user clicks date to make it "active"
             scope.setDate = function(date) {
               scope.date = me._setActiveDate(date);

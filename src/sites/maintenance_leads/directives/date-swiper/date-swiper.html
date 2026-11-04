@@ -1,16 +1,25 @@
 
-<div ng-class="{'is-active': config.show}" class="date-swiper-holder">
+<div ng-class="{'is-active': config.show, 'appointment-date-picker': config.prefix === 'swiper'}" class="date-swiper-holder">
   <div class="date-swiper-box">
+    <div class="selected-date" ng-if="config.prefix === 'swiper'" aria-live="polite">
+      <div class="selected-weekday">{{formatSelectedDate('dddd')}}</div>
+      <div class="selected-day">{{formatSelectedDate('D')}}</div>
+      <div class="selected-month">{{formatSelectedDate('MMM')}}</div>
+      <div class="selected-year">{{formatSelectedDate('YYYY')}}</div>
+    </div>
+    <div class="calendar-panel">
     <div class="date-swiper">
       <div class="carousel">
         <div ng-repeat="m in months track by $index" class="month month-{{$index+1}} month-{{m.year}}-{{m.month+1}}">
           <div class="month-holder">
             <div class="left">
-              <div tap="monthPrev()" class="prev">&lt;</div>
+              <button ng-if="config.prefix === 'swiper'" type="button" ng-click="monthPrev()" class="prev" aria-label="Previous month">&lt;</button>
+              <div ng-if="config.prefix !== 'swiper'" tap="monthPrev()" class="prev">&lt;</div>
             </div>
             <div class="month-name">{{m.monthName}} <span class="month-year">{{m.year}}</span></div>
             <div class="right">
-              <div tap="monthNext()" class="next">&gt;</div>
+              <button ng-if="config.prefix === 'swiper'" type="button" ng-click="monthNext()" class="next" aria-label="Next month">&gt;</button>
+              <div ng-if="config.prefix !== 'swiper'" tap="monthNext()" class="next">&gt;</div>
             </div>
           </div>
           <ul class="day-names">
@@ -19,8 +28,9 @@
             </li>
           </ul>
           <ul class="days">
-            <li ng-repeat="d in m.days track by $index" tap="setDate(d.date)" ng-class="setClass(d, m)">
-              <div class="date">{{d.num}}</div>
+            <li ng-repeat="d in m.days track by $index" tap="config.prefix !== 'swiper' &amp;&amp; setDate(d.date)" ng-class="setClass(d, m)">
+              <button ng-if="config.prefix === 'swiper'" type="button" class="date" ng-click="setDate(d.date)" ng-attr-aria-pressed="{{d.date === date}}" aria-label="{{d.date}}">{{d.num}}</button>
+              <div ng-if="config.prefix !== 'swiper'" class="date">{{d.num}}</div>
             </li>
           </ul>
         </div>
@@ -28,7 +38,10 @@
     </div>
     <div class="controls">
       <div class="button-row">
-        <div ng-click="done()" class="done">Done</div>
+        <button type="button" ng-if="config.prefix === 'swiper'" ng-click="config.show = false" class="cancel">Cancel</button>
+        <button ng-if="config.prefix === 'swiper'" type="button" ng-click="done()" class="done">OK</button>
+        <div ng-if="config.prefix !== 'swiper'" ng-click="done()" class="done">Done</div>
+      </div>
       </div>
     </div>
   </div>

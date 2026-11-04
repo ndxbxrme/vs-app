@@ -242,6 +242,9 @@
       scope.date);
             };
             // Calculate the classes for the calendar items.
+            scope.formatSelectedDate = function(format) {
+              return $moment(scope.date).format(format);
+            };
             scope.setClass = function(day,
       month) {
               var classes;

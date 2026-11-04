@@ -247,21 +247,165 @@
     line-height 1.2
 .lettings-dashboard-route
   padding-top 30px
-  .controls
-    .order-item
-      display inline-flex
-      position relative
-      color vs-orange
-      background white
+  .progression-container
+    max-width 1600px
+    margin-inline auto
+  .progression-controls
+    display flex
+    justify-content space-between
+    align-items center
+    flex-wrap wrap
+    gap 15px
+  .progression-search
+    width 350px
+    max-width 100%
+    label
+      display block
+    .progression-count
+      margin-top 5px
+      text-align right
+      font-size 1.2rem
+  .progression-table-wrapper
+    overflow-x auto
+    background white
+    border-radius 15px
+    border 1px solid vs-lightgrey
+    box-shadow 0 3px 8px rgba(0,0,0,0.08)
+  .progression-table
+    width 100%
+    min-width 1300px
+    table-layout fixed
+    col.property-column
+      width 200px
+    col.service-column
+      width 50px
+    col.date-column
+      width 105px
+    col.progress-column
+      width 135px
+    border-collapse separate
+    border-spacing 0
+    font-size 1.2rem
+    padding 15px
+    th, td
+      padding 9px 10px
+      text-align center
+      vertical-align bottom
+    thead th
+      background #f4f5f7
+      font-size 1.4rem
+      line-height 1.2
       font-weight 600
-      margin 0px 5px 10px 0px
-      padding 5px 15px
-      border 1px solid vs-lightgrey
+    thead tr:first-child
+      th:last-child
+        border-top-right-radius 10px
+    tbody tr:nth-child(even)
+      background #f8f9fa
+    tbody tr:hover
+      background #fff5ed
+    .progression-property
+      min-width 155px
+      text-align left
+      border-top-left-radius 10px
+      a
+        color vs-grey
+        font-size 1.4rem
+        &:hover
+          color vs-orange
+    .progression-date
+      white-space nowrap
+      font-weight 600
+    .group-start, .progression-group
+      font-size 1.4rem
+      border-left 1px solid #e8e8ed
+      i 
+        margin-right 5px
+    .group-end
+      border-right 1px solid #e8e8ed
+    .group-end + .group-start
+      border-left 0
+    .group-pre-tenancy
+      background #fff0ec
+      color vs-orange
+    .group-agreement
+      background #eef0ff
+      color #454798
+    .group-funds
+      background #edf8ef
+      color #28653a
+    .group-move-in
+      background #f2edfc
+      color #5b408c
+    .group-finalisation
+      background #e6f7ff
+      color #0c4a6e
+    .progression-service
+      display inline-block
+      padding 2px 6px
+      border-radius 5px
+      color vs-orange
+      background #fff0e8
+      font-weight 600
+    .progression-meter
+      display flex
+      align-items center
+      gap 8px
+      strong
+        min-width 35px
+        text-align right
+    .progression-track
+      width 75px
+      height 7px
+      background #e4e6ea
+      border-radius 5px
+      overflow hidden
+    .progression-fill
+      height 100%
+      background vs-orange
+      border-radius 5px
+  .milestone-dot
+    display inline-flex
+    align-items center
+    justify-content center
+    vertical-align middle
+    width 15px
+    height 15px
+    border-radius 50%
+    &.status-completed
+      background vs-green
+    &.status-progressing
+      background vs-amber
+    &.status-pending
+      background vs-silver
+    &.status-unavailable
+      background white
+      border 1px solid #777
+      color #555
+      font-weight 700
+      line-height 1
+  .progression-legend
+    display flex
+    flex-wrap wrap
+    gap 15px
+    margin-top 12px
+    font-size 1.5rem
+    > span
+      display inline-flex
+      align-items center
+    .milestone-dot
+      margin-right 5px
+  .controls
+    .sort
+      display inline-flex
+      align-items center
+      gap 15px
+    .order-item
+      margin 0px
       border-radius 30px
       &.selected
         background vs-orange
         color white
-        border: 1px solid vs-orange
+
 .maintenance-leads-dashboard
   padding 30px 0
   .button

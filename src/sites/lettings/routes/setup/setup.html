@@ -49,6 +49,27 @@
 
     <div class="dashboard-setup row setup-row">
       <h2><i class="fa-duotone fa-light fa-grip"></i> Dashboard</h2>
+      <form class="progression-layout-setup" ng-submit="saveProgressionLayout()">
+        <h3>Progression columns</h3>
+        <p role="alert" ng-if="progressions.error || dashboard.error">Unable to load milestone definitions or dashboard settings. Reload before editing.</p>
+        <p role="alert" ng-if="layoutConflict">Multiple progression layouts were found. Resolve the duplicate settings before saving.</p>
+        <div class="row">
+          <fieldset class="col-md-4 col-lg" ng-repeat="group in progressionGroups">
+            <legend>{{group.label}}</legend>
+            <div ng-repeat="column in group.columns">
+              <label for="progression-column-{{column.key}}">{{column.label}} <small>{{column.title}}</small></label>
+              <select id="progression-column-{{column.key}}" ng-model="progressionSelections[column.key]"
+                ng-options="option.key as option.label group by option.progressionName for option in progressionOptions"
+                ng-change="editProgressionLayout()" ng-disabled="!layoutLoaded || layoutSaving" required>
+                <option value="">Select milestone</option>
+              </select>
+            </div>
+          </fieldset>
+        </div>
+        <p role="alert" ng-if="layoutError">{{layoutError}}</p>
+        <p role="status" ng-if="layoutMessage">{{layoutMessage}}</p>
+        <button type="submit" class="button" ng-disabled="!layoutLoaded || layoutSaving || layoutConflict || progressions.error || dashboard.error">{{layoutSaving ? 'Saving...' : 'Save progression layout'}}</button>
+      </form>
       <div class="row">
         <div class="col-sm-6 overview">
           <h3><i class="fa-duotone fa-light fa-eye"></i> Overview</h3>

@@ -17,44 +17,97 @@
         <div class="snapshot-value">{{available.total + total(items)}}</div>
       </div>
     </div>
+  </div>
 
-    <div class="row g-5 mt-4">    
-      <div class="col-12">
-        <h3><i class="fa-duotone fa-light fa-timeline-arrow"></i> Progression</h3>
-        <div class="controls mb-3">
-          <div class="sort">Order By<br><a class="order-item" href="" ng-click="sort='milestone.startTime'" ng-class="{selected:sort==='milestone.startTime'}">DOA</a><a class="order-item" href="" ng-click="sort='proposedMoving'" ng-class="{selected:sort==='proposedMoving'}">Move in date</a></div>
-        </div>
-        <div class="progressions" ng-show="properties.total">
-          <div class="progression-list">
-            <div class="progression-item" ng-repeat="property in properties.items | orderBy:sort">
-              <div class="property-header">
-                <div class="property-info">
-                  <a ui-sref="lettings_case({roleId:property.RoleId})" class="property-address">
-                    {{property.Address.Number}} {{property.Address.Street}}
-                  </a>
-                  <span class="service-level-badge" ng-class="{'tenant-find': property.ServiceLevel.Name==='Tenant Find', 'managed': property.ServiceLevel.Name!=='Tenant Find'}">
-                    {{property.ServiceLevel.Name==='Tenant Find' ? 'Tenant Find' : 'Managed'}}
-                  </span>
-                  <div class="progress-label">
-                    <strong>What's Next:</strong>
-                    <span ng-if="getCurrentMilestone(property)">{{getCurrentMilestone(property).title}}</span>
-                    <span ng-if="!getCurrentMilestone(property)">Complete</span>
-                  </div>
-                </div>
-                <div class="property-dates">
-                  <span class="date-item"><strong>DOA:</strong> {{property.milestone.startTime | date:'dd.MM.yy'}}</span>
-                  <span class="date-item"><strong>Move In:</strong> {{property.proposedMoving | date:'dd.MM.yy'}}</span>
-                </div>
-              </div>
-              <div class="progress-section">
-                <div class="progress-bar-wrapper" ng-init="totalMilestones = (property.progressions[0].milestones | flatten).length; completedMilestones = (property.progressions[0].milestones | flatten | filter:{completed:true}).length; progressPercent = (completedMilestones / totalMilestones * 100)">
-                  <div class="progress-bar">
-                    <div class="progress-fill" ng-style="{width: progressPercent + '%'}"></div>
-                  </div>
-                  <span class="progress-text">{{completedMilestones}} / {{totalMilestones}}</span>
-                </div>
+  <div class="progression-container">
+    <div class="container-xl">
+      <div class="row mt-4 justify-content-center">    
+        <div class="col-12">
+          <h3><i class="fa-duotone fa-light fa-timeline-arrow"></i> Progression</h3>
+          <div class="controls progression-controls mb-3">
+            <div class="sort">Order By
+              <button type="button" class="order-item" ng-click="sort='doa'" ng-class="{selected:sort==='doa'}" ng-attr-aria-pressed="{{sort==='doa'}}">DOA</button>
+              <button type="button" class="order-item" ng-click="sort='moveIn'" ng-class="{selected:sort==='moveIn'}" ng-attr-aria-pressed="{{sort==='moveIn'}}">Move in date</button>
+            </div>
+            <div class="progression-search">
+              <label>
+                <span class="visually-hidden">Search property, tenant or reference</span>
+                <input type="search" ng-model="progressionSearch" placeholder="Search property, tenant or reference..."/>
+              </label>
+              <div class="progression-count" role="status" ng-if="progressionLayout && progressionProperties.items && !progressionProperties.error && !progressionCasesError && !progressionCasesLoading">
+                Showing {{(progressionRows | filter:matchesProgressionSearch).length}} of {{progressionRows.length}} case{{progressionRows.length!==1 ? 's' : ''}}
               </div>
             </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="container-fluid">
+      <div class="row mb-4 justify-content-center">
+        <div class="col-12">
+        <p role="alert" ng-if="progressionProperties.error || progressionCasesError || dashboard.error">Unable to load progression data. Please reload the dashboard.</p>
+        <p role="status" ng-if="!progressionProperties.items || !dashboard.items || progressionCasesLoading">Loading progressions...</p>
+        <p role="alert" ng-if="progressionLayoutConflict">Multiple progression layouts were found. Ask an administrator to resolve the duplicate settings.</p>
+        <p ng-if="dashboard.items && !dashboard.error && !progressionLayout && !progressionLayoutConflict">
+          The progression columns have not been configured. An administrator needs to check and save the mapping in
+          <a ui-sref="lettings_setup" ng-if="auth.checkRoles(['admin','superadmin'])">Lettings Setup</a><span ng-if="!auth.checkRoles(['admin','superadmin'])">Lettings Setup</span>.
+        </p>
+        <div ng-if="progressionLayout && !progressionProperties.error && !progressionCasesError && !progressionCasesLoading && !dashboard.error">
+          <p role="status" ng-if="progressionMissingData">Some cases are missing mapped milestones, shown as a dash. Their percentage is unavailable until the mapping or case data is resolved.</p>
+          <div class="progression-table-wrapper" role="region" aria-label="Lettings progression table" tabindex="0">
+            <table class="progression-table">
+              <caption class="visually-hidden">Live lettings cases. Progress is based on the 15 mapped milestones, excluding Start.</caption>
+              <colgroup>
+                <col class="property-column"/>
+                <col class="service-column"/>
+                <col class="date-column"/>
+                <col ng-repeat="column in progressionColumns"/>
+                <col class="progress-column"/>
+                <col class="date-column"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <th rowspan="2" scope="col" class="progression-property">Property</th>
+                  <th rowspan="2" scope="col">Service</th>
+                  <th rowspan="2" scope="col">Move-In<br>Date</th>
+                  <th ng-repeat="group in progressionGroups" colspan="{{group.columns.length}}" scope="colgroup" class="progression-group group-{{group.key}}" ng-class="{'group-end':$last}"><i ng-if="group.icon" class="fa-light {{group.icon}}" aria-hidden="true"></i>{{group.label}}</th>
+                  <th rowspan="2" scope="col">Progress</th>
+                  <th rowspan="2" scope="col">DOA</th>
+                </tr>
+                <tr>
+                  <th ng-repeat="column in progressionColumns" scope="col" ng-class="{'group-start':column.groupStart, 'group-end':column.groupEnd}" title="{{column.title}}">{{column.label}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in visibleProgressions = (progressionRows | filter:matchesProgressionSearch | orderBy:sort)">
+                  <th scope="row" class="progression-property"><a ui-sref="lettings_case({roleId:row.property.RoleId})">{{row.address}}</a></th>
+                  <td><span class="progression-service" title="{{row.property.ServiceLevel.Name}}">{{row.property.ServiceLevel.Name==='Tenant Find' ? 'TFO' : row.property.ServiceLevel.Name ? 'MGD' : '-'}}</span></td>
+                  <td class="progression-date">{{(row.moveIn | date:'d MMM yy') || '-'}}</td>
+                  <td ng-repeat="cell in row.cells track by cell.key" ng-class="{'group-start':cell.groupStart, 'group-end':cell.groupEnd}">
+                    <span class="milestone-dot status-{{cell.status}}" tabindex="0" title="{{cell.description}}" aria-label="{{cell.description}}">{{cell.status==='unavailable' ? '-' : ''}}</span>
+                  </td>
+                  <td>
+                    <div class="progression-meter" ng-if="row.percent !== null" title="{{row.completed}} / 15 milestones complete">
+                      <div class="progression-track" role="progressbar" aria-label="Mapped milestones completed" aria-valuemin="0" aria-valuemax="100" ng-attr-aria-valuenow="{{row.percent}}">
+                        <div class="progression-fill" ng-style="{width:row.percent + '%'}"></div>
+                      </div>
+                      <strong>{{row.percent}}%</strong>
+                    </div>
+                    <span ng-if="row.percent === null" title="{{row.missing}} mapped milestones unavailable">Unavailable</span>
+                  </td>
+                  <td class="progression-date">{{(row.doa | date:'d MMM yy') || '-'}}</td>
+                </tr>
+                <tr ng-if="progressionProperties.items && !visibleProgressions.length">
+                  <td colspan="20">{{progressionRows.length ? 'No cases match your search.' : 'No live lettings cases.'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="progression-legend" aria-label="Milestone status legend">
+            <span><span class="milestone-dot status-completed"></span> Completed</span>
+            <span><span class="milestone-dot status-progressing"></span> In progress</span>
+            <span><span class="milestone-dot status-pending"></span> Not started</span>
+            <span><span class="milestone-dot status-unavailable">-</span> Unavailable</span>
           </div>
         </div>
       </div>
