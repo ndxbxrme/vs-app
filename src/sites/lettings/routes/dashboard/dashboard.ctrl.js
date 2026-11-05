@@ -63,15 +63,9 @@ const progressionLayout = require('../../services/progression-layout');
           });
           rebuildProgressionRows();
         });
-        scope.propsOpts = {
-          where: {
-            delisted: false
-          }
-        };
         scope.properties = scope.list('lettings:properties', {
           where: {
-            Status: 'OfferAccepted',
-            delisted: false
+            Status: 'OfferAccepted'
           }
         }, function(properties) {
           var completeBeforeDelisted, i, milestone, progression, property, results;
@@ -132,7 +126,7 @@ const progressionLayout = require('../../services/progression-layout');
           count = 0;
           minIndex = 0;
           maxIndex = 100;
-          if (scope.properties && scope.properties.items && scope.progressions && scope.progressions.items) {
+          if (scope.progressions && scope.progressions.items) {
             ref = scope.progressions.items;
             for (j = 0, len = ref.length; j < len; j++) {
               progression = ref[j];
@@ -153,10 +147,10 @@ const progressionLayout = require('../../services/progression-layout');
                 }
               }
             }
-            ref2 = scope.properties.items;
+            ref2 = Array.from(caseRecords.values()).map(record => record.item).filter(Boolean);
             for (m = 0, len3 = ref2.length; m < len3; m++) {
               property = ref2[m];
-              if (property && property.milestoneIndex && angular.isDefined(property.milestoneIndex[di.progression])) {
+              if (property.milestoneIndex && angular.isDefined(property.milestoneIndex[di.progression])) {
                 if ((ref3 = property.override) != null ? ref3.deleted : void 0) {
                   continue;
                 }
@@ -288,11 +282,10 @@ const progressionLayout = require('../../services/progression-layout');
           }
           if (list.length) {
             return scope.modal({
-              template: 'dashboard-income',
-              controller: 'lettingsDashboardIncomeCtrl',
+              template: require('../../modals/dashboard-properties/dashboard-properties.html').default,
+              controller: 'lettingsDashboardPropertiesCtrl',
               data: {
                 di: di,
-                month: month,
                 list: list
               }
             }).then(function() {

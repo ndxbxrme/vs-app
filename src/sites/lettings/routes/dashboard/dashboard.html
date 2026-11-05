@@ -8,7 +8,11 @@
         <div class="snapshot-label"><a href="/lettings/available">Available Properties <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></div>
         <div class="snapshot-value">{{available.total}}</div>
       </div>
-      <div class="snapshot-item" ng-repeat="di in items = (dashboard.items | filter:{type:&quot;overview&quot;})" ng-click="showInfo(&quot;count&quot;, di, month)">
+      <div class="snapshot-item" role="button" tabindex="0"
+        ng-repeat="di in items = (dashboard.items | filter:{type:&quot;overview&quot;})"
+        ng-click="showInfo(&quot;count&quot;, di)"
+        ng-keydown="$event.key === 'Enter' &amp;&amp; showInfo(&quot;count&quot;, di)"
+        aria-label="View properties included in {{di.name}}">
         <div class="snapshot-label">{{di.name}}</div>
         <div class="snapshot-value">{{count(di)}}</div>
       </div>

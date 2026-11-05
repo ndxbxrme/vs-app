@@ -1,0 +1,25 @@
+<div class="modal dashboard-income">
+  <div class="modal-header">
+    <h1>{{data.di.name}}</h1>
+    <p>{{data.list.length}} propert{{data.list.length === 1 ? 'y' : 'ies'}} included in this total</p>
+    <input type="search" ng-model="search" placeholder="Search properties..."/>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <tbody>
+        <tr ng-repeat="property in filteredProperties = (data.list | filter:matchesSearch) | orderBy:getAddress">
+          <td>
+            <a class="address" href="" ng-if="getRoleId(property)" ng-click="goToCase(property)">
+              {{getAddress(property)}} <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i>
+            </a>
+            <span ng-if="!getRoleId(property)">{{getAddress(property)}}</span>
+          </td>
+        </tr>
+        <tr ng-if="!filteredProperties.length">
+          <td>No properties match your search.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <a class="close-reveal-modal" ng-click="cancel()">&times;</a>
+</div>
