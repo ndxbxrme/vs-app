@@ -91,11 +91,12 @@
                     <span class="milestone-dot status-{{cell.status}}" tabindex="0" title="{{cell.description}}" aria-label="{{cell.description}}">{{cell.status==='unavailable' ? '-' : ''}}</span>
                   </td>
                   <td>
-                    <div class="progression-meter" ng-if="row.percent !== null" title="{{row.completed}} / 15 milestones complete">
+                    <div class="progression-meter" ng-if="row.percent !== null" ng-class="{'move-in-ready':row.percent >= 67}" title="{{row.completed}} / 15 milestones complete">
                       <div class="progression-track" role="progressbar" aria-label="Mapped milestones completed" aria-valuemin="0" aria-valuemax="100" ng-attr-aria-valuenow="{{row.percent}}">
                         <div class="progression-fill" ng-style="{width:row.percent + '%'}"></div>
                       </div>
                       <strong>{{row.percent}}%</strong>
+                      <small class="progression-ready-label" ng-if="row.percent >= 67">Move in ready</small>
                     </div>
                     <span ng-if="row.percent === null" title="{{row.missing}} mapped milestones unavailable">Unavailable</span>
                   </td>

@@ -347,12 +347,28 @@
       background #fff0e8
       font-weight 600
     .progression-meter
-      display flex
+      display grid
+      grid-template-columns 75px minmax(35px, 1fr)
       align-items center
-      gap 8px
+      column-gap 8px
+      row-gap 3px
       strong
         min-width 35px
         text-align right
+      &.move-in-ready .progression-fill
+        background vs-green
+      &.move-in-ready strong
+        grid-column 2
+        grid-row 1 / span 2
+        align-self start
+        line-height 1
+      .progression-ready-label
+        grid-column 1
+        font-size 10px
+        line-height 1.1
+        font-weight 400
+        color vs-grey
+        white-space nowrap
     .progression-track
       width 75px
       height 7px
