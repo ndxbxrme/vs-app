@@ -12,41 +12,65 @@
     </div>
     
     <!-- Snapshot Boxes -->
-    <div class="row g-md-5 g-2 snapshot-row">
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="snapshot-box" ui-sref="maintenance_leads_issues">
-          <div class="snapshot-label">Today's Issues <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
-          <div class="snapshot-value">{{ maintenanceToday.total }}</div>
+    <div class="row g-md-4 g-2 snapshot-row snapshot-compact">
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="snapshot">
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_issues" aria-label="View {{maintenanceToday.total}} issues raised today">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-tools"></i></span>
+            <div class="snapshot-value">{{ maintenanceToday.total }}</div>
+            <div class="snapshot-label">Today's Issues</div>
+            <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="snapshot-box" ui-sref="maintenance_leads_issues">
-          <div class="snapshot-label">Outstanding Issues <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
-          <div class="snapshot-value">{{ maintenanceOutstanding.total }}</div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="snapshot">
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_issues" aria-label="View {{maintenanceOutstanding.total}} outstanding issues">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-tools"></i></span>
+            <div class="snapshot-value">{{ maintenanceOutstanding.total }}</div>
+            <div class="snapshot-label">Outstanding Issues</div>
+            <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="snapshot-box" ui-sref="maintenance_leads_worksorders">
-          <div class="snapshot-label">Outstanding Works <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
-          <div class="snapshot-value">{{ worksOutstanding.total }}</div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="snapshot">
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders" aria-label="View {{worksOutstanding.total}} outstanding works orders">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-check"></i></span>
+            <div class="snapshot-value">{{ worksOutstanding.total }}</div>
+            <div class="snapshot-label">Outstanding Works</div>
+            <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="snapshot-box" ui-sref="maintenance_leads_worksorders">
-          <div class="snapshot-label">Invoices Outstanding <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
-          <div class="snapshot-value">{{ invoiceOutstanding.total }}</div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="snapshot">
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders" aria-label="View {{invoiceOutstanding.total}} outstanding invoices">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-check"></i></span>
+            <div class="snapshot-value">{{ invoiceOutstanding.total }}</div>
+            <div class="snapshot-label">Invoices Outstanding</div>
+            <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="snapshot-box" ui-sref="maintenance_leads_worksorders">
-          <div class="snapshot-label">Inspections <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
-          <div class="snapshot-value">{{ inspectionWorks.total }}</div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="snapshot">
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders" aria-label="View {{inspectionWorks.total}} inspections">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-check"></i></span>
+            <div class="snapshot-value">{{ inspectionWorks.total }}</div>
+            <div class="snapshot-label">Inspections</div>
+            <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="snapshot-box" ui-sref="maintenance_leads_worksorders">
-          <div class="snapshot-label">MoveOut Works <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
-          <div class="snapshot-value">{{ moveOutWorks.total }}</div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="snapshot">
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders" aria-label="View {{moveOutWorks.total}} move-out works orders">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-check"></i></span>
+            <div class="snapshot-value">{{ moveOutWorks.total }}</div>
+            <div class="snapshot-label">MoveOut Works</div>
+            <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
     </div>

@@ -201,6 +201,8 @@ import './sites/agency/modals/advance-progression/advance-progression.ctrl.js';
 import './sites/agency/modals/dashboard-income/dashboard-income.ctrl.js';
 import './sites/agency/modals/instructed-by/instructed-by.ctrl.js';
 import './sites/agency/modals/yesnocancel.ctrl.js';
+import './sites/agency/routes/admin/admin.ctrl.js';
+import './sites/agency/routes/admin/admin.routes.js';
 import './sites/agency/routes/agreed/agreed.ctrl.js';
 import './sites/agency/routes/agreed/agreed.routes.js';
 import './sites/agency/routes/birthdays/birthdays.ctrl.js';

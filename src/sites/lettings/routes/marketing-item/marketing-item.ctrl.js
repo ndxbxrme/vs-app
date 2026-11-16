@@ -3,6 +3,14 @@
     'use strict';
     angular.module('vs-lettings-inner').controller('lettingsMarketingItemCtrl', function($scope, $stateParams, env, $http) {
         $scope.marketing = $scope.single('lettings:marketing', $stateParams.id);
+        $scope.formatDate = (date) => {
+            if (!date) return '';
+            const parsedDate = new Date(date);
+            const day = parsedDate.getDate();
+            const suffix = day >= 11 && day <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][day % 10] || 'th';
+            const month = parsedDate.toLocaleString('en-GB', { month: 'long' });
+            return `${day}${suffix} ${month} ${parsedDate.getFullYear()}`;
+        };
     });
 
 }).call(this);

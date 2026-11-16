@@ -13,16 +13,19 @@
 
     <div class="snapshot">
       <div class="snapshot-item">
-        <div class="snapshot-label">Today's Leads</div>
+        <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-calendar-day"></i></span>
         <div class="snapshot-value">{{ todayLeads.total }}</div>
+        <div class="snapshot-label">Today's Leads</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-label">Outstanding Leads</div>
+        <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clock"></i></span>
         <div class="snapshot-value">{{ outstandingLeads.total }}</div>
+        <div class="snapshot-label">Outstanding Leads</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-label">Total Leads</div>
+        <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-chart-simple"></i></span>
         <div class="snapshot-value">{{ todayLeads.total + outstandingLeads.total }}</div>
+        <div class="snapshot-label">Total Leads</div>
       </div>
     </div>
 

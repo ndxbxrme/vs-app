@@ -23,24 +23,27 @@
       <div class="col-md-6 col-lg-4">
         <div class="snapshot">
           <div class="snapshot-item">
-            <div class="snapshot-label">Total Fees</div>
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-circle-sterling"></i></span>
             <div class="snapshot-value">{{getTotalFees() | currency:'£':0}}</div>
+            <div class="snapshot-label">Total Fees</div>
           </div>
         </div>
       </div>
       <div class="col-md-6 col-lg-4">
         <div class="snapshot">
           <div class="snapshot-item">
-            <div class="snapshot-label">Total Instructions</div>
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-list-check"></i></span>
             <div class="snapshot-value">{{getTotalInstructions()}}</div>
+            <div class="snapshot-label">Total Instructions</div>
           </div>
         </div>
       </div>
       <div class="col-md-6 col-lg-4">
         <div class="snapshot">
           <div class="snapshot-item">
-            <div class="snapshot-label">Next Photos On</div>
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-camera"></i></span>
             <div class="snapshot-value">{{getNextPhotosDate() | date:'dd/MM/yy'}}</div>
+            <div class="snapshot-label">Next Photos On</div>
           </div>
         </div>
       </div>

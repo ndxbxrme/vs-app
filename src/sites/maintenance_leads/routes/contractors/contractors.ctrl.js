@@ -83,8 +83,9 @@
               <h2>{{contractor.name}} Issues</h2>
               <div class="snapshot">
                 <div class="snapshot-item">
-                  <div class="snapshot-label">Total Issues</div>
+                  <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-tools"></i></span>
                   <div class="snapshot-value">{{contractor.issues.total}}</div>
+                  <div class="snapshot-label">Total Issues</div>
                 </div>
               </div>
             </div>

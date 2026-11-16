@@ -28,20 +28,23 @@
       <div class="row g-5">
         <div class="col-md-4">
           <div class="snapshot-item">
-            <div class="snapshot-label">Sold in {{currentYear}}</div>
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-house-circle-check"></i></span>
             <div class="snapshot-value">{{getTotalSold()}}</div>
+            <div class="snapshot-label">Sold in {{currentYear}}</div>
           </div>
         </div>
         <div class="col-md-4">
           <div class="snapshot-item">
-            <div class="snapshot-label">Fees in {{currentYear}}</div>
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-circle-sterling"></i></span>
             <div class="snapshot-value" ng-bind-html="(getTotalFees() | currency:'£' | currencyFormat)"></div>
+            <div class="snapshot-label">Fees in {{currentYear}}</div>
           </div>
         </div>
         <div class="col-md-4">
           <div class="snapshot-item">
-            <div class="snapshot-label">Sales Required to hit Target</div>
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-bullseye-arrow"></i></span>
             <div class="snapshot-value">{{getSalesRequiredToTarget()}}</div>
+            <div class="snapshot-label">Sales Required to hit Target</div>
           </div>
         </div>
       </div>

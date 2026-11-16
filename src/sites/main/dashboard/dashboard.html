@@ -22,20 +22,24 @@
           <div class="col-xl-6">
             <h3><i class="fa-duotone fa-light fa-eye"></i> Overview</h3>
             <div class="row g-5 overview-row">
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="snapshot">
-                  <div class="snapshot-item">
-                    <div class="snapshot-label"><a href="/leads/selling">Outstanding Sales Leads <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></div>
+                  <a class="snapshot-item snapshot-action" href="/leads/selling" aria-label="View {{salesLeads.total}} outstanding sales leads">
+                    <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-bars-progress"></i></span>
                     <div class="snapshot-value">{{salesLeads.total}}</div>
-                  </div>
+                    <div class="snapshot-label">Outstanding Sales Leads</div>
+                    <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="snapshot">
-                  <div class="snapshot-item">
-                    <div class="snapshot-label"><a href="/leads/valuation">Outstanding Valuation Leads <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></div>
+                  <a class="snapshot-item snapshot-action" href="/leads/valuation" aria-label="View {{valuationLeads.total}} outstanding valuation leads">
+                    <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-bars-progress"></i></span>
                     <div class="snapshot-value">{{valuationLeads.total}}</div>
-                  </div>
+                    <div class="snapshot-label">Outstanding Valuation Leads</div>
+                    <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
             </div>     
@@ -44,19 +48,23 @@
           <div class="col-xl-6">
             <h3><i class="fa-duotone fa-light fa-timeline-arrow"></i> My Pipeline</h3>
             <div class="row g-5">
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="snapshot">
-                  <div class="snapshot-item clickable" ng-click="showMyPipelineModal()">
-                    <div class="snapshot-label">Sold By Me <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
+                  <div class="snapshot-item snapshot-action" role="button" tabindex="0" ng-click="showMyPipelineModal()" ng-keydown="$event.key === 'Enter' && showMyPipelineModal()" aria-label="View {{myPipeline}} properties sold by me">
+                    <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-house-circle-check"></i></span>
                     <div class="snapshot-value">{{myPipeline}}</div>
+                    <div class="snapshot-label">Sold By Me</div>
+                    <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="snapshot">
-                  <div class="snapshot-item clickable" ng-click="showMyInstructedByModal()">
-                    <div class="snapshot-label">Instructed By Me <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
+                  <div class="snapshot-item snapshot-action" role="button" tabindex="0" ng-click="showMyInstructedByModal()" ng-keydown="$event.key === 'Enter' && showMyInstructedByModal()" aria-label="View {{myInstructedBy}} properties instructed by me">
+                    <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-people-roof"></i></span>
                     <div class="snapshot-value">{{myInstructedBy}}</div>
+                    <div class="snapshot-label">Instructed By Me</div>
+                    <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
@@ -71,20 +79,24 @@
           <div class="col-xl-6">
             <h3><i class="fa-duotone fa-light fa-eye"></i> Overview</h3>
             <div class="row g-5 overview-row">
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="snapshot">
-                  <div class="snapshot-item">
-                    <div class="snapshot-label"><a href="/leads/letting">Outstanding Letting Leads <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></div>
+                  <a class="snapshot-item snapshot-action" href="/leads/letting" aria-label="View {{lettingLeads.total}} outstanding letting leads">
+                    <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-bars-progress"></i></span>
                     <div class="snapshot-value">{{lettingLeads.total}}</div>
-                  </div>
+                    <div class="snapshot-label">Outstanding Letting Leads</div>
+                    <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="snapshot">
-                  <div class="snapshot-item">
-                    <div class="snapshot-label"><a href="/leads/valuation">Outstanding Valuation Leads <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></div>
+                  <a class="snapshot-item snapshot-action" href="/leads/valuation" aria-label="View {{lettingValuationLeads.total}} outstanding valuation leads">
+                    <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-bars-progress"></i></span>
                     <div class="snapshot-value">{{lettingValuationLeads.total}}</div>
-                  </div>
+                    <div class="snapshot-label">Outstanding Valuation Leads</div>
+                    <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
             </div>     
@@ -93,20 +105,24 @@
           <div class="col-xl-6">
             <h3><i class="fa-duotone fa-light fa-timeline-arrow"></i> My Pipeline</h3>
             <div class="row g-5">
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="snapshot">
-                  <div class="snapshot-item">
-                    <div class="snapshot-label"><a href="/lettings/available">Current Available Properties <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></div>
+                  <a class="snapshot-item snapshot-action" href="/lettings/available" aria-label="View {{availableProperties.total}} available rental properties">
+                    <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-square-plus"></i></span>
                     <div class="snapshot-value">{{availableProperties.total}}</div>
-                  </div>
+                    <div class="snapshot-label">Current Available Properties</div>
+                    <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="snapshot">
-                  <div class="snapshot-item">
-                    <div class="snapshot-label"><a href="/lettings/cases">Current Agreed Lets <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></a></div>
+                  <a class="snapshot-item snapshot-action" href="/lettings/cases" aria-label="View {{agreedLets.total}} agreed lets">
+                    <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-house"></i></span>
                     <div class="snapshot-value">{{agreedLets.total}}</div>
-                  </div>
+                    <div class="snapshot-label">Current Agreed Lets</div>
+                    <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
             </div>

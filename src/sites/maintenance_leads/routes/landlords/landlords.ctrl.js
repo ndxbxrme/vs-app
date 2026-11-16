@@ -105,8 +105,9 @@
               <h2>{{landlord.name}} Properties</h2>
               <div class="snapshot">
                 <div class="snapshot-item">
-                  <div class="snapshot-label">Total Properties</div>
+                  <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-buildings"></i></span>
                   <div class="snapshot-value">{{landlord.addresses.length}}</div>
+                  <div class="snapshot-label">Total Properties</div>
                 </div>
               </div>
             </div>

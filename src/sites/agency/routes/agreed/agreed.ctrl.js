@@ -258,12 +258,14 @@
               <h2>{{month.month}} {{year}}</h2>
               <div class="snapshot">
                 <div class="snapshot-item">
-                  <div class="snapshot-label">Total Properties</div>
+                  <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-house-circle-check"></i></span>
                   <div class="snapshot-value">{{month.properties.length}}</div>
+                  <div class="snapshot-label">Total Properties</div>
                 </div>
                 <div class="snapshot-item">
-                  <div class="snapshot-label">Commission</div>
+                  <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-circle-sterling"></i></span>
                   <div class="snapshot-value" ng-bind-html="(month.commission | currency:'£' | currencyFormat)"></div>
+                  <div class="snapshot-label">Commission</div>
                 </div>
               </div>
             </div>

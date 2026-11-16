@@ -38,10 +38,13 @@
     
     <!-- Snapshot Boxes -->
     <div class="row g-3 snapshot-row">
-      <div class="col-md-6 col-lg-3 col-6" ng-repeat="window in windows">
-        <div class="snapshot-box">
-          <div class="snapshot-label">{{window.name}}</div>
-          <div class="snapshot-value">{{window.items.length}}</div>
+      <div class="col-12 col-sm-6 col-lg-3" ng-repeat="window in windows">
+        <div class="snapshot">
+          <div class="snapshot-item">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-picture-in-picture"></i></span>
+            <div class="snapshot-value">{{window.items.length}}</div>
+            <div class="snapshot-label">{{window.name}}</div>
+          </div>
         </div>
       </div>
     </div>

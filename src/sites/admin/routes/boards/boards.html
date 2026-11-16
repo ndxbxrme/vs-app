@@ -41,10 +41,13 @@
     </div>
     
     <div class="row g-3 snapshot-row">
-      <div class="col-md-6 col-lg-3 col-6" ng-repeat="board in boards">
-        <div class="snapshot-box">
-          <div class="snapshot-label">{{board.name}}</div>
+      <div class="col-12 col-sm-6 col-lg-3" ng-repeat="board in boards">
+        <div class="snapshot">
+          <div class="snapshot-item">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-sign-hanging"></i></span>
           <div class="snapshot-value">{{board.items.length}}</div>
+            <div class="snapshot-label">{{board.name}}</div>
+          </div>
         </div>
       </div>
     </div>

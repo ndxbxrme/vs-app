@@ -6,9 +6,11 @@
       <div class="col-lg-4">
         <h3><i class="fa-duotone fa-light fa-eye"></i> Overview of live cases</h3>
         <div class="snapshot">
-          <div class="snapshot-item" ng-repeat="di in items = (dashboard.items | filter:{type:&quot;overview&quot;}) | limitTo:-1" ng-click="showInfo(&quot;count&quot;, di, month)">
-            <div class="snapshot-label">{{di.name}} <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
+          <div class="snapshot-item snapshot-action" role="button" tabindex="0" ng-repeat="di in items = (dashboard.items | filter:{type:&quot;overview&quot;}) | limitTo:-1" ng-click="showInfo(&quot;count&quot;, di, month)" ng-keydown="$event.key === 'Enter' && showInfo(&quot;count&quot;, di, month)" aria-label="View {{di.name}}">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-list-check"></i></span>
             <div class="snapshot-value">{{count(di)}}</div>
+            <div class="snapshot-label">{{di.name}}</div>
+            <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
           </div>
         </div>
         <div class="overview">
@@ -37,9 +39,11 @@
       <div class="col-lg-8 income-column">
         <h3><i class="fa-duotone fa-light fa-circle-sterling"></i> Income</h3>
         <div class="snapshot">
-          <div class="snapshot-item" ng-repeat="di in incomeItems = (dashboard.items | filter:{type:&quot;income&quot;}) | limitTo:2" ng-click="showInfo(&quot;income&quot;, di, allmonths)">
-            <div class="snapshot-label">{{di.name}} <i class="fa-duotone fa-light fa-arrow-up-right-from-square"></i></div>
+          <div class="snapshot-item snapshot-action" role="button" tabindex="0" ng-repeat="di in incomeItems = (dashboard.items | filter:{type:&quot;income&quot;}) | limitTo:2" ng-click="showInfo(&quot;income&quot;, di, allmonths)" ng-keydown="$event.key === 'Enter' && showInfo(&quot;income&quot;, di, allmonths)" aria-label="View {{di.name}}">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-circle-sterling"></i></span>
             <div class="snapshot-value" ng-bind-html="income(di, allmonths) | currencyFormat" ng-class="{currency:di.sumtype===&quot;Income&quot;}"></div>
+            <div class="snapshot-label">{{di.name}}</div>
+            <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
           </div>
         </div>
         <div class="income">

@@ -87,8 +87,9 @@
               <h1>{{solicitor.name}}</h1>
               <div class="snapshot">
                 <div class="snapshot-item">
-                  <div class="snapshot-label">Total Cases</div>
+                  <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-scale-balanced"></i></span>
                   <div class="snapshot-value">{{solicitor.properties.length}}</div>
+                  <div class="snapshot-label">Total Cases</div>
                 </div>
               </div>
             </div>

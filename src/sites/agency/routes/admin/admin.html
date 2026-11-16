@@ -1,0 +1,121 @@
+<div class="agency-admin-route">
+  <div class="container-xl agency-admin-container">
+    <div class="agency-admin-controls">
+      <h1><i class="fa-duotone fa-light fa-clipboard-list-check"></i> Sales Admin</h1>
+      <div class="agency-admin-search">
+        <input id="agency-admin-search" type="search" ng-model="adminSearch" ng-change="resetAdminPages()" placeholder="Search admin cases"/>
+      </div>
+    </div>
+    <section class="agency-admin-summary" ng-if="!isAdminLoading() && !hasAdminError()" aria-label="Sales admin headline figures">
+      <article class="agency-admin-summary-card tone-{{summary.tone}}" ng-repeat="summary in adminSummary">
+        <div class="summary-icon"><i class="fa-duotone fa-light {{summary.icon}}" aria-hidden="true"></i></div>
+        <div class="summary-content">
+          <strong>{{summary.value}}</strong>
+          <span>{{summary.label}}</span>
+          <small>Across all live sales cases</small>
+        </div>
+      </article>
+    </section>
+    <nav class="agency-admin-jump-links" role="tablist" aria-label="Sales admin view">
+      <button type="button" id="{{table.key}}-admin-tab" ng-repeat="table in adminTables" ng-click="showAdminTable(table.key)" ng-class="{active:activeAdminTable === table.key}" role="tab" aria-selected="{{activeAdminTable === table.key}}" aria-controls="{{table.key}}-admin-table">{{table.title}}</button>
+    </nav>
+
+    <p role="alert" ng-if="hasAdminError()">Unable to load sales admin data. Please reload the page.</p>
+    <p role="status" ng-if="isAdminLoading() && !hasAdminError()">Loading sales admin data...</p>
+
+    <section class="agency-admin-section" id="{{table.key}}-admin-table" ng-repeat="table in adminTables" ng-show="activeAdminTable === table.key && !isAdminLoading() && !hasAdminError()" role="tabpanel" aria-labelledby="{{table.key}}-admin-tab">
+      <div class="agency-admin-heading">
+        <h2><i class="fa-duotone fa-light" ng-class="table.type === 'available' ? 'fa-house-circle-check' : 'fa-house-circle-exclamation'"></i> {{table.title}}</h2>
+        <div class="agency-admin-table-controls">
+          <div class="agency-admin-control-row">
+            <div class="agency-admin-sort">
+              <span>Order by:</span>
+              <button type="button" ng-click="changeAdminSort(table, 'instructed')" ng-class="{selected:isAdminSortActive(table, 'instructed')}" aria-pressed="{{isAdminSortActive(table, 'instructed')}}" title="Sort by instructed date">
+                Instructed Date
+                <i ng-if="isAdminSortActive(table, 'instructed')" class="fa-light" ng-class="getAdminSortDirection(table, 'instructed') === 'descending' ? 'fa-chevron-down' : 'fa-chevron-up'" aria-hidden="true"></i>
+              </button>
+              <button type="button" ng-click="changeAdminSort(table, 'percent')" ng-class="{selected:isAdminSortActive(table, 'percent')}" aria-pressed="{{isAdminSortActive(table, 'percent')}}" title="Sort by progress">
+                Progress
+                <i ng-if="isAdminSortActive(table, 'percent')" class="fa-light" ng-class="getAdminSortDirection(table, 'percent') === 'descending' ? 'fa-chevron-down' : 'fa-chevron-up'" aria-hidden="true"></i>
+              </button>
+            </div>
+            <label>Show
+              <select ng-model="table.pageSize" ng-change="changeAdminPageSize(table)" aria-label="Rows shown for {{table.title}}">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="all">All</option>
+              </select>
+              properties
+            </label>
+          </div>
+          <span>Showing {{table.pagedRows.length || 0}} of {{table.filteredRows.length || 0}} properties</span>
+        </div>
+      </div>
+
+      <div class="agency-admin-table-wrapper" role="region" aria-label="{{table.title}} admin table" tabindex="0">
+        <table class="agency-admin-table">
+          <colgroup>
+            <col class="property-column"/>
+            <col class="fee-column"/>
+            <col class="date-column"/>
+            <col ng-repeat="column in adminColumns"/>
+            <col class="progress-column"/>
+            <col class="valuer-column"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th rowspan="2" scope="col" class="admin-property">Property</th>
+              <th rowspan="2" scope="col">Fee</th>
+              <th rowspan="2" scope="col">Instructed</th>
+              <th ng-repeat="group in adminGroups" colspan="{{group.columns.length}}" scope="colgroup" class="admin-group group-{{group.key}}" ng-class="{'group-end':$last}">
+                <i class="fa-light {{group.icon}}" aria-hidden="true"></i>{{group.label}}
+              </th>
+              <th rowspan="2" scope="col">Progress</th>
+              <th rowspan="2" scope="col">Valuer</th>
+            </tr>
+            <tr>
+              <th ng-repeat="column in adminColumns" scope="col" ng-class="{'group-start':column.groupStart, 'group-end':column.groupEnd}" title="{{column.title}}">{{column.label}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="row in table.pagedRows = ((table.filteredRows = (table.rows | filter:matchesAdminSearch | orderBy:table.sort)) | limitTo:getAdminPageLimit(table):getAdminPageOffset(table))">
+              <th scope="row" class="admin-property">
+                <a ng-if="row.type === 'available'" ui-sref="agency_client-management-details({id:row.property._id})">{{row.address}}</a>
+                <a ng-if="row.type === 'sstc'" ui-sref="agency_case({roleId:row.roleId})">{{row.address}}</a>
+              </th>
+              <td class="admin-fee"><span>{{row.fee}}</span></td>
+              <td class="admin-date">{{(row.instructed | date:'d MMM yy') || '-'}}</td>
+              <td ng-repeat="cell in row.cells track by cell.key" ng-class="{'group-start':cell.groupStart, 'group-end':cell.groupEnd}">
+                <span class="admin-status-dot status-{{cell.status}}" agency-admin-tooltip data-bs-custom-class="agency-admin-tooltip" tabindex="0" title="{{cell.description}}" aria-label="{{cell.description}}">{{cell.status === 'unavailable' ? '-' : ''}}</span>
+              </td>
+              <td>
+                <div class="admin-progress-meter" title="{{row.completed}} of 13 tasks completed">
+                  <div class="admin-progress-track" role="progressbar" aria-label="Visible admin tasks completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{row.percent}}">
+                    <div class="admin-progress-fill" ng-style="{width:row.percent + '%'}"></div>
+                  </div>
+                  <strong>{{row.percent}}%</strong>
+                </div>
+              </td>
+              <td class="admin-valuer">
+                <img ng-if="row.valuer && row.valuer.local.email" gravatar-src="row.valuer.local.email" gravatar-size="36" title="{{row.valuer.displayName}}" alt="{{row.valuer.displayName}}"/>
+                <span ng-if="row.valuer && !row.valuer.local.email" title="{{row.valuer.displayName}}">{{row.valuer.displayName}}</span>
+                <span ng-if="!row.valuer">-</span>
+              </td>
+            </tr>
+            <tr ng-if="!table.filteredRows.length">
+              <td colspan="18">{{table.rows.length ? 'No properties match your search.' : 'No properties to show.'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pagination ng-if="table.pageSize !== 'all' && table.filteredRows.length > getAdminPageLimit(table)" class="pagination-sm pagination agency-admin-pagination" total="table.filteredRows.length" ng-model="table.page" page-size="getAdminPageLimit(table)" show-first-last="true"></pagination>
+    </section>
+
+    <div class="agency-admin-legend" ng-if="!isAdminLoading() && !hasAdminError()" aria-label="Admin status legend">
+      <span><span class="admin-status-dot status-completed"></span> Completed</span>
+      <span><span class="admin-status-dot status-pending"></span> Not started</span>
+      <span><span class="admin-status-dot status-required"></span> Not actioned</span>
+      <span><span class="admin-status-dot status-unavailable">-</span> Unavailable</span>
+    </div>
+  </div>
+</div>
