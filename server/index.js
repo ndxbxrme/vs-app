@@ -9,7 +9,7 @@ AWS.config.update({
 });
 require('ndx-server').config({
   database: 'db',
-  tables: ['users', 'emailtemplates', 'smstemplates', 'numberlists', 'schedule', 'boards', 'propertyadmin'],
+  tables: ['users', 'emailtemplates', 'smstemplates', 'numberlists', 'schedule', 'boards', 'propertyadmin', 'stripe'],
   localStorage: './data',
   hasInvite: true,
   hasForgot: true,
