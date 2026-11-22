@@ -6,6 +6,7 @@ import './sites/main/users/users.js';
 import './sites/main/forgot/forgot.js';
 import './sites/main/profile/profile.js';
 import './sites/main/invited/invited.js';
+import './sites/main/stripe-test/stripe-test.js';
 import './sites/main/setup/setup.js';
 import './sites/main/template/template.js';
 import './sites/main/breadcrumbs/breadcrumbs.js';
