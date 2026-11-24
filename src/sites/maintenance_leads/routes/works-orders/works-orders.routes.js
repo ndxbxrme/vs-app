@@ -3,7 +3,13 @@
   'use strict';
   angular.module('vs-maintenance-leads').config(function($stateProvider) {
     return $stateProvider.state('maintenance_leads_worksorders', {
-      url: '/maintenance_leads/works-orders',
+      url: '/maintenance_leads/works-orders?filter',
+      params: {
+        filter: {
+          value: null,
+          squash: true
+        }
+      },
       template: require("./works-orders.html").default,
       controller: 'maintenance_leadsWorksOrdersCtrl',
       data: {

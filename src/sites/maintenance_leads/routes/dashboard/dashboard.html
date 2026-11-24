@@ -6,16 +6,15 @@
         <h1><i class="fa-duotone fa-light fa-screwdriver-wrench"></i> Maintenance <strong class="orange">Dashboard</strong></h1>
       </div>
       <div class="col-md-4 text-md-end">
-        <button ng-click="openAddIssueModal()" class="button button-alt orange-button">New Issue <i class="fas fa-plus"></i></button>
-        <button type="button" ng-click="openAddWorksOrderModal()" class="button button-grey">New Works Order <i class="fas fa-plus"></i></button>
+        <button type="button" ng-click="openNewMaintenanceIssueModal()" class="button button-grey">New Maintenance Issue <i class="fas fa-plus"></i></button>
       </div>
     </div>
     
     <!-- Snapshot Boxes -->
     <div class="row g-md-4 g-2 snapshot-row snapshot-compact">
-      <div class="col-12 col-sm-6 col-md-4">
+      <div class="col-12 col-sm-4 col-md-2">
         <div class="snapshot">
-          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_issues" aria-label="View {{maintenanceToday.total}} issues raised today">
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_issues({filter:'today'})" aria-label="View {{maintenanceToday.total}} issues raised today">
             <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-tools"></i></span>
             <div class="snapshot-value">{{ maintenanceToday.total }}</div>
             <div class="snapshot-label">Today's Issues</div>
@@ -23,39 +22,39 @@
           </a>
         </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-4">
+      <div class="col-12 col-sm-4 col-md-2">
         <div class="snapshot">
-          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_issues" aria-label="View {{maintenanceOutstanding.total}} outstanding issues">
-            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-tools"></i></span>
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_issues({filter:'outstanding'})" aria-label="View {{maintenanceOutstanding.total}} outstanding issues">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-layer-group"></i></span>
             <div class="snapshot-value">{{ maintenanceOutstanding.total }}</div>
             <div class="snapshot-label">Outstanding Issues</div>
             <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
           </a>
         </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-4">
+      <div class="col-12 col-sm-4 col-md-2">
         <div class="snapshot">
-          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders" aria-label="View {{worksOutstanding.total}} outstanding works orders">
-            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-check"></i></span>
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders({filter:'outstanding'})" aria-label="View {{worksOutstanding.total}} outstanding works orders">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-helmet-safety"></i></span>
             <div class="snapshot-value">{{ worksOutstanding.total }}</div>
-            <div class="snapshot-label">Outstanding Works</div>
+            <div class="snapshot-label">Works Orders</div>
             <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
           </a>
         </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-4">
+      <div class="col-12 col-sm-4 col-md-2">
         <div class="snapshot">
-          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders" aria-label="View {{invoiceOutstanding.total}} outstanding invoices">
-            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-check"></i></span>
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders({filter:'invoices'})" aria-label="View {{invoiceOutstanding.total}} outstanding invoices">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-file-invoice"></i></span>
             <div class="snapshot-value">{{ invoiceOutstanding.total }}</div>
-            <div class="snapshot-label">Invoices Outstanding</div>
+            <div class="snapshot-label">Invoices</div>
             <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
           </a>
         </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-4">
+      <div class="col-12 col-sm-4 col-md-2">
         <div class="snapshot">
-          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders" aria-label="View {{inspectionWorks.total}} inspections">
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders({filter:'inspections'})" aria-label="View {{inspectionWorks.total}} inspections">
             <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-check"></i></span>
             <div class="snapshot-value">{{ inspectionWorks.total }}</div>
             <div class="snapshot-label">Inspections</div>
@@ -63,12 +62,12 @@
           </a>
         </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-4">
+      <div class="col-12 col-sm-4 col-md-2">
         <div class="snapshot">
-          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders" aria-label="View {{moveOutWorks.total}} move-out works orders">
-            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-clipboard-check"></i></span>
+          <a class="snapshot-item snapshot-action" ui-sref="maintenance_leads_worksorders({filter:'move-out'})" aria-label="View {{moveOutWorks.total}} move-out works orders">
+            <span class="snapshot-icon" aria-hidden="true"><i class="fa-duotone fa-light fa-arrow-up-from-square fa-rotate-90"></i></span>
             <div class="snapshot-value">{{ moveOutWorks.total }}</div>
-            <div class="snapshot-label">MoveOut Works</div>
+            <div class="snapshot-label">Move Out Works</div>
             <i class="snapshot-arrow fa-duotone fa-light fa-arrow-right" aria-hidden="true"></i>
           </a>
         </div>
@@ -105,7 +104,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="moveout-tab" data-bs-toggle="tab" data-bs-target="#moveout" type="button" role="tab" aria-controls="moveout" aria-selected="false">
-            MoveOut Works <span class="badge">{{ moveOutWorks.total }}</span>
+            Move Out Works <span class="badge">{{ moveOutWorks.total }}</span>
           </button>
         </li>
       </ul>
@@ -121,13 +120,13 @@
               </div>
               <div class="status">
                 <div class="booked"> 
-                  <div class="fad fa-file-medical"></div>
+                  <div class="fa-solid fa-file-medical"></div>
                 </div>
                 <div class="completed">
-                  <div class="fad fa-file-check"></div>
+                  <div class="fa-solid fa-message"></div>
                 </div>
                 <div class="invoiced">
-                  <div class="fad fa-thumbs-up"></div>
+                  <div class="fa-solid fa-thumbs-up"></div>
                 </div>
               </div>
               <div ng-if="issue.newMessages > 0" ng-class="{newmessage:issue.newMessages > 0}" class="messages">{{issue.newMessages || 0}}</div>
@@ -146,13 +145,13 @@
               </div>
               <div class="status">
                 <div class="booked"> 
-                  <div class="fad fa-file-medical"></div>
+                  <div class="fa-solid fa-file-medical"></div>
                 </div>
                 <div class="completed">
-                  <div class="fad fa-file-check"></div>
+                  <div class="fa-solid fa-message"></div>
                 </div>
                 <div class="invoiced">
-                  <div class="fad fa-thumbs-up"></div>
+                  <div class="fa-solid fa-thumbs-up"></div>
                 </div>
               </div>
               <div ng-if="issue.newMessages > 0" ng-class="{newmessage:issue.newMessages > 0}" class="messages">{{issue.newMessages || 0}}</div>
@@ -171,13 +170,13 @@
               </div>
               <div class="status">
                 <div class="booked"> 
-                  <div class="fad fa-file-medical"></div>
+                  <div class="fa-solid fa-file-medical"></div>
                 </div>
                 <div class="completed">
-                  <div class="fad fa-file-check"></div>
+                  <div class="fa-solid fa-message"></div>
                 </div>
                 <div class="invoiced">
-                  <div class="fad fa-thumbs-up"></div>
+                  <div class="fa-solid fa-thumbs-up"></div>
                 </div>
               </div>
               <div ng-if="issue.newMessages > 0" ng-class="{newmessage:issue.newMessages > 0}" class="messages">{{issue.newMessages || 0}}</div>
@@ -196,13 +195,13 @@
               </div>
               <div class="status">
                 <div class="booked"> 
-                  <div class="fad fa-file-medical"></div>
+                  <div class="fa-solid fa-file-medical"></div>
                 </div>
                 <div class="completed">
-                  <div class="fad fa-file-check"></div>
+                  <div class="fa-solid fa-message"></div>
                 </div>
                 <div class="invoiced">
-                  <div class="fad fa-thumbs-up"></div>
+                  <div class="fa-solid fa-thumbs-up"></div>
                 </div>
               </div>
               <div ng-if="issue.newMessages > 0" ng-class="{newmessage:issue.newMessages > 0}" class="messages">{{issue.newMessages || 0}}</div>
@@ -221,13 +220,13 @@
               </div>
               <div class="status">
                 <div class="booked"> 
-                  <div class="fad fa-file-medical"></div>
+                  <div class="fa-solid fa-file-medical"></div>
                 </div>
                 <div class="completed">
-                  <div class="fad fa-file-check"></div>
+                  <div class="fa-solid fa-message"></div>
                 </div>
                 <div class="invoiced">
-                  <div class="fad fa-thumbs-up"></div>
+                  <div class="fa-solid fa-thumbs-up"></div>
                 </div>
               </div>
               <div ng-if="issue.newMessages > 0" ng-class="{newmessage:issue.newMessages > 0}" class="messages">{{issue.newMessages || 0}}</div>
@@ -246,13 +245,13 @@
               </div>
               <div class="status">
                 <div class="booked"> 
-                  <div class="fad fa-file-medical"></div>
+                  <div class="fa-solid fa-file-medical"></div>
                 </div>
                 <div class="completed">
-                  <div class="fad fa-file-check"></div>
+                  <div class="fa-solid fa-message"></div>
                 </div>
                 <div class="invoiced">
-                  <div class="fad fa-thumbs-up"></div>
+                  <div class="fa-solid fa-thumbs-up"></div>
                 </div>
               </div>
               <div ng-if="issue.newMessages > 0" ng-class="{newmessage:issue.newMessages > 0}" class="messages">{{issue.newMessages || 0}}</div>

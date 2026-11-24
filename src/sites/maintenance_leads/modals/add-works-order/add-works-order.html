@@ -1,6 +1,6 @@
 <div class="modal add-lead-modal large">
   <div class="modal-header">
-    <h2>{{ data.worksOrder ? 'Edit Works Order' : 'Create Works Order' }}</h2>
+    <h2>{{ data.createIssue ? 'New Maintenance Issue' : (data.worksOrder ? 'Edit Works Order' : 'Create Works Order') }}</h2>
     <a ng-click="cancel()" class="close-reveal-modal">&times;</a>
   </div>
 
@@ -79,6 +79,6 @@
 
   <div class="modal-footer">
     <button class="button button-alt" ng-click="cancel()">Cancel</button>
-    <button class="button" ng-click="submit()">{{ data.worksOrder ? 'Update Works Order' : 'Create Works Order' }}</button>
+    <button class="button" ng-click="submit()">{{ data.createIssue ? 'Create Issue' : (data.worksOrder ? 'Update Works Order' : 'Create Works Order') }}</button>
   </div>
 </div>

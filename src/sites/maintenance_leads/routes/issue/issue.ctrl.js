@@ -2,7 +2,10 @@
 (function() {
   'use strict';
   angular.module('vs-maintenance-leads').controller('maintenance_leadsIssueCtrl', function($scope, $stateParams, $state, $http, $window, Auth, Upload, alert, breadcrumbs) {
-    var myParams;
+    var contractorSpreadsheetUrls, myParams;
+    contractorSpreadsheetUrls = {
+      'Thermal Heating Services': 'https://docs.google.com/spreadsheets/d/1CMpdbbSoBb-oynrmt_58fnTTBBznUpk91Q2HTeKRLTs/edit?usp=sharing'
+    };
     $scope.fetched = false;
     $scope.submitted = false;
     $scope.redirect = null;
@@ -72,6 +75,152 @@
       sort: 'date',
       sortDir: 'DESC'
     });
+    $scope.getContractorSpreadsheetUrl = function() {
+      var contractor, contractorName, task;
+      task = $scope.tasks && $scope.tasks.items && $scope.tasks.items[0];
+      if (!task) {
+        return null;
+      }
+      contractor = ($scope.contractors.items || []).find(function(item) {
+        return item._id === task.contractor;
+      });
+      contractorName = contractor && contractor.name || task.contractorName;
+      return contractorSpreadsheetUrls[contractorName] || null;
+    };
+
+    $scope.toggleIssueType = function(type) {
+      if (type !== 'inspectionWorks' && type !== 'moveOutWorks') {
+        return;
+      }
+      $scope.issue.item[type] = !$scope.issue.item[type];
+      return $scope.issue.save();
+    };
+
+    $scope.hasAssignedContractor = function() {
+      var tasks;
+      tasks = $scope.tasks && $scope.tasks.items;
+      return !!(tasks && tasks.some(function(task) {
+        return !!task.contractor;
+      }));
+    };
+    $scope.hasScheduledTask = function() {
+      var tasks;
+      tasks = $scope.tasks && $scope.tasks.items;
+      return !!(tasks && tasks.some(function(task) {
+        return !!task.contractor && !!task.date;
+      }));
+    };
+    $scope.hasCompleteCostings = function() {
+      var item, hasValue;
+      item = $scope.issue && $scope.issue.item;
+      if (!item) {
+        return false;
+      }
+      hasValue = function(value) {
+        return value !== null && value !== void 0 && String(value).trim() !== '';
+      };
+      return hasValue(item.quoteContractor) && hasValue(item.quoteVitalSpace);
+    };
+    $scope.hasAssignedLandlord = function() {
+      var item;
+      item = $scope.issue && $scope.issue.item;
+      return !!(item && item.landlordId && item.landlordName && item.landlordName !== 'Empty');
+    };
+    $scope.assignLandlord = function() {
+      var landlord;
+      landlord = ($scope.landlords && $scope.landlords.items || []).find(function(item) {
+        return item._id === $scope.issue.item.landlordId;
+      });
+      if (landlord) {
+        $scope.issue.item.landlordName = landlord.name;
+        $scope.issue.item.landlordPhone = landlord.phone;
+        $scope.issue.item.landlordEmail = landlord.email;
+      }
+      return $scope.issue.save();
+    };
+    $scope.getIssueProgressStep = function() {
+      var item, status;
+      item = $scope.issue && $scope.issue.item;
+      if (!item) {
+        return 1;
+      }
+      status = item.status || {};
+      if (!$scope.hasAssignedContractor()) {
+        return 1;
+      }
+      if (item.statusName === 'Completed' && $scope.hasCompleteCostings()) {
+        return 5;
+      }
+      if (status.invoiced && $scope.hasCompleteCostings()) {
+        return 4;
+      }
+      if (status.completed && $scope.hasCompleteCostings()) {
+        return 3;
+      }
+      return 2;
+    };
+    $scope.getIssueProgressLabel = function() {
+      return ['Reported', 'Contractor Assigned', 'Job Completed', 'Invoice Received', 'Job Closed'][$scope.getIssueProgressStep() - 1];
+    };
+    $scope.getMaintenanceProgressionStep = function() {
+      var item;
+      var status;
+      item = $scope.issue && $scope.issue.item;
+      if (!item) {
+        return 1;
+      }
+      status = item.status || {};
+      if (!$scope.hasAssignedContractor()) {
+        return 1;
+      }
+      if (!$scope.hasScheduledTask()) {
+        return 2;
+      }
+      if (!$scope.getWorksOrderPdfUrl()) {
+        return 3;
+      }
+      if (!$scope.hasCompleteCostings()) {
+        return 4;
+      }
+      if (!status.completed) {
+        return 5;
+      }
+      if (!status.invoiced) {
+        return 6;
+      }
+      return 7;
+    };
+    $scope.isMaintenanceProgressionStepComplete = function(step) {
+      var item, status;
+      item = $scope.issue && $scope.issue.item;
+      status = item && item.status || {};
+      switch (step) {
+        case 1:
+          return $scope.hasAssignedContractor();
+        case 2:
+          return $scope.hasScheduledTask();
+        case 3:
+          return !!$scope.getWorksOrderPdfUrl();
+        case 4:
+          return $scope.hasCompleteCostings();
+        case 5:
+          return !!status.completed;
+        case 6:
+          return !!status.invoiced;
+        case 7:
+          return !!(item && item.statusName === 'Completed');
+        default:
+          return false;
+      }
+    };
+    $scope.saveCostings = function() {
+      if (!$scope.hasCompleteCostings()) {
+        return alert.error('Enter both contractor and VitalSpace quotes before continuing');
+      }
+      return $scope.issue.save().then(function() {
+        return alert.log('Costings saved');
+      });
+    };
     
     // Extract works order PDF URL from notes
     $scope.getWorksOrderPdfUrl = function() {
@@ -88,6 +237,56 @@
         }
       }
       return null;
+    };
+    $scope.worksOrderLinkCopied = false;
+    $scope.copyWorksOrderLink = function() {
+      var copyWithFallback, handleCopyError, markCopied, url;
+      url = $scope.getWorksOrderPdfUrl();
+      if (!url) {
+        return alert.error('Works order link unavailable');
+      }
+      markCopied = function() {
+        return $scope.$evalAsync(function() {
+          $scope.worksOrderLinkCopied = true;
+          return alert.log('Link copied');
+        });
+      };
+      handleCopyError = function(err) {
+        console.error('Unable to copy works order link', err);
+        return $scope.$evalAsync(function() {
+          return alert.error('Unable to copy works order link');
+        });
+      };
+      copyWithFallback = function() {
+        var copied, textarea;
+        textarea = $window.document.createElement('textarea');
+        textarea.value = url;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        $window.document.body.appendChild(textarea);
+        textarea.select();
+        copied = $window.document.execCommand('copy');
+        $window.document.body.removeChild(textarea);
+        if (!copied) {
+          throw new Error('Clipboard copy command failed');
+        }
+        return markCopied();
+      };
+      if ($window.navigator.clipboard && $window.navigator.clipboard.writeText) {
+        return $window.navigator.clipboard.writeText(url).then(markCopied, function() {
+          try {
+            return copyWithFallback();
+          } catch (err) {
+            return handleCopyError(err);
+          }
+        });
+      }
+      try {
+        return copyWithFallback();
+      } catch (err) {
+        return handleCopyError(err);
+      }
     };
     
     $scope.addNote = function() {
@@ -174,6 +373,20 @@
         return console.log('Modal dismissed', err);
       });
     };
+    $scope.openCreateWorksOrderModal = function() {
+      return $scope.modal({
+        template: require('../../modals/add-works-order/add-works-order.html').default,
+        controller: 'maintenance_leadsAddWorksOrderModalCtrl',
+        size: 'large',
+        data: {
+          issue: $scope.issue.item,
+          issueRecord: $scope.issue,
+          preserveIssueWorkflow: true
+        }
+      }, $http.sites["maintenance_leads"].config).then(function() {
+        return $scope.issue.refresh();
+      });
+    };
     $scope.showLightbox = function(media) {
       return $scope.modal({
         template: require('../../modals/lightbox/lightbox.html').default,
@@ -181,6 +394,54 @@
         size: 'large',
         data: media
       }, $http.sites["maintenance_leads"].config).then(function() {});
+    };
+    $scope.selectedMediaIndex = 0;
+    $scope.getCurrentMedia = function() {
+      var media;
+      media = $scope.issue && $scope.issue.item && $scope.issue.item.media;
+      if (!media || !media.length) {
+        return null;
+      }
+      if ($scope.selectedMediaIndex >= media.length) {
+        $scope.selectedMediaIndex = 0;
+      }
+      return media[$scope.selectedMediaIndex];
+    };
+    $scope.selectIssueMedia = function(index) {
+      return $scope.selectedMediaIndex = index;
+    };
+    $scope.changeIssueMedia = function(direction, event) {
+      var media;
+      event.stopPropagation();
+      media = $scope.issue.item.media;
+      return $scope.selectedMediaIndex = ($scope.selectedMediaIndex + direction + media.length) % media.length;
+    };
+    $scope.isVideoUrl = function(url) {
+      return /\.(mp4|webm|mov|avi|mkv|m4v)(?:[?#].*)?$/i.test(url || '');
+    };
+    $scope.isHeicUrl = function(url) {
+      return /\.(heic|heif)(?:[?#].*)?$/i.test(url || '');
+    };
+    $scope.getIssueAddress = function() {
+      var address;
+      var parts;
+      address = $scope.issue.item.address || $scope.issue.item.address1 || '';
+      parts = [$scope.issue.item.address2, $scope.issue.item.postcode];
+      parts.forEach(function(part) {
+        if (part && address.toLowerCase().indexOf(part.toLowerCase()) === -1) {
+          address += (address ? ', ' : '') + part;
+        }
+      });
+      return address;
+    };
+    $scope.faultDescriptionExpanded = false;
+    $scope.isFaultDescriptionExpandable = function() {
+      var details;
+      details = $scope.issue && $scope.issue.item && $scope.issue.item.details;
+      return !!details && details.length > 220;
+    };
+    $scope.toggleFaultDescription = function() {
+      return $scope.faultDescriptionExpanded = !$scope.faultDescriptionExpanded;
     };
     //just be happy
     $scope.chaseContractor = function(method, task) {

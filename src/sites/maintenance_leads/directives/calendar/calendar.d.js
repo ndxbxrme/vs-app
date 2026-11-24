@@ -177,7 +177,9 @@
             }
           ];
         };
-        scope.issue = scope.single('maintenance_leads:issues', $stateParams);
+        scope.issue = scope.single('maintenance_leads:issues', {
+          _id: $stateParams._id
+        });
         scope.contractors = scope.list('maintenance_leads:contractors', {
           sort: 'name',
           sortDir: 'ASC'

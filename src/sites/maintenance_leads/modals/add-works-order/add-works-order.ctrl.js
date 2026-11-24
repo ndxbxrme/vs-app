@@ -48,6 +48,59 @@
         alert.log('Please select a contractor');
         return;
       }
+
+      if ($scope.data.createIssue) {
+        const issueId = Math.floor(Math.random() * 99999999999999999999).toString(36);
+        const tenantNames = ($scope.worksOrder.tenant || '').trim().split(/\s+/);
+        const issue = {
+          "_id": issueId,
+          "source": "telephone",
+          "postcode": "",
+          "address1": $scope.worksOrder.address || "",
+          "address2": "",
+          "tenantTitle": "",
+          "tenantFirstName": tenantNames.shift() || "",
+          "tenantLastName": tenantNames.join(' '),
+          "tenantPhone": $scope.worksOrder.tenantPhone || "",
+          "tenantEmail": $scope.worksOrder.tenantEmail || "",
+          "details": $scope.worksOrder.issueDetails || "",
+          "title": $scope.worksOrder.issueTitle || "",
+          "landlordId": "",
+          "date": new Date($scope.worksOrder.date).valueOf(),
+          "address": $scope.worksOrder.address || "",
+          "tenant": $scope.worksOrder.tenant || "",
+          "statusName": "Reported",
+          "landlordName": "",
+          "landlordPhone": "",
+          "landlordEmail": "",
+          "priority": $scope.worksOrder.priority,
+          "contractor": contractor._id,
+          "contractorName": contractor.name,
+          "moveOutWorks": $scope.worksOrder.moveOutWorks === 'Move Out Issue',
+          "status": {
+            "booked": false,
+            "completed": false,
+            "invoiced": false
+          },
+          "notes": $scope.worksOrder.notes ? [{
+            date: new Date().getTime(),
+            item: 'Note',
+            side: '',
+            text: $scope.worksOrder.notes,
+            user: $scope.auth.getUser()
+          }] : []
+        };
+
+        return $http.post($http.sites["maintenance_leads"].url + `/api/issues/${issueId}`, issue, $http.sites.maintenance_leads.config)
+          .then(function() {
+            alert.log('Maintenance issue created successfully');
+            ndxModalInstance.close(issue);
+          })
+          .catch(function(error) {
+            console.error('Error creating maintenance issue:', error);
+            alert.log('Error creating maintenance issue');
+          });
+      }
       
       const htmldiv = document.createElement('div');
       const newIssue = !$scope.data.issue;
@@ -154,6 +207,28 @@
                   
                   const pdfUrl = `https://vitalspace-worksorders.s3.eu-west-1.amazonaws.com/${pdfFileName}`;
                   const contractorName = contractor.name;
+
+                  if ($scope.data.preserveIssueWorkflow) {
+                    $scope.data.issue.notes = $scope.data.issue.notes || [];
+                    $scope.data.issue.notes.push({
+                      date: new Date().getTime(),
+                      item: 'Note',
+                      side: '',
+                      text: `## **Works order created**  \n<${pdfUrl}>`,
+                      user: $scope.auth.getUser()
+                    });
+                    if ($scope.worksOrder.moveOutWorks === 'Move Out Issue') {
+                      $scope.data.issue.moveOutWorks = true;
+                    }
+                    return $scope.data.issueRecord.save()
+                      .then(function() {
+                        ndxModalInstance.close({ pdfUrl: pdfUrl });
+                      })
+                      .catch(function(error) {
+                        console.error('Error saving works order to issue:', error);
+                        alert.log('Error saving works order to issue');
+                      });
+                  }
                   
                   // If there's an existing issue, update it to be a works order
                   if ($scope.data.issue && $scope.data.issue._id) {

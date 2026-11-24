@@ -34,6 +34,64 @@
       background vs-orange
       color white
       border: 1px solid vs-orange
+  .date-sort-link
+    display inline-flex
+    align-items center
+    gap 6px
+    color vs-grey
+    font-weight 600
+    margin-bottom 5px
+    &:hover
+      color vs-orange
+  .maintenance-pagination.pagination
+    display flex
+    align-items center
+    justify-content center
+    gap 6px
+    width fit-content
+    margin 18px auto 0
+    padding 7px
+    background white
+    border 1px solid vs-lightgrey
+    border-radius 30px
+    box-shadow 0 3px 8px rgba(0,0,0,0.08)
+    .page
+      display inline-flex
+      align-items center
+      justify-content center
+      min-width 34px
+      height 34px
+      padding 0 10px !important
+      color vs-grey
+      background transparent
+      border 1px solid transparent
+      border-radius 20px
+      font-weight 600
+      line-height 1
+      transition background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease
+      &:hover:not(.disabled)
+        color vs-orange
+        background #fff0ec
+        border-color #ffd6c7
+      &.selected
+        color white
+        background vs-orange
+        border-color vs-orange
+      &.disabled
+        color vs-silver
+        opacity 0.45
+      &.firstNumber, &.last
+        min-width 52px
+      &.prev, &.next
+        color vs-orange
+        font-size 0
+        &:before
+          font-size 2rem
+          font-weight 400
+      &.prev:before
+        content '‹'
+      &.next:before
+        content '›'
   .properties-list
     .property-card
       background white
@@ -226,6 +284,11 @@
       align-items flex-start !important
     .controls
       margin-left 7px
+    .maintenance-pagination.pagination
+      flex-wrap wrap
+      border-radius 15px
+      .firstNumber, .last
+        display none
     .properties-list
       .property-card
         .property-meta

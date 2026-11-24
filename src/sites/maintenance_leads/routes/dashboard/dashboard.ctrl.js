@@ -166,7 +166,39 @@
             search: {
               $like: ''
             },
-            inspectionWorks: true
+            inspectionWorks: true,
+            $and: [
+              {
+                $or: [
+                  {
+                    status: {
+                      completed: false
+                    }
+                  },
+                  {
+                    status: {
+                      completed: {
+                        $null: true
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                $or: [
+                  {
+                    statusName: {
+                      $ne: 'Completed'
+                    }
+                  },
+                  {
+                    statusName: {
+                      $null: true
+                    }
+                  }
+                ]
+              }
+            ]
           },
           sort: 'date',
           sortDir: 'DESC'
@@ -187,16 +219,18 @@
           });
         };
         
-        scope.openAddWorksOrderModal = function() {
+        scope.openNewMaintenanceIssueModal = function() {
           return scope.modal({
             template: require('../../modals/add-works-order/add-works-order.html').default,
             controller: 'maintenance_leadsAddWorksOrderModalCtrl',
             size: 'large',
-            data: {}
-          }).then(function(newWorksOrder) {
-            if (newWorksOrder) {
-              scope.worksOutstanding.refresh();
-              scope.invoiceOutstanding.refresh();
+            data: {
+              createIssue: true
+            }
+          }).then(function(newIssue) {
+            if (newIssue) {
+              scope.maintenanceToday.refresh();
+              scope.maintenanceOutstanding.refresh();
             }
           });
         };

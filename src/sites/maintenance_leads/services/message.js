@@ -102,7 +102,7 @@
       "forms.myForm-jobnumber-label": "Input your CFP Job Number",
       "modal-issue-book-title": "What is your CFP Job Number?",
       "forms.myForm-jobnumber-error-required": "Please enter the CFP Job Number",
-      "works-heading": "Outstanding Works Orders",
+      "works-heading": "Works Orders",
       "works-heading-date": "Date Raised",
       "works-heading-address": "Property Address",
       "works-heading-tenant": "Tenant",

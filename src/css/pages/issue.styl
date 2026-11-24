@@ -1,9 +1,16 @@
 .issue-route
   padding-top 30px
+
+  #details,
+  #contractor,
+  #documents,
+  #messages,
+  #notes
+    scroll-margin-top 105px
   
   .issue
     .header-row
-      margin-bottom 30px
+      margin-bottom 0px
       h1
         font-size 2.8rem
         font-weight 600
@@ -27,6 +34,63 @@
         margin-bottom 20px
         i 
           margin-left 8px
+      .delete-issue-button
+        margin-left 8px
+        margin-bottom 20px
+      .issue-type-banner
+        display flex
+        align-items center
+        flex-wrap wrap
+        gap 8px
+        margin-bottom 20px
+        padding 12px 16px
+        color vs-grey
+        background #fff0ec
+        border 1px dotted vs-orange
+        border-radius 8px
+        font-size 1.5rem
+        i, strong
+          color vs-orange
+        .issue-type-controls
+          display inline-flex
+          gap 8px
+          margin-left auto
+          button
+            font-size 1.4rem
+            display inline-flex
+            align-items center
+            justify-content space-between
+            gap 12px
+            min-width 126px
+            margin 0
+            padding 7px 9px 7px 14px
+            color vs-grey
+            background white
+            border 1px solid vs-lightgrey
+            border-radius 22px
+            font-weight 600
+            line-height 1
+            transition background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease
+            &:hover
+              color vs-orange
+              border-color vs-orange
+            &.selected
+              color vs-orange
+              background #fff8f5
+              border-color vs-orange
+            .type-toggle-indicator
+              display inline-flex
+              align-items center
+              justify-content center
+              width 20px
+              height 20px
+              color white
+              border 1px solid vs-lightgrey
+              border-radius 50%
+              font-size 1rem
+            &.selected .type-toggle-indicator
+              background vs-orange
+              border-color vs-orange
       .contacts
         display flex
         justify-content flex-end
@@ -63,6 +127,734 @@
             color vs-grey
             margin-top 10px
             margin-bottom 20px
+
+    .issue-status-scroll
+      margin-bottom 25px
+      overflow-x auto
+      padding 2px 2px 6px
+    .issue-status-progress
+      position relative
+      display grid
+      grid-template-columns repeat(5, 1fr)
+      min-width 680px
+      padding 19px 30px 17px
+      background white
+      border 1px solid rgba(204,204,204,0.65)
+      border-radius 8px
+      .status-track
+        position absolute
+        top 33px
+        left calc(10% + 24px)
+        right calc(10% + 24px)
+        height 2px
+        overflow hidden
+        background #e0e0e4
+        span
+          display block
+          width 0
+          height 100%
+          background vs-orange
+          transition width 0.3s ease
+      &.step-2 .status-track span
+        width 25%
+      &.step-3 .status-track span
+        width 50%
+      &.step-4 .status-track span
+        width 75%
+      &.step-5 .status-track span
+        width 100%
+      .status-step
+        position relative
+        z-index 1
+        display flex
+        align-items center
+        flex-direction column
+        gap 7px
+        color vs-silver
+        text-align center
+        .status-marker
+          display inline-flex
+          align-items center
+          justify-content center
+          width 29px
+          height 29px
+          background white
+          border 2px solid #d9d9de
+          border-radius 50%
+          font-size 1.15rem
+        .status-label
+          font-size 1.3rem
+          font-weight 600
+        &.reached
+          color vs-orange
+          .status-marker
+            color white
+            background vs-orange
+            border-color vs-orange
+
+    .issue-overview
+      display grid
+      grid-template-columns minmax(0, 5fr) minmax(0, 7fr)
+      align-items start
+      gap 22px
+      margin-bottom 30px
+      > section
+        min-width 0
+        overflow hidden
+        background white
+        border 1px solid rgba(204,204,204,0.55)
+        border-radius 16px
+
+    .fault-media-card
+      display flex
+      flex-direction column
+      padding 22px
+      .overview-card-heading
+        display flex
+        align-items flex-start
+        justify-content space-between
+        gap 16px
+        h2
+          margin 0 0 6px
+          color vs-grey
+          i
+            margin-right 8px
+            color vs-orange
+      .fault-description
+        display flex
+        align-items flex-start
+        gap 8px
+        margin 16px 0 20px
+        color vs-grey
+        line-height 1.6
+        > i
+          flex-shrink 0
+          margin-top 5px
+          color vs-orange
+          font-size 1.2rem
+        .fault-description-body
+          min-width 0
+        p
+          margin 0
+          white-space pre-line
+          &.collapsed
+            display -webkit-box
+            overflow hidden
+            -webkit-box-orient vertical
+            -webkit-line-clamp 4
+        .fault-description-toggle
+          margin 8px 0 0
+          padding 0
+          color vs-orange
+          background none
+          border 0
+          font-size 1.4rem
+          font-weight 600
+          &:hover
+            color vs-grey
+          i
+            margin-left 5px
+            font-size 1.1rem
+
+    .media-thumbnails
+      display flex
+      flex-shrink 0
+      gap 6px
+      margin-bottom 10px
+      button
+        position relative
+        width 42px
+        height 42px
+        margin 0
+        overflow hidden
+        padding 0
+        color vs-grey
+        background #f4f4f6
+        border 2px solid transparent
+        border-radius 8px
+        &.selected
+          border-color vs-orange
+        &.media-more
+          color vs-grey
+          background vs-lightgrey
+          border 0
+          font-size 1.6rem
+          font-weight 600
+          display flex
+          align-items center
+          justify-content center
+      .thumbnail-image
+        position absolute
+        inset 0
+        background-position center
+        background-size cover
+      .thumbnail-icon
+        position absolute
+        inset 0
+        display flex
+        align-items center
+        justify-content center
+        color white
+        background rgba(52,52,58,0.72)
+        i
+          margin 0
+
+    .issue-media-stage
+      position relative
+      display flex
+      align-items center
+      justify-content center
+      min-height 315px
+      margin-top auto
+      overflow hidden
+      background #f1f1f3
+      border-radius 10px
+      cursor zoom-in
+      img, video
+        display block
+        width 100%
+        height 315px
+        object-fit cover
+      video
+        background #202024
+        cursor default
+      .media-arrow
+        position absolute
+        z-index 2
+        top 50%
+        display flex
+        align-items center
+        justify-content center
+        width 38px
+        height 38px
+        margin 0
+        padding 0
+        color vs-grey
+        background white
+        border 0
+        border-radius 50%
+        transform translateY(-50%)
+        transition background 0.2s ease
+        i
+          margin 0
+        &:hover
+          color white
+          background vs-orange
+        &.previous
+          left 12px
+        &.next
+          right 12px
+      .media-position
+        position absolute
+        right 12px
+        bottom 12px
+        padding 4px 9px
+        color white
+        background rgba(34,34,38,0.72)
+        border-radius 12px
+        font-size 1.1rem
+        font-weight 600
+
+    .heic-media-placeholder,
+    .issue-media-placeholder
+      display flex
+      align-items center
+      justify-content center
+      flex-direction column
+      gap 7px
+      min-height 340px
+      color vs-silver
+      background linear-gradient(145deg, #f7f7f8, #eeeeF1)
+      border 1px dashed vs-lightgrey
+      border-radius 10px
+      text-align center
+      i
+        margin-bottom 5px
+        color vs-orange
+        font-size 4rem
+      strong
+        color vs-grey
+        font-size 1.7rem
+      span
+        font-size 1.3rem
+    .heic-media-placeholder
+      width 100%
+      border 0
+
+    .property-detail-card
+      display flex
+      flex-direction column
+      .property-summary
+        margin 12px 12px 22px
+        padding 21px 22px
+        background linear-gradient(135deg, #fff0eb, #fff9f6)
+        border 1px solid #f8e1d8
+        border-radius 12px
+        h2
+          margin 0 0 18px
+          color vs-grey
+          line-height 1.35
+          i
+            margin-right 10px
+            color vs-orange
+      .property-meta-row
+        display flex
+        flex-wrap wrap
+        gap 12px 26px
+        color vs-grey
+        font-size 1.6rem
+        > span
+          display flex
+          align-items center
+          &:first-child
+            padding-right 26px
+            strong
+              min-width 90px
+              margin-left 7px
+              padding 5px 15px
+              color vs-orange
+              background rgba(255,255,255,0.65)
+              border-radius 18px
+              text-align center
+        i
+          width 18px
+          margin-right 4px
+          color vs-orange
+      .contact-list
+        display flex
+        justify-content center
+        flex 1
+        flex-direction column
+        padding 8px 26px
+      .contact-row
+        display grid
+        grid-template-columns 36px minmax(150px, 0.9fr) minmax(140px, 0.8fr) minmax(180px, 1.2fr)
+        align-items center
+        gap 10px
+        padding 12px 0
+        border-bottom 1px solid #eeeeF1
+        font-size 1.6rem
+        &:last-child
+          border-bottom 0
+        .contact-icon
+          position relative
+          display flex
+          align-items center
+          justify-content center
+          width 34px
+          height 34px
+          color vs-orange
+          background #fff0eb
+          border-radius 50%
+          &.landlord
+            color vs-grey
+            background #eeeeF1
+          small
+            position absolute
+            right -5px
+            bottom -3px
+            display flex
+            align-items center
+            justify-content center
+            width 18px
+            height 18px
+            color white
+            background vs-orange
+            border 2px solid white
+            border-radius 50%
+            font-size 0.85rem
+            font-weight 600
+          &.landlord small
+            background vs-grey
+        strong
+          color vs-grey
+        a
+          min-width 0
+          padding-left 14px
+          overflow hidden
+          color vs-grey
+          text-overflow ellipsis
+          white-space nowrap
+          &:hover
+            color vs-orange
+          i
+            margin-right 4px
+            color vs-silver
+          &.contact-email
+            color vs-orange
+        &.no-phone .contact-email
+          grid-column 3 / 5
+        &.missing-landlord
+          border-bottom 0
+          label
+            display grid
+            grid-template-columns minmax(160px, auto) minmax(220px, 1fr)
+            grid-column 2 / 5
+            align-items center
+            gap 14px
+            margin 0
+            color #b23a2f
+          .landlord-select
+            position relative
+            display block
+            i
+              position absolute
+              top 50%
+              right 14px
+              color #ef6a55
+              transform translateY(-50%)
+              pointer-events none
+          select
+            width 100%
+            height 40px
+            margin 0
+            padding 7px 36px 7px 12px
+            color #8d2e26
+            background #fff6f3
+            border 2px solid #ef6a55
+            border-radius 8px
+            font-weight 600
+
+    .overview-shortcuts
+      display grid
+      grid-template-columns repeat(auto-fit, minmax(105px, 1fr))
+      gap 10px
+      padding 18px 26px
+      border-top 1px solid #eeeeF1
+      a
+        display flex
+        align-items center
+        justify-content center
+        flex-direction column
+        gap 7px
+        min-height 82px
+        padding 12px 8px
+        color vs-grey
+        background white
+        border 1px solid #e4e4e8
+        border-radius 9px
+        text-align center
+        transition color 0.2s ease, background 0.2s ease, border-color 0.2s ease
+        &:hover
+          color vs-orange
+          background #fff8f5
+          border-color #f4c1ae
+        i
+          color vs-orange
+          font-size 2.1rem
+        &:first-child
+          color vs-orange
+          background #fff4ef
+          border-color #f7d6c9
+
+    .issue-form-actions
+      display flex
+      align-items center
+      justify-content flex-end
+      margin-bottom 20px
+      .button
+        margin 0
+
+    .fault-notes-section
+      margin 42px 0 34px
+      background white
+      border 1px solid rgba(204,204,204,0.55)
+      border-radius 8px
+      .fault-notes-heading
+        display flex
+        align-items center
+        gap 14px
+        margin-bottom 15px
+        padding 20px 24px 12px
+        h2
+          margin 0
+        .source
+          flex-shrink 0
+          margin 0
+      .fault-notes-content
+        padding 20px 24px
+        color vs-grey
+        border-top 1px solid rgba(204,204,204,0.55)
+        line-height 1.65
+        h3
+          margin 0 0 12px
+
+    .maintenance-progression
+      margin-bottom 40px
+      > h2
+        margin-bottom 20px
+
+    .progression-list
+      position relative
+      padding-left 4px
+      &:before
+        content ''
+        position absolute
+        top 28px
+        bottom 28px
+        left 19px
+        width 2px
+        background #dcdce0
+
+    .progression-step
+      position relative
+      display grid
+      grid-template-columns 40px minmax(0, 1fr)
+      align-items center
+      gap 14px
+      margin-bottom 13px
+      .progression-number
+        position relative
+        z-index 1
+        display flex
+        align-items center
+        justify-content center
+        width 32px
+        height 32px
+        color white
+        background #85858b
+        border 3px solid vs-body
+        border-radius 50%
+        font-size 1.3rem
+        font-weight 600
+        transition background 0.2s ease
+      &.active .progression-number,
+      &.complete .progression-number
+        background vs-orange
+      &.complete .progression-card
+        border-color rgba(233,94,48,0.3)
+      &.future
+        .progression-number
+          color #b8b8bd
+          background #e1e1e4
+        .progression-card
+          opacity 0.55
+          background #f4f4f5
+          border-color #dedee1
+          box-shadow none
+        .progression-action,
+        .progression-document,
+        .progression-toggle span
+          color #a5a5aa
+          background #f4f4f5
+          border-color #cfcfd3
+
+    .progression-card
+      display flex
+      align-items center
+      gap 18px
+      min-height 70px
+      padding 12px 16px
+      background white
+      border 1px solid rgba(204,204,204,0.6)
+      border-radius 10px
+      box-shadow 0 4px 14px rgba(42,42,48,0.05)
+      .progression-title
+        display flex
+        align-items center
+        flex 0 0 230px
+        gap 12px
+        color vs-grey
+        .progression-icon
+          display flex
+          align-items center
+          justify-content center
+          width 38px
+          height 38px
+          color vs-grey
+          background #f5f5f6
+          border-radius 8px
+          font-size 1.8rem
+        strong
+          font-size 1.6rem
+      .progression-empty
+        margin-right auto
+        color vs-silver
+        font-size 1.4rem
+      &.progression-schedule,
+      &.progression-costings
+        align-items flex-end
+
+    .progression-fields
+      display grid
+      grid-template-columns repeat(3, minmax(130px, 1fr))
+      flex 1
+      gap 12px
+      label
+        min-width 0
+        margin 0
+        color vs-grey
+        font-size 1.2rem
+        font-weight 600
+      input,
+      select
+        width 100%
+        height 38px
+        margin 0px
+        padding 7px 10px
+        color vs-grey
+        background #f7f7f8
+        border 1px solid #dedee2
+        border-radius 6px
+        font-size 1.4rem
+      input:disabled,
+      select:disabled
+        opacity 1
+      .contractor-booking-field
+        display flex
+        align-items center
+        gap 8px
+        select
+          min-width 0
+      .contractor-spreadsheet-link
+        display flex
+        align-items center
+        justify-content center
+        flex 0 0 38px
+        width 38px
+        height 38px
+        color #217346
+        background #eef8f2
+        border 1px solid #8fc4a7
+        border-radius 7px
+        font-size 1.8rem
+        &:hover
+          color white
+          background #217346
+          border-color #217346
+    .progression-costings .progression-fields
+      grid-template-columns repeat(2, minmax(150px, 1fr))
+      .currency-input
+        position relative
+        display block
+        > span
+          position absolute
+          z-index 1
+          top 50%
+          left 11px
+          color vs-grey
+          font-size 1.4rem
+          font-weight 600
+          transform translateY(-50%)
+          pointer-events none
+        input
+          padding-left 28px
+
+    .progression-action,
+    .progression-document
+      display inline-flex
+      align-items center
+      justify-content center
+      flex-shrink 0
+      gap 8px
+      min-height 38px
+      margin 0 0 0 auto
+      padding 8px 16px
+      color vs-orange
+      background white
+      border 1px solid vs-orange
+      border-radius 20px
+      font-size 1.4rem
+      font-weight 600
+      line-height 1.2
+      &:hover
+        color white
+        background vs-orange
+      &:disabled
+        opacity 0.45
+        pointer-events none
+      &.icon-action
+        width 38px
+        padding 0
+        border-color vs-lightgrey
+        border-radius 50%
+
+    .progression-document
+      margin-left 0
+      color vs-grey
+      border-color vs-lightgrey
+      i
+        margin-left 0px
+    .progression-inline-actions
+      display flex
+      align-items center
+      gap 8px
+      margin-left auto
+      .progression-action
+        margin 0
+      .progression-toggle
+        margin 0
+
+    .progression-toggle
+      margin 0 0 0 auto
+      input
+        position absolute
+        opacity 0
+        pointer-events none
+      span
+        display inline-flex
+        align-items center
+        gap 10px
+        min-width 160px
+        padding 8px 15px
+        color vs-grey
+        background white
+        border 1px solid vs-lightgrey
+        border-radius 20px
+        font-size 1.4rem
+        font-weight 600
+        cursor pointer
+        i
+          color vs-silver
+      input:checked + span
+        color vs-orange
+        background #fff5f1
+        border-color vs-orange
+        i
+          color vs-orange
+
+    .progression-complete-label
+      display inline-flex
+      align-items center
+      gap 8px
+      margin-left auto
+      padding 8px 15px
+      color white
+      background vs-orange
+      border-radius 20px
+      font-size 1.4rem
+      font-weight 600
+
+    .progression-administration
+      margin 20px 0 0 54px
+      overflow hidden
+      background white
+      border 1px solid rgba(204,204,204,0.6)
+      border-radius 10px
+      summary
+        padding 14px 18px
+        color vs-grey
+        font-size 1.5rem
+        font-weight 600
+        cursor pointer
+      &[open] summary
+        border-bottom 1px solid #eeeeF1
+      .progression-admin-fields
+        display grid
+        grid-template-columns repeat(4, minmax(0, 1fr))
+        gap 14px
+        padding 18px
+        label
+          margin 0
+          font-size 1.3rem
+          font-weight 600
+        select
+          width 100%
+          height 40px
+          margin-top 5px
+          padding 7px 9px
+          border 1px solid vs-lightgrey
+          border-radius 6px
     
     .issue-details-section
       background white
@@ -581,12 +1373,14 @@
                 color vs-red
     .drop-box
       margin-top 10px
+      border 1px dashed rgba(204,204,204,0.6)
+      border-radius 8px
   // Case notes section
   .case-notes
-    border 1px solid vs-lightgrey
+    border 1px solid rgba(204,204,204,0.6)
     padding 30px
     margin 10px 0 30px
-    border-radius 30px
+    border-radius 8px
     background white
     .case-note
       background vs-white
@@ -629,7 +1423,7 @@
   .add-note
     margin-top 10px
     .CodeMirror
-      border 1px solid vs-lightgrey
+      border 1px solid rgba(204,204,204,0.6)
       border-radius 5px
       background #f1f1f1
       padding-left 15px
@@ -647,7 +1441,7 @@
   // Form holder for add/edit
   .form-holder
     background white
-    border 1px solid vs-lightgrey
+    border 1px solid rgba(204,204,204,0.6)
     border-radius 20px
     padding 30px
     margin-bottom 20px
@@ -661,11 +1455,11 @@
         margin-top 0
     .form-row
       margin-bottom 20px
-      border-bottom 1px solid vs-lightgrey
+      border-bottom 1px solid rgba(204,204,204,0.6)
       padding-bottom 10px
       &.top-row
         padding-bottom 20px
-        border-bottom 2px solid vs-lightgrey
+        border-bottom 2px solid rgba(204,204,204,0.6)
     label
       font-size 1.4rem
       font-weight 500
@@ -693,18 +1487,31 @@
     .controls
       margin-top 30px
       padding-top 20px
-      border-top 1px solid vs-lightgrey
+      border-top 1px solid rgba(204,204,204,0.6)
       .button
         margin-right 10px
   
   .message-center
     background white
-    border 1px solid vs-lightgrey
-    border-radius 20px
+    border 1px solid rgba(204,204,204,0.6)
+    border-radius 8px
     padding 30px
     padding 30px
   .notes-and-messages
     margin-bottom 20px
+
+@media (max-width: 1100px)
+  .issue-route
+    .issue
+      .issue-overview
+        grid-template-columns 1fr
+      .contact-row
+        grid-template-columns 36px minmax(140px, 0.8fr) minmax(130px, 0.7fr) minmax(180px, 1.2fr)
+      .progression-card
+        .progression-title
+          flex-basis 190px
+      .progression-admin-fields
+        grid-template-columns repeat(2, minmax(0, 1fr))
 
 @media (max-width: 768px)
   .issue-route
@@ -712,6 +1519,8 @@
       .header-row
         .edit-issue-button
           margin-left 0
+        .delete-issue-button
+          margin-left 4px
         .contacts 
           justify-content flex-start
           margin-top 15px
@@ -721,6 +1530,88 @@
           justify-content flex-start
           margin-left 0
           margin-right 10px
+      .fault-media-card
+        padding 16px
+        .overview-card-heading
+          align-items stretch
+          flex-direction column
+      .media-thumbnails
+        flex-wrap wrap
+      .issue-media-stage
+        min-height 240px
+        img, video
+          height 240px
+      .heic-media-placeholder,
+      .issue-media-placeholder
+        min-height 240px
+      .property-detail-card
+        .property-summary
+          padding 20px
+          h2
+            font-size 1.8rem
+        .contact-list
+          padding 8px 20px
+        .contact-row
+          grid-template-columns 36px minmax(0, 1fr)
+          a
+            grid-column 2
+          &.no-phone .contact-email
+            grid-column 2
+          &.missing-landlord label
+            grid-template-columns 1fr
+            grid-column 2
+            gap 7px
+      .overview-shortcuts
+        grid-template-columns repeat(2, 1fr)
+        padding 16px 20px
+      .overview-primary-actions
+        align-items stretch
+        flex-direction column
+        padding 0 20px 20px
+        .button
+          width 100%
+      .fault-notes-section
+        margin-top 30px
+      .progression-list
+        padding-left 0
+        &:before
+          left 15px
+      .progression-step
+        grid-template-columns 32px minmax(0, 1fr)
+        gap 9px
+        .progression-number
+          width 28px
+          height 28px
+      .progression-card
+        align-items stretch
+        flex-wrap wrap
+        gap 12px
+        padding 14px
+        .progression-title
+          flex 1 0 100%
+        &.progression-schedule,
+        &.progression-costings
+          align-items stretch
+      .progression-fields,
+      .progression-costings .progression-fields
+        grid-template-columns 1fr
+        flex-basis 100%
+      .progression-action,
+      .progression-document,
+      .progression-toggle,
+      .progression-complete-label
+        margin-left 0
+      .progression-inline-actions
+        align-items stretch
+        flex-basis 100%
+        flex-direction column
+        margin-left 0
+        .progression-action
+          width 100%
+      .progression-administration
+        margin-left 41px
+        .progression-admin-fields
+          grid-template-columns 1fr
     .nav-row
       nav
         justify-content flex-start
