@@ -1,86 +1,395 @@
 .diary-route
-  display flex
-  font-size 12px
-  .toolbar
-    background vs-grey
-    color white
+  display block
+  width 100%
+  max-width 1800px
+  margin 0 auto
+  padding 24px 28px 32px
+  .diary-heading
+    display flex
+    align-items center
+    justify-content space-between
+    gap 20px
+    margin-bottom 18px
+    h1
+      margin 0
+      color vs-grey
+      font-size 2.8rem
+      font-weight 600
+    p
+      margin 3px 0 0
+      color vs-silver
+      font-size 1.3rem
+    .btn
+      display inline-flex
+      align-items center
+      gap 10px
+      border-radius 24px
+      i
+        font-size 1.4rem
+  .diary-toolbar
+    display flex
+    align-items center
+    gap 16px
+    margin 18px 0 20px
+  .diary-search
+    flex 1 1 430px
+    height 46px
+    margin 0
+    max-width 520px
+  .diary-input-wrap
+    position relative
+    display block
+    i
+      position absolute
+      top 50%
+      left 13px
+      z-index 1
+      color vs-grey
+      font-size 1.5rem
+      transform translateY(-50%)
+    input
+      width 100%
+      height 46px
+      margin 0
+      padding 9px 15px 9px 42px
+      color vs-grey
+      background white
+      border 1px solid vs-lightgrey
+      border-radius 10px
+      box-shadow 0 1px 3px rgba(0,0,0,0.05)
+      font-size 1.5rem
+      &::placeholder
+        color vs-grey
+        opacity 1
+      &:focus
+        border-color vs-orange
+        box-shadow 0 0 0 3px rgba(241,91,37,.1)
+  .diary-contractors
+    flex 0 1 340px
+    height 46px
+    margin 0
+    min-width 250px
+    .SumoSelect
+      width 100%
+      margin 0
+      > .CaptionCont
+        height 46px
+        min-height 46px
+        padding 9px 42px 9px 15px
+        color vs-grey
+        background white
+        border 1px solid vs-lightgrey
+        border-radius 10px
+        box-shadow 0 1px 3px rgba(0,0,0,0.05)
+        > span
+          padding-right 0
+          line-height 26px
+          font-size 1.5rem
+          &.placeholder
+            color vs-grey
+            font-style normal
+        > label
+          width 42px
+          i
+            width 8px
+            height 8px
+            background none
+            border solid vs-grey
+            border-width 0 2px 2px 0
+            transform rotate(45deg)
+      &.open > .CaptionCont
+        border-color vs-orange
+        border-radius 10px
+        box-shadow 0 0 0 3px rgba(241,91,37,.1)
+        > label i
+          margin-top -2px
+          transform rotate(225deg)
+      &.open .search-txt 
+        border-radius 10px
+      > .optWrapper
+        top calc(100% + 7px)
+        padding 7px
+        border 0
+        border-radius 10px
+        box-shadow 0 8px 24px rgba(0,0,0,.16)
+        > .options
+          max-height 300px
+          border-radius 7px
+          li.opt
+            padding 10px 12px
+            border-bottom 1px solid #eeeeef
+            font-size 1.15rem
+            label
+              font-size 1.5rem
+            &:last-child
+              border-bottom 0
+            &:hover
+              background #fff0ec
+            &.selected
+              color vs-orange
+              background #fff0ec
+        .search-txt
+          height 39px
+          padding 7px 10px
+          border 1px solid vs-lightgrey
+          border-radius 7px
+        .select-all
+          height auto
+          padding 9px 12px
+          border-bottom 1px solid vs-lightgrey
+  .diary-status-filter
+    position relative
+    flex 0 0 auto
+    width 190px
+    button
+      display flex
+      align-items center
+      justify-content space-between
+      gap 12px
+      width 100%
+      margin 0
+      min-height 46px
+      padding 9px 14px
+      color vs-grey
+      background white
+      border 1px solid vs-lightgrey
+      border-radius 10px
+      font-size 1.5rem
+      font-weight 600
+      white-space nowrap
+      i
+        margin 0
+    &.status-menu-open .diary-status-trigger
+      border-color vs-orange
+      box-shadow 0 0 0 3px rgba(241,91,37,.1)
+  .diary-status-icons
+    display inline-flex
+    align-items center
+    gap 10px
+  .diary-status-chevron
+    display inline-flex
+    align-items center
+    justify-content center
+    color vs-grey
+    font-size 1.1rem
+    i
+      transform none
+  .diary-status-menu
+    position absolute
+    top calc(100% + 7px)
+    left 0
+    z-index 30
     display flex
     flex-direction column
-    width 260px
-    min-width 260px
-    max-width 260px
-    flex-wrap wrap
-    padding-top .5rem
-    padding-bottom .5rem
-    margin 10px
-    border-radius 20px
-    .contractors
-      label
-        color vs-orange
-        margin 0.5rem
+    gap 6px
+    width 220px
+    padding 8px
+    background white
+    border-radius 12px
+    box-shadow 0 8px 24px rgba(0,0,0,.16)
+    button
+      min-height 40px
+      padding 8px 12px
+      border-color transparent
+      font-size 1.3rem
+      &:hover,
+      &.selected
+        border-color currentColor
+  .diary-status-filter
+    .status-incomplete
+      color vs-grey
+      background #f1f1f1
+    .status-awaiting-invoice
+      color #5b408c
+      background #f2edfc
+    .status-completed
+      color #26723a
+      background #edf8ef
+    .status-move-out
+      color #0c4a6e
+      background #e6f7ff
+    .status-inspection
+      color #8d2f63
+      background #fcecf4
+  .diary-focused-issue
+    display flex
+    align-items center
+    justify-content space-between
+    gap 20px
+    margin-bottom 14px
+    padding 11px 16px
+    color #5b408c
+    background #f2edfc
+    border 1px solid #d8cbed
+    border-radius 9px
+    font-size 1.2rem
+    .diary-focused-copy
+      display flex
+      align-items center
+      gap 11px
+      > i
+        flex 0 0 auto
+        font-size 1.5rem
+    .diary-focused-details
+      display flex
+      flex-direction column
+      gap 2px
+      strong
+        color vs-grey
+        font-size 1.4rem
+        line-height 1
+      span
+        color #5b408c
         font-size 1.2rem
-        display block
-        font-weight 700
-    .issue
-      width 100%
-      padding .4rem .5rem
-      border-bottom 1px solid rgba(255,255,255,0.2)
-      div
-        padding 0 .4rem .4rem .4rem
-    .dates
-      width 100%
-      .date-swiper-holder
-        position relative
-        display block
-        z-index 1
-        .day-names
-          color inherit
-          margin-top 1.6rem
-        .month
-          background #394a58
-        .controls
-          display none
-        .month-holder
-          height 2rem
-          position relative
-        .month-name
-          position absolute
-          top 0
-          left 0
-          width 100%
-          display block
-          pointer-events none
-        .is-selected
-          .date
-            background vs-orange
-        ul li:before
-          display none
-          
-    .contractors
-      width 100%
-      .input-holder
-        color #333
-        margin 1rem 0.5rem
-  .back a
-    vs-button-alt()
-    color white
-    text-align center
-    margin 0.5rem
-    padding .65rem 1rem .65rem .65rem
-    text-transform uppercase
-    text-decoration none
-    font-weight 600
-    svg 
-      margin-right 1rem
-  .SumoSelect > .optWrapper > .options li.opt label
-    font-size 1.4rem
-    color vs-grey
-  .SumoSelect > .optWrapper.multiple > .options li.opt span, .SumoSelect .select-all > span
-    opacity 0
-  .SumoSelect.open > .optWrapper > .options li
-    &:before
-      display none
-    &.selected
-      background vs-orange 
-      label
+    .diary-show-all
+      display inline-flex
+      align-items center
+      justify-content center
+      gap 9px
+      min-height 40px
+      padding 8px 15px
+      color #5b408c
+      background white
+      border 1px solid #cbbbe3
+      border-radius 21px
+      box-shadow 0 1px 2px rgba(0,0,0,.04)
+      font-size 1.2rem
+      font-weight 600
+      text-decoration none
+      white-space nowrap
+      &:hover
         color white
+        background #5b408c
+        border-color #5b408c
+  .diary-week-nav
+    display flex
+    align-items center
+    flex 0 0 auto
+    gap 0
+    height 46px
+    width max-content
+    max-width 100%
+    margin-left auto
+    button
+      margin 0
+  .diary-week-button
+    display inline-flex
+    align-items center
+    justify-content center
+    width 46px
+    height 46px
+    color vs-grey
+    background white
+    border 1px solid vs-lightgrey
+    font-size 1.5rem
+    i 
+      margin 0
+    &.previous
+      border-radius 10px 0 0 10px
+    &.next
+      border-radius 0 10px 10px 0
+    &:hover
+      color vs-orange
+      background #fff0ec
+  .diary-week-title
+    display inline-flex
+    align-items center
+    justify-content center
+    gap 10px
+    flex 0 0 200px
+    width 200px
+    height 46px
+    min-width 200px
+    padding 8px 18px
+    color vs-grey
+    background white
+    border-radius 0
+    border-top 1px solid vs-lightgrey
+    border-right 0
+    border-bottom 1px solid vs-lightgrey
+    border-left 0
+    font-size 1.5rem
+    font-weight 600
+    white-space nowrap
+    i
+      color vs-orange
+      font-size 1.45rem
+      margin 0
+    span
+      text-transform none
+  .diary-date-picker
+    position relative
+    display inline-flex
+    align-items center
+    justify-content center
+    width 28px
+    height 44px
+    margin 0
+    cursor pointer
+    input
+      position absolute
+      inset 0
+      width 100%
+      height 100%
+      margin 0
+      padding 0
+      opacity 0
+      cursor pointer
+    i
+      pointer-events none
+
+@media (max-width: 1200px)
+  .diary-route
+    .diary-toolbar
+      flex-wrap wrap
+    .diary-search,
+    .diary-contractors
+      flex 1 1 300px
+      max-width none
+    .diary-week-nav
+      margin-left auto
+
+@media (max-width: 900px)
+  .diary-route
+    padding 20px 18px 28px
+    .diary-week-nav
+      order 4
+      align-self flex-end
+      width auto
+      margin-left auto
+    .diary-week-title
+      flex 0 0 auto
+
+@media (max-width: 600px)
+  .diary-route
+    padding 16px 12px 24px
+    .diary-heading
+      align-items flex-start
+      flex-direction column
+      h1
+        font-size 2.25rem
+    .diary-toolbar
+      align-items stretch
+      flex-direction column
+    .diary-search,
+    .diary-contractors
+      flex auto
+      width 100%
+      min-width 0
+    .diary-status-filter
+      align-self flex-start
+      width 100%
+      .diary-status-menu
+        width 100%
+    .diary-focused-issue
+      align-items flex-start
+      flex-direction column
+      gap 8px
+    .diary-week-title
+      flex 0 0 250px
+      width 250px
+      min-width 250px
+      padding-right 8px
+      padding-left 8px
+      span
+        font-size 1.1rem

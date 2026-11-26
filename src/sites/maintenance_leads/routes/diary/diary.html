@@ -1,31 +1,73 @@
-
-<div class="diary-route route-full">
-  <div class="toolbar">
-    <div ng-show="issue.item._id" class="back"><a class="button" ui-sref="maintenance_leads_issue({_id:issue.item._id})"> 
-        <div class="fal fa-arrow-alt-left"></div>Back</a></div>
-    <div ng-show="issue.item._id" class="issue">
-      <div class="name"> 
-        <input id="onlyThisIssue" type="checkbox" ng-model="onlyThisIssue" ng-change="filterTasks()"/>
-        <label for="onlyThisIssue">{{issue.item.address}}</label>
+<main class="diary-route">
+  <div class="container-xl">
+    <div class="header-row">
+      <div class="row align-items-end">
+        <div class="col-sm-6">
+          <h1><i class="fa-duotone fa-light fa-calendar-days"></i> Maintenance Diary</h1>
+        </div>
       </div>
-      <div class="title">{{issue.item.title}}</div>
     </div>
-    <div class="moveOutWorksFilter">
-      <input id="showMoveOut" type="checkbox" ng-model="showMoveOut" ng-change="filterTasks()" />
-      <label for="showMoveOut">Move Out Works</label>
-    </div>
-    <div class="contractors">
-      <label>Contractors</label>
-      <div class="input-holder">
-        <select sumoselect="{placeholder:'All contractors', search:true}" ng-model="selectedContractors" name="contractors" ng-change="filterTasks()" multiple="multiple">
-          <option ng-repeat="contractor in contractors.items" value="{{contractor._id}}">{{ contractor.name }}</option>
+    <section class="diary-toolbar" aria-label="Diary controls">
+      <label class="diary-search" aria-label="Search jobs">
+        <span class="diary-input-wrap">
+          <i class="fa-light fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" ng-model="diarySearch" ng-change="refreshWeeklyBoard()" placeholder="Search address, contractor or issue...">
+        </span>
+      </label>
+      <label class="diary-contractors" aria-label="Filter by contractor">
+        <select multiple sumoselect="{placeholder: 'All contractors', search: true, selectAll: true}" ng-model="selectedContractors" ng-change="refreshWeeklyBoard()">
+          <option ng-repeat="contractor in contractors.items" ng-value="contractor._id">{{contractor.name}}</option>
         </select>
+      </label>
+      <div class="diary-status-filter" ng-class="{'status-menu-open': diaryStatusMenuOpen}">
+        <button type="button" class="diary-status-trigger status-{{selectedDiaryStatus.id}}" ng-click="diaryStatusMenuOpen = !diaryStatusMenuOpen" ng-attr-aria-expanded="{{diaryStatusMenuOpen}}" aria-haspopup="true">
+          <span>{{selectedDiaryStatus.label}}</span>
+          <span class="diary-status-icons">
+            <i class="fa-light {{selectedDiaryStatus.icon}}" aria-hidden="true"></i>
+            <span class="diary-status-chevron" aria-hidden="true">
+              <i class="fa-light fa-chevron-down" ng-if="!diaryStatusMenuOpen"></i>
+              <i class="fa-light fa-chevron-up" ng-if="diaryStatusMenuOpen"></i>
+            </span>
+          </span>
+        </button>
+        <div class="diary-status-menu" ng-if="diaryStatusMenuOpen" role="menu">
+          <button type="button" ng-repeat="status in diaryStatusOptions" class="status-{{status.id}}" ng-class="{selected: selectedDiaryStatus.id === status.id}" ng-click="selectDiaryStatus(status)" role="menuitem">
+            <span>{{status.label}}</span>
+            <i class="fa-light {{status.icon}}" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="dates">
-      <maintenance-leads-date-swiper config="{prefix:&quot;toolbar&quot;, modifier:1.5, show:true}"></maintenance-leads-date-swiper>
-    </div>
+      <nav class="diary-week-nav" aria-label="Week navigation">
+        <button type="button" class="diary-week-button previous" ng-click="previousWeek()" aria-label="Previous week">
+          <i class="fa-light fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <div class="diary-week-title">
+          <label class="diary-date-picker" title="Choose a date">
+            <i class="fa-light fa-calendar-days" aria-hidden="true"></i>
+            <input type="date" ng-model="selectedDiaryDate" ng-change="goToDiaryDate(selectedDiaryDate)" aria-label="Choose a date to view its week">
+          </label>
+          <span>{{weekStart | date:'EEE d'}} – {{weekEnd | date:'EEE d MMM'}}</span>
+        </div>
+        <button type="button" class="diary-week-button next" ng-click="nextWeek()" aria-label="Next week">
+          <i class="fa-light fa-chevron-right" aria-hidden="true"></i>
+        </button>
+      </nav>
+    </section>
   </div>
-  <calendar></calendar>
-  <task-popup></task-popup>
-</div>
+
+
+  <section class="diary-focused-issue" ng-if="onlyThisIssue && issue.item._id">
+    <div class="diary-focused-copy">
+      <i class="fa-light fa-filter" aria-hidden="true"></i>
+      <span class="diary-focused-details">
+        <strong>{{issue.item.address}}</strong>
+        <span>{{issue.item.title}}</span>
+      </span>
+    </div>
+    <a class="diary-show-all" ui-sref="maintenance_leads_diary({ _id: null, onlyThisIssue: false, diaryDate: null })">
+      Show all jobs <i class="fa-light fa-grid-2" aria-hidden="true"></i>
+    </a>
+  </section>
+
+  <weekly-calendar></weekly-calendar>
+</main>

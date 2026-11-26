@@ -132,6 +132,7 @@ import './sites/maintenance_leads/directives/date-swiper/date-swiper.d.js';
 import './sites/maintenance_leads/directives/message-center/message-center.d.js';
 import './sites/maintenance_leads/directives/task-popup/task-popup.d.js';
 import './sites/maintenance_leads/directives/task/task.d.js';
+import './sites/maintenance_leads/directives/weekly-calendar/weekly-calendar.d.js';
 //import './sites/maintenance_leads/directives/template-render/template-render.d.js';
 import './sites/maintenance_leads/filters/by-status.js';
 import './sites/maintenance_leads/modals/add-issue/add-issue.ctrl.js';

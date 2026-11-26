@@ -1,66 +1,84 @@
-
 <div class="modal task-modal" ng-click="$event.preventDefault()">
-  <h1 ng-show="!task._id">Book a maintenance appointment</h1>
-  <h1 ng-show="task._id">Edit maintenance appointment</h1>
-  <form name="forms.myForm" ng-submit="saveMLTask()" novalidate="novalidate">
-    <div class="row">
-      <div class="form-item col-sm-6">
-        <label class="title">Property:</label>
-        <p>{{task.address}}</p>
-      </div>
-      <div class="form-item col-sm-6">
-        <label class="title">Title:</label>
-        <p>{{task.title}}</p>
-      </div>
-    
-    <hr>
+  <header class="task-modal-heading">
+    <div>
+      <h1 ng-show="!task._id">Book a maintenance appointment</h1>
+      <h1 ng-show="task._id">Edit maintenance appointment</h1>
+    </div>
+    <button type="button" ng-if="task.issue" ng-click="viewIssue()" class="task-view-issue">
+      View Issue <i class="fa-light fa-arrow-right" aria-hidden="true"></i>
+    </button>
+  </header>
 
-    <div class="form-item col-12">
-      <label class="title">Created by:</label><span>{{task.createdDate | date:'mediumDate'}}, {{task.createdDate | date:'shortTime'}} | &nbsp;<img gravatar-src="task.createdBy.local.email"/><span>{{task.createdBy.displayName || task.createdBy.local.email}}</span></span>
+  <form name="forms.myForm" ng-submit="saveMLTask()" novalidate="novalidate" class="task-appointment-form">
+    <section class="task-overview">
+      <div class="task-overview-property">
+        <span>Property</span>
+        <strong>{{task.address}}</strong>
+      </div>
+      <div class="task-overview-issue">
+        <span>Issue</span>
+        <strong>{{task.title}}</strong>
+      </div>
+      <div class="task-overview-description" ng-if="issueDescription">
+        <span>Description</span>
+        <p><strong>{{issueDescription}}</strong></p>
+      </div>
+    </section>
+
+    <div class="task-created-by" ng-if="task.createdBy">
+      <span></span>
+      <div>
+        <img gravatar-src="task.createdBy.local.email"/>
+        <strong>{{task.createdBy.displayName || task.createdBy.local.email}}</strong>
+        <small>{{task.createdDate | date:'mediumDate'}}, {{task.createdDate | date:'shortTime'}}</small>
+      </div>
     </div>
 
-    <hr>
-
-    <div class="form-item col-12">
-      <label class="title">Contractor</label>
-      <div class="input-holder">
+    <section class="task-form-fields">
+      <label class="task-contractor-field">
+        <span>Contractor</span>
         <select sumoselect="{placeholder:'Contractor', search:true}" ng-model="task.contractor" name="contractors" required="required">
-          <option ng-repeat="contractor in contractors" value="{{contractor._id}}">{{ contractor.name }}</option>
+          <option ng-repeat="contractor in contractors" value="{{contractor._id}}">{{contractor.name}}</option>
         </select>
-      </div>
-    </div>
+      </label>
 
-      <div class="form-item col-sm-6">
-        <label class="title">Date:</label><a tap="setDate()" class="date">{{task.date | date:"mediumDate"}}</a>
-      </div>
-      <div class="form-item col-sm-3">
-        <label class="title">Time:</label>
+      <label class="task-date-field">
+        <span>Date</span>
+        <a tap="setDate()" class="date">{{task.date | date:"EEE d MMM yyyy"}} <i class="fa-light fa-calendar-days" aria-hidden="true"></i></a>
+      </label>
+      <label>
+        <span>Time</span>
         <input type="time" ng-model="task.date" required="required"/>
-      </div>
-      <div class="form-item col-sm-3">
-        <label class="title">Duration:</label>
+      </label>
+      <label>
+        <span>Duration</span>
         <input type="time" ng-model="task.duration" required="required"/>
-      </div>
-    </div>
+      </label>
+    </section>
 
-    <div ng-show="task._id" class="buttons contractor-buttons">
-      <button type="button" ng-click="chaseContractor(&quot;email&quot;, task)" class="button-alt"> <i class="fal fa-at"></i>{{ mml('issue-label-email') }}</button>
+    <section ng-show="task._id" class="task-confirmation-actions">
+      <button type="button" ng-click="chaseContractor('email', task)" class="task-email-action">
+        {{mml('issue-label-email')}} <i class="fa-light fa-at" aria-hidden="true"></i>
+      </button>
+      <button type="button" ng-click="chaseContractor('sms', task)" class="task-sms-action">
+        {{mml('issue-label-sms')}} <i class="fa-light fa-message-sms" aria-hidden="true"></i>
+      </button>
+    </section>
 
-      <button type="button" ng-click="chaseContractor(&quot;sms&quot;, task)" class="button-grey"> <i class="fal fa-sms"></i>{{ mml('issue-label-sms') }}</button>
-    </div>
-    <!--.form-item.half(ng-if='needsJobNumber')
-    label.title CFP Job Number
-    input(type='text', ng-model='$parent.$parent.$parent.cfpJobNumber', required)
-    -->
-    <hr>
+    <p class="task-save-error" ng-if="saveError">{{saveError}}</p>
 
-    <div class="row">
-      <div class="controls bottom col-12">
-        <button class="button-grey" type="button" tap="delete()" ng-show="task._id" class="delete">Delete</button>
-        <input class="button" type="button" value="Submit" ng-click="saveMLTask()"/>
+    <div class="task-modal-footer">
+      <button type="button" ng-click="delete()" ng-show="task._id" class="task-delete">
+        Delete <i class="fa-duotone fa-light fa-trash" aria-hidden="true"></i>
+      </button>
+      <div>
+        <button type="button" ng-click="cancel()" class="task-cancel">Cancel <i class="fa-light fa-xmark" aria-hidden="true"></i></button>
+        <button type="button" ng-click="saveMLTask()" ng-disabled="saving" class="task-submit">
+          {{saving ? 'Saving...' : 'Save appointment'}} <i class="fa-light" ng-class="saving ? 'fa-spinner fa-spin' : 'fa-check'" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
   </form>
-  
-  <a ng-click="cancel()" class="close-reveal-modal">&times;</a>
+
+  <button type="button" ng-click="cancel()" class="close-reveal-modal" aria-label="Close">&times;</button>
 </div>

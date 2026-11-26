@@ -1,0 +1,234 @@
+.weekly-calendar
+  display block
+  width 100%
+  min-width 0
+  .weekly-calendar-board
+    display grid
+    grid-template-columns repeat(7, minmax(150px, 1fr))
+    min-width 1120px
+    overflow hidden
+    background white
+    border 1px solid vs-lightgrey
+    border-radius 14px
+    box-shadow 0 3px 8px rgba(0,0,0,0.08)
+  .weekly-day
+    min-width 0
+    border-right 1px solid #e8e8ed
+    &:last-child
+      border-right 0
+  .weekly-day-header
+    padding 10px 9px 0
+    background #f1f1f1
+    border-bottom 1px solid #e8e8ed
+  .weekly-day-heading
+    display flex
+    align-items center
+    justify-content space-between
+    gap 7px
+    min-height 25px
+    padding 0 2px 8px
+    h2
+      margin 0
+      color vs-grey
+      overflow hidden
+      font-size 1.7rem
+      font-weight 700
+      line-height 1.2
+      text-align left
+      text-overflow ellipsis
+      white-space nowrap
+  .weekly-job-count
+    display inline-flex
+    align-items center
+    justify-content center
+    flex 0 0 auto
+    min-width 25px
+    height 25px
+    padding 2px 7px
+    color vs-orange
+    background #fff0ec
+    border-radius 13px
+    font-size 1.5rem
+    font-weight 700
+  .weekly-day-summary
+    display grid
+    grid-template-columns 1fr 1fr
+    margin 0 -9px
+    color vs-grey
+    background #f9f9f9
+    border-top 1px solid #e8e8ed
+    font-size .95rem
+    button
+      display flex
+      align-items center
+      flex-direction column
+      justify-content center
+      gap 1px
+      width 100%
+      min-width 0
+      min-height 43px
+      margin 0
+      padding 10px
+      color inherit
+      background transparent
+      border 0
+      border-radius 0
+      transition opacity 0.15s ease
+      span
+        font-size 1.3rem
+        &.weekly-summary-value
+          font-size 1.5rem
+          display inline-flex
+          align-items center
+          gap 4px
+      &:last-child
+        border-left 1px solid #e8e8ed
+        i
+          color vs-orange
+      &.inactive
+        opacity .35
+    i
+      margin 0
+      color vs-green
+  .weekly-job-list
+    display flex
+    flex-direction column
+    gap 6px
+    min-height 420px
+    padding 8px
+  .weekly-job-card
+    display flex
+    align-items center
+    justify-content space-between
+    gap 7px
+    width 100%
+    min-height 48px
+    margin 0
+    padding 7px 8px 7px 10px
+    color vs-grey
+    background #fff0ec
+    border 1px solid #ffd6c7
+    border-radius 8px
+    text-align left
+    transition transform 0.15s ease, box-shadow 0.15s ease
+    &:hover
+      transform translateY(-1px)
+      box-shadow 0 3px 7px rgba(0,0,0,0.12)
+    .weekly-job-copy
+      display flex
+      flex-direction column
+      min-width 0
+      strong,
+      > span
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
+      strong
+        color inherit
+        font-size 1.15rem
+        line-height 1.2
+      > span
+        margin-top 2px
+        font-size 1.05rem
+        line-height 1.2
+    .weekly-job-meta
+      display flex
+      align-items flex-end
+      flex-direction column
+      flex-shrink 0
+      gap 3px
+      small
+        font-size 0.95rem
+        font-weight 600
+      i
+        font-size 1.35rem
+    &.category-incomplete
+      color vs-grey
+      background #f4f5f7
+      border-color vs-lightgrey
+    &.category-awaiting-invoice
+      color #5b408c
+      background #f2edfc
+      border-color #d8cbed
+    &.category-completed
+      color #28653a
+      background #edf8ef
+      border-color #bfe0c7
+    &.category-move-out
+      color #0c4a6e
+      background #e6f7ff
+      border-color #b8ddec
+    &.category-inspection
+      color #8d2f63
+      background #fcecf4
+      border-color #e8bfd4
+  .weekly-day-empty
+    margin auto
+    color vs-silver
+    font-size 1.2rem
+    text-align center
+  .weekly-calendar-footer
+    display flex
+    align-items center
+    justify-content space-between
+    flex-wrap wrap
+    gap 16px
+    margin-top 10px
+    padding 12px 16px
+    background white
+    border 1px solid vs-lightgrey
+    border-radius 12px
+    box-shadow 0 2px 5px rgba(0,0,0,0.05)
+  .weekly-calendar-key,
+  .weekly-calendar-totals
+    display flex
+    align-items center
+    flex-wrap wrap
+    gap 20px
+    color vs-grey
+    font-size 1.5rem
+    span
+      display inline-flex
+      align-items center
+      gap 5px
+    i
+      color vs-orange
+      font-size 1.5rem
+  .weekly-calendar-key
+    span i
+      width 12px
+      height 12px
+      border-radius 50%
+    .category-incomplete i
+      background vs-grey
+    .category-awaiting-invoice i
+      background #5b408c
+    .category-completed i
+      background #28653a
+    .category-move-out i
+      background #0c4a6e
+    .category-inspection i
+      background #8d2f63
+  .weekly-calendar-totals
+    gap 20px
+    strong
+      margin-right 1px
+
+@media (max-width: 1250px)
+  .weekly-calendar
+    overflow-x auto
+    padding-bottom 5px
+
+@media (max-width: 767px)
+  .weekly-calendar
+    .weekly-calendar-board
+      grid-template-columns repeat(7, calc(100vw - 56px))
+      min-width max-content
+      scroll-snap-type x mandatory
+    .weekly-day
+      scroll-snap-align start
+    .weekly-job-list
+      min-height 280px
+    .weekly-calendar-footer
+      align-items flex-start
+      flex-direction column

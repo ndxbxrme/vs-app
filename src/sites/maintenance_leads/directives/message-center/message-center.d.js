@@ -88,7 +88,7 @@
           };
           return document.querySelector('.page').scrollIntoView();
         };
-        scope.templateize = () => {
+        scope.templateize = (templateData) => {
           const $t = (s, data) => (s).replace(/\{\{(.+?)\}\}/g, (all, m) => {
             try {
               return (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data))
@@ -98,8 +98,9 @@
           });
           $timeout(() => {
             try {
-              scope.outgoingEmail.item.subject = $t(scope.outgoingEmail.item.subject, scope.issue.item);
-              scope.outgoingEmail.body = $t(scope.outgoingEmail.body, scope.issue.item);
+              const data = templateData || scope.issue.item;
+              scope.outgoingEmail.item.subject = $t(scope.outgoingEmail.item.subject, data);
+              scope.outgoingEmail.body = $t(scope.outgoingEmail.body, data);
             } catch(e) {}
           });
         }
@@ -111,7 +112,9 @@
             scope.outgoingEmail.item.subject = selectedTemplate.subject;
             scope.outgoingEmail.body = selectedTemplate.body;
             scope.issue.item.userName = scope.auth.getUser().displayName;
-            scope.templateize();
+            scope.templateize(Object.assign({}, scope.issue.item, {
+              pdfURL: scope.getWorksOrderPdfUrl ? scope.getWorksOrderPdfUrl() || '' : ''
+            }));
           }
         };
         scope.whatsappSend = () => {

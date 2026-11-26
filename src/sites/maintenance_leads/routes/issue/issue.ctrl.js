@@ -387,6 +387,49 @@
         return $scope.issue.refresh();
       });
     };
+    $scope.openContractorBooking = function() {
+      var appointmentDate, refreshBooking, task;
+      task = $scope.tasks && $scope.tasks.items && $scope.tasks.items[0];
+      if (!task) {
+        appointmentDate = new Date();
+        appointmentDate = new Date(appointmentDate.getFullYear(), appointmentDate.getMonth(), appointmentDate.getDate(), 9);
+        task = {
+          issue: $scope.issue.item._id,
+          title: $scope.issue.item.title,
+          address: $scope.getIssueAddress(),
+          date: appointmentDate,
+          duration: 3600000,
+          status: {
+            booked: true
+          },
+          createdDate: new Date().valueOf(),
+          createdBy: Auth.getUser()
+        };
+      }
+      refreshBooking = function() {
+        if ($state.current.name !== 'maintenance_leads_issue') {
+          return;
+        }
+        if ($scope.tasks && $scope.tasks.refreshFn) {
+          $scope.tasks.refreshFn();
+        }
+        if ($scope.issue && $scope.issue.refresh) {
+          return $scope.issue.refresh();
+        }
+      };
+      return $scope.modal({
+        template: require('../../modals/task/task.html').default,
+        controller: 'maintenance_leadsTaskCtrl',
+        size: 'large',
+        data: {
+          task: task,
+          cfpJobNumber: $scope.issue.item.cfpJobNumber || '',
+          needsJobNumber: !$scope.issue.item.cfpJobNumber,
+          contractors: $scope.contractors.items || [],
+          redirectToDiary: true
+        }
+      }, $http.sites["maintenance_leads"].config).then(refreshBooking, refreshBooking);
+    };
     $scope.showLightbox = function(media) {
       return $scope.modal({
         template: require('../../modals/lightbox/lightbox.html').default,

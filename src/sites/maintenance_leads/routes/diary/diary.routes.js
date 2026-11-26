@@ -3,7 +3,7 @@
   'use strict';
   angular.module('vs-maintenance-leads').config(function($stateProvider) {
     return $stateProvider.state('maintenance_leads_diary', {
-      url: '/maintenance_leads/diary/:_id?onlyThisIssue',
+      url: '/maintenance_leads/diary/:_id?onlyThisIssue&diaryDate',
       template: require("./diary.html").default,
       controller: 'maintenance_leadsDiaryCtrl',
       data: {

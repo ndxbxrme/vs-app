@@ -1,0 +1,50 @@
+<section class="weekly-calendar" aria-label="Maintenance jobs by week">
+  <div class="weekly-calendar-board">
+    <article class="weekly-day" ng-repeat="day in weekDays track by day.date.valueOf()">
+      <header class="weekly-day-header">
+        <div class="weekly-day-heading">
+          <h2>{{day.date | date:'EEE d MMM'}}</h2>
+          <span class="weekly-job-count" title="{{day.complete + day.incomplete}} jobs">{{day.complete + day.incomplete}}</span>
+        </div>
+        <div class="weekly-day-summary">
+          <button type="button" ng-click="toggleDiaryCompletion(true)" ng-class="{inactive:!showCompletedJobs}" ng-attr-aria-pressed="{{showCompletedJobs}}" title="{{showCompletedJobs ? 'Hide completed jobs' : 'Show completed jobs'}}">
+            <span class="weekly-summary-value"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><strong>{{day.complete}}</strong></span>
+            <span>Complete</span>
+          </button>
+          <button type="button" ng-click="toggleDiaryCompletion(false)" ng-class="{inactive:!showIncompleteJobs}" ng-attr-aria-pressed="{{showIncompleteJobs}}" title="{{showIncompleteJobs ? 'Hide incomplete jobs' : 'Show incomplete jobs'}}">
+            <span class="weekly-summary-value"><i class="fa-light fa-clock" aria-hidden="true"></i><strong>{{day.incomplete}}</strong></span>
+            <span>Incomplete</span>
+          </button>
+        </div>
+      </header>
+      <div class="weekly-job-list">
+        <button type="button" ng-repeat="task in day.tasks track by task._id" ng-click="openWeeklyTask(task)" class="weekly-job-card category-{{task.diaryCategory}}" aria-label="{{task.diaryCategoryLabel}}: {{task.diaryContractorName}}, {{task.address}}, {{task.date | date:'shortTime'}}">
+          <span class="weekly-job-copy">
+            <strong>{{task.diaryContractorName || 'Contractor not assigned'}}</strong>
+            <span>{{task.address || task.title}}</span>
+          </span>
+          <span class="weekly-job-meta">
+            <small>{{task.date | date:'HH:mm'}}</small>
+            <i class="fa-light {{task.diaryCategoryIcon}}" aria-hidden="true"></i>
+          </span>
+        </button>
+        <p class="weekly-day-empty" ng-if="!day.tasks.length">No jobs</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="weekly-calendar-footer">
+    <div class="weekly-calendar-key" aria-label="Job category key">
+      <strong>Key:</strong>
+      <span class="category-incomplete"><i></i>Incomplete</span>
+      <span class="category-awaiting-invoice"><i></i>Awaiting Invoice</span>
+      <span class="category-completed"><i></i>Completed</span>
+      <span class="category-move-out"><i></i>Move Out</span>
+      <span class="category-inspection"><i></i>Inspections</span>
+    </div>
+    <div class="weekly-calendar-totals">
+      <span><i class="fa-light fa-calendar-days" aria-hidden="true"></i><strong>{{weeklySummary.jobs}}</strong> Jobs</span>
+      <span><i class="fa-light fa-users" aria-hidden="true"></i><strong>{{weeklySummary.contractors}}</strong> Contractors</span>
+    </div>
+  </div>
+</section>

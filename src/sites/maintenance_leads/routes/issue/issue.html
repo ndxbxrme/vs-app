@@ -131,11 +131,9 @@
                 <label>
                   <strong>No Landlord Assigned</strong>
                   <span class="landlord-select">
-                    <select ng-model="issue.item.landlordId" ng-change="assignLandlord()" aria-label="Assign landlord">
-                      <option value="">Select a landlord</option>
+                    <select sumoselect="{placeholder:'Select a landlord', search:true}" ng-model="issue.item.landlordId" ng-change="assignLandlord()" aria-label="Assign landlord">
                       <option ng-repeat="landlord in landlords.items" value="{{landlord._id}}">{{landlord.name}}</option>
                     </select>
-                    <i class="fa-light fa-chevron-down" aria-hidden="true"></i>
                   </span>
                 </label>
               </div>
@@ -176,7 +174,7 @@
               <span class="progression-number">1</span>
               <div class="progression-card">
                 <div class="progression-title"><span class="progression-icon"><i class="fa-light fa-helmet-safety"></i></span><strong>Assign Contractor</strong></div>
-                <button type="button" ui-sref="maintenance_leads_diary({_id:issue.item._id, onlyThisIssue:true})" ng-disabled="issue.item.statusName==='Completed'" class="progression-action">
+                <button type="button" ng-click="openContractorBooking()" ng-disabled="issue.item.statusName==='Completed'" class="progression-action">
                   {{getIssueProgressStep() >= 2 ? 'Reassign Contractor' : 'Book Contractor'}}
                   <i class="fa-light" ng-class="getIssueProgressStep() >= 2 ? 'fa-arrows-rotate' : 'fa-plus'"></i>
                 </button>
@@ -202,7 +200,7 @@
                   <label>Task Time<input type="text" value="{{tasks.items[0].date | date:'HH:mm'}}" disabled/></label>
                 </div>
                 <span class="progression-empty" ng-if="!tasks.total">Not yet scheduled</span>
-                <button type="button" ui-sref="maintenance_leads_diary({_id:issue.item._id, onlyThisIssue:true})" ng-disabled="getMaintenanceProgressionStep() < 2" class="progression-action">View Diary <i class="fa-light fa-clock"></i></button>
+                <button type="button" ui-sref="maintenance_leads_diary({_id:issue.item._id, onlyThisIssue:true, diaryDate:tasks.items[0].date})" ng-disabled="getMaintenanceProgressionStep() < 2" class="progression-action">View Diary <i class="fa-light fa-clock"></i></button>
               </div>
             </section>
 

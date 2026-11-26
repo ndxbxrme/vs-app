@@ -1,131 +1,313 @@
 .task-modal
-  padding 1rem
+  padding 30px 34px 26px
+  color vs-grey
   background white
-  form
-    box-sizing border-box
-    padding 0 1rem 0 0
+  .task-modal-heading
     display flex
-    flex-direction row
-    flex-wrap wrap
+    align-items center
     justify-content space-between
-    .form-item
+    gap 24px
+    padding-right 38px
+    h1
+      margin 2px 0 0
+      color vs-orange
+      font-size 2.35rem
+      font-weight 600
+      line-height 1.2
+  .task-modal-eyebrow
+    color vs-silver
+    font-size 1.2rem
+    font-weight 600
+    letter-spacing .08em
+    text-transform uppercase
+  .task-view-issue
+    display inline-flex
+    align-items center
+    justify-content center
+    gap 9px
+    flex 0 0 auto
+    min-height 40px
+    margin 0
+    padding 8px 16px
+    color vs-orange
+    background #fff0ec
+    border 1px solid #ffd6c7
+    border-radius 21px
+    font-size 1.4rem
+    font-weight 600
+    &:hover
+      color white
+      background vs-orange
+      border 1px solid vs-orange
+  form.task-appointment-form
+    display block
+    width 100%
+    padding 0
+    line-height normal
+    margin-top 22px
+  .task-overview
+    display grid
+    grid-template-columns 1fr 1fr
+    gap 12px
+    padding 15px 17px
+    background #f6f7f8
+    border 1px solid #e7e8ea
+    border-radius 10px
+    > div
+      min-width 0
+    .task-overview-issue
+      padding-left 16px
+      border-left 1px solid #dedfe2
+    .task-overview-description
+      grid-column 1 / -1
+      padding-top 12px
+      border-top 1px solid #dedfe2
+    span,
+    strong
+      display block
+    span
+      margin-bottom 3px
+      color vs-silver
+      font-size 1.2rem
+      font-weight 600
+      text-transform uppercase
+    strong
+      overflow hidden
+      color vs-grey
+      font-size 1.45rem
+      text-overflow ellipsis
+      white-space nowrap
+    p
+      margin 0
+      color vs-grey
+      font-size 1.35rem
+      line-height 1.5
+      white-space pre-wrap
+  .task-created-by
+    display flex
+    align-items center
+    justify-content space-between
+    gap 20px
+    padding 14px 2px
+    border-bottom 1px solid #e7e8ea
+    > span
+      color vs-silver
+      font-size 1.2rem
+      font-weight 600
+      text-transform uppercase
+    > div
       display flex
-      margin-bottom 1rem
-      align-items baseline
-      flex-wrap wrap
-      position relative
-      max-width 100%
-      word-wrap break-word
-      p
-        margin 0 0 5px 0
-      .input-holder
-        width 100%
-      label.title
-        width 100px
-        font-weight 700
-        color vs-orange
-      a.date
-        padding .8rem 1rem
-        background #f5f5f5
-        border 1px solid vs-grey
-        border-radius 3px
-        width 100%
-      input[type='text'], textarea, input[type=time], input[type=number]
-        flex 1
-        font-family inherit
+      align-items center
+      justify-content flex-end
+      gap 8px
+    img
+      width 30px
+      height 30px
+      border-radius 50%
+    strong
+      font-size 1.35rem
+    small
+      color vs-silver
+      font-size 1.2rem
+  .task-form-fields
+    display grid
+    grid-template-columns 2fr 1fr 1fr
+    gap 14px
+    padding-top 18px
+    label
+      min-width 0
+      margin 0
+      > span
+        display block
+        margin-bottom 6px
+        color vs-grey
         font-size 1.3rem
         font-weight 600
-        margin-top 0
-        padding 0.3rem
-        border 1px solid vs-grey
-        border-radius 3px
-        background #f5f5f5
-      textarea
-        height 70px
-      input[type=time], input[type=number]
-        width 100%
-        display inline
-      .SumoSelect > .CaptionCont
-        border 1px solid vs-grey
-        border-radius 3px
-      .SumoSelect
-        flex 1
-        .optWrapper
-          top 100%
-      .CodeMirror
-        flex 1
-        height 100px
-        border 1px solid #ccc
-      .add-job
-        margin-left 1rem
-      &.half
-        width calc(50% - .5rem)!important
-      &.quarter
-        width calc(25% - .5rem)!important
-    .contractor-buttons
-      margin-top 10px
-      width 100%
-    .controls
-      margin-top 30px
-    .drop-box
-      border 3px dashed #ccc
-      border-radius 1rem
-      background #f1f1f1
-      width 100%
-      text-align center
-      padding-bottom 1rem
-      &.dragover
-        h3
-          color vs-orange
-    .documents
-      flex 1
-      display flex
-      flex-direction column
-      .document-list
-        width 100%
+    .task-contractor-field
+      grid-column 1 / -1
+    .task-date-field
+      a.date
         display flex
+        align-items center
+        justify-content space-between
+        width 100%
+        height 50px
+        padding 9px 13px
+        color vs-orange
+        background white
+        border 1px solid vs-lightgrey
+        border-radius 8px
+        font-size 1.4rem
+        font-weight 600
+        text-decoration none
+        cursor pointer
+    input[type=time]
+      width 100%
+      height 50px
+      margin 0
+      padding 8px 12px
+      color vs-grey
+      background white
+      border 1px solid vs-lightgrey
+      border-radius 8px
+      font-family inherit
+      font-size 1.4rem
+      font-weight 600
+    .SumoSelect
+      width 100%
+      margin 0
+      > .CaptionCont
+        height 50px
+        padding 9px 42px 9px 13px
+        border 1px solid vs-lightgrey
+        border-radius 8px
+        > span
+          line-height 26px
+          font-size 1.4rem
+        > label
+          width 40px
+      > .optWrapper
+        top calc(100% + 5px)
+        border 0
+        border-radius 8px
+        box-shadow 0 8px 22px rgba(0,0,0,.15)
+  .task-confirmation-actions
+    display flex
+    align-items center
+    flex-wrap wrap
+    gap 10px
+    margin-top 20px
+    button
+      display inline-flex
+      align-items center
+      gap 7px
+      min-height 44px
+      margin 0
+      padding 8px 16px
+      border-radius 21px
+      font-size 1.35rem
+      font-weight 600
+    .task-email-action
+      color white
+      background vs-orange
+      border 1px solid vs-orange
+      &:hover
+        background vs-grey
+        border 1px solid vs-grey
+    .task-sms-action
+      color white
+      background vs-grey
+      border 1px solid vs-grey
+  .task-save-error
+    margin 18px 0 0
+    padding 10px 13px
+    color #a32929
+    background #fff2f2
+    border 1px solid #efc4c4
+    border-radius 8px
+    font-size 1.25rem
+      &:hover
+        background vs-orange
+        border 1px solid vs-orange
+  .task-modal-footer
+    display flex
+    align-items center
+    justify-content space-between
+    gap 20px
+    margin-top 24px
+    padding-top 18px
+    border-top 1px solid #e7e8ea
+    > div
+      display flex
+      gap 10px
+    button
+      display inline-flex
+      align-items center
+      justify-content center
+      gap 8px
+      min-height 46px
+      margin 0
+      padding 9px 17px
+      border-radius 22px
+      font-size 1.35rem
+      font-weight 600
+  .task-delete
+    color white
+    background vs-red
+    border 1px solid vs-red
+    &:hover
+      background vs-grey
+      border 1px solid vs-grey
+  .task-cancel
+    color vs-grey
+    background white
+    border 1px solid vs-lightgrey
+    &:hover
+      color white
+      background vs-grey
+      border 1px solid vs-grey
+  .task-submit
+    color white
+    background vs-orange
+    border 1px solid vs-orange
+    &:hover
+      background vs-grey
+      border 1px solid vs-grey
+  .close-reveal-modal
+    display flex
+    align-items center
+    justify-content center
+    width 34px
+    height 34px
+    margin 0
+    padding 0
+    color vs-grey
+    background transparent
+    border 0
+    border-radius 50%
+    font-size 2.5rem
+    line-height 1
+
+@media (max-width: 700px)
+  .task-modal
+    padding 24px 20px 20px
+    .task-modal-heading
+      align-items flex-start
+      flex-direction column
+      gap 12px
+      padding-right 34px
+    .task-overview
+      grid-template-columns 1fr
+      .task-overview-issue
+        padding-top 10px
+        padding-left 0
+        border-top 1px solid #dedfe2
+        border-left 0
+    .task-created-by
+      align-items flex-start
+      flex-direction column
+      gap 7px
+      > div
         justify-content flex-start
         flex-wrap wrap
-        .document
-          width auto
-          display flex
-          flex-direction column
-          justify-content center
-          box-sizing border-box
-          border 2px solid vs-lightgrey
-          padding 1rem
-          margin 1rem
-          .document-link
-            flex 1
-          .filename
-            margin-top 0.5rem
-            display flex
-            input
-              flex 1
-              margin-left 1rem
-          .controls
-            display flex
-            justify-content space-between
-            a
-              color vs-orange
-          img
-            max-width 100%
-            display block
-            margin 10px auto
-          @media screen and (max-width: 1080px)
-            width calc(33% - 2rem)
-          @media screen and (max-width: 800px)
-            width calc(50% - 2rem)
-          @media screen and (max-width: 590px)
-            width calc(100%)
-  @media screen and (max-width:819px)
-    form .form-item
-      .half
-        min-width 100%
-        margin-bottom 1.6rem
-      input[type=time], input[type=number]
-        flex 1
-  @media screen and (max-height:800px)
-    overflow-Y scroll
-    max-height 100vh
-    top 0
+    .task-form-fields
+      grid-template-columns 1fr 1fr
+      .task-date-field
+        grid-column 1 / -1
+    .task-modal-footer
+      align-items stretch
+      flex-direction column
+      > div
+        justify-content flex-end
+
+@media (max-width: 430px)
+  .task-modal
+    .task-form-fields
+      grid-template-columns 1fr
+      .task-date-field
+        grid-column auto
+    .task-confirmation-actions
+      align-items stretch
+      flex-direction column
+    .task-modal-footer > div
+      flex-direction column
