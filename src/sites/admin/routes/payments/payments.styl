@@ -1,0 +1,440 @@
+@require '../../../../css/global/variables.styl'
+
+.payments-route
+  padding-top 30px
+  .payments-header
+    margin-bottom 22px
+    h1
+      margin 0
+      color vs-grey
+      font-size 2.8rem
+      font-weight 600
+      i
+        margin-right 10px
+  .payment-search
+    position relative
+    display block
+    max-width 420px
+    margin-left auto
+    > i
+      position absolute
+      top 50%
+      left 18px
+      z-index 1
+      color vs-silver
+      font-size 1.5rem
+      transform translateY(-50%)
+    input
+      width 100%
+      height 48px
+      margin 0
+      padding 0 18px 0 46px
+      background white
+      border 1px solid rgba(204, 204, 204, 0.8)
+      border-radius 10px
+      color vs-grey
+      font-size 1.5rem
+      &:focus
+        border-color vs-orange
+        outline none
+        box-shadow 0 0 0 3px rgba(244, 101, 35, 0.12)
+  .payments-toolbar
+    display flex
+    align-items flex-end
+    gap 16px
+    margin-bottom 20px
+    .payment-purpose-filter
+      display flex
+      min-width 240px
+      flex-direction column
+      gap 5px
+      margin 0
+      > span
+        color #737980
+        font-size 1.2rem
+        font-weight 600
+        text-transform uppercase
+      select
+        height 38px
+        margin 0
+        padding 0 36px 0 12px
+        background-color white
+        border 1px solid vs-lightgrey
+        border-radius 8px
+        color vs-grey
+        font-size 1.4rem
+        &:focus
+          border-color vs-orange
+          outline none
+    .payment-status-filter
+      position relative
+      display inline-grid
+      grid-template-columns repeat(3, 1fr)
+      width 342px
+      padding 4px
+      background white
+      border-radius 22px
+      .payment-status-slider
+        position absolute
+        top 4px
+        bottom 4px
+        left 4px
+        width calc((100% - 8px) / 3)
+        background vs-orange
+        border-radius 18px
+        box-shadow 0 2px 5px rgba(241, 91, 37, 0.22)
+        transform translateX(0)
+        transition transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease
+      &.status-successful
+        .payment-status-slider
+          background #18a83f
+          box-shadow 0 2px 5px rgba(24, 168, 63, 0.24)
+          transform translateX(100%)
+      &.status-failed
+        .payment-status-slider
+          background #d34b45
+          box-shadow 0 2px 5px rgba(211, 75, 69, 0.24)
+          transform translateX(200%)
+      button
+        position relative
+        z-index 1
+        display inline-flex
+        align-items center
+        justify-content center
+        gap 6px
+        height 32px
+        margin 0
+        padding 0 10px
+        background transparent
+        border 0
+        border-radius 18px
+        color #686e74
+        font-size 1.3rem
+        font-weight 600
+        &:hover:not(:disabled)
+          color vs-grey
+        &.selected
+          color white
+        &:focus-visible
+          outline 2px solid vs-grey
+          outline-offset -3px
+        &:disabled
+          cursor wait
+          opacity 0.6
+    .payment-count
+      margin-left auto
+      padding-bottom 0
+      color #737980
+      font-size 1.35rem
+      white-space nowrap
+      strong
+        color vs-orange
+  .payment-card
+    margin-bottom 12px
+    overflow hidden
+    background white
+    border 1px solid rgba(204, 204, 204, 0.65)
+    border-radius 16px
+    box-shadow 0 4px 12px rgba(42, 45, 53, 0.06)
+    transition border-color 0.2s ease, box-shadow 0.2s ease
+    &:hover
+      border-color rgba(241, 91, 37, 0.55)
+      box-shadow 0 6px 15px rgba(42, 45, 53, 0.09)
+    &.expanded
+      box-shadow 0 7px 18px rgba(42, 45, 53, 0.09)
+  .payment-summary
+    display grid
+    grid-template-columns 34px minmax(230px, 1.25fr) 150px minmax(170px, 1fr) 205px
+    align-items center
+    column-gap 14px
+    width 100%
+    min-height 70px
+    margin 0
+    padding 12px 16px
+    background transparent
+    border 0
+    border-radius 0
+    color vs-grey
+    font-size 1.5rem
+    text-align left
+    &:hover,
+    &:focus
+      background transparent
+      outline none
+    &:focus-visible
+      box-shadow inset 0 0 0 2px rgba(241, 91, 37, 0.35)
+    .payment-chevron
+      display inline-flex
+      align-items center
+      justify-content center
+      width 34px
+      color vs-grey
+    .payment-customer
+      display flex
+      align-items center
+      gap 14px
+      min-width 0
+      padding 0 8px
+      > i
+        flex-shrink 0
+        font-size 2rem
+      .payment-customer-details
+        display flex
+        min-width 0
+        flex-direction column
+        gap 3px
+        strong,
+        small
+          overflow hidden
+          text-overflow ellipsis
+          white-space nowrap
+        strong
+          color vs-orange
+          font-size 1.7rem
+        small
+          color #737980
+          font-size 1.25rem
+          i
+            margin-right 5px
+    .payment-amount
+      padding 0
+      color vs-orange
+      font-size 1.8rem
+      text-align left
+    .payment-purpose
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
+    .payment-status
+      display inline-flex
+      align-items center
+      justify-content center
+      justify-self end
+      gap 8px
+      width 205px
+      padding 9px 15px
+      border-radius 10px
+      color white
+      font-size 1.4rem
+      font-weight 600
+      text-transform capitalize
+      &.successful
+        background #18a83f
+      &.processing
+        background #d79013
+      &.unsuccessful
+        background #d34b45
+  .payment-details
+    padding 4px 22px 22px
+    > .row
+      padding 18px 12px
+      background #f6fbf7
+      border-radius 12px
+    .detail-group
+      padding 0 28px
+      &.processing-details
+        border-left 1px solid #dfe5e1
+      h2
+        margin 0 0 13px
+        color vs-grey
+        font-size 1.6rem
+        font-weight 700
+      dl
+        margin 0
+        > div
+          display grid
+          grid-template-columns minmax(150px, 0.8fr) minmax(0, 1.2fr)
+          gap 14px
+          padding 6px 0
+      dt
+        color vs-grey
+        font-weight 500
+        i
+          width 24px
+          color vs-grey
+      dd
+        min-width 0
+        margin 0
+        overflow-wrap anywhere
+        color vs-grey
+        font-weight 600
+        &.card-brand
+          display flex
+          align-items center
+          gap 9px
+          text-transform capitalize
+          .card-brand-logo
+            display inline-flex
+            align-items center
+            justify-content center
+            flex-shrink 0
+            width 34px
+            color #59636d
+            font-size 2.5rem
+            line-height 1
+            &.brand-visa
+              color #1434cb
+            &.brand-mastercard
+              color #eb001b
+            &.brand-amex
+              color #006fcf
+            &.brand-discover
+              color #ff6000
+            &.brand-diners_club
+              color #0079be
+            &.brand-jcb
+              color #0b7f3e
+  .payment-message
+    display flex
+    align-items center
+    justify-content center
+    gap 10px
+    min-height 90px
+    margin-bottom 15px
+    padding 20px
+    background white
+    border 1px solid rgba(204, 204, 204, 0.65)
+    border-radius 12px
+    color vs-grey
+    font-size 1.5rem
+    &.error
+      color #b73832
+      background #fff5f4
+      border-color #ebc4c1
+  .maintenance-pagination.pagination
+    display flex
+    align-items center
+    justify-content center
+    gap 6px
+    width fit-content
+    margin 18px auto 25px
+    padding 7px
+    background white
+    border 1px solid vs-lightgrey
+    border-radius 30px
+    box-shadow 0 3px 8px rgba(0, 0, 0, 0.08)
+    .page
+      display inline-flex
+      align-items center
+      justify-content center
+      min-width 34px
+      height 34px
+      padding 0 10px !important
+      color vs-grey
+      background transparent
+      border 1px solid transparent
+      border-radius 20px
+      font-weight 600
+      line-height 1
+      transition background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease
+      &:hover:not(.disabled)
+        color vs-orange
+        background #fff0ec
+        border-color #ffd6c7
+      &.selected
+        color white
+        background vs-orange
+        border-color vs-orange
+      &.disabled
+        color vs-silver
+        opacity 0.45
+      &.firstNumber,
+      &.last
+        min-width 52px
+      &.prev,
+      &.next
+        color vs-orange
+        font-size 0
+        &:before
+          font-size 2rem
+          font-weight 400
+      &.prev:before
+        content '‹'
+      &.next:before
+        content '›'
+@media (max-width: 991px)
+  .payments-route
+    .payments-toolbar
+      flex-wrap wrap
+      .payment-count
+        width 100%
+        margin-left 0
+        padding-bottom 0
+    .payment-summary
+      grid-template-columns 34px minmax(180px, 1.25fr) 115px minmax(120px, 1fr) 178px
+      column-gap 8px
+      .payment-customer
+        padding-right 8px
+      .payment-status
+        width 178px
+    .payment-details
+      .detail-group
+        padding 0 18px
+        dl > div
+          grid-template-columns 135px minmax(0, 1fr)
+@media (max-width: 767px)
+  .payments-route
+    padding-top 20px
+    .payments-header
+      h1
+        margin-bottom 16px
+        font-size 2.4rem
+    .payment-search
+      max-width none
+    .payments-toolbar
+      align-items stretch
+      flex-direction column
+      .payment-purpose-filter
+        min-width 0
+      .payment-status-filter
+        align-self flex-start
+        max-width 100%
+      .payment-count
+        width auto
+    .payment-summary
+      grid-template-columns 28px minmax(0, 1fr)
+      grid-template-areas "chevron customer" ". amount" ". purpose" ". status"
+      column-gap 10px
+      row-gap 12px
+      padding 14px
+      .payment-chevron
+        grid-area chevron
+        position static
+        width 24px
+      .payment-customer
+        grid-area customer
+        padding 0
+      .payment-amount
+        grid-area amount
+        padding 0
+      .payment-purpose
+        grid-area purpose
+      .payment-status
+        grid-area status
+        justify-self start
+        width auto
+        margin 0
+    .payment-details
+      padding 0 14px 14px
+      .detail-group
+        padding 0 12px
+        &.processing-details
+          margin-top 18px
+          padding-top 18px
+          border-top 1px solid #dfe5e1
+          border-left 0
+    .maintenance-pagination.pagination
+      flex-wrap wrap
+      border-radius 15px
+      .firstNumber,
+      .last
+        display none
+@media (max-width: 479px)
+  .payments-route
+    .payment-details
+      .detail-group dl > div
+        display block
+      dt
+        margin-bottom 3px
+      dd
+        padding-left 28px

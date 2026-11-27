@@ -1,0 +1,149 @@
+<div class="payments-route route">
+  <div class="payments container-xl">
+    <div class="payments-header row align-items-end">
+      <div class="col-md-6">
+        <h1><i class="fa-duotone fa-light fa-credit-card"></i> Card Payments</h1>
+      </div>
+      <div class="col-md-6">
+        <label class="payment-search">
+          <i class="fa-light fa-magnifying-glass" aria-hidden="true"></i>
+          <span class="visually-hidden">Search card payments</span>
+          <input
+            type="search"
+            ng-model="search"
+            placeholder="Search card payments"
+          />
+        </label>
+      </div>
+    </div>
+
+    <div class="payments-toolbar">
+      <label class="payment-purpose-filter">
+        <span>Payment purpose</span>
+        <select
+          ng-model="filters.purpose"
+          ng-change="applyFilters()"
+          ng-disabled="loading">
+          <option value="">All purposes</option>
+          <option ng-repeat="purpose in paymentPurposes track by purpose" value="{{purpose}}">{{purpose}}</option>
+        </select>
+      </label>
+
+      <div class="payment-status-filter" ng-class="'status-' + filters.status" role="group" aria-label="Filter by payment status">
+        <span class="payment-status-slider" aria-hidden="true"></span>
+        <button type="button" ng-click="setStatusFilter('all')" ng-class="{selected:filters.status === 'all'}" ng-disabled="loading">All</button>
+        <button type="button" ng-click="setStatusFilter('successful')" ng-class="{selected:filters.status === 'successful'}" ng-disabled="loading">Successful  <i class="fa-light fa-circle-check"></i></button>
+        <button type="button" ng-click="setStatusFilter('failed')" ng-class="{selected:filters.status === 'failed'}" ng-disabled="loading">Failed <i class="fa-light fa-circle-xmark"></i></button>
+      </div>
+
+      <div class="payment-count" aria-live="polite">
+        <span ng-if="!search">
+          Showing <strong>{{payments.length}}</strong> of
+          <strong>{{totalCount}}{{totalCountIsMinimum ? '+' : ''}}</strong> payments
+        </span>
+        <span ng-if="search">Showing <strong>{{(payments | filter:search).length}}</strong> of {{payments.length}} payments</span>
+      </div>
+    </div>
+
+    <div class="payment-message error" ng-if="error">
+      <i class="fa-light fa-circle-exclamation"></i>
+      <span>{{error}}</span>
+    </div>
+
+    <div class="payment-message" ng-if="loading && !payments.length">
+      <i class="fa-light fa-spinner fa-spin"></i>
+      <span>Loading payments...</span>
+    </div>
+
+    <div class="payment-message" ng-if="!loading && !error && !(payments | filter:search).length">
+      <i class="fa-light fa-receipt"></i>
+      <span>No matching payments found.</span>
+    </div>
+
+    <section
+      class="payment-card"
+      ng-class="{expanded:payment.expanded}"
+      ng-repeat="payment in payments | filter:search track by payment.id"
+    >
+      <button
+        type="button"
+        class="payment-summary"
+        ng-click="togglePayment(payment)"
+        aria-expanded="{{!!payment.expanded}}"
+      >
+        <span class="payment-chevron">
+          <i class="fa-light" ng-class="payment.expanded ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+        </span>
+        <span class="payment-customer">
+          <i class="fa-light fa-user"></i>
+          <span class="payment-customer-details">
+            <strong>{{getCustomerName(payment)}}</strong>
+            <small ng-if="getPropertyAddress(payment)">
+              {{getPropertyAddress(payment)}}
+            </small>
+          </span>
+        </span>
+        <strong class="payment-amount">{{formatAmount(payment.amount)}}</strong>
+        <span class="payment-purpose">{{getPaymentPurpose(payment)}}</span>
+        <span class="payment-status" ng-class="getStatusClass(payment.status)">
+          {{formatStatus(payment.status)}}
+          <i class="fa-light" ng-class="payment.status === 'succeeded' ? 'fa-circle-check' : 'fa-circle-exclamation'"></i>
+        </span>
+      </button>
+
+      <div class="payment-details" ng-if="payment.expanded">
+        <div class="row">
+          <div class="col-md-6 detail-group">
+            <h2>Payment Details</h2>
+            <dl>
+              <div>
+                <dt><i class="fa-light fa-credit-card"></i> Card type</dt>
+                <dd class="card-brand">
+                  <span class="card-brand-logo" ng-class="'brand-' + getCardBrandKey(payment.cardBrand)" aria-hidden="true">
+                    <i ng-class="getCardBrandIcon(payment.cardBrand)"></i>
+                  </span>
+                  <span>{{payment.cardBrand || 'Not available'}}</span>
+                </dd>
+              </div>
+              <div>
+                <dt><i class="fa-light fa-wallet"></i> Payment amount</dt>
+                <dd>{{formatAmount(payment.amount)}}</dd>
+              </div>
+              <div ng-if="getPaymentPurpose(payment)">
+                <dt><i class="fa-light fa-bullseye-arrow"></i> Payment purpose</dt>
+                <dd>{{getPaymentPurpose(payment)}}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="col-md-6 detail-group processing-details">
+            <h2>Processing Details</h2>
+            <dl>
+              <div>
+                <dt><i class="fa-light fa-credit-card"></i> Card details</dt>
+                <dd ng-if="payment.cardLast4">&bull;&bull;&bull;&bull; {{payment.cardLast4}}</dd>
+                <dd ng-if="!payment.cardLast4">Not available</dd>
+              </div>
+              <div>
+                <dt><i class="fa-light fa-calendar"></i> Date processed</dt>
+                <dd>{{payment.created * 1000 | date:"dd/MM/yyyy 'at' HH:mm"}}</dd>
+              </div>
+              <div>
+                <dt><i class="fa-light fa-hashtag"></i> Payment reference</dt>
+                <dd>{{payment.id}}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <pagination
+      class="pagination-sm pagination maintenance-pagination"
+      ng-model="pagination.page"
+      total="pagination.total"
+      page-size="pagination.pageSize"
+      show-first-last="true">
+    </pagination>
+  </div>
+</div>

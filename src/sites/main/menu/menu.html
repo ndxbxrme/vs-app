@@ -85,6 +85,7 @@
               <a ui-sref="admin_dashboard" ng-class="{selected:state('admin_dashboard')}" ng-click="toggleSubmenu('admin', $event)">Admin</a>
               <pages ng-click="closeMenu()">
                 <a class="d-lg-none" ui-sref="admin_dashboard" ng-class="{selected:state('admin_dashboard')}">Overview</a>
+                <a ui-sref="admin_payments" ng-class="{selected:state('admin_payments')}">Payments</a>
                 <a ui-sref="admin_boards", ng-class="{selected:state('admin_boards')}" ng-show="auth.isAuthorized('admin_boards')">Boards Management</a>
                 <a ui-sref="admin_epc", ng-class="{selected:state(['admin_epc'])}" ng-show="auth.isAuthorized('admin_epc')">EPC Management</a>
                 <a ui-sref="admin_misdescriptions", ng-class="{selected:state(['admin_misdescriptions'])}" ng-show="auth.isAuthorized('admin_misdescriptions')">Misdescriptions</a>

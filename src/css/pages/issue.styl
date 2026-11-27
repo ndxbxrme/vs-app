@@ -449,6 +449,29 @@
           &.landlord
             color vs-grey
             background #eeeeF1
+          &.landlord-edit
+            margin 0
+            padding 0
+            border 0
+            cursor pointer
+            transition color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease
+            i 
+              margin 0
+            .landlord-edit-icon
+              display none
+            &:hover,
+            &:focus-visible,
+            &.active
+              color white
+              background vs-orange
+              box-shadow 0 3px 8px rgba(241,91,37,0.25)
+              outline none
+              .landlord-view-icon
+                display none
+              .landlord-edit-icon
+                display inline-block
+              small
+                background vs-orange
           small
             position absolute
             right -5px
@@ -484,8 +507,8 @@
             color vs-orange
         &.no-phone .contact-email
           grid-column 3 / 5
-        &.missing-landlord
-          border-bottom 0
+        &.missing-landlord,
+        &.editing-landlord
           label
             display grid
             grid-template-columns minmax(160px, auto) minmax(220px, 1fr)
@@ -538,6 +561,8 @@
             border 2px solid #ef6a55
             border-radius 8px
             font-weight 600
+        &.missing-landlord
+          border-bottom 0
 
     .overview-shortcuts
       display grid
@@ -662,6 +687,20 @@
           color #a5a5aa
           background #f4f4f5
           border-color #cfcfd3
+      &.blocked
+        .progression-number
+          color #b8b8bd
+          background #e1e1e4
+        .progression-card
+          background #f4f4f5
+          border-color #dedee1
+          box-shadow none
+        .progression-title
+          opacity 0.55
+        .progression-action
+          color #a5a5aa
+          background #f4f4f5
+          border-color #cfcfd3
 
     .progression-card
       display flex
@@ -698,6 +737,24 @@
       &.progression-schedule,
       &.progression-costings
         align-items flex-end
+
+    .progression-requirement
+      display inline-flex
+      align-items center
+      flex 1
+      flex-wrap wrap
+      gap 5px
+      color #77777d
+      font-size 1.35rem
+      i
+        color vs-orange
+      a
+        color vs-orange
+        font-weight 600
+        text-decoration underline
+        &:hover,
+        &:focus
+          color vs-grey
 
     .progression-fields
       display grid

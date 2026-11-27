@@ -8,6 +8,7 @@
     };
     $scope.fetched = false;
     $scope.submitted = false;
+    $scope.reassigningLandlord = false;
     $scope.redirect = null;
     $scope.sources = [
       {
@@ -126,6 +127,26 @@
       item = $scope.issue && $scope.issue.item;
       return !!(item && item.landlordId && item.landlordName && item.landlordName !== 'Empty');
     };
+    $scope.toggleLandlordReassignment = function() {
+      $scope.reassigningLandlord = !$scope.reassigningLandlord;
+    };
+    $scope.showLandlordAssignment = function() {
+      var control, element;
+      element = $window.document.getElementById('landlord-assignment');
+      if (!element) {
+        return;
+      }
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+      control = element.querySelector('.CaptionCont');
+      if (control && control.click) {
+        $window.setTimeout(function() {
+          control.click();
+        }, 0);
+      }
+    };
     $scope.assignLandlord = function() {
       var landlord;
       landlord = ($scope.landlords && $scope.landlords.items || []).find(function(item) {
@@ -136,7 +157,10 @@
         $scope.issue.item.landlordPhone = landlord.phone;
         $scope.issue.item.landlordEmail = landlord.email;
       }
-      return $scope.issue.save();
+      return $scope.issue.save().then(function(result) {
+        $scope.reassigningLandlord = false;
+        return result;
+      });
     };
     $scope.getIssueProgressStep = function() {
       var item, status;
@@ -389,6 +413,11 @@
     };
     $scope.openContractorBooking = function() {
       var appointmentDate, refreshBooking, task;
+      if (!$scope.hasAssignedLandlord()) {
+        alert.error('Assign a landlord before booking a contractor');
+        $scope.showLandlordAssignment();
+        return;
+      }
       task = $scope.tasks && $scope.tasks.items && $scope.tasks.items[0];
       if (!task) {
         appointmentDate = new Date();

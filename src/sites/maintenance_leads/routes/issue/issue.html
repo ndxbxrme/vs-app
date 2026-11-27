@@ -120,13 +120,25 @@
                 <a class="contact-phone" ng-if="issue.item.tenantPhone" href="tel:{{issue.item.tenantPhone}}"><i class="fa-light fa-phone"></i> {{issue.item.tenantPhone}}</a>
                 <a class="contact-email" ng-if="issue.item.tenantEmail" href="mailto:{{issue.item.tenantEmail}}"><i class="fa-light fa-envelope"></i> {{issue.item.tenantEmail}}</a>
               </div>
-              <div class="contact-row" ng-if="issue.item.landlordName && issue.item.landlordName !== 'Empty'" ng-class="{'no-phone': !issue.item.landlordPhone}">
-                <span class="contact-icon landlord"><i class="fa-light fa-user"></i><small>L</small></span>
-                <strong>{{issue.item.landlordName}}</strong>
-                <a class="contact-phone" ng-if="issue.item.landlordPhone" href="tel:{{issue.item.landlordPhone}}"><i class="fa-light fa-phone"></i> {{issue.item.landlordPhone}}</a>
-                <a class="contact-email" ng-if="issue.item.landlordEmail" href="mailto:{{issue.item.landlordEmail}}"><i class="fa-light fa-envelope"></i> {{issue.item.landlordEmail}}</a>
+              <div class="contact-row" ng-if="issue.item.landlordName && issue.item.landlordName !== 'Empty'" ng-class="{'no-phone': !issue.item.landlordPhone, 'editing-landlord': reassigningLandlord}">
+                <button type="button" class="contact-icon landlord landlord-edit" ng-class="{active:reassigningLandlord}" ng-click="toggleLandlordReassignment()" aria-label="{{reassigningLandlord ? 'Cancel landlord reassignment' : 'Change landlord'}}" aria-expanded="{{!!reassigningLandlord}}" title="{{reassigningLandlord ? 'Cancel landlord reassignment' : 'Change landlord'}}">
+                  <i class="fa-light fa-user landlord-view-icon"></i>
+                  <i class="fa-light fa-pen landlord-edit-icon"></i>
+                  <small>L</small>
+                </button>
+                <strong ng-if="!reassigningLandlord">{{issue.item.landlordName}}</strong>
+                <a ng-if="!reassigningLandlord && issue.item.landlordPhone" class="contact-phone" href="tel:{{issue.item.landlordPhone}}"><i class="fa-light fa-phone"></i> {{issue.item.landlordPhone}}</a>
+                <a ng-if="!reassigningLandlord && issue.item.landlordEmail" class="contact-email" href="mailto:{{issue.item.landlordEmail}}"><i class="fa-light fa-envelope"></i> {{issue.item.landlordEmail}}</a>
+                <label ng-if="reassigningLandlord">
+                  <strong>Reassign Landlord</strong>
+                  <span class="landlord-select">
+                    <select sumoselect="{placeholder:'Select a landlord', search:true}" ng-model="issue.item.landlordId" ng-change="assignLandlord()" aria-label="Reassign landlord">
+                      <option ng-repeat="landlord in landlords.items" value="{{landlord._id}}">{{landlord.name}}</option>
+                    </select>
+                  </span>
+                </label>
               </div>
-              <div class="contact-row missing-landlord" ng-if="!hasAssignedLandlord()">
+              <div class="contact-row missing-landlord" id="landlord-assignment" ng-if="!hasAssignedLandlord()">
                 <span class="contact-icon landlord"><i class="fa-light fa-user"></i><small>L</small></span>
                 <label>
                   <strong>No Landlord Assigned</strong>
@@ -170,11 +182,16 @@
         <form name="myForm" novalidate="novalidate" autocomplete="off" class="maintenance-progression" id="contractor">
           <h2>Maintenance Progression</h2>
           <div class="progression-list">
-            <section class="progression-step" ng-class="{complete:isMaintenanceProgressionStepComplete(1), active:getMaintenanceProgressionStep() === 1, future:getMaintenanceProgressionStep() < 1}">
+            <section class="progression-step" ng-class="{complete:isMaintenanceProgressionStepComplete(1), active:getMaintenanceProgressionStep() === 1, future:getMaintenanceProgressionStep() < 1, blocked:!hasAssignedLandlord()}">
               <span class="progression-number">1</span>
               <div class="progression-card">
                 <div class="progression-title"><span class="progression-icon"><i class="fa-light fa-helmet-safety"></i></span><strong>Assign Contractor</strong></div>
-                <button type="button" ng-click="openContractorBooking()" ng-disabled="issue.item.statusName==='Completed'" class="progression-action">
+                <span class="progression-requirement" ng-if="!hasAssignedLandlord()">
+                  <i class="fa-light fa-circle-exclamation"></i>
+                  Landlord required.
+                  <a href="" ng-click="showLandlordAssignment()">Assign a landlord</a>
+                </span>
+                <button type="button" ng-click="openContractorBooking()" ng-disabled="issue.item.statusName==='Completed' || !hasAssignedLandlord()" class="progression-action">
                   {{getIssueProgressStep() >= 2 ? 'Reassign Contractor' : 'Book Contractor'}}
                   <i class="fa-light" ng-class="getIssueProgressStep() >= 2 ? 'fa-arrows-rotate' : 'fa-plus'"></i>
                 </button>
@@ -270,7 +287,7 @@
             </section>
           </div>
 
-          <details class="progression-administration">
+          <!-- <details class="progression-administration">
             <summary>Additional issue administration</summary>
             <div class="progression-admin-fields">
               <label>Assign Landlord
@@ -294,7 +311,7 @@
                 </select>
               </label>
             </div>
-          </details>
+          </details> -->
         </form>
 
       <div class="row g-5" id="documents">

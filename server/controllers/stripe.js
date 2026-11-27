@@ -1,9 +1,9 @@
 const https = require('https');
 module.exports = (ndx) => {
-    function fetchStripePayments(startingAfter) {
+    function fetchStripePayments(startingAfter, limit) {
         return new Promise((resolve, reject) => {
             const params = new URLSearchParams({
-                limit: '50',
+                limit: String(limit || 100),
                 'expand[]': 'data.latest_charge'
             });
 
@@ -53,9 +53,58 @@ module.exports = (ndx) => {
             req.end();
         });
     }
+
+    function mapPayment(payment) {
+        const charge = payment.latest_charge;
+        const chargeData = charge && typeof charge === 'object'
+            ? charge
+            : null;
+
+        const card = chargeData &&
+            chargeData.payment_method_details &&
+            chargeData.payment_method_details.card;
+
+        return {
+            id: payment.id,
+            amount: payment.amount,
+            currency: payment.currency,
+            status: payment.status,
+            description: payment.description,
+            created: payment.created,
+            customerName: chargeData &&
+            chargeData.billing_details &&
+            chargeData.billing_details.name,
+            cardBrand: card && card.brand,
+            cardLast4: card && card.last4,
+            metadata: payment.metadata || {}
+        };
+    }
+
+    function getPaymentPurpose(payment) {
+        return payment.metadata['Payment For']
+            || payment.metadata.paymentPurpose
+            || '';
+    }
+
+    function matchesFilters(payment, status, purpose) {
+        if (status === 'successful' && payment.status !== 'succeeded') {
+            return false;
+        }
+
+        if (status === 'failed' && payment.status === 'succeeded') {
+            return false;
+        }
+
+        return !purpose || getPaymentPurpose(payment) === purpose;
+    }
+
     ndx.app.get('/api/stripe-payments', ndx.authenticate(), async (req, res) => {
         try {
             const cursor = req.query.starting_after;
+            const status = req.query.status || 'all';
+            const purpose = req.query.purpose || '';
+            const pageSize = Number.parseInt(req.query.limit, 10) || 20;
+            const includeTotal = req.query.include_total === 'true';
 
             if (cursor && (
                 typeof cursor !== 'string' ||
@@ -64,39 +113,80 @@ module.exports = (ndx) => {
                 return res.status(400).json({ error: 'Invalid cursor' });
             }
 
-            const result = await fetchStripePayments(cursor);
+            if (!['all', 'successful', 'failed'].includes(status)) {
+                return res.status(400).json({ error: 'Invalid payment status' });
+            }
 
-            const payments = result.data.map(payment => {
-                const charge = payment.latest_charge;
-                const chargeData = charge && typeof charge === 'object'
-                    ? charge
+            if (
+                pageSize < 1 ||
+                pageSize > 100 ||
+                typeof purpose !== 'string' ||
+                purpose.length > 200
+            ) {
+                return res.status(400).json({ error: 'Invalid payment filters' });
+            }
+
+            const payments = [];
+            const purposes = new Set();
+            let scanCursor = cursor;
+            let hasMore = true;
+            let batches = 0;
+
+            while (
+                (includeTotal || payments.length <= pageSize) &&
+                hasMore &&
+                batches < 100
+            ) {
+                const result = await fetchStripePayments(scanCursor, 100);
+                const batch = result.data.map(mapPayment);
+
+                batches += 1;
+                batch.forEach(payment => {
+                    const paymentPurpose = getPaymentPurpose(payment);
+
+                    if (paymentPurpose) {
+                        purposes.add(paymentPurpose);
+                    }
+                });
+
+                for (const payment of batch) {
+                    if (matchesFilters(payment, status, purpose)) {
+                        payments.push(payment);
+                    }
+
+                    if (!includeTotal && payments.length > pageSize) {
+                        break;
+                    }
+                }
+
+                if (!includeTotal && payments.length > pageSize) {
+                    break;
+                }
+
+                hasMore = Boolean(result.has_more);
+
+                if (!result.data.length) {
+                    hasMore = false;
+                    break;
+                }
+
+                scanCursor = result.data[result.data.length - 1].id;
+            }
+
+            const pagePayments = payments.slice(0, pageSize);
+            const nextCursor = payments.length > pageSize
+                ? pagePayments[pagePayments.length - 1].id
+                : hasMore
+                    ? scanCursor
                     : null;
 
-                const card = chargeData &&
-                    chargeData.payment_method_details &&
-                    chargeData.payment_method_details.card;
-
-                return {
-                    id: payment.id,
-                    amount: payment.amount,
-                    currency: payment.currency,
-                    status: payment.status,
-                    description: payment.description,
-                    created: payment.created,
-                    customerName: chargeData &&
-                    chargeData.billing_details &&
-                    chargeData.billing_details.name,
-                    cardBrand: card && card.brand,
-                    cardLast4: card && card.last4,
-                    metadata: payment.metadata
-                };
-            });
-
             res.json({
-                data: payments,
-                has_more: result.has_more,
-                next_cursor: result.has_more && result.data.length
-                    ? result.data[result.data.length - 1].id
+                data: pagePayments,
+                has_more: Boolean(nextCursor),
+                next_cursor: nextCursor,
+                purpose_options: Array.from(purposes).sort(),
+                total_count: includeTotal && !hasMore
+                    ? payments.length
                     : null
             });
         } catch (err) {
